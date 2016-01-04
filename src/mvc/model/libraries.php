@@ -7,10 +7,8 @@ $db =& $this->data['db'];
 // Get all libraries
 if ( !empty($db) && count($this->data) === 1 ){
   return $db->get_rows("
-    SELECT libraries.*, licences.name AS licence
+    SELECT *
     FROM libraries
-    LEFT JOIN licences
-      ON libraries.licence = licences.licence
     ORDER BY title COLLATE NOCASE ASC
   ");
 }
@@ -31,8 +29,8 @@ else if ( !empty($db) &&
   !empty($this->data['status']) &&
   ( !empty($this->data['files']) ||
     !empty($this->data['languages']) ||
-    !empty($this->data['themes'])
-  )
+    !empty($this->data['themes']) ) &&
+  empty($this->data['edit'])
 ){
   if ( $db->insert('libraries', [
     'name' => $this->data['name'],
@@ -46,28 +44,49 @@ else if ( !empty($db) &&
     'doc_link' => $this->data['doc_link'],
     'git' => $this->data['git'],
     'support_link' => $this->data['support_link'],
-    'lat_update' => date('Y-m-d H:i:s', time()),
+    'last_update' => date('Y-m-d H:i:s', time()),
     'last_check' => date('Y-m-d H:i:s', time())
   ]) ){
-    $content = false;
-    if ( !empty($this->data['file']) ){
-      $content['files'] = json_decode($this->data['file']);
+    $ver = $this->get_model('./versions');
+    if ( !empty($ver['success']) ){
+      return $db->get_rows("
+        SELECT *
+        FROM libraries
+        ORDER BY title COLLATE NOCASE ASC
+      ");
     }
-    if ( !empty($this->data['languages']) ){
-      $content['languages'] = json_decode($this->data['languages']);
-    }
-    if ( !empty($this->data['themes']) ){
-      $content['themes'] = json_decode($this->data['themes']);
-    }
-    if ( !empty($content) ){
-      $db->insert('versions', [
-        'name' => $this->data['vname'],
-        'library' => $this->data['name'],
-        'content' => json_encode($this->data['content']),
-        'status' => $this->data['status'],
-        'date_added' => date('Y-m-d H:i:s', time())
-      ]);
-    }
+    return ['error' => "Error to add new library's version."];
   }
+  return false;
+}
 
+// Update library
+else if ( !empty($db) &&
+  (count($this->data) > 2) &&
+  !empty($this->data['name']) &&
+  !empty($this->data['new_name']) &&
+  !empty($this->data['title']) &&
+  !empty($this->data['edit'])
+){
+  $id = $this->data['name'];
+  $this->data['name'] = $this->data['new_name'];
+  unset($this->data['db']);
+  unset($this->data['new_name']);
+  unset($this->data['edit']);
+  if ( $db->update('libraries', $this->data, ['name' => $id]) ){
+    return $this->data;
+  }
+  return false;
+}
+
+// Delete library
+else if ( !empty($db) &&
+  (count($this->data) === 2) &&
+  !empty($this->data['name'])
+){
+  if ( $db->delete('libraries', ['name' => $this->data['name']]) ){
+    $db->delete('versions', ['library' => $this->data['name']]);
+    // ELIMINARE DIPENDENZE?
+    return ['success' => 1];
+  }
 }

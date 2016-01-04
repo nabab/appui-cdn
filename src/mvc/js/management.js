@@ -18,23 +18,43 @@ var
           }
         },
         create: function(o){
-          var TVgetChecked = function(treeView){
-            var checkedNodes = [],
-                r = [];
-            getChecked(treeView.dataSource.view(), checkedNodes);
-            $.each(checkedNodes, function(i, a){
-              r.push(a);
-            });
-            return JSON.stringify(r);
-          };
           o.data.vname = $("#u93248safn328dasuq89yu").val();
           o.data.status = $("#as9hw3rhn9203nnfd9n23").val();
-          o.data.files = TVgetChecked($("#ashd3538y1i35h8oasdj023").data("kendoTreeView"));
-          o.data.languages = TVgetChecked($("#y7hhiawza3u9y983w2asj9h9xe4").data("kendoTreeView"));
-          o.data.themes = TVgetChecked($("#y99hu8y4ss3a2s5423ld453wmn").data("kendoTreeView"));
+          o.data.dependencies = $("#732ijfasASdha92389yasdh9823").data("kendoMultiSelect").value();
           appui.f.post('cdn/management', o.data, function(d){
-            
+            if ( d.data ){
+              o.success();
+              librariesGrid.data("kendoGrid").dataSource.data(d.data);
+            }
+            else {
+              o.error();
+            }
           });
+        },
+        update: function(o){
+          o.data.edit = 1;
+          o.data.new_name = $("input[name=new_name]", appui.f.get_popup()).val();
+          o.data.name = $("input[name=name]:hidden", appui.f.get_popup()).val();
+          appui.f.post('cdn/libraries', o.data, function(d){
+            if ( d.data ){
+              o.success(d.data);
+            }
+            else {
+              o.error();
+            }
+          });
+        },
+        destroy: function(o){
+          if ( o.data.name !== undefined ){
+            appui.f.post('cdn/libraries', {name: o.data.name}, function(d){
+              if ( d.data.success ){
+                o.success();
+              }
+              else{
+                o.error();
+              }
+            });
+          }
         }
       },
       schema: {
@@ -56,7 +76,8 @@ var
             status: { type: "string" },
             files: { type: "string" },
             languages: { type: "string" },
-            themes: { type: "string" }
+            themes: { type: "string" },
+            dependencies: { type: "string" }
           }
         }
       }
@@ -155,55 +176,52 @@ var
         ' fa-ambulance"></i></a>' : '';
       }
     }, {
-      width: 80,
-      template: function(e){
-        return '<a class="k-button k-button-icontext k-grid-edit" href="javascript:;"><i class="fa fa-edit"></i></a>' +
-          '<a class="k-button k-button-icontext k-grid-delete" href="javascript:;"><i class="fa fa-trash"></i></a>';
-      }
-    }, {
-      hidden: true,
       title: '',
+      width: 80,
       command: [{
         name: "edit",
         text: {
           edit: "Mod.",
           update: "Save",
           cancel: "Cancel"
-        }
+        },
+        template: '<a class="k-button k-grid-edit fa fa-edit" href="javascript:;"></a>'
       }, {
         name: "destroy",
-        test: "Del."
+        text: "Del.",
+        template: '<a class="k-button k-grid-delete fa fa-trash" href="javascript:;"></a>'
+
       }]
     }],
     toolbar: function(){
       return '<div class="toolbar">' +
-                // Add library button
+                // Search library
                 '<div style="width: 50%; display: inline-block">' +
+                  '<i class="fa fa-search" style="margin: 0 5px"></i>' +
+                  '<input id="F4LLL9jdn3nhasS38sh301dfs" style="width: 300px">' +
+                '</div>' +
+                // Add library button
+                '<div style="width: 50%; display: inline-block; text-align: right"">' +
                   '<a class="k-button k-button-icontext k-grid-add" href="javascript:;">' +
                     '<i class="fa fa-plus" style="margin-right: 5px"></i>Add library' +
                   '</a>' +
-                '</div>' +
-                // Search library
-                '<div style="width: 50%; display: inline-block; text-align: right">' +
-                  '<i class="fa fa-search" style="margin-right: 5px"></i>' +
-                  '<input id="F4LLL9jdn3nhasS38sh301dfs">' +
                 '</div>' +
               '</div>';
     },
     editable: {
       mode: "popup",
+      confirmation: "Are you sure that you want to delete this entry?",
       window: {
         width: 850
       }
     },
     edit: function(e){
-      appui.f.log(e);
       var cont = e.container,
           kcont = cont.data("kendoWindow");
 
       // Set title
       kcont.title(
-        e.model[e.model.name] ? "Edit Library" : "New Library"
+        e.model.name ? "Edit Library" : "New Library"
       );
 
       // Fix inputs width
@@ -212,15 +230,12 @@ var
       // Set required inputs
       $("input[name=title], input[name=name]", cont).attr("required", "required");
 
-      // Remove duplicated buttons
-      $("div.k-edit-field:last, div.k-edit-label:last", cont).remove();
-
       // Remove "latest" input
       $("input[name=latest]").parent().prev().remove();
       $("input[name=latest]").parent().remove();
 
       // Insert mode
-      if ( !e.model[e.model.name] ){
+      if ( !e.model.name ){
         // Version's content DataSource
         var filesDS = new kendo.data.HierarchicalDataSource({
               data: []
@@ -286,6 +301,18 @@ var
                       checkChildren: true
                     }
                   }).data("kendoTreeView").dataSource.data(d.data.tree);
+                  //
+                  $("#732ijfasASdha92389yasdh9823").kendoMultiSelect({
+                    dataSource: {
+                      data: d.data.lib_ver,
+                      group: {
+                        field: "lib"
+                      }
+                    },
+                    dataTextField: "name",
+                    dataValueField: "id_ver",
+                    placeholder: "Select dependences..."
+                  });
                   // Show save button
                   $("a.k-button.k-grid-update", "div.k-edit-buttons", cont).show();
                   // Add before button
@@ -316,18 +343,64 @@ var
           })
         );
       }
+      else {
+        // Change input name attribute to name field in "new_name"
+        $("input[name=name]", cont).attr("name", "new_name");
+        // Add a hidden input for stored the name (id)
+        $("div.k-edit-form-container", cont).append($('<input type="hidden" name="name">').val(e.model.name));
+      }
     },
     // Library's versions subgrid
     detailInit: function(d){
       $("<div/>").appendTo(d.detailCell).kendoGrid({
         dataSource: {
           transport: {
-            read: function(e){
+            read: function(o){
               appui.f.post('cdn/versions', {id_lib: d.data.name}, function(p){
                 if ( p.data ){
-                  e.success(p.data);
+                  o.success(p.data);
                 }
               });
+            },
+            create: function(o){
+              alert('ciao');
+            },
+            update: function(o){
+              if ( o.data.id !== undefined ){
+                appui.f.post('cdn/versions', o.data, function(p){
+                  if ( p.data ){
+                    o.success(p.data);
+                  }
+                  else {
+                    o.error();
+                  }
+                });
+              }
+            },
+            destroy: function(o){
+              if ( o.data.id !== undefined ){
+                appui.f.post('cdn/versions', {id_ver: o.data.id}, function(p){
+                  if ( p.data.success ){
+                    o.success();
+                  }
+                  else {
+                    o.error();
+                  }
+                });
+              }
+            }
+          },
+          schema: {
+            model :{
+              id: "id",
+              fields: {
+                id: { type: "numer", editable: false },
+                name: { type: "string" },
+                library: { type: "string" },
+                content: { type: "string" },
+                date_added: { type: "date" },
+                status: { type: "string" }
+              }
             }
           }
         },
@@ -339,7 +412,30 @@ var
           field: 'status'
         }, {
           title: 'Date',
-          field: 'date_added'
+          field: 'date_added',
+          template: function(e){
+            return kendo.toString(e.date_added, "dd/MM/yyyy");
+          }
+        }, {
+          title: '',
+          width: 80,
+          headerTemplate: '<a href="javascript:;" class="k-button k-button-icontext k-grid-add fa fa-plus add-ver"></a>',
+          headerAttributes: {
+            style: "text-align: center"
+          },
+          command: [{
+            name: "edit",
+            text: {
+              edit: "Mod.",
+              update: "Save",
+              cancel: "Cancel"
+            },
+            template: '<a class="k-button k-grid-edit fa fa-edit" href="javascript:;"></a>'
+          }, {
+            name: "destroy",
+            test: "Del.",
+            template: '<a class="k-button k-grid-delete fa fa-trash" href="javascript:;"></a>'
+          }]
         }],
         selectable: true,
         change: function(e){
@@ -376,7 +472,10 @@ var
                 field: 'status'
               }, {
                 title: 'Date',
-                field: 'date_added'
+                field: 'date_added',
+                template: function(t){
+                  return kendo.toString(t.date_added, "dd/MM/yyyy")
+                }
               }]
             });
 
@@ -403,12 +502,124 @@ var
             $(w).redraw();
 
           });
+        },
+        editable: {
+          mode: "popup",
+          confirmation: "Are you sure that you want to delete this entry?",
+          window: {
+            title: "Edit library's version",
+            width: 850
+          }
+        },
+        edit: function(e){
+
         }
+      });
+      appui.f.log(d);
+      // Insert new library's version (Plus button)
+      $("a.k-button.k-button-icontext.k-grid-add.fa.fa-plus.add-ver", d.detailCell).on("click", function(e){
+        appui.f.alert($("#932f9u4923rjasdu09j3333").html(), 'Add ' + d.data.title + ' library\'s version', 850, 380, function(w){
+          w.data("kendoWindow").bind("resize", function(){
+            w.data("kendoWindow").center();
+          });
+          w.closest(".k-window").height("");
+          appui.f.post('cdn/versions', {folder: d.data.name}, function(p){
+            // Version's content DataSource
+            var filesDS = new kendo.data.HierarchicalDataSource({
+                  data: []
+                }),
+                languagesDS = new kendo.data.HierarchicalDataSource({
+                  data: []
+                }),
+                themesDS = new kendo.data.HierarchicalDataSource({
+                  data: []
+                });
+            // Show form
+            $("#asdahf8923489yhf98923hr").show();
+            // Set version's name
+            $("#u93248safn328dasuq89yu").val(p.data.version);
+            // Version's status dropdownlist
+            $("#as9hw3rhn9203nnfd9n23").kendoDropDownList({
+              dataSource: ['Stable', 'Development'],
+              optionLabel: "Select one..."
+            });
+            // Content panelbar
+            $("#0ash834fh9qqqwhf8h34h9").kendoPanelBar({
+              expandMode: "single"
+            });
+            // Create files treeviews
+            $("#ashd3538y1i35h8oasdj023").kendoTreeView({
+              dataSource: filesDS,
+              checkboxes: {
+                checkChildren: true
+              },
+              expand: function(){
+
+              }
+            }).data("kendoTreeView").dataSource.data(p.data.tree);
+            // Create files treeviews
+            $("#y7hhiawza3u9y983w2asj9h9xe4").kendoTreeView({
+              dataSource: languagesDS,
+              checkboxes: {
+                checkChildren: true
+              }
+            }).data("kendoTreeView").dataSource.data(p.data.tree);
+            // Create files treeviews
+            $("#y99hu8y4ss3a2s5423ld453wmn").kendoTreeView({
+              dataSource: themesDS,
+              checkboxes: {
+                checkChildren: true
+              }
+            }).data("kendoTreeView").dataSource.data(p.data.tree);
+            // Dependences multiselect
+            $("#732ijfasASdha92389yasdh9823").kendoMultiSelect({
+              dataSource: {
+                data: p.data.lib_ver,
+                group: {
+                  field: "lib"
+                }
+              },
+              dataTextField: "name",
+              dataValueField: "id_ver",
+              placeholder: "Select dependences..."
+            });
+            // Add save and cancel buttons
+            $("#asdahf8923489yhf98923hr").append(
+              '<div class="k-edit-label"></div>' +
+              '<div class="k-edit-field" style="text-align: right">' +
+                '<a href="#" class="k-button k-button-icontext" style="margin-right: 5px">' +
+                  '<span class="k-icon k-update"></span>' +
+                  'Save' +
+                '</a>' +
+                '<a href="#" class="k-button k-button-icontext">' +
+                  '<span class="k-icon k-cancel"></span>' +
+                  'Cancel' +
+                '</a>' +
+              '</div>'
+            );
+            $("span.k-update", $("#asdahf8923489yhf98923hr")).parent().on("click", function(){
+              appui.f.post('cdn/versions', {
+                name: d.data.name,
+                vname: p.data.version,
+                status: $("#as9hw3rhn9203nnfd9n23").data("kendoDropDownList").value(),
+                files: TVgetChecked($("#ashd3538y1i35h8oasdj023").data("kendoTreeView")),
+                languages: TVgetChecked($("#y7hhiawza3u9y983w2asj9h9xe4").data("kendoTreeView")),
+                themes: TVgetChecked($("#y99hu8y4ss3a2s5423ld453wmn").data("kendoTreeView"))
+              }, function(i){
+                $("div.k-grid", d.detailCell).data("kendoGrid").dataSource.read();
+                appui.f.closeAlert();
+              });
+            });
+            $("span.k-cancel", $("#asdahf8923489yhf98923hr")).parent().on("click", function(){
+              appui.f.closeAlert();
+            });
+          });
+        });
       });
     }
   }),
 
-  // Function for get the treeview checked elements
+  // Functions for get the treeview checked elements
   getChecked = function(nodes, checkedNodes) {
     for (var i = 0; i < nodes.length; i++) {
       if (nodes[i].checked && nodes[i].path) {
@@ -416,9 +627,20 @@ var
       }
 
       if (nodes[i].hasChildren) {
+        appui.f.log('children', nodes[i].children.view(), 'nodo', nodes[i]);
         getChecked(nodes[i].children.view(), checkedNodes);
       }
     }
+  },
+
+  TVgetChecked = function(treeView){
+    var checkedNodes = [],
+      r = [];
+    getChecked(treeView.dataSource.view(), checkedNodes);
+    $.each(checkedNodes, function(i, a){
+      r.push(a);
+    });
+    return JSON.stringify(r);
   };
 
 // Main TabStrip container padding fix
