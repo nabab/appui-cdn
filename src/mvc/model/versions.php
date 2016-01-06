@@ -6,13 +6,7 @@ $db =& $this->data['db'];
 
 if ( !empty($this->data['id_lib']) ){
   // Get all library's versions
-  $versions =  $db->get_rows("
-    SELECT *
-    FROM versions
-    WHERE library = ?
-    ORDER BY date_added DESC",
-    $this->data['id_lib']
-  );
+  $versions =  $db->rselect_all('versions', [], ['library' => $this->data['id_lib']], ['date_added' => 'DESC']);
 
   foreach( $versions as $i => $ver ){
     // Get all versions' dependencies
@@ -89,7 +83,7 @@ else if ( !empty($this->data['folder']) && !empty(BBN_CDN_PATH) ){
 
 }
 
-// Insert library's version
+// Insert new library's version
 else if ( !empty($this->data['name']) &&
   !empty($this->data['vname']) &&
   !empty($this->data['status']) &&
@@ -98,7 +92,7 @@ else if ( !empty($this->data['name']) &&
     !empty($this->data['themes']) )
 ){
   $content = [
-    'files' => !empty($this->data['file']) ? $this->data['file'] : [],
+    'files' => !empty($this->data['files']) ? $this->data['files'] : [],
     'languages' => !empty($this->data['languages']) ? $this->data['languages'] : [],
     'themes' => !empty($this->data['themes']) ? $this->data['themes'] : []
   ];
@@ -117,6 +111,9 @@ else if ( !empty($this->data['name']) &&
           'id_slave' => $id
         ]);
       }
+    }
+    if ( !empty($this->data['latest']) ){
+      $db->update('libraries', ['latest' => $this->data['vname']], ['name' => $this->data['name']]);
     }
   }
   return ['success' => 1];
@@ -143,8 +140,10 @@ else if ( !empty($db) &&
   !empty($this->data['id_ver'])
 ){
   if ( $db->delete('versions', ['id' => $this->data['id_ver']]) ){
+    // Delete dependences
+    $db->delete('dependencies', ['id_slave' => $this->data['id_ver']]);
+    $db->delete('dependencies', ['id_master' => $this->data['id_ver']]);
     return ['success' => 1];
-    // ELIMINARE DIPENDENZE????
   }
   return false;
 }

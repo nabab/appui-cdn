@@ -6,11 +6,7 @@ $db =& $this->data['db'];
 
 // Get all libraries
 if ( !empty($db) && count($this->data) === 1 ){
-  return $db->get_rows("
-    SELECT *
-    FROM libraries
-    ORDER BY title COLLATE NOCASE ASC
-  ");
+  return $db->rselect_all('libraries', [], [], ['title' => 'ASC']);
 }
 
 // Get all library's info
@@ -85,8 +81,15 @@ else if ( !empty($db) &&
   !empty($this->data['name'])
 ){
   if ( $db->delete('libraries', ['name' => $this->data['name']]) ){
-    $db->delete('versions', ['library' => $this->data['name']]);
-    // ELIMINARE DIPENDENZE?
+    // Get all library's versions' id
+    $versions = $db->rselect_all('versions', ['id'], ['library' => $this->data['name']]);
+    foreach ( $versions as $ver ){
+      // Delete versions
+      $db->delete('versions', ['id' => $ver['id']]);
+      // Delete dependecies
+      $db->delete('dependencies', ['id_slave' => $ver['id']]);
+      $db->delete('dependencies', ['id_master' => $ver['id']]);
+    }
     return ['success' => 1];
   }
 }
