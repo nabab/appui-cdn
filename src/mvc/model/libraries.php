@@ -22,7 +22,6 @@ else if ( !empty($db) &&
   !empty($this->data['name']) &&
   !empty($this->data['title']) &&
   !empty($this->data['vname']) &&
-  !empty($this->data['status']) &&
   ( !empty($this->data['files']) ||
     !empty($this->data['languages']) ||
     !empty($this->data['themes']) ) &&

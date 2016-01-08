@@ -9,7 +9,6 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234").kendoGrid({
       },
       create: function(o){
         o.data.vname = $("#u93248safn328dasuq89yu").val();
-        o.data.status = $("#as9hw3rhn9203nnfd9n23").val();
         o.data.files = TVgetChecked($("#ashd3538y1i35h8oasdj023").data("kendoTreeView"));
         o.data.languages = TVgetChecked($("#y7hhiawza3u9y983w2asj9h9xe4").data("kendoTreeView"));
         o.data.themes = TVgetChecked($("#y99hu8y4ss3a2s5423ld453wmn").data("kendoTreeView"));
@@ -66,7 +65,6 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234").kendoGrid({
           git: { type: "string" },
           support_link: { type: "string" },
           vname: { type: "string" },
-          status: { type: "string" },
           files: { type: "string" },
           languages: { type: "string" },
           themes: { type: "string" },
@@ -264,11 +262,6 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234").kendoGrid({
                 $("#asdahf8923489yhf98923hr").show();
                 // Set version's name
                 $("#u93248safn328dasuq89yu").val(d.data.version);
-                // Version's status dropdownlist
-                $("#as9hw3rhn9203nnfd9n23").kendoDropDownList({
-                  dataSource: ['Stable', 'Development'],
-                  optionLabel: "Select one..."
-                });
                 // Content panelbar
                 $("#0ash834fh9qqqwhf8h34h9").kendoPanelBar({
                   expandMode: "single"
@@ -345,7 +338,7 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234").kendoGrid({
   },
   // Library's versions subgrid
   detailInit: function(d){
-    $("<div/>").appendTo(d.detailCell).kendoGrid({
+    var versionsGrid = $("<div/>").appendTo(d.detailCell).kendoGrid({
       dataSource: {
         transport: {
           read: function(o){
@@ -355,14 +348,20 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234").kendoGrid({
               }
             });
           },
-          create: function(o){
-            alert('ciao');
-          },
           update: function(o){
+            appui.f.log(o);
             if ( o.data.id !== undefined ){
-              appui.f.post('cdn/versions', o.data, function(p){
-                if ( p.data ){
-                  o.success(p.data);
+              appui.f.post('cdn/versions', {
+                id_ver: o.data.id,
+                files: TVgetChecked($("#ashd3538y1i35h8oasdj023").data("kendoTreeView")),
+                languages: TVgetChecked($("#y7hhiawza3u9y983w2asj9h9xe4").data("kendoTreeView")),
+                themes: TVgetChecked($("#y99hu8y4ss3a2s5423ld453wmn").data("kendoTreeView")),
+                dependencies: $("#732ijfasASdha92389yasdh9823").data("kendoMultiSelect").value(),
+                latest: $("#hw4o5923noasd890324yho:checked").length
+              }, function(d){
+                if ( d.data.success ){
+                  versionsGrid.data("kendoGrid").dataSource.read();
+                  o.success();
                 }
                 else {
                   o.error();
@@ -391,8 +390,7 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234").kendoGrid({
               name: { type: "string" },
               library: { type: "string" },
               content: { type: "string" },
-              date_added: { type: "date" },
-              status: { type: "string" }
+              date_added: { type: "date" }
             }
           }
         }
@@ -400,9 +398,6 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234").kendoGrid({
       columns: [{
         title: 'Version',
         field: 'name'
-      }, {
-        title: 'Status',
-        field: 'status'
       }, {
         title: 'Date',
         field: 'date_added',
@@ -461,9 +456,6 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234").kendoGrid({
               title: 'Name',
               field: 'name'
             }, {
-              title: 'Status',
-              field: 'status'
-            }, {
               title: 'Date',
               field: 'date_added',
               template: function(t){
@@ -505,7 +497,82 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234").kendoGrid({
         }
       },
       edit: function(e){
-        appui.f.log(e);
+        $("div.k-edit-field, div.k-edit-label", e.container).remove();
+        $("div.k-edit-form-container", e.container).prepend($("#932f9u4923rjasdu09j3333").html());
+        appui.f.post('cdn/versions', {version: e.model.id}, function(p){
+          if ( p.data ){
+            // Show form
+            $("#asdahf8923489yhf98923hr").show();
+            // Set version's name
+            $("#u93248safn328dasuq89yu").val(e.model.name).attr('readonly', 'readonly');
+            // Content panelbar
+            $("#0ash834fh9qqqwhf8h34h9").kendoPanelBar({
+              expandMode: "single"
+            });
+            // Create files treeviews
+            $("#ashd3538y1i35h8oasdj023").kendoTreeView({
+              dataSource: p.data.files,
+              checkboxes: {
+                checkChildren: true
+              },
+              check: function(){
+                e.model.dirty = true;
+              }
+            }).data("kendoTreeView");
+            // Create languages treeviews
+            $("#y7hhiawza3u9y983w2asj9h9xe4").kendoTreeView({
+              dataSource: p.data.languages,
+              checkboxes: {
+                checkChildren: true
+              },
+              check: function(){
+                e.model.dirty = true;
+              }
+            }).data("kendoTreeView");
+            // Create themes treeviews
+            $("#y99hu8y4ss3a2s5423ld453wmn").kendoTreeView({
+              dataSource: p.data.themes,
+              checkboxes: {
+                checkChildren: true
+              },
+              check: function(){
+                e.model.dirty = true;
+              }
+            }).data("kendoTreeView");
+            // Dependences multiselect
+            $("#732ijfasASdha92389yasdh9823").kendoMultiSelect({
+              dataSource: {
+                data: p.data.lib_ver,
+                group: {
+                  field: "lib"
+                }
+              },
+              dataTextField: "name",
+              dataValueField: "id_ver",
+              placeholder: "Select dependences...",
+              value: p.data.dependencies,
+              change: function(){
+                e.model.dirty = true;
+              }
+            });
+            // Add latest checkbox
+            $("#asdahf8923489yhf98923hr").append(
+              '<div class="k-edit-label">Latest</div>' +
+              '<div class="k-edit-field">' +
+                '<input id="hw4o5923noasd890324yho" type="checkbox" class="k-checkbox">' +
+                '<label for="hw4o5923noasd890324yho" class="k-checkbox-label"></label>' +
+              '</div>'
+            );
+            if ( p.data.latest ){
+              $("#hw4o5923noasd890324yho").attr({checked: 'checked', disabled: 'disabled'});
+            }
+            $("#hw4o5923noasd890324yho").on("click", function(){
+              if ( !$(this).attr('checked') ){
+                e.model.dirty = true;
+              }
+            });
+          }
+        });
       }
     });
     // Insert new library's version (Plus button)
@@ -527,11 +594,6 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234").kendoGrid({
           $("#asdahf8923489yhf98923hr").show();
           // Set version's name
           $("#u93248safn328dasuq89yu").val(p.data.version);
-          // Version's status dropdownlist
-          $("#as9hw3rhn9203nnfd9n23").kendoDropDownList({
-            dataSource: ['Stable', 'Development'],
-            optionLabel: "Select one..."
-          });
           // Content panelbar
           $("#0ash834fh9qqqwhf8h34h9").kendoPanelBar({
             expandMode: "single"
@@ -541,19 +603,16 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234").kendoGrid({
             dataSource: filesDS,
             checkboxes: {
               checkChildren: true
-            },
-            expand: function(){
-
             }
           }).data("kendoTreeView").dataSource.data(p.data.tree);
-          // Create files treeviews
+          // Create languages treeviews
           $("#y7hhiawza3u9y983w2asj9h9xe4").kendoTreeView({
             dataSource: languagesDS,
             checkboxes: {
               checkChildren: true
             }
           }).data("kendoTreeView").dataSource.data(p.data.tree);
-          // Create files treeviews
+          // Create themes treeviews
           $("#y99hu8y4ss3a2s5423ld453wmn").kendoTreeView({
             dataSource: themesDS,
             checkboxes: {
@@ -595,7 +654,6 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234").kendoGrid({
             appui.f.post('cdn/versions', {
               name: d.data.name,
               vname: p.data.version,
-              status: $("#as9hw3rhn9203nnfd9n23").data("kendoDropDownList").value(),
               files: TVgetChecked($("#ashd3538y1i35h8oasdj023").data("kendoTreeView")),
               languages: TVgetChecked($("#y7hhiawza3u9y983w2asj9h9xe4").data("kendoTreeView")),
               themes: TVgetChecked($("#y99hu8y4ss3a2s5423ld453wmn").data("kendoTreeView")),

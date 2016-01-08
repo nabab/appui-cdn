@@ -4,7 +4,7 @@
 // DB connection
 $db =& $this->data['db'];
 
-if ( !empty($this->data['id_lib']) ){
+if ( !empty($db) && !empty($this->data['id_lib']) ){
   // Get all library's versions
   $versions =  $db->rselect_all('versions', [], ['library' => $this->data['id_lib']], ['date_added' => 'DESC']);
 
@@ -67,7 +67,7 @@ else if ( !empty($this->data['folder']) && !empty(BBN_CDN_PATH) ){
     }
     return $res;
   }
-  $ret['tree'] = tree($ver[0], $ver[0]);
+    $ret['tree'] = tree($ver[0], $ver[0]);
   // Version name
   $ret['version'] = basename($ver[0]);
   // Get all libraries list
@@ -84,9 +84,9 @@ else if ( !empty($this->data['folder']) && !empty(BBN_CDN_PATH) ){
 }
 
 // Insert new library's version
-else if ( !empty($this->data['name']) &&
+else if ( !empty($db) &&
+  !empty($this->data['name']) &&
   !empty($this->data['vname']) &&
-  !empty($this->data['status']) &&
   ( !empty($this->data['files']) ||
     !empty($this->data['languages']) ||
     !empty($this->data['themes']) )
@@ -100,7 +100,6 @@ else if ( !empty($this->data['name']) &&
     'name' => $this->data['vname'],
     'library' => $this->data['name'],
     'content' => json_encode($content),
-    'status' => $this->data['status'],
     'date_added' => date('Y-m-d H:i:s', time())
   ]) ) {
     if ( !empty($this->data['dependencies']) ){
@@ -119,17 +118,100 @@ else if ( !empty($this->data['name']) &&
   return ['success' => 1];
 }
 
+// Returns the files data for the content treeviews with checked, all libraries list and if the version is latest.
+else if ( !empty($db) &&
+  !empty($this->data['version']) &&
+  (count($this->data) === 2)
+){
+  $ver = $db->rselect('versions', ['name', 'library', 'content'], ['id' => $this->data['version']]);
+  $p = BBN_CDN_PATH . 'lib/' . $ver['library'] . '/' . $ver['name'];
+  $cont = json_decode($ver['content'], 1);
+  // Make the tree data
+  function tree($path, $ver_path, $c){
+    $res = [];
+    foreach ( \bbn\file\dir::get_files($path, 1) as $p ){
+      $r = [
+        'text' => basename($p),
+        'path' => substr($p, strlen($ver_path), strlen($p))
+      ];
+      if ( in_array($r['path'], $c) ){
+        $r['checked'] = 1;
+      }
+      if ( is_dir($p) ){
+        $r['items'] = tree($p, $ver_path, $c);
+      }
+      array_push($res, $r);
+    }
+    return $res;
+  }
+  $ret = [
+    'files' => tree($p, $p, json_decode($cont['files'], 1)),
+    'languages' => tree($p, $p, json_decode($cont['languages'], 1)),
+    'themes' => tree($p, $p, json_decode($cont['themes'], 1)),
+    // all libraries list
+    'lib_ver' => $db->get_rows("
+      SELECT libraries.title || ' - ' || versions.name AS name, libraries.name AS lib,
+        versions.name AS ver, versions.id AS id_ver
+      FROM libraries
+      LEFT JOIN versions
+        ON versions.library = libraries.name
+      ORDER BY lib ASC
+    "),
+    // all versions' dependencies
+    'dependencies' => $db->get_column_values('dependencies', 'id_master', ['id_slave' => $this->data['version']])
+  ];
+  if ( $db->select_one('libraries', 'latest', ['name' => $ver['library']]) === $ver['name'] ){
+    $ret['latest'] = 1;
+  }
+  return $ret;
+}
+
 // Update library's version
 else if ( !empty($db) &&
-  !empty($this->data['name']) &&
-  !empty($this->data['library']) &&
-  !empty($this->data['content']) &&
-  !empty($this->data['date_added']) &&
-  !empty($this->data['status'])
+  !empty($this->data['id_ver']) &&
+  ( !empty($this->data['files']) ||
+    !empty($this->data['languages']) ||
+    !empty($this->data['themes']) )
 ){
-  unset($this->data['db']);
-  if ( $db->update('versions', $this->data) ){
-    return $this->data;
+  $content = [
+    'files' => !empty($this->data['files']) ? $this->data['files'] : [],
+    'languages' => !empty($this->data['languages']) ? $this->data['languages'] : [],
+    'themes' => !empty($this->data['themes']) ? $this->data['themes'] : []
+  ];
+  if ( $db->update('versions', ['content' => json_encode($content)], ['id' => $this->data['id_ver']]) ){
+    if ( !empty($this->data['latest']) ){
+      $ver_lib = $db->rselect('versions', ['name', 'library'], ['id' => $this->data['id_ver']]);
+      if ( !$db->update('libraries', ['latest' => $ver_lib['name']], ['name' => $ver_lib['library']])){
+        return ['error' => 'Error to update latest library\'s version'];
+      }
+    }
+    if ( !empty($this->data['dependencies']) ){
+      $old_dep = $db->get_column_values('dependencies', 'id_master', ['id_slave' => $this->data['id_ver']]);
+      foreach ( $old_dep as $old ){
+        if ( !in_array($old, $this->data['dependencies']) ){
+          if ( !$db->delete('dependencies', [
+            'id_slave' => $this->data['id_ver'],
+            'id_master' => $old
+          ]) ){
+            return ['error' => 'Error to delete a version\'s dependency'];
+          };
+        }
+        else {
+          unset($this->data['dependencies'][array_search($old, $this->data['dependencies'])]);
+        }
+      }
+      foreach ( $this->data['dependencies'] as $dep ){
+        if ( !in_array($dep, $old_dep) ){
+          if ( !$db->insert('dependencies', [
+            'id_slave' => $this->data['id_ver'],
+            'id_master' => $dep
+          ]) ){
+            return ['error' => 'Error to insert a new version\'s dependency'];
+          }
+        }
+      }
+    }
+    return ['success' => 1];
   }
   return false;
 }
