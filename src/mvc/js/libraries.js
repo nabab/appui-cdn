@@ -10,8 +10,8 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234").kendoGrid({
       create: function(o){
         o.data.vname = $("#u93248safn328dasuq89yu").val();
         o.data.files = TVgetChecked($("#ashd3538y1i35h8oasdj023").data("kendoTreeView"));
-        o.data.languages = TVgetChecked($("#y7hhiawza3u9y983w2asj9h9xe4").data("kendoTreeView"));
-        o.data.themes = TVgetChecked($("#y99hu8y4ss3a2s5423ld453wmn").data("kendoTreeView"));
+        o.data.languages = JSON.stringify($("#y7hhiawza3u9y983w2asj9h9xe4").data("kendoGrid").dataSource.data());
+        o.data.themes = JSON.stringify($("#y99hu8y4ss3a2s5423ld453wmn").data("kendoGrid").dataSource.data());
         o.data.dependencies = $("#732ijfasASdha92389yasdh9823").data("kendoMultiSelect").value();
         appui.f.post('cdn/libraries', o.data, function(d){
           if ( d.data && d.data.length ){
@@ -203,12 +203,13 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234").kendoGrid({
     mode: "popup",
     confirmation: "Are you sure that you want to delete this entry?",
     window: {
-      width: 850
+      width: 850,
+      maxHeight: appui.v.height - 50
     }
   },
   edit: function(e){
     var cont = e.container,
-      kcont = cont.data("kendoWindow");
+        kcont = cont.data("kendoWindow");
 
     // Set title
     kcont.title(
@@ -227,16 +228,6 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234").kendoGrid({
 
     // Insert mode
     if ( !e.model.name ){
-      // Version's content DataSource
-      var filesDS = new kendo.data.HierarchicalDataSource({
-          data: []
-        }),
-        languagesDS = new kendo.data.HierarchicalDataSource({
-          data: []
-        }),
-        themesDS = new kendo.data.HierarchicalDataSource({
-          data: []
-        });
       // Add version form
       $("div.k-edit-form-container", cont).prepend($("#932f9u4923rjasdu09j3333").html());
       // Hide "Save" button
@@ -262,32 +253,132 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234").kendoGrid({
                 $("#asdahf8923489yhf98923hr").show();
                 // Set version's name
                 $("#u93248safn328dasuq89yu").val(d.data.version);
-                // Content panelbar
-                $("#0ash834fh9qqqwhf8h34h9").kendoPanelBar({
-                  expandMode: "single"
-                });
                 // Create files treeviews
                 $("#ashd3538y1i35h8oasdj023").kendoTreeView({
-                  dataSource: filesDS,
+                  dataSource: d.data.tree,
                   checkboxes: {
                     checkChildren: true
+                  },
+                  expand: function(){
+                    setTimeout(function(){
+                      kcont.resize();
+                      kcont.center();
+                    }, 300);
+                  },
+                  collapse: function(){
+                    setTimeout(function(){
+                      kcont.resize();
+                      kcont.center();
+                    }, 300);
                   }
-                }).data("kendoTreeView").dataSource.data(d.data.tree);
-                // Create files treeviews
-                $("#y7hhiawza3u9y983w2asj9h9xe4").kendoTreeView({
-                  dataSource: languagesDS,
-                  checkboxes: {
-                    checkChildren: true
-                  }
-                }).data("kendoTreeView").dataSource.data(d.data.tree);
-                // Create files treeviews
-                $("#y99hu8y4ss3a2s5423ld453wmn").kendoTreeView({
-                  dataSource: themesDS,
-                  checkboxes: {
-                    checkChildren: true
-                  }
-                }).data("kendoTreeView").dataSource.data(d.data.tree);
-                //
+                });
+                // Create languages grid
+                $("#y7hhiawza3u9y983w2asj9h9xe4").kendoGrid({
+                  dataSource: {
+                    data: []
+                  },
+                  editable: 'popup',
+                  columns: [{
+                    title: 'Files',
+                    field: 'path'
+                  }, {
+                    title: '',
+                    width: 40,
+                    headerTemplate: '<a href="javascript:;" class="k-button k-button-icontext k-grid-add fa fa-plus add-lang"></a>',
+                    headerAttributes: {
+                      style: "text-align: center"
+                    },
+                    command: [{
+                      name: "destroy",
+                      test: "Del.",
+                      template: '<a class="k-button k-grid-delete fa fa-trash" href="javascript:;"></a>'
+                    }]
+                  }]
+                });
+                // Insert new language file
+                $("a.k-button.k-button-icontext.k-grid-add.fa.fa-plus.add-lang", "#y7hhiawza3u9y983w2asj9h9xe4").on("click", function(){
+                  appui.f.alert($("#9342ja823hioasfy3oi").html(), 'Add language file', 850, false, function(w){
+                    w.closest(".k-window").height("");
+                    w.data("kendoWindow").center();
+                    $("#845hiay8h9fhuwiey823hi").kendoTreeView({
+                      dataSource: d.data.languages_tree,
+                      select: function(s){
+                        $("input[name=path]", w).val(s.sender.dataItem(s.node).path);
+                      },
+                      expand: function(){
+                        setTimeout(function(){
+                          w.data("kendoWindow").trigger("resize");
+                        }, 300);
+                      },
+                      collapse: function(){
+                        setTimeout(function(){
+                          w.data("kendoWindow").trigger("resize");
+                        }, 300);
+                      }
+                    });
+                    $("a.k-button:first", w).on("click", function(){
+                      $("#y7hhiawza3u9y983w2asj9h9xe4").data("kendoGrid").dataSource.add({path: $("input[name=path]", w).val()});
+                      appui.f.closeAlert();
+                    });
+                    $("a.k-button:last", w).on("click", function(){
+                      appui.f.closeAlert();
+                    });
+                  });
+                });
+                // Create themes grid
+                $("#y99hu8y4ss3a2s5423ld453wmn").kendoGrid({
+                  dataSource: {
+                    data: []
+                  },
+                  editable: 'popup',
+                  columns: [{
+                    title: 'Files',
+                    field: 'path'
+                  }, {
+                    title: '',
+                    width: 40,
+                    headerTemplate: '<a href="javascript:;" class="k-button k-button-icontext k-grid-add fa fa-plus add-theme"></a>',
+                    headerAttributes: {
+                      style: "text-align: center"
+                    },
+                    command: [{
+                      name: "destroy",
+                      test: "Del.",
+                      template: '<a class="k-button k-grid-delete fa fa-trash" href="javascript:;"></a>'
+                    }]
+                  }]
+                });
+                // Insert new theme file
+                $("a.k-button.k-button-icontext.k-grid-add.fa.fa-plus.add-theme", "#y99hu8y4ss3a2s5423ld453wmn").on("click", function(){
+                  appui.f.alert($("#9342ja823hioasfy3oi").html(), 'Add theme file', 850, false, function(w){
+                    w.closest(".k-window").height("");
+                    w.data("kendoWindow").center();
+                    $("#845hiay8h9fhuwiey823hi").kendoTreeView({
+                      dataSource: d.data.tree,
+                      select: function(s){
+                        $("input[name=path]", w).val(s.sender.dataItem(s.node).path);
+                      },
+                      expand: function(){
+                        setTimeout(function(){
+                          w.data("kendoWindow").trigger("resize");
+                        }, 300);
+                      },
+                      collapse: function(){
+                        setTimeout(function(){
+                          w.data("kendoWindow").trigger("resize");
+                        }, 300);
+                      }
+                    });
+                    $("a.k-button:first", w).on("click", function(){
+                      $("#y99hu8y4ss3a2s5423ld453wmn").data("kendoGrid").dataSource.add({path: $("input[name=path]", w).val()});
+                      appui.f.closeAlert();
+                    });
+                    $("a.k-button:last", w).on("click", function(){
+                      appui.f.closeAlert();
+                    });
+                  });
+                });
+                // Dependences multiselect
                 $("#732ijfasASdha92389yasdh9823").kendoMultiSelect({
                   dataSource: {
                     data: d.data.lib_ver,
@@ -354,8 +445,8 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234").kendoGrid({
               appui.f.post('cdn/versions', {
                 id_ver: o.data.id,
                 files: TVgetChecked($("#ashd3538y1i35h8oasdj023").data("kendoTreeView")),
-                languages: TVgetChecked($("#y7hhiawza3u9y983w2asj9h9xe4").data("kendoTreeView")),
-                themes: TVgetChecked($("#y99hu8y4ss3a2s5423ld453wmn").data("kendoTreeView")),
+                languages: JSON.stringify($("#y7hhiawza3u9y983w2asj9h9xe4").data("kendoGrid").dataSource.data()),
+                themes: JSON.stringify($("#y99hu8y4ss3a2s5423ld453wmn").data("kendoGrid").dataSource.data()),
                 dependencies: $("#732ijfasASdha92389yasdh9823").data("kendoMultiSelect").value(),
                 latest: $("#hw4o5923noasd890324yho:checked").length
               }, function(d){
@@ -497,18 +588,20 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234").kendoGrid({
         }
       },
       edit: function(e){
-        $("div.k-edit-field, div.k-edit-label", e.container).remove();
-        $("div.k-edit-form-container", e.container).prepend($("#932f9u4923rjasdu09j3333").html());
+        var cont = e.container,
+            kcont = cont.data("kendoWindow");
+        // Set window's max height
+        kcont.setOptions({maxHeight: appui.v.height - 50});
+        // Remove all field
+        $("div.k-edit-field, div.k-edit-label", cont).remove();
+        // Insert template
+        $("div.k-edit-form-container", cont).prepend($("#932f9u4923rjasdu09j3333").html());
         appui.f.post('cdn/versions', {version: e.model.id}, function(p){
           if ( p.data ){
             // Show form
             $("#asdahf8923489yhf98923hr").show();
             // Set version's name
             $("#u93248safn328dasuq89yu").val(e.model.name).attr('readonly', 'readonly');
-            // Content panelbar
-            $("#0ash834fh9qqqwhf8h34h9").kendoPanelBar({
-              expandMode: "single"
-            });
             // Create files treeviews
             $("#ashd3538y1i35h8oasdj023").kendoTreeView({
               dataSource: p.data.files,
@@ -517,28 +610,134 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234").kendoGrid({
               },
               check: function(){
                 e.model.dirty = true;
-              }
-            }).data("kendoTreeView");
-            // Create languages treeviews
-            $("#y7hhiawza3u9y983w2asj9h9xe4").kendoTreeView({
-              dataSource: p.data.languages,
-              checkboxes: {
-                checkChildren: true
               },
-              check: function(){
+              expand: function(){
+                setTimeout(function(){
+                  kcont.resize();
+                  kcont.center();
+                }, 300);
+              },
+              collapse: function(){
+                setTimeout(function(){
+                  kcont.resize();
+                  kcont.center();
+                }, 300);
+              }
+            });
+            // Create languages grid
+            $("#y7hhiawza3u9y983w2asj9h9xe4").kendoGrid({
+              dataSource: {
+                data: p.data.languages
+              },
+              editable: 'popup',
+              columns: [{
+                title: 'Files',
+                field: 'path'
+              }, {
+                title: '',
+                width: 40,
+                headerTemplate: '<a href="javascript:;" class="k-button k-button-icontext k-grid-add fa fa-plus add-lang"></a>',
+                headerAttributes: {
+                  style: "text-align: center"
+                },
+                command: [{
+                  name: "destroy",
+                  test: "Del.",
+                  template: '<a class="k-button k-grid-delete fa fa-trash" href="javascript:;"></a>'
+                }]
+              }],
+              remove: function(){
                 e.model.dirty = true;
               }
-            }).data("kendoTreeView");
-            // Create themes treeviews
-            $("#y99hu8y4ss3a2s5423ld453wmn").kendoTreeView({
-              dataSource: p.data.themes,
-              checkboxes: {
-                checkChildren: true
+            });
+            // Insert new language file
+            $("a.k-button.k-button-icontext.k-grid-add.fa.fa-plus.add-lang", "#y7hhiawza3u9y983w2asj9h9xe4").on("click", function(){
+              appui.f.alert($("#9342ja823hioasfy3oi").html(), 'Add language file', 850, false, function(w){
+                w.closest(".k-window").height("");
+                w.data("kendoWindow").center();
+                $("#845hiay8h9fhuwiey823hi").kendoTreeView({
+                  dataSource: p.data.languages_tree,
+                  select: function(s){
+                    $("input[name=path]", w).val(s.sender.dataItem(s.node).path);
+                  },
+                  expand: function(){
+                    setTimeout(function(){
+                      w.data("kendoWindow").trigger("resize");
+                    }, 300);
+                  },
+                  collapse: function(){
+                    setTimeout(function(){
+                      w.data("kendoWindow").trigger("resize");
+                    }, 300);
+                  }
+                });
+                $("a.k-button:first", w).on("click", function(){
+                  $("#y7hhiawza3u9y983w2asj9h9xe4").data("kendoGrid").dataSource.add({path: $("input[name=path]", w).val()});
+                  e.model.dirty = true;
+                  appui.f.closeAlert();
+                });
+                $("a.k-button:last", w).on("click", function(){
+                  appui.f.closeAlert();
+                });
+              });
+            });
+            // Create themes grid
+            $("#y99hu8y4ss3a2s5423ld453wmn").kendoGrid({
+              dataSource: {
+                data: p.data.themes
               },
-              check: function(){
+              editable: 'popup',
+              columns: [{
+                title: 'Files',
+                field: 'path'
+              }, {
+                title: '',
+                width: 40,
+                headerTemplate: '<a href="javascript:;" class="k-button k-button-icontext k-grid-add fa fa-plus add-theme"></a>',
+                headerAttributes: {
+                  style: "text-align: center"
+                },
+                command: [{
+                  name: "destroy",
+                  test: "Del.",
+                  template: '<a class="k-button k-grid-delete fa fa-trash" href="javascript:;"></a>'
+                }]
+              }],
+              remove: function(){
                 e.model.dirty = true;
               }
-            }).data("kendoTreeView");
+            });
+            // Insert new theme file
+            $("a.k-button.k-button-icontext.k-grid-add.fa.fa-plus.add-theme", "#y99hu8y4ss3a2s5423ld453wmn").on("click", function(){
+              appui.f.alert($("#9342ja823hioasfy3oi").html(), 'Add theme file', 850, false, function(w){
+                w.closest(".k-window").height("");
+                w.data("kendoWindow").center();
+                $("#845hiay8h9fhuwiey823hi").kendoTreeView({
+                  dataSource: p.data.themes_tree,
+                  select: function(s){
+                    $("input[name=path]", w).val(s.sender.dataItem(s.node).path);
+                  },
+                  expand: function(){
+                    setTimeout(function(){
+                      w.data("kendoWindow").trigger("resize");
+                    }, 300);
+                  },
+                  collapse: function(){
+                    setTimeout(function(){
+                      w.data("kendoWindow").trigger("resize");
+                    }, 300);
+                  }
+                });
+                $("a.k-button:first", w).on("click", function(){
+                  $("#y99hu8y4ss3a2s5423ld453wmn").data("kendoGrid").dataSource.add({path: $("input[name=path]", w).val()});
+                  e.model.dirty = true;
+                  appui.f.closeAlert();
+                });
+                $("a.k-button:last", w).on("click", function(){
+                  appui.f.closeAlert();
+                });
+              });
+            });
             // Dependences multiselect
             $("#732ijfasASdha92389yasdh9823").kendoMultiSelect({
               dataSource: {
@@ -572,53 +771,147 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234").kendoGrid({
               }
             });
           }
+          kcont.center();
         });
       }
     });
     // Insert new library's version (Plus button)
     $("a.k-button.k-button-icontext.k-grid-add.fa.fa-plus.add-ver", d.detailCell).on("click", function(e){
-      appui.f.alert($("#932f9u4923rjasdu09j3333").html(), 'Add ' + d.data.title + ' library\'s version', 850, 380, function(w){
-        w.closest(".k-window").height("");
+      appui.f.alert($("#932f9u4923rjasdu09j3333").html(), 'Add ' + d.data.title + ' library\'s version', 850, false, function(w){
+        var cont = w,
+            kcont = cont.data("kendoWindow");
+        // Set window's max height
+        kcont.setOptions({maxHeight: appui.v.height - 50});
+        // Set dynamic window's height
+        cont.closest(".k-window").height("");
         appui.f.post('cdn/versions', {folder: d.data.name}, function(p){
-          // Version's content DataSource
-          var filesDS = new kendo.data.HierarchicalDataSource({
-              data: []
-            }),
-            languagesDS = new kendo.data.HierarchicalDataSource({
-              data: []
-            }),
-            themesDS = new kendo.data.HierarchicalDataSource({
-              data: []
-            });
           // Show form
           $("#asdahf8923489yhf98923hr").show();
           // Set version's name
-          $("#u93248safn328dasuq89yu").val(p.data.version);
-          // Content panelbar
-          $("#0ash834fh9qqqwhf8h34h9").kendoPanelBar({
-            expandMode: "single"
-          });
+          $("#u93248safn328dasuq89yu").val(p.data.version).attr('readonly', 'readonly');
           // Create files treeviews
           $("#ashd3538y1i35h8oasdj023").kendoTreeView({
-            dataSource: filesDS,
+            dataSource: p.data.tree,
             checkboxes: {
               checkChildren: true
+            },
+            expand: function(){
+              setTimeout(function(){
+                kcont.trigger("resize");
+              }, 300);
+            },
+            collapse: function(){
+              setTimeout(function(){
+                kcont.trigger("resize");
+              }, 300);
             }
-          }).data("kendoTreeView").dataSource.data(p.data.tree);
-          // Create languages treeviews
-          $("#y7hhiawza3u9y983w2asj9h9xe4").kendoTreeView({
-            dataSource: languagesDS,
-            checkboxes: {
-              checkChildren: true
-            }
-          }).data("kendoTreeView").dataSource.data(p.data.tree);
-          // Create themes treeviews
-          $("#y99hu8y4ss3a2s5423ld453wmn").kendoTreeView({
-            dataSource: themesDS,
-            checkboxes: {
-              checkChildren: true
-            }
-          }).data("kendoTreeView").dataSource.data(p.data.tree);
+          });
+          // Create languages grid
+          $("#y7hhiawza3u9y983w2asj9h9xe4").kendoGrid({
+            dataSource: {
+              data: []
+            },
+            editable: 'popup',
+            columns: [{
+              title: 'Files',
+              field: 'path'
+            }, {
+              title: '',
+              width: 40,
+              headerTemplate: '<a href="javascript:;" class="k-button k-button-icontext k-grid-add fa fa-plus add-lang"></a>',
+              headerAttributes: {
+                style: "text-align: center"
+              },
+              command: [{
+                name: "destroy",
+                test: "Del.",
+                template: '<a class="k-button k-grid-delete fa fa-trash" href="javascript:;"></a>'
+              }]
+            }]
+          });
+          // Insert new language file
+          $("a.k-button.k-button-icontext.k-grid-add.fa.fa-plus.add-lang", "#y7hhiawza3u9y983w2asj9h9xe4").on("click", function(){
+            appui.f.alert($("#9342ja823hioasfy3oi").html(), 'Add language file', 850, false, function(a){
+              a.closest(".k-window").height("");
+              a.data("kendoWindow").center();
+              $("#845hiay8h9fhuwiey823hi").kendoTreeView({
+                dataSource: p.data.languages_tree,
+                select: function(s){
+                  $("input[name=path]", a).val(s.sender.dataItem(s.node).path);
+                },
+                expand: function(){
+                  setTimeout(function(){
+                    a.data("kendoWindow").trigger("resize");
+                  }, 300);
+                },
+                collapse: function(){
+                  setTimeout(function(){
+                    a.data("kendoWindow").trigger("resize");
+                  }, 300);
+                }
+              });
+              $("a.k-button:first", a).on("click", function(){
+                $("#y7hhiawza3u9y983w2asj9h9xe4").data("kendoGrid").dataSource.add({path: $("input[name=path]", a).val()});
+                appui.f.closeAlert();
+              });
+              $("a.k-button:last", a).on("click", function(){
+                appui.f.closeAlert();
+              });
+            });
+          });
+          // Create themes grid
+          $("#y99hu8y4ss3a2s5423ld453wmn").kendoGrid({
+            dataSource: {
+              data: []
+            },
+            editable: 'popup',
+            columns: [{
+              title: 'Files',
+              field: 'path'
+            }, {
+              title: '',
+              width: 40,
+              headerTemplate: '<a href="javascript:;" class="k-button k-button-icontext k-grid-add fa fa-plus add-theme"></a>',
+              headerAttributes: {
+                style: "text-align: center"
+              },
+              command: [{
+                name: "destroy",
+                test: "Del.",
+                template: '<a class="k-button k-grid-delete fa fa-trash" href="javascript:;"></a>'
+              }]
+            }]
+          });
+          // Insert new theme file
+          $("a.k-button.k-button-icontext.k-grid-add.fa.fa-plus.add-theme", "#y99hu8y4ss3a2s5423ld453wmn").on("click", function(){
+            appui.f.alert($("#9342ja823hioasfy3oi").html(), 'Add theme file', 850, false, function(a){
+              a.closest(".k-window").height("");
+              a.data("kendoWindow").center();
+              $("#845hiay8h9fhuwiey823hi").kendoTreeView({
+                dataSource: p.data.tree,
+                select: function(s){
+                  $("input[name=path]", a).val(s.sender.dataItem(s.node).path);
+                },
+                expand: function(){
+                  setTimeout(function(){
+                    a.data("kendoWindow").trigger("resize");
+                  }, 300);
+                },
+                collapse: function(){
+                  setTimeout(function(){
+                    a.data("kendoWindow").trigger("resize");
+                  }, 300);
+                }
+              });
+              $("a.k-button:first", a).on("click", function(){
+                $("#y99hu8y4ss3a2s5423ld453wmn").data("kendoGrid").dataSource.add({path: $("input[name=path]", a).val()});
+                appui.f.closeAlert();
+              });
+              $("a.k-button:last", a).on("click", function(){
+                appui.f.closeAlert();
+              });
+            });
+          });
           // Dependences multiselect
           $("#732ijfasASdha92389yasdh9823").kendoMultiSelect({
             dataSource: {
@@ -635,19 +928,19 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234").kendoGrid({
           $("#asdahf8923489yhf98923hr").append(
             '<div class="k-edit-label">Latest</div>' +
             '<div class="k-edit-field">' +
-            '<input id="hw4o5923noasd890324yho" type="checkbox" class="k-checkbox">' +
-            '<label for="hw4o5923noasd890324yho" class="k-checkbox-label"></label>' +
+              '<input id="hw4o5923noasd890324yho" type="checkbox" class="k-checkbox">' +
+              '<label for="hw4o5923noasd890324yho" class="k-checkbox-label"></label>' +
             '</div>' +
             '<div class="k-edit-label"></div>' +
             '<div class="k-edit-field" style="text-align: right">' +
-            '<a href="#" class="k-button k-button-icontext" style="margin-right: 5px">' +
-            '<span class="k-icon k-update"></span>' +
-            'Save' +
-            '</a>' +
-            '<a href="#" class="k-button k-button-icontext">' +
-            '<span class="k-icon k-cancel"></span>' +
-            'Cancel' +
-            '</a>' +
+              '<a href="#" class="k-button k-button-icontext" style="margin-right: 5px">' +
+                '<span class="k-icon k-update"></span>' +
+                'Save' +
+              '</a>' +
+              '<a href="#" class="k-button k-button-icontext">' +
+                '<span class="k-icon k-cancel"></span>' +
+                'Cancel' +
+              '</a>' +
             '</div>'
           );
           $("span.k-update", $("#asdahf8923489yhf98923hr")).parent().on("click", function(){
@@ -655,8 +948,8 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234").kendoGrid({
               name: d.data.name,
               vname: p.data.version,
               files: TVgetChecked($("#ashd3538y1i35h8oasdj023").data("kendoTreeView")),
-              languages: TVgetChecked($("#y7hhiawza3u9y983w2asj9h9xe4").data("kendoTreeView")),
-              themes: TVgetChecked($("#y99hu8y4ss3a2s5423ld453wmn").data("kendoTreeView")),
+              languages: JSON.stringify($("#y7hhiawza3u9y983w2asj9h9xe4").data("kendoGrid").dataSource.data()),
+              themes: JSON.stringify($("#y99hu8y4ss3a2s5423ld453wmn").data("kendoGrid").dataSource.data()),
               dependencies: $("#732ijfasASdha92389yasdh9823").data("kendoMultiSelect").value(),
               latest: $("#hw4o5923noasd890324yho:checked").length
             }, function(i){
@@ -669,6 +962,8 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234").kendoGrid({
           $("span.k-cancel", $("#asdahf8923489yhf98923hr")).parent().on("click", function(){
             appui.f.closeAlert();
           });
+          // Call window resize
+          kcont.trigger("resize");
         });
       });
     });

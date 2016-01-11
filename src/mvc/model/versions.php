@@ -53,21 +53,29 @@ else if ( !empty($this->data['folder']) && !empty(BBN_CDN_PATH) ){
     return ['error' => "The library's directory isn't existing or you don't have a version folder inserted."];
   }
   // Make the tree data
-  function tree($path, $ver_path){
+  function tree($path, $ver_path, $ext=false){
     $res = [];
     foreach ( \bbn\file\dir::get_files($path, 1) as $p ){
-      $r = [
-        'text' => basename($p),
-        'path' => substr($p, strlen($ver_path), strlen($p))
-      ];
-      if ( is_dir($p) ){
-        $r['items'] = tree($p, $ver_path);
+      if ( empty($ext) || (!empty($ext) && ( (\bbn\str\text::file_ext($p) === $ext) || (\bbn\str\text::file_ext($p) === '') ) ) ){
+        $pa = substr($p, strlen($ver_path), strlen($p));
+        $r = [
+          'text' => basename($p),
+          'path' => (strpos($pa, '/') === 0) ? substr($pa, 1, strlen($pa)) : $pa
+        ];
+        if ( is_dir($p) ){
+          $r['items'] = tree($p, $ver_path, $ext);
+        }
+        if ( !is_dir($p) || (is_dir($p) && !empty($r['items'])) ){
+          array_push($res, $r);
+        }
       }
-      array_push($res, $r);
     }
     return $res;
   }
-    $ret['tree'] = tree($ver[0], $ver[0]);
+  // Files' tree
+  $ret['tree'] = tree($ver[0], $ver[0]);
+  // Files' tree for languages
+  $ret['languages_tree'] = tree($ver[0], $ver[0], 'js');
   // Version name
   $ret['version'] = basename($ver[0]);
   // Get all libraries list
@@ -91,10 +99,18 @@ else if ( !empty($db) &&
     !empty($this->data['languages']) ||
     !empty($this->data['themes']) )
 ){
+  $languages = [];
+  $themes = [];
+  foreach ( json_decode($this->data['languages'], 1) as $l ){
+    array_push($languages, $l['path']);
+  }
+  foreach ( json_decode($this->data['themes'], 1) as $l ){
+    array_push($themes, $l['path']);
+  }
   $content = [
-    'files' => !empty($this->data['files']) ? $this->data['files'] : [],
-    'languages' => !empty($this->data['languages']) ? $this->data['languages'] : [],
-    'themes' => !empty($this->data['themes']) ? $this->data['themes'] : []
+    'files' => !empty($this->data['files']) ? json_decode($this->data['files'], 1) : [],
+    'lang' => !empty($languages) ? $languages : [],
+    'theme_files' => !empty($themes) ? $themes : []
   ];
   if ( $db->insert('versions', [
     'name' => $this->data['vname'],
@@ -118,7 +134,7 @@ else if ( !empty($db) &&
   return ['success' => 1];
 }
 
-// Returns the files data for the content treeviews with checked, all libraries list and if the version is latest.
+// Returns the files data for the content treeviews with checked, all libraries list and if the version is latest. (Edit version)
 else if ( !empty($db) &&
   !empty($this->data['version']) &&
   (count($this->data) === 2)
@@ -127,27 +143,42 @@ else if ( !empty($db) &&
   $p = BBN_CDN_PATH . 'lib/' . $ver['library'] . '/' . $ver['name'];
   $cont = json_decode($ver['content'], 1);
   // Make the tree data
-  function tree($path, $ver_path, $c){
+  function tree($path, $ver_path, $c=false, $ext=false){
     $res = [];
     foreach ( \bbn\file\dir::get_files($path, 1) as $p ){
-      $r = [
-        'text' => basename($p),
-        'path' => substr($p, strlen($ver_path), strlen($p))
-      ];
-      if ( in_array($r['path'], $c) ){
-        $r['checked'] = 1;
+      if ( empty($ext) || (!empty($ext) && ( (\bbn\str\text::file_ext($p) === $ext) || (\bbn\str\text::file_ext($p) === '') ) ) ){
+        $pa = substr($p, strlen($ver_path), strlen($p));
+        $r = [
+          'text' => basename($p),
+          'path' => (strpos($pa, '/') === 0) ? substr($pa, 1, strlen($pa)) : $pa
+        ];
+        if ( !empty($c) && in_array($r['path'], $c) ){
+          $r['checked'] = 1;
+        }
+        if ( is_dir($p) ){
+          $r['items'] = tree($p, $ver_path, $c, $ext);
+        }
+        if ( !is_dir($p) || (is_dir($p) && !empty($r['items'])) ){
+          array_push($res, $r);
+        }
       }
-      if ( is_dir($p) ){
-        $r['items'] = tree($p, $ver_path, $c);
-      }
-      array_push($res, $r);
     }
     return $res;
   }
+  $languages = [];
+  $themes = [];
+  foreach ( $cont['lang'] as $l ){
+    array_push($languages, ['path' => $l]);
+  }
+  foreach ( $cont['theme_files'] as $t ){
+    array_push($themes, ['path' => $t]);
+  }
   $ret = [
-    'files' => tree($p, $p, json_decode($cont['files'], 1)),
-    'languages' => tree($p, $p, json_decode($cont['languages'], 1)),
-    'themes' => tree($p, $p, json_decode($cont['themes'], 1)),
+    'files' => tree($p, $p, $cont['files']),
+    'languages' => $languages,
+    'languages_tree' => tree($p, $p, 0, 'js'),
+    'themes' => $themes,
+    'themes_tree' => tree($p, $p),
     // all libraries list
     'lib_ver' => $db->get_rows("
       SELECT libraries.title || ' - ' || versions.name AS name, libraries.name AS lib,
@@ -173,10 +204,18 @@ else if ( !empty($db) &&
     !empty($this->data['languages']) ||
     !empty($this->data['themes']) )
 ){
+  $languages = [];
+  $themes = [];
+  foreach ( json_decode($this->data['languages'], 1) as $l ){
+    array_push($languages, $l['path']);
+  }
+  foreach ( json_decode($this->data['themes'], 1) as $l ){
+    array_push($themes, $l['path']);
+  }
   $content = [
-    'files' => !empty($this->data['files']) ? $this->data['files'] : [],
-    'languages' => !empty($this->data['languages']) ? $this->data['languages'] : [],
-    'themes' => !empty($this->data['themes']) ? $this->data['themes'] : []
+    'files' => !empty($this->data['files']) ? json_decode($this->data['files'], 1) : [],
+    'lang' => $languages,
+    'theme_files' => $themes
   ];
   if ( $db->update('versions', ['content' => json_encode($content)], ['id' => $this->data['id_ver']]) ){
     if ( !empty($this->data['latest']) ){
