@@ -1,0 +1,19 @@
+{
+  "name": "bbn/appui-cdn",
+  "description": "CDN for APPUI",
+  "keywords": ["cdn","appui"],
+  "homepage": "https://github.com/nabab/appui-cdn",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Thomas Nabet",
+      "email": "thomas.nabet@gmail.com",
+      "homepage": "http://bbn.solutions",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": ">=5.4.0",
+    "bbn/bbn": "dev-master"
+  }
+}
