@@ -172,8 +172,11 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234").kendoGrid({
     }
   }, {
     title: '',
-    width: 80,
+    width: 110,
     command: [{
+      name: "info",
+      template: '<a class="k-button k-grid-info fa fa-info" href="javascript:;"></a>'
+    }, {
       name: "edit",
       text: {
         edit: "Mod.",
@@ -203,48 +206,6 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234").kendoGrid({
         '</div>' +
       '</div>';
   },
-  selectable: true,
-  change: function(e){
-    var grid = this,
-        dataItem = grid.dataItem(this.select());
-
-    appui.f.alert($("#i3h34uefn94uh3rnfe9sfd23u").html(), 'Library: ' + dataItem.title, 600, false, function(w){
-      var cont = w,
-          kcont = w.data("kendoWindow");
-
-      // Set window's max height
-      kcont.setOptions({maxHeight: appui.v.height - 50});
-
-      // Set dynamic window's height
-      cont.closest(".k-window").height("");
-
-      // Bind library's info
-      kendo.bind(w, dataItem);
-      // Library's versions grid
-      appui.f.post('cdn/versions', {id_lib: dataItem.name}, function(p){
-        if ( p.data !== undefined ){
-          $("#hufsa93hias9n38fn3293h389r2").kendoGrid({
-            dataSource: p.data,
-            dataBound: function(){
-              kcont.trigger("resize");
-            },
-            selectable: false,
-            columns: [{
-              title: 'Name',
-              field: 'name'
-            }, {
-              title: 'Date',
-              field: 'date_added',
-              template: function(t){
-                return kendo.toString(kendo.parseDate(t.date_added, "yyyy-MM-dd HH:mm:ss"), "dd/MM/yyyy")
-              }
-            }]
-          });
-        }
-      });
-
-    });
-  },
   editable: {
     mode: "popup",
     confirmation: "Are you sure that you want to delete this entry?",
@@ -256,7 +217,7 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234").kendoGrid({
   edit: function(e){
     var cont = e.container,
         kcont = cont.data("kendoWindow");
-
+    e.sender.clearSelection();
     // Set title
     kcont.title(
       e.model.name ? "Edit Library" : "New Library"
@@ -586,12 +547,15 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234").kendoGrid({
         }
       }, {
         title: '',
-        width: 80,
+        width: 110,
         headerTemplate: '<a href="javascript:;" class="k-button k-button-icontext k-grid-add fa fa-plus add-ver"></a>',
         headerAttributes: {
           style: "text-align: center"
         },
         command: [{
+          name: "info",
+          template: '<a class="k-button k-grid-d-info fa fa-info" href="javascript:;"></a>'
+        }, {
           name: "edit",
           text: {
             edit: "Mod.",
@@ -605,43 +569,51 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234").kendoGrid({
           template: '<a class="k-button k-grid-delete fa fa-trash" href="javascript:;"></a>'
         }]
       }],
-      selectable: true,
-      change: function(e){
-        var grid = this,
-            dataItem = grid.dataItem(this.select());
+      dataBound: function(db){
+        // Library's version info popup
+        $("a.k-grid-d-info", versionsGrid).on("click", function(e){
+          var item = $(e.target).closest("tr[role=row]"),
+            grid = $(item).closest("div.k-grid").data("kendoGrid"),
+            dataItem = grid.dataItem(item);
 
-        // Date fix
-        dataItem.date_added = kendo.toString(kendo.parseDate(dataItem.date_added, "yyyy-MM-dd HH:mm:ss"), "dd/MM/yyyy");
+          // Date fix
+          dataItem.date_added = kendo.toString(kendo.parseDate(dataItem.date_added, "yyyy-MM-dd HH:mm:ss"), "dd/MM/yyyy");
 
-        appui.f.alert($("#kkk3jaSdh23490hqAsdha93").html(), 'Library: ' + d.data.title + ' - Version: ' + dataItem.name, 800, 800, function(w){
-          var cont = w,
-            kcont = w.data("kendoWindow");
+          appui.f.alert(
+            $("#kkk3jaSdh23490hqAsdha93").html(),
+            'Library: ' + dataItem.library + ' - Version: ' + dataItem.name,
+            800, 800,
+            function(w){
+              var cont = w,
+                kcont = w.data("kendoWindow");
 
-          // Set window's max height
-          kcont.setOptions({maxHeight: appui.v.height - 50});
+              // Set window's max height
+              kcont.setOptions({maxHeight: appui.v.height - 50});
 
-          // Set dynamic window's height
-          cont.closest(".k-window").height("");
+              // Set dynamic window's height
+              cont.closest(".k-window").height("");
 
-          // Bind version's info
-          kendo.bind(cont, dataItem);
-          // Version's files TreeView
-          $("#daij444jasdjhi332jiosdajo").html(dataItem.files_tree);
-          // Version's dependencies list
-          $("#isfih3huasdf92huf823hyhas93").html(function(){
-            if ( dataItem.dependencies.length ){
-              var ret = '<ul>';
-              $.each(dataItem.dependencies, function(i,v){
-                ret += '<li>' + v.title + ' - ' + v.version + '</li>';
+              // Bind version's info
+              kendo.bind(cont, dataItem);
+              // Version's files TreeView
+              $("#daij444jasdjhi332jiosdajo").html(dataItem.files_tree);
+              // Version's dependencies list
+              $("#isfih3huasdf92huf823hyhas93").html(function(){
+                if ( dataItem.dependencies.length ){
+                  var ret = '<ul>';
+                  $.each(dataItem.dependencies, function(i,v){
+                    ret += '<li>' + v.title + ' - ' + v.version + '</li>';
+                  });
+                  ret += '</ul>';
+                  return ret;
+                }
+                return '<div style="text-align: center">NO DEPENDENCIES</div>';
               });
-              ret += '</ul>';
-              return ret;
-            }
-            return '<div style="text-align: center">NO DEPENDENCIES</div>';
-          });
 
-          // Center window
-          kcont.center();
+              // Center window
+              kcont.center();
+            }
+          );
         });
       },
       editable: {
@@ -1177,6 +1149,50 @@ addDelFilesOrder = function(item, forceAdd){
     }
   }
 };
+
+$("a.k-grid-info", librariesGrid).on("click", function(e){
+  appui.f.log(e);
+  var grid = librariesGrid.data("kendoGrid"),
+      dataItem = grid.dataItem($(e.target).closest("tr.k-master-row"));
+  appui.f.log(grid, dataItem);
+
+  appui.f.alert($("#i3h34uefn94uh3rnfe9sfd23u").html(), 'Library: ' + dataItem.title, 600, false, function(w){
+    var cont = w,
+        kcont = w.data("kendoWindow");
+
+    // Set window's max height
+    kcont.setOptions({maxHeight: appui.v.height - 50});
+
+    // Set dynamic window's height
+    cont.closest(".k-window").height("");
+
+    // Bind library's info
+    kendo.bind(w, dataItem);
+    // Library's versions grid
+    appui.f.post('cdn/versions', {id_lib: dataItem.name}, function(p){
+      if ( p.data !== undefined ){
+        $("#hufsa93hias9n38fn3293h389r2").kendoGrid({
+          dataSource: p.data,
+          dataBound: function(){
+            kcont.trigger("resize");
+          },
+          columns: [{
+            title: 'Name',
+            field: 'name'
+          }, {
+            title: 'Date',
+            field: 'date_added',
+            template: function(t){
+              return kendo.toString(kendo.parseDate(t.date_added, "yyyy-MM-dd HH:mm:ss"), "dd/MM/yyyy")
+            }
+          }]
+        });
+      }
+    });
+  });
+});
+
+
 
 // Search field
 $("#F4LLL9jdn3nhasS38sh301dfs").kendoAutoComplete({
