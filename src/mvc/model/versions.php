@@ -165,8 +165,12 @@ else if ( !empty($db) &&
     }
     return $res;
   }
+  $files = [];
   $languages = [];
   $themes = [];
+  foreach ( $cont['files'] as $f ){
+    array_push($files, ['path' => $f]);
+  }
   foreach ( $cont['lang'] as $l ){
     array_push($languages, ['path' => $l]);
   }
@@ -174,7 +178,8 @@ else if ( !empty($db) &&
     array_push($themes, ['path' => $t]);
   }
   $ret = [
-    'files' => tree($p, $p, $cont['files']),
+    'files' => $files,
+    'files_tree' => tree($p, $p, $cont['files']),
     'languages' => $languages,
     'languages_tree' => tree($p, $p, 0, 'js'),
     'themes' => $themes,
