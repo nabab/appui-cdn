@@ -17,7 +17,7 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234").kendoGrid({
         o.data.languages = JSON.stringify($("#y7hhiawza3u9y983w2asj9h9xe4").data("kendoGrid").dataSource.data());
         o.data.themes = JSON.stringify($("#y99hu8y4ss3a2s5423ld453wmn").data("kendoGrid").dataSource.data());
         o.data.dependencies = $("#732ijfasASdha92389yasdh9823").data("kendoMultiSelect").value();
-        appui.f.post('cdn/libraries', o.data, function(d){
+        appui.fn.post('cdn/libraries', o.data, function(d){
           if ( d.data && d.data.length ){
             librariesGrid.data("kendoGrid").dataSource.data(d.data);
             o.success();
@@ -29,9 +29,9 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234").kendoGrid({
       },
       update: function(o){
         o.data.edit = 1;
-        o.data.new_name = $("input[name=new_name]", appui.f.get_popup()).val();
-        o.data.name = $("input[name=name]:hidden", appui.f.get_popup()).val();
-        appui.f.post('cdn/libraries', o.data, function(d){
+        o.data.new_name = $("input[name=new_name]", appui.fn.get_popup()).val();
+        o.data.name = $("input[name=name]:hidden", appui.fn.get_popup()).val();
+        appui.fn.post('cdn/libraries', o.data, function(d){
           if ( d.data ){
             o.success(d.data);
           }
@@ -42,7 +42,7 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234").kendoGrid({
       },
       destroy: function(o){
         if ( o.data.name !== undefined ){
-          appui.f.post('cdn/libraries', {name: o.data.name}, function(d){
+          appui.fn.post('cdn/libraries', {name: o.data.name}, function(d){
             if ( d.data.success ){
               o.success();
             }
@@ -211,7 +211,7 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234").kendoGrid({
     confirmation: "Are you sure that you want to delete this entry?",
     window: {
       width: 850,
-      maxHeight: appui.v.height - 50
+      maxHeight: appui.env.height - 50
     }
   },
   edit: function(e){
@@ -246,7 +246,7 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234").kendoGrid({
           '<span class="k-icon k-i-arrow-e" style="margin-left: 3px; margin-right: -3px"></span>' +
           '</a>').click(function(){
           if ( $("input[name=name]", cont).val().length ){
-            appui.f.post('cdn/versions', {
+            appui.fn.post('cdn/versions', {
               folder: $("input[name=name]", cont).val()
             }, function(d){
               if ( d.data.version && d.data.tree ){
@@ -341,7 +341,7 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234").kendoGrid({
                 });
                 // Insert new language file
                 $("a.k-button.k-button-icontext.k-grid-add.fa.fa-plus.add-lang", "#y7hhiawza3u9y983w2asj9h9xe4").on("click", function(){
-                  appui.f.alert($("#9342ja823hioasfy3oi").html(), 'Add language file', 850, false, function(w){
+                  appui.fn.alert($("#9342ja823hioasfy3oi").html(), 'Add language file', 850, false, function(w){
                     // Set dynamic window's height
                     w.closest(".k-window").height("");
                     // Center the window
@@ -364,10 +364,10 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234").kendoGrid({
                     });
                     $("a.k-button:first", w).on("click", function(){
                       $("#y7hhiawza3u9y983w2asj9h9xe4").data("kendoGrid").dataSource.add({path: $("input[name=path]", w).val()});
-                      appui.f.closeAlert();
+                      appui.fn.closeAlert();
                     });
                     $("a.k-button:last", w).on("click", function(){
-                      appui.f.closeAlert();
+                      appui.fn.closeAlert();
                     });
                   });
                 });
@@ -396,7 +396,7 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234").kendoGrid({
                 });
                 // Insert new theme file
                 $("a.k-button.k-button-icontext.k-grid-add.fa.fa-plus.add-theme", "#y99hu8y4ss3a2s5423ld453wmn").on("click", function(){
-                  appui.f.alert($("#9342ja823hioasfy3oi").html(), 'Add theme file', 850, false, function(w){
+                  appui.fn.alert($("#9342ja823hioasfy3oi").html(), 'Add theme file', 850, false, function(w){
                     w.closest(".k-window").height("");
                     w.data("kendoWindow").center();
                     $("#845hiay8h9fhuwiey823hi").kendoTreeView({
@@ -417,10 +417,10 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234").kendoGrid({
                     });
                     $("a.k-button:first", w).on("click", function(){
                       $("#y99hu8y4ss3a2s5423ld453wmn").data("kendoGrid").dataSource.add({path: $("input[name=path]", w).val()});
-                      appui.f.closeAlert();
+                      appui.fn.closeAlert();
                     });
                     $("a.k-button:last", w).on("click", function(){
-                      appui.f.closeAlert();
+                      appui.fn.closeAlert();
                     });
                   });
                 });
@@ -480,7 +480,7 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234").kendoGrid({
       dataSource: {
         transport: {
           read: function(o){
-            appui.f.post('cdn/versions', {id_lib: d.data.name}, function(p){
+            appui.fn.post('cdn/versions', {id_lib: d.data.name}, function(p){
               if ( p.data ){
                 o.success(p.data);
               }
@@ -492,7 +492,7 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234").kendoGrid({
               $("div", "#joisfd8723hifwe78238hds").each(function(i,v){
                 files.push($(v).attr('path'));
               });
-              appui.f.post('cdn/versions', {
+              appui.fn.post('cdn/versions', {
                 id_ver: o.data.id,
                 files: JSON.stringify(files),
                 languages: JSON.stringify($("#y7hhiawza3u9y983w2asj9h9xe4").data("kendoGrid").dataSource.data()),
@@ -512,7 +512,7 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234").kendoGrid({
           },
           destroy: function(o){
             if ( o.data.id !== undefined ){
-              appui.f.post('cdn/versions', {id_ver: o.data.id}, function(p){
+              appui.fn.post('cdn/versions', {id_ver: o.data.id}, function(p){
                 if ( p.data.success ){
                   o.success();
                 }
@@ -579,7 +579,7 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234").kendoGrid({
           // Date fix
           dataItem.date_added = kendo.toString(kendo.parseDate(dataItem.date_added, "yyyy-MM-dd HH:mm:ss"), "dd/MM/yyyy");
 
-          appui.f.alert(
+          appui.fn.alert(
             $("#kkk3jaSdh23490hqAsdha93").html(),
             'Library: ' + dataItem.library + ' - Version: ' + dataItem.name,
             800, 800,
@@ -588,7 +588,7 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234").kendoGrid({
                 kcont = w.data("kendoWindow");
 
               // Set window's max height
-              kcont.setOptions({maxHeight: appui.v.height - 50});
+              kcont.setOptions({maxHeight: appui.env.height - 50});
 
               // Set dynamic window's height
               cont.closest(".k-window").height("");
@@ -621,8 +621,8 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234").kendoGrid({
         confirmation: "Are you sure that you want to delete this entry?",
         window: {
           title: "Edit library's version",
-          width: appui.v.width - 100,
-          maxHeight: appui.v.height - 150
+          width: appui.env.width - 100,
+          maxHeight: appui.env.height - 150
         }
       },
       edit: function(e){
@@ -633,7 +633,7 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234").kendoGrid({
         $("div.k-edit-field, div.k-edit-label", cont).remove();
         // Insert template
         $("div.k-edit-form-container", cont).prepend($("#932f9u4923rjasdu09j3333").html());
-        appui.f.post('cdn/versions', {version: e.model.id}, function(p){
+        appui.fn.post('cdn/versions', {version: e.model.id}, function(p){
           if ( p.data ){
             // Show form
             $("#asdahf8923489yhf98923hr").show();
@@ -728,7 +728,7 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234").kendoGrid({
             });
             // Insert new language file
             $("a.k-button.k-button-icontext.k-grid-add.fa.fa-plus.add-lang", "#y7hhiawza3u9y983w2asj9h9xe4").on("click", function(){
-              appui.f.alert($("#9342ja823hioasfy3oi").html(), 'Add language file', 850, false, function(w){
+              appui.fn.alert($("#9342ja823hioasfy3oi").html(), 'Add language file', 850, false, function(w){
                 w.closest(".k-window").height("");
                 w.data("kendoWindow").center();
                 $("#845hiay8h9fhuwiey823hi").kendoTreeView({
@@ -750,10 +750,10 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234").kendoGrid({
                 $("a.k-button:first", w).on("click", function(){
                   $("#y7hhiawza3u9y983w2asj9h9xe4").data("kendoGrid").dataSource.add({path: $("input[name=path]", w).val()});
                   e.model.dirty = true;
-                  appui.f.closeAlert();
+                  appui.fn.closeAlert();
                 });
                 $("a.k-button:last", w).on("click", function(){
-                  appui.f.closeAlert();
+                  appui.fn.closeAlert();
                 });
               });
             });
@@ -785,7 +785,7 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234").kendoGrid({
             });
             // Insert new theme file
             $("a.k-button.k-button-icontext.k-grid-add.fa.fa-plus.add-theme", "#y99hu8y4ss3a2s5423ld453wmn").on("click", function(){
-              appui.f.alert($("#9342ja823hioasfy3oi").html(), 'Add theme file', 850, false, function(w){
+              appui.fn.alert($("#9342ja823hioasfy3oi").html(), 'Add theme file', 850, false, function(w){
                 w.closest(".k-window").height("");
                 w.data("kendoWindow").center();
                 $("#845hiay8h9fhuwiey823hi").kendoTreeView({
@@ -807,10 +807,10 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234").kendoGrid({
                 $("a.k-button:first", w).on("click", function(){
                   $("#y99hu8y4ss3a2s5423ld453wmn").data("kendoGrid").dataSource.add({path: $("input[name=path]", w).val()});
                   e.model.dirty = true;
-                  appui.f.closeAlert();
+                  appui.fn.closeAlert();
                 });
                 $("a.k-button:last", w).on("click", function(){
-                  appui.f.closeAlert();
+                  appui.fn.closeAlert();
                 });
               });
             });
@@ -856,13 +856,13 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234").kendoGrid({
     });
     // Insert new library's version (Plus button)
     $("a.k-button.k-button-icontext.k-grid-add.fa.fa-plus.add-ver", d.detailCell).on("click", function(e){
-      appui.f.alert($("#932f9u4923rjasdu09j3333").html(), 'Add ' + d.data.title + ' library\'s version', appui.v.width - 100, false, function(w){
+      appui.fn.alert($("#932f9u4923rjasdu09j3333").html(), 'Add ' + d.data.title + ' library\'s version', appui.env.width - 100, false, function(w){
         var cont = w,
             kcont = cont.data("kendoWindow");
 
         // Set dynamic window's height
         cont.closest(".k-window").height("");
-        appui.f.post('cdn/versions', {folder: d.data.name}, function(p){
+        appui.fn.post('cdn/versions', {folder: d.data.name}, function(p){
           // Show form
           $("#asdahf8923489yhf98923hr").show();
           // Set version's name
@@ -946,7 +946,7 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234").kendoGrid({
           });
           // Insert new language file
           $("a.k-button.k-button-icontext.k-grid-add.fa.fa-plus.add-lang", "#y7hhiawza3u9y983w2asj9h9xe4").on("click", function(){
-            appui.f.alert($("#9342ja823hioasfy3oi").html(), 'Add language file', 850, false, function(a){
+            appui.fn.alert($("#9342ja823hioasfy3oi").html(), 'Add language file', 850, false, function(a){
               a.closest(".k-window").height("");
               a.data("kendoWindow").center();
               $("#845hiay8h9fhuwiey823hi").kendoTreeView({
@@ -967,10 +967,10 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234").kendoGrid({
               });
               $("a.k-button:first", a).on("click", function(){
                 $("#y7hhiawza3u9y983w2asj9h9xe4").data("kendoGrid").dataSource.add({path: $("input[name=path]", a).val()});
-                appui.f.closeAlert();
+                appui.fn.closeAlert();
               });
               $("a.k-button:last", a).on("click", function(){
-                appui.f.closeAlert();
+                appui.fn.closeAlert();
               });
             });
           });
@@ -999,7 +999,7 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234").kendoGrid({
           });
           // Insert new theme file
           $("a.k-button.k-button-icontext.k-grid-add.fa.fa-plus.add-theme", "#y99hu8y4ss3a2s5423ld453wmn").on("click", function(){
-            appui.f.alert($("#9342ja823hioasfy3oi").html(), 'Add theme file', 850, false, function(a){
+            appui.fn.alert($("#9342ja823hioasfy3oi").html(), 'Add theme file', 850, false, function(a){
               a.closest(".k-window").height("");
               a.data("kendoWindow").center();
               $("#845hiay8h9fhuwiey823hi").kendoTreeView({
@@ -1020,10 +1020,10 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234").kendoGrid({
               });
               $("a.k-button:first", a).on("click", function(){
                 $("#y99hu8y4ss3a2s5423ld453wmn").data("kendoGrid").dataSource.add({path: $("input[name=path]", a).val()});
-                appui.f.closeAlert();
+                appui.fn.closeAlert();
               });
               $("a.k-button:last", a).on("click", function(){
-                appui.f.closeAlert();
+                appui.fn.closeAlert();
               });
             });
           });
@@ -1063,7 +1063,7 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234").kendoGrid({
             $("div", "#joisfd8723hifwe78238hds").each(function(i,v){
               files.push($(v).attr('path'));
             });
-            appui.f.post('cdn/versions', {
+            appui.fn.post('cdn/versions', {
               name: d.data.name,
               vname: p.data.version,
               files: JSON.stringify(files),
@@ -1074,12 +1074,12 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234").kendoGrid({
             }, function(i){
               if ( i.data.success ){
                 $("div.k-grid", d.detailCell).data("kendoGrid").dataSource.read();
-                appui.f.closeAlert();
+                appui.fn.closeAlert();
               }
             });
           });
           $("span.k-cancel", $("#asdahf8923489yhf98923hr")).parent().on("click", function(){
-            appui.f.closeAlert();
+            appui.fn.closeAlert();
           });
           // Call window resize
           kcont.trigger("resize");
@@ -1143,7 +1143,7 @@ addDelFilesOrder = function(item, forceAdd){
       else {
         $("div[path='" + item.path + "']", "#joisfd8723hifwe78238hds").remove();
       }
-      kcont.setOptions({maxHeight: appui.v.height - 150});
+      kcont.setOptions({maxHeight: appui.env.height - 150});
       kcont.resize();
       kcont.center();
     }
@@ -1151,17 +1151,17 @@ addDelFilesOrder = function(item, forceAdd){
 };
 
 $("a.k-grid-info", librariesGrid).on("click", function(e){
-  appui.f.log(e);
+  appui.fn.log(e);
   var grid = librariesGrid.data("kendoGrid"),
       dataItem = grid.dataItem($(e.target).closest("tr.k-master-row"));
-  appui.f.log(grid, dataItem);
+  appui.fn.log(grid, dataItem);
 
-  appui.f.alert($("#i3h34uefn94uh3rnfe9sfd23u").html(), 'Library: ' + dataItem.title, 600, false, function(w){
+  appui.fn.alert($("#i3h34uefn94uh3rnfe9sfd23u").html(), 'Library: ' + dataItem.title, 600, false, function(w){
     var cont = w,
         kcont = w.data("kendoWindow");
 
     // Set window's max height
-    kcont.setOptions({maxHeight: appui.v.height - 50});
+    kcont.setOptions({maxHeight: appui.env.height - 50});
 
     // Set dynamic window's height
     cont.closest(".k-window").height("");
@@ -1169,7 +1169,7 @@ $("a.k-grid-info", librariesGrid).on("click", function(e){
     // Bind library's info
     kendo.bind(w, dataItem);
     // Library's versions grid
-    appui.f.post('cdn/versions', {id_lib: dataItem.name}, function(p){
+    appui.fn.post('cdn/versions', {id_lib: dataItem.name}, function(p){
       if ( p.data !== undefined ){
         $("#hufsa93hias9n38fn3293h389r2").kendoGrid({
           dataSource: p.data,

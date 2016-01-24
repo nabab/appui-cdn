@@ -7,7 +7,7 @@ var configurationsGrid = $("#98324nas9t4pash9d2n3ifau").kendoGrid({
         }
       },
       create: function(o){
-        appui.f.post('cdn/configurations', o.data, function(d){
+        appui.fn.post('cdn/configurations', o.data, function(d){
           if ( d.data && d.data.length ){
             o.success(d.data);
           }
@@ -17,7 +17,7 @@ var configurationsGrid = $("#98324nas9t4pash9d2n3ifau").kendoGrid({
         });
       },
       update: function(o){
-        appui.f.post('cdn/configurations', o.data, function(d){
+        appui.fn.post('cdn/configurations', o.data, function(d){
           if ( d.data ){
             o.success(d.data);
           }
@@ -28,7 +28,7 @@ var configurationsGrid = $("#98324nas9t4pash9d2n3ifau").kendoGrid({
       },
       destroy: function(o){
         if ( o.data.hash !== undefined ){
-          appui.f.post('cdn/configurations', {hash: o.data.hash}, function(d){
+          appui.fn.post('cdn/configurations', {hash: o.data.hash}, function(d){
             if ( d.data.success ){
               o.success();
             }
@@ -126,4 +126,4 @@ $("#h3294lasd9j234oasd9u").kendoAutoComplete({
   placeholder: 'Search configuration...'
 });
 
-appui.f.log(data);
+appui.fn.log(data);
