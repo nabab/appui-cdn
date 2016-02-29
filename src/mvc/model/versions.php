@@ -24,7 +24,7 @@ if ( !empty($db) && !empty($this->data['id_lib']) ){
     );
 
     // Make version's files TreeView
-    $versions[$i]['files_tree'] = \bbn\tools::make_tree((array)json_decode($ver['content']));
+    $versions[$i]['files_tree'] = \bbn\x::make_tree((array)json_decode($ver['content']));
   }
   return $versions;
 }
@@ -56,7 +56,7 @@ else if ( !empty($this->data['folder']) && !empty(BBN_CDN_PATH) ){
   function tree($path, $ver_path, $ext=false){
     $res = [];
     foreach ( \bbn\file\dir::get_files($path, 1) as $p ){
-      if ( empty($ext) || (!empty($ext) && ( (\bbn\str\text::file_ext($p) === $ext) || (\bbn\str\text::file_ext($p) === '') ) ) ){
+      if ( empty($ext) || (!empty($ext) && ( (\bbn\str::file_ext($p) === $ext) || (\bbn\str::file_ext($p) === '') ) ) ){
         $pa = substr($p, strlen($ver_path), strlen($p));
         $r = [
           'text' => basename($p),
@@ -109,8 +109,8 @@ else if ( !empty($db) &&
   }
   $content = [
     'files' => !empty($this->data['files']) ? json_decode($this->data['files'], 1) : [],
-    'lang' => !empty($languages) ? $languages : [],
-    'theme_files' => !empty($themes) ? $themes : []
+    'lang' => $languages,
+    'theme_files' => $themes
   ];
   if ( $db->insert('versions', [
     'name' => $this->data['vname'],
@@ -146,7 +146,7 @@ else if ( !empty($db) &&
   function tree($path, $ver_path, $c=false, $ext=false){
     $res = [];
     foreach ( \bbn\file\dir::get_files($path, 1) as $p ){
-      if ( empty($ext) || (!empty($ext) && ( (\bbn\str\text::file_ext($p) === $ext) || (\bbn\str\text::file_ext($p) === '') ) ) ){
+      if ( empty($ext) || (!empty($ext) && ( (\bbn\str::file_ext($p) === $ext) || (\bbn\str::file_ext($p) === '') ) ) ){
         $pa = substr($p, strlen($ver_path), strlen($p));
         $r = [
           'text' => basename($p),
