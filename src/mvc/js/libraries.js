@@ -1,5 +1,5 @@
 // All libraries grid
-var librariesGrid = $("#RRsj983Jfjnv2kasihj234").kendoGrid({
+var librariesGrid = $("#RRsj983Jfjnv2kasihj234", ele).kendoGrid({
   dataSource: {
     transport: {
       read: function(o){
@@ -217,7 +217,6 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234").kendoGrid({
   edit: function(e){
     var cont = e.container,
         kcont = cont.data("kendoWindow");
-    e.sender.clearSelection();
     // Set title
     kcont.title(
       e.model.name ? "Edit Library" : "New Library"
