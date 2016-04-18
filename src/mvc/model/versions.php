@@ -46,11 +46,11 @@ else if ( !empty($this->data['folder']) && !empty(BBN_CDN_PATH) ){
       }
     }
     if ( empty($ver) ){
-      return ['error' => "All library's versions (subfolders) are existing into database."];
+      return ['error' => _("All library's versions (subfolders) are existing into database.")];
     }
   }
   else {
-    return ['error' => "The library's directory isn't existing or you don't have a version folder inserted."];
+    return ['error' => _("The library's directory isn't existing or you don't have a version folder inserted.")];
   }
   // Make the tree data
   function tree($path, $ver_path, $ext=false){
@@ -237,7 +237,7 @@ else if ( !empty($db) &&
             'id_slave' => $this->data['id_ver'],
             'id_master' => $old
           ]) ){
-            return ['error' => 'Error to delete a version\'s dependency'];
+            return ['error' => _('Error to delete a version\'s dependency')];
           };
         }
         else {
@@ -250,7 +250,7 @@ else if ( !empty($db) &&
             'id_slave' => $this->data['id_ver'],
             'id_master' => $dep
           ]) ){
-            return ['error' => 'Error to insert a new version\'s dependency'];
+            return ['error' => _('Error to insert a new version\'s dependency') ];
           }
         }
       }

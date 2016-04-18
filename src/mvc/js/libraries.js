@@ -78,19 +78,19 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234", ele).kendoGrid({
     }
   },
   columns: [{
-    title: 'Title',
+    title: data.lng.title,
     field: 'title'
   }, {
-    title: 'Folder name',
+    title: data.lng.folderName,
     field: 'name',
   }, {
-    title: 'Function name',
+    title: data.lng.functionName,
     field: 'fname'
   }, {
-    title: 'Latest',
+    title: data.lng.latest,
     field: 'latest'
   }, {
-    title: 'Author',
+    title: data.lng.author,
     field: 'author',
     width: 70,
     attributes:{
@@ -100,7 +100,7 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234", ele).kendoGrid({
       return e.author && e.author.length ? '<i class="fa fa-user"></i>' : '';
     }
   }, {
-    title: 'Licence',
+    title: data.lng.licence,
     field: 'licence',
     width: 70,
     attributes:{
@@ -113,13 +113,13 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234", ele).kendoGrid({
       var $input = $('<input name="' + options.field + '" style="width: 100%">');
       $input.appendTo(container).kendoDropDownList({
         dataSource: data.licences,
-        dataTextField: "name",
+        dataTextField:  "name",
         dataValueField: "licence",
-        optionLabel: "Select one..."
+        optionLabel: data.lng.SelectOne
       });
     }
   }, {
-    title: 'WebSite',
+    title: data.lng.webSite,
     field: 'website',
     width: 70,
     attributes:{
@@ -129,7 +129,7 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234", ele).kendoGrid({
       return e.website && e.website.length ? '<a href="' + e.website + '" target="_blank"><i class="fa fa-globe"></i></a>' : '';
     }
   }, {
-    title: 'Download',
+    title: data.lng.download,
     field: 'download_link',
     width: 70,
     attributes:{
@@ -139,7 +139,7 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234", ele).kendoGrid({
       return e.download_link && e.download_link.length ? '<a href="' + e.download_link + '" target="_blank"><i class="fa fa-download"></i></a>' : '';
     }
   }, {
-    title: 'Doc.',
+    title: data.lng.doc,
     field: 'doc_link',
     width: 70,
     attributes:{
@@ -150,7 +150,7 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234", ele).kendoGrid({
       ' fa-book"></i></a>' : '';
     }
   }, {
-    title: 'GitHub',
+    title: data.lng.gitHub,
     field: 'git',
     width: 70,
     attributes:{
@@ -160,7 +160,7 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234", ele).kendoGrid({
       return e.git && e.git.length ? '<a href="' + e.git + '" target="_blank"><i class="fa fa-github"></i></a>' : '';
     }
   }, {
-    title: 'Supp.',
+    title: data.lng.supp,
     field: 'support_link',
     width: 70,
     attributes:{
@@ -179,14 +179,14 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234", ele).kendoGrid({
     }, {
       name: "edit",
       text: {
-        edit: "Mod.",
-        update: "Save",
-        cancel: "Cancel"
+        edit: data.lng.mod,
+        update: data.lng.save,
+        cancel: data.lng.cancel
       },
       template: '<a class="k-button k-grid-edit fa fa-edit" href="javascript:;"></a>'
     }, {
-      name: "destroy",
-      text: "Del.",
+      name: 'destroy',
+      text: data.lng.del,
       template: '<a class="k-button k-grid-delete fa fa-trash" href="javascript:;"></a>'
 
     }]
@@ -208,7 +208,7 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234", ele).kendoGrid({
   },
   editable: {
     mode: "popup",
-    confirmation: "Are you sure that you want to delete this entry?",
+    confirmation: data.lng.delete_this_entry,
     window: {
       width: 850,
       maxHeight: appui.env.height - 50
@@ -219,7 +219,7 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234", ele).kendoGrid({
         kcont = cont.data("kendoWindow");
     // Set title
     kcont.title(
-      e.model.name ? "Edit Library" : "New Library"
+      e.model.name ? data.lng.editLib : data.lng.new_library
     );
 
     // Fix inputs width
@@ -241,7 +241,7 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234", ele).kendoGrid({
       // Insert "Next" button
       $("div.k-edit-buttons", cont).append(
         $('<a href="#" class="k-button k-button-icontext b-next">' +
-          'Next' +
+          data.lng.next +
           '<span class="k-icon k-i-arrow-e" style="margin-left: 3px; margin-right: -3px"></span>' +
           '</a>').click(function(){
           if ( $("input[name=name]", cont).val().length ){
@@ -250,7 +250,7 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234", ele).kendoGrid({
             }, function(d){
               if ( d.data.version && d.data.tree ){
                 // Change window title
-                kcont.title("New Library's Version");
+                kcont.title(data.lng.new_libr_vers);
                 // Hide library form
                 $("div.k-edit-field:visible, div.k-edit-label:visible", cont).hide();
                 // Hide next button
@@ -322,7 +322,7 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234", ele).kendoGrid({
                   },
                   editable: 'popup',
                   columns: [{
-                    title: 'Files',
+                    title: data.lng.files,
                     field: 'path'
                   }, {
                     title: '',
@@ -332,15 +332,15 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234", ele).kendoGrid({
                       style: "text-align: center"
                     },
                     command: [{
-                      name: "destroy",
-                      test: "Del.",
+                      name: 'destroy',
+                      test: data.lng.del,
                       template: '<a class="k-button k-grid-delete fa fa-trash" href="javascript:;"></a>'
                     }]
                   }]
                 });
                 // Insert new language file
                 $("a.k-button.k-button-icontext.k-grid-add.fa.fa-plus.add-lang", "#y7hhiawza3u9y983w2asj9h9xe4").on("click", function(){
-                  appui.fn.alert($("#9342ja823hioasfy3oi").html(), 'Add language file', 850, false, function(w){
+                  appui.fn.alert($("#9342ja823hioasfy3oi").html(), data.lng.add_language, 850, false, function(w){
                     // Set dynamic window's height
                     w.closest(".k-window").height("");
                     // Center the window
@@ -377,7 +377,7 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234", ele).kendoGrid({
                   },
                   editable: 'popup',
                   columns: [{
-                    title: 'Files',
+                    title: data.lng.files,
                     field: 'path'
                   }, {
                     title: '',
@@ -387,15 +387,15 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234", ele).kendoGrid({
                       style: "text-align: center"
                     },
                     command: [{
-                      name: "destroy",
-                      test: "Del.",
+                      name: 'destroy',
+                      test: data.lng.del,
                       template: '<a class="k-button k-grid-delete fa fa-trash" href="javascript:;"></a>'
                     }]
                   }]
                 });
                 // Insert new theme file
                 $("a.k-button.k-button-icontext.k-grid-add.fa.fa-plus.add-theme", "#y99hu8y4ss3a2s5423ld453wmn").on("click", function(){
-                  appui.fn.alert($("#9342ja823hioasfy3oi").html(), 'Add theme file', 850, false, function(w){
+                  appui.fn.alert($("#9342ja823hioasfy3oi").html(), data.lng.add_theme_file, 850, false, function(w){
                     w.closest(".k-window").height("");
                     w.data("kendoWindow").center();
                     $("#845hiay8h9fhuwiey823hi").kendoTreeView({
@@ -433,7 +433,7 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234", ele).kendoGrid({
                   },
                   dataTextField: "name",
                   dataValueField: "id_ver",
-                  placeholder: "Select dependences..."
+                  placeholder: data.lng.select_dependece
                 });
                 // Show save button
                 $("a.k-button.k-grid-update", "div.k-edit-buttons", cont).show();
@@ -441,10 +441,10 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234", ele).kendoGrid({
                 $("div.k-edit-buttons", cont).prepend(
                   $('<a href="#" class="k-button k-button-icontext b-before">' +
                     '<span class="k-icon k-i-arrow-w"></span>' +
-                    'Before' +
+                    data.lng.before +
                     '</a>').click(function(){
                     // Change window title
-                    kcont.title("New Library");
+                    kcont.title(data.lng.new_library);
                     // Show library form inputs
                     $("div.k-edit-field:hidden, div.k-edit-label:hidden", cont).show();
                     // Hide version form
@@ -460,7 +460,7 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234", ele).kendoGrid({
             });
           }
           else {
-            alert('Set the folder name first, please.');
+            alert(data.lng.allert);
             $("input[name=name]", cont).focus();
           }
         })
@@ -536,10 +536,10 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234", ele).kendoGrid({
         }
       },
       columns: [{
-        title: 'Version',
+        title: data.lng.version,
         field: 'name'
       }, {
-        title: 'Date',
+        title: data.lng.date,
         field: 'date_added',
         template: function(e){
           return kendo.toString(e.date_added, "dd/MM/yyyy");
@@ -557,14 +557,14 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234", ele).kendoGrid({
         }, {
           name: "edit",
           text: {
-            edit: "Mod.",
-            update: "Save",
-            cancel: "Cancel"
+            edit: data.lng.mod,
+            update: data.lng.save,
+            cancel: data.lng.cancel,
           },
           template: '<a class="k-button k-grid-edit fa fa-edit" href="javascript:;"></a>'
         }, {
           name: "destroy",
-          test: "Del.",
+          text: dat.lng.del,
           template: '<a class="k-button k-grid-delete fa fa-trash" href="javascript:;"></a>'
         }]
       }],
@@ -580,7 +580,7 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234", ele).kendoGrid({
 
           appui.fn.alert(
             $("#kkk3jaSdh23490hqAsdha93").html(),
-            'Library: ' + dataItem.library + ' - Version: ' + dataItem.name,
+            kendo.format(data.lng.libraryVersion, dataItem.library, dataItem.name),
             800, 800,
             function(w){
               var cont = w,
@@ -606,7 +606,7 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234", ele).kendoGrid({
                   ret += '</ul>';
                   return ret;
                 }
-                return '<div style="text-align: center">NO DEPENDENCIES</div>';
+                return '<div style="text-align: center">' + data.lng.no_depend + '</div>';
               });
 
               // Center window
@@ -617,9 +617,9 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234", ele).kendoGrid({
       },
       editable: {
         mode: "popup",
-        confirmation: "Are you sure that you want to delete this entry?",
+        confirmation: data.lng.delete_this_entry,
         window: {
-          title: "Edit library's version",
+          title: data.lng,edit_library,
           width: appui.env.width - 100,
           maxHeight: appui.env.height - 150
         }
@@ -706,7 +706,7 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234", ele).kendoGrid({
               },
               editable: 'popup',
               columns: [{
-                title: 'Files',
+                title: data.lng.files,
                 field: 'path'
               }, {
                 title: '',
@@ -716,8 +716,8 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234", ele).kendoGrid({
                   style: "text-align: center"
                 },
                 command: [{
-                  name: "destroy",
-                  test: "Del.",
+                  name: 'destroy',
+                  test: data.lng.del,
                   template: '<a class="k-button k-grid-delete fa fa-trash" href="javascript:;"></a>'
                 }]
               }],
@@ -727,7 +727,7 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234", ele).kendoGrid({
             });
             // Insert new language file
             $("a.k-button.k-button-icontext.k-grid-add.fa.fa-plus.add-lang", "#y7hhiawza3u9y983w2asj9h9xe4").on("click", function(){
-              appui.fn.alert($("#9342ja823hioasfy3oi").html(), 'Add language file', 850, false, function(w){
+              appui.fn.alert($("#9342ja823hioasfy3oi").html(), data.lng.add_language, 850, false, function(w){
                 w.closest(".k-window").height("");
                 w.data("kendoWindow").center();
                 $("#845hiay8h9fhuwiey823hi").kendoTreeView({
@@ -763,7 +763,7 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234", ele).kendoGrid({
               },
               editable: 'popup',
               columns: [{
-                title: 'Files',
+                title: data.lng.files,
                 field: 'path'
               }, {
                 title: '',
@@ -773,8 +773,8 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234", ele).kendoGrid({
                   style: "text-align: center"
                 },
                 command: [{
-                  name: "destroy",
-                  test: "Del.",
+                  name: 'destroy',
+                  test: data.lng.del,
                   template: '<a class="k-button k-grid-delete fa fa-trash" href="javascript:;"></a>'
                 }]
               }],
@@ -784,7 +784,7 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234", ele).kendoGrid({
             });
             // Insert new theme file
             $("a.k-button.k-button-icontext.k-grid-add.fa.fa-plus.add-theme", "#y99hu8y4ss3a2s5423ld453wmn").on("click", function(){
-              appui.fn.alert($("#9342ja823hioasfy3oi").html(), 'Add theme file', 850, false, function(w){
+              appui.fn.alert($("#9342ja823hioasfy3oi").html(), data.lng.add_theme_file, 850, false, function(w){
                 w.closest(".k-window").height("");
                 w.data("kendoWindow").center();
                 $("#845hiay8h9fhuwiey823hi").kendoTreeView({
@@ -821,9 +821,9 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234", ele).kendoGrid({
                   field: "lib"
                 }
               },
-              dataTextField: "name",
+              dataTextField: "Name",
               dataValueField: "id_ver",
-              placeholder: "Select dependences...",
+              placeholder: data.lng.select_dependece,
               value: p.data.dependencies,
               change: function(){
                 e.model.dirty = true;
@@ -855,7 +855,7 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234", ele).kendoGrid({
     });
     // Insert new library's version (Plus button)
     $("a.k-button.k-button-icontext.k-grid-add.fa.fa-plus.add-ver", d.detailCell).on("click", function(e){
-      appui.fn.alert($("#932f9u4923rjasdu09j3333").html(), 'Add ' + d.data.title + ' library\'s version', appui.env.width - 100, false, function(w){
+      appui.fn.alert($("#932f9u4923rjasdu09j3333").html(), kendo.format(data.lng.add_version, d.data.title), appui.env.width - 100, false, function(w){
         var cont = w,
             kcont = cont.data("kendoWindow");
 
@@ -927,7 +927,7 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234", ele).kendoGrid({
             },
             editable: 'popup',
             columns: [{
-              title: 'Files',
+              title: data.lng.files,
               field: 'path'
             }, {
               title: '',
@@ -938,14 +938,14 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234", ele).kendoGrid({
               },
               command: [{
                 name: "destroy",
-                test: "Del.",
+                test: data.lng.del,
                 template: '<a class="k-button k-grid-delete fa fa-trash" href="javascript:;"></a>'
               }]
             }]
           });
           // Insert new language file
           $("a.k-button.k-button-icontext.k-grid-add.fa.fa-plus.add-lang", "#y7hhiawza3u9y983w2asj9h9xe4").on("click", function(){
-            appui.fn.alert($("#9342ja823hioasfy3oi").html(), 'Add language file', 850, false, function(a){
+            appui.fn.alert($("#9342ja823hioasfy3oi").html(), data.lng.add_language, 850, false, function(a){
               a.closest(".k-window").height("");
               a.data("kendoWindow").center();
               $("#845hiay8h9fhuwiey823hi").kendoTreeView({
@@ -980,7 +980,7 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234", ele).kendoGrid({
             },
             editable: 'popup',
             columns: [{
-              title: 'Files',
+              title: data.lng.files,
               field: 'path'
             }, {
               title: '',
@@ -991,14 +991,14 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234", ele).kendoGrid({
               },
               command: [{
                 name: "destroy",
-                test: "Del.",
+                test: data.lng.del,
                 template: '<a class="k-button k-grid-delete fa fa-trash" href="javascript:;"></a>'
               }]
             }]
           });
           // Insert new theme file
           $("a.k-button.k-button-icontext.k-grid-add.fa.fa-plus.add-theme", "#y99hu8y4ss3a2s5423ld453wmn").on("click", function(){
-            appui.fn.alert($("#9342ja823hioasfy3oi").html(), 'Add theme file', 850, false, function(a){
+            appui.fn.alert($("#9342ja823hioasfy3oi").html(), data.lng.add_theme_file, 850, false, function(a){
               a.closest(".k-window").height("");
               a.data("kendoWindow").center();
               $("#845hiay8h9fhuwiey823hi").kendoTreeView({
@@ -1034,9 +1034,9 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234", ele).kendoGrid({
                 field: "lib"
               }
             },
-            dataTextField: "name",
+            dataTextField: "Name",
             dataValueField: "id_ver",
-            placeholder: "Select dependences..."
+            placeholder: data.lng.select_dependence,
           });
           // Add save and cancel buttons
           $("#asdahf8923489yhf98923hr").append(
@@ -1049,11 +1049,11 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234", ele).kendoGrid({
             '<div class="appui-form-field" style="text-align: right">' +
               '<a href="#" class="k-button k-button-icontext" style="margin-right: 5px">' +
                 '<span class="k-icon k-update"></span>' +
-                'Save' +
+              data.lng.save +
               '</a>' +
               '<a href="#" class="k-button k-button-icontext">' +
                 '<span class="k-icon k-cancel"></span>' +
-                'Cancel' +
+            data.lng.cancel +
               '</a>' +
             '</div>'
           );
@@ -1155,7 +1155,7 @@ $("a.k-grid-info", librariesGrid).on("click", function(e){
       dataItem = grid.dataItem($(e.target).closest("tr.k-master-row"));
   appui.fn.log(grid, dataItem);
 
-  appui.fn.alert($("#i3h34uefn94uh3rnfe9sfd23u").html(), 'Library: ' + dataItem.title, 600, false, function(w){
+  appui.fn.alert($("#i3h34uefn94uh3rnfe9sfd23u").html(), data.lng.library + ':'  + dataItem.title, 600, false, function(w){
     var cont = w,
         kcont = w.data("kendoWindow");
 
@@ -1176,10 +1176,10 @@ $("a.k-grid-info", librariesGrid).on("click", function(e){
             kcont.trigger("resize");
           },
           columns: [{
-            title: 'Name',
+            title: data.lng.name,
             field: 'name'
           }, {
-            title: 'Date',
+            title: data.lng.date,
             field: 'date_added',
             template: function(t){
               return kendo.toString(kendo.parseDate(t.date_added, "yyyy-MM-dd HH:mm:ss"), "dd/MM/yyyy")
@@ -1194,6 +1194,7 @@ $("a.k-grid-info", librariesGrid).on("click", function(e){
 
 
 // Search field
+appui.fn.log("LANGUAGES", data.lng);
 $("#F4LLL9jdn3nhasS38sh301dfs").kendoAutoComplete({
-  placeholder: 'Search library...'
+  placeholder: data.lng.search_library +'...',
 });

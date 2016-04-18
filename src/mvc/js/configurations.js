@@ -51,10 +51,10 @@ var configurationsGrid = $("#98324nas9t4pash9d2n3ifau").kendoGrid({
     }
   },
   columns: [{
-    title: "Hash",
+    title: data.lng.hash,
     field: "hash"
   }, {
-    title: "Configuration",
+    title: data.lng.configuration,
     field: "config",
     template: function(e){
       if ( e.config.length ){
@@ -68,7 +68,7 @@ var configurationsGrid = $("#98324nas9t4pash9d2n3ifau").kendoGrid({
       return '';
     }
   }, {
-    title: "Cached",
+    title:  data.lng.cached,
     field: "cached"
   }, {
     title: '',
@@ -76,13 +76,13 @@ var configurationsGrid = $("#98324nas9t4pash9d2n3ifau").kendoGrid({
     command: [{
       name: "edit",
       text: {
-        edit: "Mod.",
-        update: "Save",
-        cancel: "Cancel"
+        edit: data.lng.mod,
+        update: data.lng.save,
+        cancel: data.lng.cancel,
       },
       template: '<a class="k-button k-grid-edit fa fa-edit" href="javascript:;"></a>'
     }, {
-      name: "destroy",
+      name: data.lng.destroy,
       test: "Del.",
       template: '<a class="k-button k-grid-delete fa fa-trash" href="javascript:;"></a>'
     }]
@@ -104,7 +104,7 @@ var configurationsGrid = $("#98324nas9t4pash9d2n3ifau").kendoGrid({
   },
   editable: {
     mode: "popup",
-    confirmation: "Are you sure that you want to delete this entry?",
+    confirmation: data.lng.delete_this_entry,
     window: {
       width: 850
     }
@@ -123,7 +123,7 @@ var configurationsGrid = $("#98324nas9t4pash9d2n3ifau").kendoGrid({
 
 // Search field
 $("#h3294lasd9j234oasd9u").kendoAutoComplete({
-  placeholder: 'Search configuration...'
+  placeholder: data.lng.search_conf + '...',
 });
 
 appui.fn.log(data);

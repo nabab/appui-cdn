@@ -50,7 +50,7 @@ else if ( !empty($db) &&
         ORDER BY title COLLATE NOCASE ASC
       ");
     }
-    return ['error' => "Error to add new library's version."];
+    return ['error' => _("Error to add new library's version.")];
   }
   return false;
 }
