@@ -564,7 +564,7 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234", ele).kendoGrid({
           template: '<a class="k-button k-grid-edit fa fa-edit" href="javascript:;"></a>'
         }, {
           name: "destroy",
-          text: dat.lng.del,
+          text: data.lng.del,
           template: '<a class="k-button k-grid-delete fa fa-trash" href="javascript:;"></a>'
         }]
       }],
@@ -619,7 +619,7 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234", ele).kendoGrid({
         mode: "popup",
         confirmation: data.lng.delete_this_entry,
         window: {
-          title: data.lng,edit_library,
+          title: data.lng.edit_library,
           width: appui.env.width - 100,
           maxHeight: appui.env.height - 150
         }
