@@ -68,7 +68,14 @@ else if ( !empty($db) &&
   unset($this->data['db']);
   unset($this->data['new_name']);
   unset($this->data['edit']);
-  if ( $db->update('libraries', $this->data, ['name' => $id]) ){
+  $columns = $db->get_columns('libraries');
+  $change = [];
+  foreach ( $this->data as $n => $v ){
+    if ( isset($columns[$n]) ){
+      $change[$n] = $v;
+    }
+  }
+  if ( $db->update('libraries', $change, ['name' => $id]) ){
     return $this->data;
   }
   return false;
