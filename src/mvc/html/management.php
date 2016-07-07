@@ -21,6 +21,23 @@
 
 <!-- ## Templates ## -->
 
+<!-- Libraries toolbar -->
+<script type="text/html" id="kasdnjnsdfguiwerhasdh">
+  <div class="toolbar">
+    <!-- Search library -->
+    <div style="float:left; display: inline-block">
+      <i class="fa fa-search" style="margin: 0 5px"></i>
+      <input id="F4LLL9jdn3nhasS38sh301dfs" style="width: 300px">
+    </div>
+    <!-- Add library button -->
+    <div style="float:right; display: inline-block">
+    <a class="k-button k-button-icontext k-grid-add" href="javascript:;">
+      <i class="fa fa-plus" style="margin-right: 5px"></i><?=_("Add library")?>
+    </a>
+    </div>
+  </div>
+</script>
+
 <!-- Library details popup -->
 <script type="text/html" id="i3h34uefn94uh3rnfe9sfd23u">
   <!-- Info panel -->
@@ -85,31 +102,34 @@
 
 <!-- Version details popup -->
 <script type="text/html" id="kkk3jaSdh23490hqAsdha93">
+  <div class="info-masonry-container">
   <!-- Info panel -->
-  <div class="k-block">
-    <div class="k-header k-shadow" style="text-align: center"><?=_("INFO")?></div>
-    <div style="padding: 10px">
-      <strong><?=_("Version:")?> </strong>
-      <span data-bind="text: lng.name"></span>
-      <strong style="margin-left: 20px"><?=_("Date:")?> </strong>
-      <span data-bind="text: date_added"></span>
-      <strong style="margin-left: 20px"><?=_("Used:")?> </strong>
-      <span data-bind="text: used"></span>
+    <div class="k-block info-masonry">
+      <div class="k-header k-shadow" style="text-align: center"><?=_("INFO")?></div>
+      <div style="padding: 10px">
+        <strong><?=_("Version:")?> </strong>
+        <span data-bind="text: name"></span>
+        <strong style="margin-left: 20px"><?=_("Date:")?> </strong>
+        <span data-bind="text: date_added"></span>
+      </div>
     </div>
-  </div>
-  <br>
-  <div>
     <!-- Files panel -->
-    <div class="k-block" style="width: 49.5%; float: left">
+    <div class="k-block info-masonry">
       <div class="k-header k-shadow" style="text-align: center"><?=_("CONTENT")?></div>
       <!-- Files TreeView -->
       <div id="daij444jasdjhi332jiosdajo"></div>
     </div>
     <!-- Dependencies panel -->
-    <div class="k-block" style="width: 49.5%; float: left; margin-left: 1%">
+    <div class="k-block info-masonry">
       <div class="k-header k-shadow" style="text-align: center"><?=_("DEPENDENCIES")?></div>
       <!-- Dependencies list -->
       <div id="isfih3huasdf92huf823hyhas93"></div>
+    </div>
+    <!-- Slave dependencies panel -->
+    <div class="k-block info-masonry">
+      <div class="k-header k-shadow" style="text-align: center"><?=_("SLAVE DEPENDENCIES")?></div>
+      <!-- Dependencies list -->
+      <div id="snjgdnasdoi234nasdnu1opteoh"></div>
     </div>
   </div>
 </script>
@@ -117,29 +137,34 @@
 <!-- Library's version add and edit -->
 <script type="text/html" id="932f9u4923rjasdu09j3333">
   <div id="asdahf8923489yhf98923hr" style="display: none">
-    <div class="appui-form-label appui-r" style="padding: 0; width: 120px"><?=_("Name")?></div>
-    <div class="appui-form-field">
+    <div class="appui-form-label appui-r fix-width no-padding"><?=_("Name")?></div>
+    <div class="appui-form-field fix-width">
       <input id="u93248safn328dasuq89yu" class="k-textbox" name="vname" style="width: 100%" required>
     </div>
-    <div class="appui-form-label appui-r" style="padding: 0; width: 120px"><?=_("Files")?></div>
-    <div class="appui-form-field" style="display: flex">
+    <div class="appui-form-label appui-r fix-width no-padding"><?=_("Files")?></div>
+    <div class="appui-form-field fix-width" style="display: flex">
       <div id="ashd3538y1i35h8oasdj023" style="display: inline-block; width: 49.7%"></div>
       <div style="display: inline-block; width: 49.7%">
         <div class="k-header k-shadow appui-c"><?=_("Files Order (drag&drop)")?></div>
         <div id="joisfd8723hifwe78238hds" style="padding: 5px"></div>
       </div>
     </div>
-    <div class="appui-form-label appui-r" style="padding: 0; width: 120px"><?=_("Languages")?></div>
-    <div class="appui-form-field">
+    <div class="appui-form-label appui-r fix-width no-padding"><?=_("Languages")?></div>
+    <div class="appui-form-field fix-width">
       <div id="y7hhiawza3u9y983w2asj9h9xe4"></div>
     </div>
-    <div class="appui-form-label appui-r" style="padding: 0; width: 120px"><?=_("Themes")?></div>
-    <div class="appui-form-field">
+    <div class="appui-form-label appui-r fix-width no-padding"><?=_("Themes")?></div>
+    <div class="appui-form-field fix-width">
       <div id="y99hu8y4ss3a2s5423ld453wmn"></div>
     </div>
-    <div class="appui-form-label appui-r" style="padding: 0; width: 120px"><?=_("Dependecies")?></div>
-    <div class="appui-form-field">
-      <select id="732ijfasASdha92389yasdh9823" name="dependencies"></select>
+    <div class="appui-form-label appui-r fix-width no-padding"><?=_("Latest")?></div>
+    <div class="appui-form-field fix-width">
+      <input id="hw4o5923noasd890324yho" type="checkbox" class="k-checkbox">
+      <label for="hw4o5923noasd890324yho" class="k-checkbox-label"></label>
+    </div>
+    <div class="appui-form-label appui-r fix-width no-padding"><?=_("Dependecies")?></div>
+    <div class="appui-form-field fix-width">
+      <div id="732ijfasASdha92389yasdh9823"></div>
     </div>
   </div>
 </script>
@@ -164,6 +189,27 @@
       <span class="k-icon k-cancel"></span>
       <?=_("Cancel")?>
     </a>
+  </div>
+</script>
+
+<!-- Slave version's dependencies (add mode) -->
+<script type="text/html" id="hfashio3289yasdnuqwy8232">
+  <div class="appui-form-label appui-r fix-width no-padding"><?=_("Slave dependecies")
+    ?></div>
+  <div class="appui-form-field">
+    <div class="k-block">
+      <div class="k-header" style="margin-bottom: 0; font-size: inherit">
+        <span style="margin-right: 10px; margin-left: 5px; cursor: pointer">
+          <i class="fa fa-check-square-o ds-check"></i> <?=_("Check all")?>
+        </span>
+        <span style="cursor: pointer">
+          <i class="fa fa-square-o ds-check"></i> <?=_("Uncheck all")?>
+        </span>
+      </div>
+      <div style="padding: 5px">
+        <form></form>
+      </div>
+    </div>
   </div>
 </script>
 

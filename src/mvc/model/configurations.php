@@ -6,6 +6,7 @@ $db =& $this->data['db'];
 
 // Get all configurations
 if ( !empty($db) && count($this->data) === 1 ){
+  return [];
   $confs = $db->rselect_all('configurations');
   foreach ( $confs as $i => $conf ){
     $config = json_decode($conf['config'], 1);

@@ -18,7 +18,6 @@ else if ( !empty($db) && (count($this->data) === 2) && !empty($this->data['id_li
 
 // Insert new library
 else if ( !empty($db) &&
-  (count($this->data) > 2) &&
   !empty($this->data['name']) &&
   !empty($this->data['title']) &&
   !empty($this->data['vname']) &&
@@ -43,6 +42,7 @@ else if ( !empty($db) &&
     'last_check' => date('Y-m-d H:i:s', time())
   ]) ){
     $ver = $this->get_model('./versions');
+    
     if ( !empty($ver['success']) ){
       return $db->get_rows("
         SELECT *
@@ -57,7 +57,6 @@ else if ( !empty($db) &&
 
 // Update library
 else if ( !empty($db) &&
-  (count($this->data) > 2) &&
   !empty($this->data['name']) &&
   !empty($this->data['new_name']) &&
   !empty($this->data['title']) &&
@@ -83,7 +82,6 @@ else if ( !empty($db) &&
 
 // Delete library
 else if ( !empty($db) &&
-  (count($this->data) === 2) &&
   !empty($this->data['name'])
 ){
   if ( $db->delete('libraries', ['name' => $this->data['name']]) ){

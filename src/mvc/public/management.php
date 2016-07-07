@@ -1,7 +1,7 @@
 <?php
 /** @var $this \bbn\mvc\controller */
 
-echo $this
+echo $this->get_less() . $this
   ->set_title('CDN Management')
   ->add_js()
   ->add_js('./libraries')
@@ -12,16 +12,16 @@ echo $this
     'lng' => [
       'title' => _("Title"),
       'folderName' => _("Folder name"),
-      'functionName' => _("Function Name"),
-      'latest' => _("latest"),
+      'functionName' => _("Function name"),
+      'latest' => _("Latest"),
       'author' => _("Author"),
       'licence' => _("Licence"),
       'SelectOne' => _("Select one"),
-      'webSite' => _("Web Site"),
+      'webSite' => _("Web site"),
       'download' => _("Download"),
-      'doc' => _("Doc"),
-      'gitHub' => _("Git Hub"),
-      'supp' => _("Supp"),
+      'doc' => _("Documentation"),
+      'gitHub' => _("GitHub"),
+      'supp' => _("Support"),
       'info' => _("info"),
       'edit' => _("edit"),
       'new_libr_vers' => _("New Library's Version"),
@@ -60,7 +60,10 @@ echo $this
       'cancel' => _("Cancel"),
       'destroy' => _("Destroy"),
       'delete_this_entry'=> _("Are you sure that you want to delete this entry?"),
-      'search_conf' => _("Search configuration")
+      'search_conf' => _("Search configuration"),
+      'libraryVersion' => _("Library: {0} - Version: {1}"),
+      'no_new_version' => _("You don't have new library's version to add!"),
+      'order' => _("Order")
     ]
   ])
-  ->get_view();
+  ->get_view('', false);
