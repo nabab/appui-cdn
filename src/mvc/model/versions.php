@@ -1,10 +1,10 @@
 <?php
-/** @var $this \bbn\mvc\controller */
+/** @var $model \bbn\mvc\model */
 
 // DB connection
-$db =& $this->data['db'];
+$db =& $model->data['db'];
 
-if ( !empty($db) && !empty($this->data['id_lib']) ){
+if ( !empty($db) && !empty($model->data['id_lib']) ){
   // Get all library's versions
   $versions =  $db->get_rows("
     SELECT versions.*, 
@@ -14,7 +14,7 @@ if ( !empty($db) && !empty($this->data['id_lib']) ){
       ON versions.library = libraries.name
     WHERE versions.library = ?
     ORDER BY internal DESC",
-    $this->data['id_lib']
+    $model->data['id_lib']
   );
 
   foreach( $versions as $i => $ver ){
@@ -58,16 +58,16 @@ if ( !empty($db) && !empty($this->data['id_lib']) ){
 }
 
 // Get library's version name, the files data for the content treeviews and the list of all libraries with them versions (INSERT MODE)
-else if ( !empty($this->data['folder']) && !empty(BBN_CDN_PATH) ){
+else if ( !empty($model->data['folder']) && !empty(BBN_CDN_PATH) ){
   // Library path
-  $lib_path = BBN_CDN_PATH . 'lib/' . $this->data['folder'];
+  $lib_path = BBN_CDN_PATH . 'lib/' . $model->data['folder'];
   // Check if the library's subfolders are already inserted into db and use the first not included as version
   if ( is_dir($lib_path) && ($dirs = \bbn\file\dir::get_dirs($lib_path)) ){
     $ver = [];
     foreach ( $dirs as $dir ){
       if ( empty($db->select('versions', [], [
         'name' => basename($dir),
-        'library' => $this->data['folder']
+        'library' => $model->data['folder']
       ])) ){
         array_push($ver, $dir);
       }
@@ -130,7 +130,7 @@ else if ( !empty($this->data['folder']) && !empty(BBN_CDN_PATH) ){
         ON "vers"."library" = "libr"."name"
       WHERE "libraries"."name" = ?
       ORDER BY "libr"."title" COLLATE NOCASE ASC',
-      $this->data['folder']
+      $model->data['folder']
       ),
     // All slave dependencies
     'slave_dependencies' => $db->get_rows("
@@ -147,44 +147,44 @@ else if ( !empty($this->data['folder']) && !empty(BBN_CDN_PATH) ){
         ON vers.library = libr.name
       WHERE libraries.name = ?
       ORDER BY libr.name ASC",
-      $this->data['folder']
+      $model->data['folder']
     ),
     'internal' => $db->get_rows("
       SELECT internal AS text, internal AS value
       FROM versions
       WHERE library = ?",
-      $this->data['folder']
+      $model->data['folder']
     )
   ];
 }
 
 // Insert new library's version
 else if ( !empty($db) &&
-  !empty($this->data['name']) &&
-  !empty($this->data['vname']) &&
-  ( !empty($this->data['files']) ||
-    !empty($this->data['languages']) ||
-    !empty($this->data['themes']) )
+  !empty($model->data['name']) &&
+  !empty($model->data['vname']) &&
+  ( !empty($model->data['files']) ||
+    !empty($model->data['languages']) ||
+    !empty($model->data['themes']) )
 ){
   $languages = [];
   $themes = [];
-  foreach ( json_decode($this->data['languages'], 1) as $l ){
+  foreach ( json_decode($model->data['languages'], 1) as $l ){
     array_push($languages, $l['path']);
   }
-  foreach ( json_decode($this->data['themes'], 1) as $l ){
+  foreach ( json_decode($model->data['themes'], 1) as $l ){
     array_push($themes, $l['path']);
   }
   $content = [
-    'files' => !empty($this->data['files']) ? json_decode($this->data['files'], 1) : [],
+    'files' => !empty($model->data['files']) ? json_decode($model->data['files'], 1) : [],
     'lang' => $languages,
     'theme_files' => $themes
   ];
-  if ( !empty($this->data['latest']) ){
+  if ( !empty($model->data['latest']) ){
     $internal = $db->get_one("
     SELECT MAX(internal)
     FROM versions
     WHERE library = ?",
-      $this->data['name']
+      $model->data['name']
     );
     if ( is_null($internal) ){
       $internal = 0;
@@ -193,28 +193,28 @@ else if ( !empty($db) &&
       $internal++;
     }
   }
-  else if ( isset($this->data['internal']) && \bbn\str::is_integer($this->data['internal']) ){
-    $internal = $this->data['internal'];
+  else if ( isset($model->data['internal']) && \bbn\str::is_integer($model->data['internal']) ){
+    $internal = $model->data['internal'];
     if ( $db->select_one('versions', 'internal', ['internal' => $internal]) ){
       $db->query("
       UPDATE versions SET internal = internal+1
       WHERE internal >= ?
         AND library = ?",
         $internal,
-        $this->data['name']
+        $model->data['name']
       );
     }
   }
   if ( $db->insert('versions', [
-    'name' => $this->data['vname'],
-    'library' => $this->data['name'],
+    'name' => $model->data['vname'],
+    'library' => $model->data['name'],
     'content' => json_encode($content),
     'date_added' => date('Y-m-d H:i:s', time()),
     'internal' => $internal
   ]) ) {
     $id = $db->last_id();
-    if ( !empty($this->data['dependencies']) ){
-      foreach ( $this->data['dependencies'] as $dep ){
+    if ( !empty($model->data['dependencies']) ){
+      foreach ( $model->data['dependencies'] as $dep ){
         if ( $db->select_one('dependencies', 'order', ['order' => $dep['order']]) ){
           $db->query('
           UPDATE "dependencies" SET "order" = "order"+1
@@ -230,11 +230,11 @@ else if ( !empty($db) &&
         ]);
       }
     }
-    if ( !empty($this->data['latest']) ){
-      $db->update('libraries', ['latest' => $this->data['vname']], ['name' => $this->data['name']]);
+    if ( !empty($model->data['latest']) ){
+      $db->update('libraries', ['latest' => $model->data['vname']], ['name' => $model->data['name']]);
     }
-    if ( !empty($this->data['slave_dependencies']) ){
-      foreach ( $this->data['slave_dependencies'] AS $lib => $yes ){
+    if ( !empty($model->data['slave_dependencies']) ){
+      foreach ( $model->data['slave_dependencies'] AS $lib => $yes ){
         if ( !empty($yes) ){
           $id_slave = $db->get_one("
             SELECT versions.id
@@ -261,9 +261,9 @@ else if ( !empty($db) &&
 
 // Returns the files data for the content treeviews with checked, all libraries list and if the version is latest. (EDIT MODE)
 else if ( !empty($db) &&
-  !empty($this->data['version'])
+  !empty($model->data['version'])
 ){
-  $ver = $db->rselect('versions', ['name', 'library', 'content'], ['id' => $this->data['version']]);
+  $ver = $db->rselect('versions', ['name', 'library', 'content'], ['id' => $model->data['version']]);
   $p = BBN_CDN_PATH . 'lib/' . $ver['library'] . '/' . $ver['name'];
   $cont = json_decode($ver['content'], 1);
   // Make the tree data
@@ -335,9 +335,9 @@ else if ( !empty($db) &&
       WHERE "dependencies"."id_slave" = ?
       GROUP BY "versions"."library"
       ORDER BY "libraries"."title" COLLATE NOCASE ASC',
-      $this->data['version']
+      $model->data['version']
     ),
-    //'dependencies' => $db->get_column_values('dependencies', 'id_master', ['id_slave' => $this->data['version']])
+    //'dependencies' => $db->get_column_values('dependencies', 'id_master', ['id_slave' => $model->data['version']])
   ];
   if ( $db->select_one('libraries', 'latest', ['name' => $ver['library']]) === $ver['name'] ){
     $ret['latest'] = 1;
@@ -347,34 +347,34 @@ else if ( !empty($db) &&
 
 // Update library's version
 else if ( !empty($db) &&
-  !empty($this->data['id_ver']) &&
-  ( !empty($this->data['files']) ||
-    !empty($this->data['languages']) ||
-    !empty($this->data['themes']) )
+  !empty($model->data['id_ver']) &&
+  ( !empty($model->data['files']) ||
+    !empty($model->data['languages']) ||
+    !empty($model->data['themes']) )
 ){
   $languages = [];
   $themes = [];
-  foreach ( json_decode($this->data['languages'], 1) as $l ){
+  foreach ( json_decode($model->data['languages'], 1) as $l ){
     array_push($languages, $l['path']);
   }
-  foreach ( json_decode($this->data['themes'], 1) as $l ){
+  foreach ( json_decode($model->data['themes'], 1) as $l ){
     array_push($themes, $l['path']);
   }
   $content = [
-    'files' => !empty($this->data['files']) ? json_decode($this->data['files'], 1) : [],
+    'files' => !empty($model->data['files']) ? json_decode($model->data['files'], 1) : [],
     'lang' => $languages,
     'theme_files' => $themes
   ];
-  if ( $db->update('versions', ['content' => json_encode($content)], ['id' => $this->data['id_ver']]) ){
-    if ( !empty($this->data['latest']) ){
-      $ver_lib = $db->rselect('versions', ['name', 'library'], ['id' => $this->data['id_ver']]);
+  if ( $db->update('versions', ['content' => json_encode($content)], ['id' => $model->data['id_ver']]) ){
+    if ( !empty($model->data['latest']) ){
+      $ver_lib = $db->rselect('versions', ['name', 'library'], ['id' => $model->data['id_ver']]);
       if ( !$db->update('libraries', ['latest' => $ver_lib['name']], ['name' => $ver_lib['library']])){
         return ['error' => 'Error to update latest library\'s version'];
       }
     }
-    if ( !empty($this->data['dependencies']) ){
+    if ( !empty($model->data['dependencies']) ){
       $dependencies = [];
-      foreach ( $this->data['dependencies'] as $dep ){
+      foreach ( $model->data['dependencies'] as $dep ){
         $dependencies[$dep['id_ver']] = $dep;
       }
       $old_dep = $db->get_col_array('
@@ -385,12 +385,12 @@ else if ( !empty($db) &&
         WHERE dependencies.id_slave = ?
         GROUP BY versions.library
         ORDER BY versions.internal',
-        $this->data['id_ver']
+        $model->data['id_ver']
       );
       foreach ( $old_dep as $old ){
         if ( !in_array($old, array_keys($dependencies)) ){
           if ( !$db->delete('dependencies', [
-            'id_slave' => $this->data['id_ver'],
+            'id_slave' => $model->data['id_ver'],
             'id_master' => $old
           ]) ){
             return ['error' => _('Error to delete a version\'s dependency')];
@@ -400,7 +400,7 @@ else if ( !empty($db) &&
       foreach ( $dependencies as $idd => $dep ){
         if ( !in_array($idd, $old_dep) ){
           if ( !$db->insert('dependencies', [
-            'id_slave' => $this->data['id_ver'],
+            'id_slave' => $model->data['id_ver'],
             'id_master' => $idd,
             'order' => $dep['order']
           ]) ){
@@ -411,7 +411,7 @@ else if ( !empty($db) &&
           if ( !$db->update('dependencies', [
             'order' => $dep['order']
           ], [
-            'id_slave' => $this->data['id_ver'],
+            'id_slave' => $model->data['id_ver'],
             'id_master' => $idd
           ]) ){
             return ['error' => _('Error to update a version\'s dependency') ];
@@ -426,16 +426,16 @@ else if ( !empty($db) &&
 
 // Delete library's version
 else if ( !empty($db) &&
-  !empty($this->data['id_ver']) &&
-  !empty($this->data['library'])
+  !empty($model->data['id_ver']) &&
+  !empty($model->data['library'])
 ){
   // Get version's name and library's name
-  $ver = $db->rselect('versions', ['name', 'library'], ['id' => $this->data['id_ver']]);
+  $ver = $db->rselect('versions', ['name', 'library'], ['id' => $model->data['id_ver']]);
   // Delete version
-  if ( $db->delete('versions', ['id' => $this->data['id_ver']]) ){
+  if ( $db->delete('versions', ['id' => $model->data['id_ver']]) ){
     // Delete dependences
-    $db->delete('dependencies', ['id_slave' => $this->data['id_ver']]);
-    $db->delete('dependencies', ['id_master' => $this->data['id_ver']]);
+    $db->delete('dependencies', ['id_slave' => $model->data['id_ver']]);
+    $db->delete('dependencies', ['id_master' => $model->data['id_ver']]);
     // Check if it's the latest library's version
     if ( $ver['name'] === $db->select_one('libraries', 'latest', ['name' => $ver['library']]) ){
       // Get previous version's name
@@ -458,7 +458,7 @@ else if ( !empty($db) &&
         SELECT name, MAX(internal)
         FROM versions
         WHERE library = ?",
-        $this->data['library']
+        $model->data['library']
       )
     ];
   }

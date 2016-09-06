@@ -1,15 +1,15 @@
 <?php
-/** @var $this \bbn\mvc\controller */
+/** @var $ctrl \bbn\mvc\controller */
 
-if ( empty($this->post) ){
-  echo $this
+if ( empty($ctrl->post) ){
+  echo $ctrl
     ->set_title('CDN Management')
     ->add_js()
     ->add_js('./libraries')
     ->add_js('./configurations', [
-      'all_conf' => $this->get_model('./configurations', ['db' => $this->data['db']]),
-      'all_lib' => $this->get_model('./libraries', ['db' => $this->data['db']]),
-      'licences' => $this->get_model('./licences'),
+      'all_conf' => $ctrl->get_model('./configurations', ['db' => $ctrl->data['db']]),
+      'all_lib' => $ctrl->get_model('./libraries', ['db' => $ctrl->data['db']]),
+      'licences' => $ctrl->get_model('./licences'),
       'lng' => [
         'title' => _("Title"),
         'folderName' => _("Folder name"),
@@ -68,7 +68,7 @@ if ( empty($this->post) ){
 }
 /*
 else {
-  $this->data = array_merge($this->data, $this->post);
-  $this->obj->data = $this->get_model('./libraries');
+  $ctrl->data = array_merge($ctrl->data, $ctrl->post);
+  $ctrl->obj->data = $ctrl->get_model('./libraries');
 }
 */

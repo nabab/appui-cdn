@@ -1,14 +1,14 @@
 <?php
-/** @var $this \bbn\mvc\controller */
+/** @var $ctrl \bbn\mvc\controller */
 
-echo $this->get_less() . $this
+echo $ctrl->get_less() . $ctrl
   ->set_title('CDN Management')
   ->add_js()
   ->add_js('./libraries')
   ->add_js('./configurations', [
-    'all_conf' => $this->get_model('./configurations', ['db' => $this->data['db']]),
-    'all_lib' => $this->get_model('./libraries', ['db' => $this->data['db']]),
-    'licences' => $this->get_model('./licences'),
+    'all_conf' => $ctrl->get_model('./configurations', ['db' => $ctrl->data['db']]),
+    'all_lib' => $ctrl->get_model('./libraries', ['db' => $ctrl->data['db']]),
+    'licences' => $ctrl->get_model('./licences'),
     'lng' => [
       'title' => _("Title"),
       'folderName' => _("Folder name"),

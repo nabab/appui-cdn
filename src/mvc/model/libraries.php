@@ -1,47 +1,47 @@
 <?php
-/** @var $this \bbn\mvc\controller */
+/** @var $model \bbn\mvc\model */
 
 // DB connection
-$db =& $this->data['db'];
+$db =& $model->data['db'];
 
 // Get all libraries
-if ( !empty($db) && count($this->data) === 1 ){
+if ( !empty($db) && count($model->data) === 1 ){
   return $db->rselect_all('libraries', [], [], ['title' => 'ASC']);
 }
 
 // Get all library's info
-else if ( !empty($db) && (count($this->data) === 2) && !empty($this->data['id_lib']) ){
+else if ( !empty($db) && (count($model->data) === 2) && !empty($model->data['id_lib']) ){
   $ret = [];
-  $ret['versions'] = $this->get_model('./versions');
+  $ret['versions'] = $model->get_model('./versions');
   return $ret;
 }
 
 // Insert new library
 else if ( !empty($db) &&
-  !empty($this->data['name']) &&
-  !empty($this->data['title']) &&
-  !empty($this->data['vname']) &&
-  ( !empty($this->data['files']) ||
-    !empty($this->data['languages']) ||
-    !empty($this->data['themes']) ) &&
-  empty($this->data['edit'])
+  !empty($model->data['name']) &&
+  !empty($model->data['title']) &&
+  !empty($model->data['vname']) &&
+  ( !empty($model->data['files']) ||
+    !empty($model->data['languages']) ||
+    !empty($model->data['themes']) ) &&
+  empty($model->data['edit'])
 ){
   if ( $db->insert('libraries', [
-    'name' => $this->data['name'],
-    'fname' => $this->data['fname'],
-    'title' => $this->data['title'],
-    'latest' => $this->data['vname'],
-    'website' => $this->data['website'],
-    'author' => $this->data['author'],
-    'licence' => $this->data['licence'],
-    'download_link' => $this->data['download_link'],
-    'doc_link' => $this->data['doc_link'],
-    'git' => $this->data['git'],
-    'support_link' => $this->data['support_link'],
+    'name' => $model->data['name'],
+    'fname' => $model->data['fname'],
+    'title' => $model->data['title'],
+    'latest' => $model->data['vname'],
+    'website' => $model->data['website'],
+    'author' => $model->data['author'],
+    'licence' => $model->data['licence'],
+    'download_link' => $model->data['download_link'],
+    'doc_link' => $model->data['doc_link'],
+    'git' => $model->data['git'],
+    'support_link' => $model->data['support_link'],
     'last_update' => date('Y-m-d H:i:s', time()),
     'last_check' => date('Y-m-d H:i:s', time())
   ]) ){
-    $ver = $this->get_model('./versions');
+    $ver = $model->get_model('./versions');
     
     if ( !empty($ver['success']) ){
       return $db->get_rows("
@@ -57,36 +57,36 @@ else if ( !empty($db) &&
 
 // Update library
 else if ( !empty($db) &&
-  !empty($this->data['name']) &&
-  !empty($this->data['new_name']) &&
-  !empty($this->data['title']) &&
-  !empty($this->data['edit'])
+  !empty($model->data['name']) &&
+  !empty($model->data['new_name']) &&
+  !empty($model->data['title']) &&
+  !empty($model->data['edit'])
 ){
-  $id = $this->data['name'];
-  $this->data['name'] = $this->data['new_name'];
-  unset($this->data['db']);
-  unset($this->data['new_name']);
-  unset($this->data['edit']);
+  $id = $model->data['name'];
+  $model->data['name'] = $model->data['new_name'];
+  unset($model->data['db']);
+  unset($model->data['new_name']);
+  unset($model->data['edit']);
   $columns = $db->get_columns('libraries');
   $change = [];
-  foreach ( $this->data as $n => $v ){
+  foreach ( $model->data as $n => $v ){
     if ( isset($columns[$n]) ){
       $change[$n] = $v;
     }
   }
   if ( $db->update('libraries', $change, ['name' => $id]) ){
-    return $this->data;
+    return $model->data;
   }
   return false;
 }
 
 // Delete library
 else if ( !empty($db) &&
-  !empty($this->data['name'])
+  !empty($model->data['name'])
 ){
-  if ( $db->delete('libraries', ['name' => $this->data['name']]) ){
+  if ( $db->delete('libraries', ['name' => $model->data['name']]) ){
     // Get all library's versions' id
-    $versions = $db->rselect_all('versions', ['id'], ['library' => $this->data['name']]);
+    $versions = $db->rselect_all('versions', ['id'], ['library' => $model->data['name']]);
     foreach ( $versions as $ver ){
       // Delete versions
       $db->delete('versions', ['id' => $ver['id']]);

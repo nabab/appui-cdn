@@ -1,7 +1,7 @@
 <?php
-/** @var $this \bbn\mvc\controller */
+/** @var $ctrl \bbn\mvc\controller */
 
-if ( !empty($this->post) ){
-  $this->data = array_merge($this->data, $this->post);
-  $this->obj->data = $this->get_model();
+if ( !empty($ctrl->post) ){
+  $ctrl->data = array_merge($ctrl->data, $ctrl->post);
+  $ctrl->obj->data = $ctrl->get_model();
 }

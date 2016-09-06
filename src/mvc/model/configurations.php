@@ -1,11 +1,11 @@
 <?php
-/** @var $this \bbn\mvc\controller */
+/** @var $model \bbn\mvc\model */
 
 // DB connection
-$db =& $this->data['db'];
+$db =& $model->data['db'];
 
 // Get all configurations
-if ( !empty($db) && count($this->data) === 1 ){
+if ( !empty($db) && count($model->data) === 1 ){
   return [];
   $confs = $db->rselect_all('configurations');
   foreach ( $confs as $i => $conf ){
@@ -27,37 +27,37 @@ if ( !empty($db) && count($this->data) === 1 ){
 
 // Add new configuration
 else if ( !empty($db) &&
-  (count($this->data) > 2) &&
-  !empty($this->data['hash']) &&
-  !empty($this->data['config'])
+  (count($model->data) > 2) &&
+  !empty($model->data['hash']) &&
+  !empty($model->data['config'])
 ){
-  unset($this->data['db']);
-  $db->insert('configurations', $this->data);
+  unset($model->data['db']);
+  $db->insert('configurations', $model->data);
 }
 
 // Update configuration
 else if ( !empty($db) &&
-  (count($this->data) > 2) &&
-  !empty($this->data['hash']) &&
-  !empty($this->data['new_hash']) &&
-  !empty($this->data['config'])
+  (count($model->data) > 2) &&
+  !empty($model->data['hash']) &&
+  !empty($model->data['new_hash']) &&
+  !empty($model->data['config'])
 ){
-  $id = $this->data['hash'];
-  $this->data['hash'] = $this->data['new_hash'];
-  unset($this->data['db']);
-  unset($this->data['new_hash']);
-  if ( $db->update('configuration', $this->data, ['hash' => $id]) ){
-    return $this->data;
+  $id = $model->data['hash'];
+  $model->data['hash'] = $model->data['new_hash'];
+  unset($model->data['db']);
+  unset($model->data['new_hash']);
+  if ( $db->update('configuration', $model->data, ['hash' => $id]) ){
+    return $model->data;
   }
   return false;
 }
 
 // Delete configuration
 else if ( !empty($db) &&
-  (count($this->data) === 2) &&
-  !empty($this->data['hash'])
+  (count($model->data) === 2) &&
+  !empty($model->data['hash'])
 ){
-  if ( $db->delete('configurations', ['hash' => $this->data['hash']]) ){
+  if ( $db->delete('configurations', ['hash' => $model->data['hash']]) ){
     return ['success' => 1];
   }
 }
