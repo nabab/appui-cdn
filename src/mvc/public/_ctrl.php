@@ -2,9 +2,12 @@
 /** @var $ctrl \bbn\mvc\controller */
 
 // SQLITE connection
+if ( !defined('BBN_CDN_DB') ){
+  die("You need to define in order to use this plugin.");
+}
 $ctrl->data['db'] = new \bbn\db([
   'engine' => 'sqlite',
-  'db' => '/home/mybbn/domains/cdn.mybbn.so/_appui/current/data/db/cdn.sqlite'
+  'db' => BBN_CDN_DB
 ]);
 
 $ctrl->data['root'] = $ctrl->say_dir().'/';
