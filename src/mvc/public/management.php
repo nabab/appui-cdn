@@ -3,9 +3,7 @@
 
 echo $ctrl->get_less() . $ctrl
   ->set_title('CDN Management')
-  ->add_js()
-  ->add_js('./libraries')
-  ->add_js('./configurations', [
+  ->add_js_group(['./libraries', './configurations', ''], [
     'all_conf' => $ctrl->get_model('./configurations', ['db' => $ctrl->data['db']]),
     'all_lib' => $ctrl->get_model('./libraries', ['db' => $ctrl->data['db']]),
     'licences' => $ctrl->get_model('./licences'),
