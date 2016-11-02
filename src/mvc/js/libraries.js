@@ -322,7 +322,7 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234"),
                     });
                     // Insert new language file
                     $("a.k-button.k-button-icontext.k-grid-add.fa.fa-plus.add-lang", "#y7hhiawza3u9y983w2asj9h9xe4", cont).on("click", function(){
-                      appui.fn.alert($("#9342ja823hioasfy3oi").html(), data.lng.add_language, 850, false, function(w){
+                      appui.fn.popup($("#9342ja823hioasfy3oi").html(), data.lng.add_language, 850, false, function(w){
                         $("#845hiay8h9fhuwiey823hi", w).kendoTreeView({
                           dataSource: d.data.languages_tree,
                           select: function(s){
@@ -341,10 +341,10 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234"),
                         });
                         $("a.k-button:first", w).on("click", function(){
                           $("#y7hhiawza3u9y983w2asj9h9xe4", cont).data("kendoGrid").dataSource.add({path: $("input[name=path]", w).val()});
-                          appui.fn.closeAlert();
+                          appui.fn.closePopup();
                         });
                         $("a.k-button:last", w).on("click", function(){
-                          appui.fn.closeAlert();
+                          appui.fn.closePopup();
                         });
                       });
                     });
@@ -373,7 +373,7 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234"),
                     });
                     // Insert new theme file
                     $("a.k-button.k-button-icontext.k-grid-add.fa.fa-plus.add-theme", "#y99hu8y4ss3a2s5423ld453wmn", cont).on("click", function(){
-                      appui.fn.alert($("#9342ja823hioasfy3oi").html(), data.lng.add_theme_file, 850, false, function(w){
+                      appui.fn.popup($("#9342ja823hioasfy3oi").html(), data.lng.add_theme_file, 850, false, function(w){
                         $("#845hiay8h9fhuwiey823hi", w).kendoTreeView({
                           dataSource: d.data.tree,
                           select: function(s){
@@ -398,10 +398,10 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234"),
                         });
                         $("a.k-button:first", w).on("click", function(){
                           $("#y99hu8y4ss3a2s5423ld453wmn", cont).data("kendoGrid").dataSource.add({path: $("input[name=path]", w).val()});
-                          appui.fn.closeAlert();
+                          appui.fn.closePopup();
                         });
                         $("a.k-button:last", w).on("click", function(){
-                          appui.fn.closeAlert();
+                          appui.fn.closePopup();
                         });
                       });
                     });
@@ -571,7 +571,7 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234"),
                 });
               }
               else {
-                alert(data.lng.allert);
+                appui.fn.alert(data.lng.allert);
                 $("input[name=name]", cont).focus();
               }
             })
@@ -705,7 +705,7 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234"),
               // Date fix
               dataItem.date_added = moment(dataItem.date_added).format('DD/MM/YYYY');
 
-              appui.fn.alert(
+              appui.fn.popup(
                 $("#kkk3jaSdh23490hqAsdha93").html(),
                 kendo.format(data.lng.libraryVersion, dataItem.library, dataItem.name),
                 800, false,
@@ -885,7 +885,7 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234"),
                 });
                 // Insert new language file
                 $("a.k-button.k-button-icontext.k-grid-add.fa.fa-plus.add-lang", cont).on("click", function(){
-                  appui.fn.alert($("#9342ja823hioasfy3oi").html(), data.lng.add_language, 850, false, function(w){
+                  appui.fn.popup($("#9342ja823hioasfy3oi").html(), data.lng.add_language, 850, false, function(w){
                     $("#845hiay8h9fhuwiey823hi", w).kendoTreeView({
                       dataSource: p.data.languages_tree,
                       select: function(s){
@@ -905,10 +905,10 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234"),
                     $("a.k-button:first", w).on("click", function(){
                       $("#y7hhiawza3u9y983w2asj9h9xe4", cont).data("kendoGrid").dataSource.add({path: $("input[name=path]", w).val()});
                       e.model.dirty = true;
-                      appui.fn.closeAlert();
+                      appui.fn.closePopup();
                     });
                     $("a.k-button:last", w).on("click", function(){
-                      appui.fn.closeAlert();
+                      appui.fn.closePopup();
                     });
                   });
                 });
@@ -940,7 +940,7 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234"),
                 });
                 // Insert new theme file
                 $("a.k-button.k-button-icontext.k-grid-add.fa.fa-plus.add-theme", "#y99hu8y4ss3a2s5423ld453wmn", cont).on("click", function(){
-                  appui.fn.alert($("#9342ja823hioasfy3oi").html(), data.lng.add_theme_file, 850, false, function(w){
+                  appui.fn.popup($("#9342ja823hioasfy3oi").html(), data.lng.add_theme_file, 850, false, function(w){
                     $("#845hiay8h9fhuwiey823hi", w).kendoTreeView({
                       dataSource: p.data.themes_tree,
                       select: function(s){
@@ -960,10 +960,10 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234"),
                     $("a.k-button:first", w).on("click", function(){
                       $("#y99hu8y4ss3a2s5423ld453wmn", cont).data("kendoGrid").dataSource.add({path: $("input[name=path]", w).val()});
                       e.model.dirty = true;
-                      appui.fn.closeAlert();
+                      appui.fn.closePopup();
                     });
                     $("a.k-button:last", w).on("click", function(){
-                      appui.fn.closeAlert();
+                      appui.fn.closePopup();
                     });
                   });
                 });
@@ -1118,7 +1118,7 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234"),
 
             if ( p.data && p.data.tree && p.data.tree.length ){
 
-              appui.fn.alert($("#932f9u4923rjasdu09j3333").html(), kendo.format(data.lng.add_version, d.data.title), appui.env.width - 100, false, function(cont){
+              appui.fn.popup($("#932f9u4923rjasdu09j3333").html(), kendo.format(data.lng.add_version, d.data.title), appui.env.width - 100, false, function(cont){
 
                 var kcont = cont.data("kendoWindow");
 
@@ -1212,7 +1212,7 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234"),
 
                 // Insert new language file
                 $("a.k-button.k-button-icontext.k-grid-add.fa.fa-plus.add-lang", "#y7hhiawza3u9y983w2asj9h9xe4", cont).on("click", function(){
-                  appui.fn.alert($("#9342ja823hioasfy3oi").html(), data.lng.add_language, 850, false, function(a){
+                  appui.fn.popup($("#9342ja823hioasfy3oi").html(), data.lng.add_language, 850, false, function(a){
                     $("#845hiay8h9fhuwiey823hi", a).kendoTreeView({
                       dataSource: p.data.languages_tree,
                       select: function(s){
@@ -1231,10 +1231,10 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234"),
                     });
                     $("a.k-button:first", a).on("click", function(){
                       $("#y7hhiawza3u9y983w2asj9h9xe4", cont).data("kendoGrid").dataSource.add({path: $("input[name=path]", a).val()});
-                      appui.fn.closeAlert();
+                      appui.fn.closePopup();
                     });
                     $("a.k-button:last", a).on("click", function(){
-                      appui.fn.closeAlert();
+                      appui.fn.closePopup();
                     });
                   });
                 });
@@ -1264,7 +1264,7 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234"),
                 });
                 // Insert new theme file
                 $("a.k-button.k-button-icontext.k-grid-add.fa.fa-plus.add-theme", "#y99hu8y4ss3a2s5423ld453wmn", cont).on("click", function(){
-                  appui.fn.alert($("#9342ja823hioasfy3oi").html(), data.lng.add_theme_file, 850, false, function(a){
+                  appui.fn.popup($("#9342ja823hioasfy3oi").html(), data.lng.add_theme_file, 850, false, function(a){
                     $("#845hiay8h9fhuwiey823hi", a).kendoTreeView({
                       dataSource: p.data.tree,
                       select: function(s){
@@ -1283,10 +1283,10 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234"),
                     });
                     $("a.k-button:first", a).on("click", function(){
                       $("#y99hu8y4ss3a2s5423ld453wmn", cont).data("kendoGrid").dataSource.add({path: $("input[name=path]", a).val()});
-                      appui.fn.closeAlert();
+                      appui.fn.closePopup();
                     });
                     $("a.k-button:last", a).on("click", function(){
-                      appui.fn.closeAlert();
+                      appui.fn.closePopup();
                     });
                   });
                 });
@@ -1505,12 +1505,12 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234"),
                         this
                         $("div.k-grid", d.detailCell, ele).data("kendoGrid").dataSource.read();
                       }
-                      appui.fn.closeAlert();
+                      appui.fn.closePopup();
                     }
                   });
                 });
                 $("span.k-cancel", cont).parent().on("click", function(){
-                  appui.fn.closeAlert();
+                  appui.fn.closePopup();
                 });
               });
             }
@@ -1585,7 +1585,7 @@ var librariesGrid = $("#RRsj983Jfjnv2kasihj234"),
       var grid = librariesGrid.data("kendoGrid"),
         dataItem = grid.dataItem($(e.target).closest("tr.k-master-row"));
 
-      appui.fn.alert($("#i3h34uefn94uh3rnfe9sfd23u").html(), data.lng.library + ':'  + dataItem.title, 600, false, function(w){
+      appui.fn.popup($("#i3h34uefn94uh3rnfe9sfd23u").html(), data.lng.library + ':'  + dataItem.title, 600, false, function(w){
         var cont = w,
           kcont = w.data("kendoWindow");
 
