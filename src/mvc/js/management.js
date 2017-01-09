@@ -12,10 +12,9 @@ var isActivated = false,
           librariesGridInit();
           isActivated = true;
         }
-        $(this.element).redraw();
       }
     }).data("kendoTabStrip");
-appui.fn.log(ele, data);
+
 cdnTabStrip.trigger("activate");
 
 // Main TabStrip container padding fix

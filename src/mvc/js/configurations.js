@@ -126,6 +126,5 @@ var configurationsGrid = $("#98324nas9t4pash9d2n3ifau"),
       $("#h3294lasd9j234oasd9u").kendoAutoComplete({
         placeholder: data.lng.search_conf + '...',
       });
-      appui.fn.log(data);
     };
 

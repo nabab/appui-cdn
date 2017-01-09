@@ -1,11 +1,34 @@
 <?php
 /** @var $ctrl \bbn\mvc\controller */
 
+$templates = \bbn\file\dir::get_files($ctrl->plugin_path('appui-cdn').'/mvc/html/templates');
+if ( !empty($templates) ){
+  $templates = array_map(function($t){
+    return './templates/'.basename($t, '.php');
+  }, $templates);
+}
+else{
+  $templates = [];
+}
+
 echo $ctrl->get_less() . $ctrl
   ->set_title('CDN Management')
-  ->add_js_group(['./libraries', './configurations', ''], [
+  ->add_js_group([
+    './libraries',
+    './versions',
+    './library/add',
+    './library/edit',
+    './functions/get_checked',
+    './functions/files_order',
+    './version/add',
+    './version/edit',
+    './version/info',
+    './version/from_github',
+    './configurations',
+    ''
+  ], [
     'all_conf' => $ctrl->get_model('./configurations', ['db' => $ctrl->data['db']]),
-    'all_lib' => $ctrl->get_model('./libraries', ['db' => $ctrl->data['db']]),
+    'all_lib' => $ctrl->get_model('./data/libraries', ['db' => $ctrl->data['db']]),
     'licences' => $ctrl->get_model('./licences'),
     'lng' => [
       'title' => _("Title"),
@@ -33,7 +56,7 @@ echo $ctrl->get_less() . $ctrl
       'files' => _("Files"),
       'name' => _("Name"),
       'before' => _("Before"),
-      'allert' => _("Set the folder name first, please."),
+      'setFolderName' => _("Set the folder name first, please."),
       'version' => _("Version"),
       'date' => _("Date"),
       'add_language' => ("Add language file"),
@@ -41,9 +64,8 @@ echo $ctrl->get_less() . $ctrl
       'edit_library' => _("Edit library's version"),
       'select_dependece' => _("Select dependences..."),
       'add' => _("Add"),
-      'add_version' => _("Add {0}'s new version"),
+      'add_version' => _("Add new version: {0}"),
       'library_version' => _("library's version"),
-      'version' => _("Version"),
       'add_theme_file' => _("Add theme file"),
       'new_library' => _("New Library"),
       'library' => _("Library"),
@@ -51,17 +73,20 @@ echo $ctrl->get_less() . $ctrl
       'editLib' => _("Edit Library"),
       'hash' => _("Hash"),
       'configuration' => _("Configuration"),
-      //'version' => _("Version"),
       'cached' => _("cached"),
-      'mod' => _("Mod."),
-      'save' => _("Save"),
-      'cancel' => _("Cancel"),
-      'destroy' => _("Destroy"),
-      'delete_this_entry'=> _("Are you sure that you want to delete this entry?"),
       'search_conf' => _("Search configuration"),
       'libraryVersion' => _("Library: {0} - Version: {1}"),
-      'no_new_version' => _("You don't have new library's version to add!"),
-      'order' => _("Order")
+      'noNewVersion' => _("You don't have a new library's version to add."),
+      'versionGithubImport' => _("You don't have a new library's version to add (locally). Do you want to import it from GitHub?"),
+      'order' => _("Order"),
+      'skip' => _("Skip"),
+      'import' => _("Import"),
+      'githubVersion' => _("Select the version you want to import from GitHub"),
+      'githubUpdates' => _("GitHub updates"),
+      'updates' => _("Updates"),
+      'checkUpdates' => _("Do you want to check updates from GitHub? This may take a long time.")
     ]
   ])
-  ->get_view('', false);
+  ->get_view_group(\bbn\x::merge_arrays($templates, [
+    ''
+  ]));
