@@ -12,7 +12,7 @@ var versionEdit = function(e){
   $("div.k-edit-field, div.k-edit-label", cont).remove();
   // Insert template
   $("div.k-edit-form-container", cont).prepend($("#932f9u4923rjasdu09j3333").html());
-  appui.fn.post('cdn/data/version/edit', {version: e.model.id}, function(p){
+  bbn.fn.post('cdn/data/version/edit', {version: e.model.id}, function(p){
     if ( p.data ){
       // Show form
       $("#asdahf8923489yhf98923hr", cont).show();
@@ -109,7 +109,7 @@ var versionEdit = function(e){
       });
       // Insert new language file
       $("a.k-button.k-button-icontext.k-grid-add.fa.fa-plus.add-lang", cont).on("click", function(){
-        appui.fn.popup($("#9342ja823hioasfy3oi").html(), data.lng.add_language, 850, false, function(w){
+        bbn.fn.popup($("#9342ja823hioasfy3oi").html(), data.lng.add_language, 850, false, function(w){
           $("#845hiay8h9fhuwiey823hi", w).kendoTreeView({
             dataSource: p.data.languages_tree,
             select: function(s){
@@ -129,10 +129,10 @@ var versionEdit = function(e){
           $("a.k-button:first", w).on("click", function(){
             $("#y7hhiawza3u9y983w2asj9h9xe4", cont).data("kendoGrid").dataSource.add({path: $("input[name=path]", w).val()});
             e.model.dirty = true;
-            appui.fn.closePopup();
+            bbn.fn.closePopup();
           });
           $("a.k-button:last", w).on("click", function(){
-            appui.fn.closePopup();
+            bbn.fn.closePopup();
           });
         });
       });
@@ -164,7 +164,7 @@ var versionEdit = function(e){
       });
       // Insert new theme file
       $("a.k-button.k-button-icontext.k-grid-add.fa.fa-plus.add-theme", "#y99hu8y4ss3a2s5423ld453wmn", cont).on("click", function(){
-        appui.fn.popup($("#9342ja823hioasfy3oi").html(), data.lng.add_theme_file, 850, false, function(w){
+        bbn.fn.popup($("#9342ja823hioasfy3oi").html(), data.lng.add_theme_file, 850, false, function(w){
           $("#845hiay8h9fhuwiey823hi", w).kendoTreeView({
             dataSource: p.data.themes_tree,
             select: function(s){
@@ -184,10 +184,10 @@ var versionEdit = function(e){
           $("a.k-button:first", w).on("click", function(){
             $("#y99hu8y4ss3a2s5423ld453wmn", cont).data("kendoGrid").dataSource.add({path: $("input[name=path]", w).val()});
             e.model.dirty = true;
-            appui.fn.closePopup();
+            bbn.fn.closePopup();
           });
           $("a.k-button:last", w).on("click", function(){
-            appui.fn.closePopup();
+            bbn.fn.closePopup();
           });
         });
       });
@@ -220,7 +220,7 @@ var versionEdit = function(e){
           editor: function(container, options){
             var libraries = [];
             $.each(p.data.lib_ver, function(i,e){
-              if ( appui.fn.search(libraries, 'lib_name', e.lib_name) < 0 ){
+              if ( bbn.fn.search(libraries, 'lib_name', e.lib_name) < 0 ){
                 libraries.push(e);
               }
             });

@@ -9,7 +9,7 @@ var configurationsGrid = $("#98324nas9t4pash9d2n3ifau"),
               }
             },
             create: function(o){
-              appui.fn.post('cdn/configurations', o.data, function(d){
+              bbn.fn.post('cdn/configurations', o.data, function(d){
                 if ( d.data && d.data.length ){
                   o.success(d.data);
                 }
@@ -19,7 +19,7 @@ var configurationsGrid = $("#98324nas9t4pash9d2n3ifau"),
               });
             },
             update: function(o){
-              appui.fn.post('cdn/configurations', o.data, function(d){
+              bbn.fn.post('cdn/configurations', o.data, function(d){
                 if ( d.data ){
                   o.success(d.data);
                 }
@@ -30,7 +30,7 @@ var configurationsGrid = $("#98324nas9t4pash9d2n3ifau"),
             },
             destroy: function(o){
               if ( o.data.hash !== undefined ){
-                appui.fn.post('cdn/configurations', {hash: o.data.hash}, function(d){
+                bbn.fn.post('cdn/configurations', {hash: o.data.hash}, function(d){
                   if ( d.data.success ){
                     o.success();
                   }

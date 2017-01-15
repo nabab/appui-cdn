@@ -22,7 +22,7 @@ var librariesGridInit = function(){
           o.data.themes = JSON.stringify($("#y99hu8y4ss3a2s5423ld453wmn").data("kendoGrid").dataSource.data());
           o.data.dependencies = $("#732ijfasASdha92389yasdh9823").data("kendoGrid").dataSource.data().toJSON();
           o.data.latest = 1;
-          appui.fn.post('cdn/actions/library/add', o.data, function(d){
+          bbn.fn.post('cdn/actions/library/add', o.data, function(d){
             if ( d.data && d.data.length ){
               librariesGrid.data("kendoGrid").dataSource.data(d.data);
               o.success();
@@ -35,8 +35,8 @@ var librariesGridInit = function(){
         update: function(o){
           o.data.edit = 1;
           o.data.new_name = o.data.name;
-          o.data.name = $("input[name=old_name]:hidden", appui.fn.get_popup()).val();
-          appui.fn.post('cdn/actions/library/edit', o.data, function(d){
+          o.data.name = $("input[name=old_name]:hidden", bbn.fn.get_popup()).val();
+          bbn.fn.post('cdn/actions/library/edit', o.data, function(d){
             if ( d.data ){
               o.success(d.data);
             }
@@ -47,7 +47,7 @@ var librariesGridInit = function(){
         },
         destroy: function(o){
           if ( o.data.name !== undefined ){
-            appui.fn.post('cdn/actions/library/delete', {name: o.data.name}, function(d){
+            bbn.fn.post('cdn/actions/library/delete', {name: o.data.name}, function(d){
               if ( d.data.success ){
                 o.success();
               }
@@ -192,8 +192,8 @@ var librariesGridInit = function(){
       mode: "popup",
       confirmation: data.lng.delete_this_entry,
       window: {
-        width: appui.env.width - 150,
-        maxHeight: appui.env.height - 50,
+        width: bbn.env.width - 150,
+        maxHeight: bbn.env.height - 50,
       },
       template: function(e){
         if ( !e.name ){
@@ -211,7 +211,7 @@ var librariesGridInit = function(){
 
       kcont.bind('activate', function(){
         // Resize and center
-        appui.fn.analyzeContent(cont);
+        bbn.fn.analyzeContent(cont);
         $("div.appui-form-label", cont).css('padding-right', '0');
         kcont.center();
       });
@@ -233,7 +233,7 @@ var librariesGridInit = function(){
       $("a.k-grid-info", librariesGrid).on("click", function(e){
         var grid = librariesGrid.data("kendoGrid"),
             dataItem = grid.dataItem($(e.target).closest("tr.k-master-row"));
-        appui.fn.popup(
+        bbn.fn.popup(
           $("#i3h34uefn94uh3rnfe9sfd23u").html(),
           data.lng.library + ': '  + dataItem.title,
           600, 600,
@@ -242,17 +242,17 @@ var librariesGridInit = function(){
                kcont = w.data("kendoWindow");
 
             // Set window's max height
-            kcont.setOptions({maxHeight: appui.env.height - 50});
+            kcont.setOptions({maxHeight: bbn.env.height - 50});
 
             // Set the right licence name
             if ( dataItem.licence ){
-              dataItem.licence = appui.fn.get_field(data.licences, 'licence', dataItem.licence, 'name');
+              dataItem.licence = bbn.fn.get_field(data.licences, 'licence', dataItem.licence, 'name');
             }
 
             // Bind library's info
             kendo.bind(w, dataItem);
             // Library's versions grid
-            appui.fn.post('cdn/data/versions', {id_lib: dataItem.name}, function(p){
+            bbn.fn.post('cdn/data/versions', {id_lib: dataItem.name}, function(p){
               if ( p.data !== undefined ){
                 $("#hufsa93hias9n38fn3293h389r2", cont).kendoGrid({
                   dataSource: p.data,
@@ -281,7 +281,7 @@ var librariesGridInit = function(){
   updatesBt = $("#anksd8u23hasdh09oi234h8", librariesGrid).kendoButton({
     enable: false,
     click: function(){
-      appui.fn.popup('<div></div>', '<i class="fa fa-github"></i> ' + data.lng.githubUpdates, appui.env.width-100, false, function(w){
+      bbn.fn.popup('<div></div>', '<i class="fa fa-github"></i> ' + data.lng.githubUpdates, bbn.env.width-100, false, function(w){
 
         $("div", w).first().kendoGrid({
           dataSource: updatesBt.data("updates"),
@@ -303,7 +303,7 @@ var librariesGridInit = function(){
             $("a.k-button.fa-trash", w).click(function(c){
               var dataItem = e.sender.dataItem($(c.target).closest("tr"));
               e.sender.dataSource.remove(dataItem);
-              updatesBt.data("updates").splice(appui.fn.search(updatesBt.data("updates"), 'title', dataItem.title), 1);
+              updatesBt.data("updates").splice(bbn.fn.search(updatesBt.data("updates"), 'title', dataItem.title), 1);
               w.data("kendoWindow").center();
               updatesBt.html(
                 '<i class="fa fa-cubes" style="margin-right: 5px"></i>' +
@@ -325,8 +325,8 @@ var librariesGridInit = function(){
 
   $("#pqwenksdfh823rsnasdh98", ele).kendoButton({
     click: function(){
-      appui.fn.confirm(data.lng.checkUpdates, function(){
-        appui.fn.post('cdn/github/updates', {}, function(d){
+      bbn.fn.confirm(data.lng.checkUpdates, function(){
+        bbn.fn.post('cdn/github/updates', {}, function(d){
           if ( d.data && d.data.length ){
             updatesBt.data("updates", d.data);
             updatesBt.data("kendoButton").enable(true);

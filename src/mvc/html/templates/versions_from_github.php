@@ -13,7 +13,7 @@
     <div class="appui-form-label appui-r fix-width no-padding"></div>
     <div class="appui-form-field appui-r">
       <button class="k-button" type="submit"><i class="fa fa-download"></i> <?=_("Import")?></button>
-      <button class="k-button" type="button" onclick="appui.fn.closePopup();"><i class="fa fa-close"></i> <?=_("Cancel")?></button>
+      <button class="k-button" type="button" onclick="bbn.fn.closePopup();"><i class="fa fa-close"></i> <?=_("Cancel")?></button>
     </div>
   </form>
 </script>

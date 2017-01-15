@@ -11,7 +11,7 @@ var versionInfo = function(e, grid){
   // Date fix
   dataItem.date_added = moment(dataItem.date_added).format('DD/MM/YYYY');
 
-  appui.fn.popup(
+  bbn.fn.popup(
     $("#kkk3jaSdh23490hqAsdha93").html(),
     kendo.format(data.lng.libraryVersion, dataItem.library, dataItem.name),
     800, false,
@@ -25,7 +25,7 @@ var versionInfo = function(e, grid){
           };
 
       // Set window's max height
-      kcont.setOptions({maxHeight: appui.env.height - 50});
+      kcont.setOptions({maxHeight: bbn.env.height - 50});
 
       // Set dynamic window's height
       cont.closest(".k-window").height("");

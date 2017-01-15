@@ -9,7 +9,7 @@ var libraryVersions = function(d){
     dataSource: {
       transport: {
         read: function(o){
-          appui.fn.post('cdn/data/versions', {id_lib: d.data.name}, function(p){
+          bbn.fn.post('cdn/data/versions', {id_lib: d.data.name}, function(p){
             if ( p.data ){
               o.success(p.data);
             }
@@ -21,7 +21,7 @@ var libraryVersions = function(d){
             $("div", "#joisfd8723hifwe78238hds").each(function(i,v){
               files.push($(v).attr('path'));
             });
-            appui.fn.post('cdn/actions/version/edit', {
+            bbn.fn.post('cdn/actions/version/edit', {
               id_ver: o.data.id,
               files: JSON.stringify(files),
               languages: JSON.stringify($("#y7hhiawza3u9y983w2asj9h9xe4").data("kendoGrid").dataSource.data()),
@@ -41,7 +41,7 @@ var libraryVersions = function(d){
         },
         destroy: function(o){
           if ( (o.data.id !== undefined) && (o.data.library !== undefined) ){
-            appui.fn.post('cdn/actions/version/delete', {
+            bbn.fn.post('cdn/actions/version/delete', {
               id_ver: o.data.id,
               library: o.data.library
             }, function(p){
@@ -113,7 +113,7 @@ var libraryVersions = function(d){
       });
       // Insert new library's version (Plus button)
       $("a.k-button.k-button-icontext.k-grid-add.fa.fa-plus.add-ver", versionsGrid).on("click", function(e){
-        appui.fn.post('cdn/data/version/add', {folder: d.data.name}, function(p){
+        bbn.fn.post('cdn/data/version/add', {folder: d.data.name}, function(p){
           versionAdd(p, d);
         });
       });
@@ -123,8 +123,8 @@ var libraryVersions = function(d){
       confirmation: data.lng.delete_this_entry,
       window: {
         title: data.lng.edit_library,
-        width: appui.env.width - 100,
-        maxHeight: appui.env.height - 150
+        width: bbn.env.width - 100,
+        maxHeight: bbn.env.height - 150
       }
     },
     edit: function(e){

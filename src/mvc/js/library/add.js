@@ -32,7 +32,7 @@ var libraryAdd = function(e){
 
         kendo.bind($("#lkasu9rnos9ufsdfw9udfsdy8923", cont), e.model);
 
-        appui.fn.analyzeContent(cont);
+        bbn.fn.analyzeContent(cont);
         $("div.appui-form-label", cont).css('padding-right', '0');
         kcont.center();
 
@@ -49,7 +49,7 @@ var libraryAdd = function(e){
           dataSource: e.model.versions,
           dataTextField: 'text',
           dataValueField: 'id',
-          value: appui.fn.get_field(e.model.versions, 'is_latest', true, 'id')
+          value: bbn.fn.get_field(e.model.versions, 'is_latest', true, 'id')
         });
 
         // Insert "Next" button
@@ -59,7 +59,7 @@ var libraryAdd = function(e){
             '<span class="k-icon k-i-arrow-e" style="margin-left: 3px; margin-right: -3px"></span>' +
             '</a>').click(function(){
             if ( $("input[name=name]", cont).val().length && $("input[name=title]", cont).val().length ){
-              appui.fn.post('cdn/data/version/add', {
+              bbn.fn.post('cdn/data/version/add', {
                 folder: $("input[name=name]", cont).val(),
                 git_id_ver: $("select[name=git_id]", cont).data("kendoDropDownList").value(),
                 git_user: info !== undefined ? info.user : false,
@@ -168,7 +168,7 @@ var libraryAdd = function(e){
                   });
                   // Insert new language file
                   $("a.k-button.k-button-icontext.k-grid-add.fa.fa-plus.add-lang", "#y7hhiawza3u9y983w2asj9h9xe4", cont).on("click", function(){
-                    appui.fn.popup($("#9342ja823hioasfy3oi").html(), data.lng.add_language, 850, false, function(w){
+                    bbn.fn.popup($("#9342ja823hioasfy3oi").html(), data.lng.add_language, 850, false, function(w){
                       $("#845hiay8h9fhuwiey823hi", w).kendoTreeView({
                         dataSource: d.data.languages_tree,
                         select: function(s){
@@ -187,10 +187,10 @@ var libraryAdd = function(e){
                       });
                       $("a.k-button:first", w).on("click", function(){
                         $("#y7hhiawza3u9y983w2asj9h9xe4", cont).data("kendoGrid").dataSource.add({path: $("input[name=path]", w).val()});
-                        appui.fn.closePopup();
+                        bbn.fn.closePopup();
                       });
                       $("a.k-button:last", w).on("click", function(){
-                        appui.fn.closePopup();
+                        bbn.fn.closePopup();
                       });
                     });
                   });
@@ -219,7 +219,7 @@ var libraryAdd = function(e){
                   });
                   // Insert new theme file
                   $("a.k-button.k-button-icontext.k-grid-add.fa.fa-plus.add-theme", "#y99hu8y4ss3a2s5423ld453wmn", cont).on("click", function(){
-                    appui.fn.popup($("#9342ja823hioasfy3oi").html(), data.lng.add_theme_file, 850, false, function(w){
+                    bbn.fn.popup($("#9342ja823hioasfy3oi").html(), data.lng.add_theme_file, 850, false, function(w){
                       $("#845hiay8h9fhuwiey823hi", w).kendoTreeView({
                         dataSource: d.data.files_tree,
                         select: function(s){
@@ -236,7 +236,7 @@ var libraryAdd = function(e){
                         collapse: function(){
                           setTimeout(function(){
                             // Window redraw
-                            cont.redraw();
+                            cont.bbn("redraw");
                             // Center the window
                             kcont.center();
                           }, 1000);
@@ -244,10 +244,10 @@ var libraryAdd = function(e){
                       });
                       $("a.k-button:first", w).on("click", function(){
                         $("#y99hu8y4ss3a2s5423ld453wmn", cont).data("kendoGrid").dataSource.add({path: $("input[name=path]", w).val()});
-                        appui.fn.closePopup();
+                        bbn.fn.closePopup();
                       });
                       $("a.k-button:last", w).on("click", function(){
-                        appui.fn.closePopup();
+                        bbn.fn.closePopup();
                       });
                     });
                   });
@@ -285,7 +285,7 @@ var libraryAdd = function(e){
                       editor: function(container, options){
                         var libraries = [];
                         $.each(d.data.lib_ver, function(i,e){
-                          if ( appui.fn.search(libraries, 'lib_name', e.lib_name) < 0 ){
+                          if ( bbn.fn.search(libraries, 'lib_name', e.lib_name) < 0 ){
                             libraries.push(e);
                           }
                         });
@@ -417,7 +417,7 @@ var libraryAdd = function(e){
               });
             }
             else {
-              appui.fn.alert(data.lng.setFolderName);
+              bbn.fn.alert(data.lng.setFolderName);
               $("input[name=name]", cont).focus();
             }
           })
@@ -446,7 +446,7 @@ var libraryAdd = function(e){
         var url = $("input[name=github]", cont).val();
 
         if ( url.length && /^(http|https):\/\/[^ "]+$/.test(url) ){
-          appui.fn.post('cdn/github/info', {url: url}, function(d){
+          bbn.fn.post('cdn/github/info', {url: url}, function(d){
             if ( d.data ){
               showForm(d.data);
             }

@@ -20,7 +20,7 @@ var libraryEdit = function(e){
   });
   // Import from GitHub button
   $("a.k-button.fa-download", cont).click(function(){
-    appui.fn.post("cdn/github/info", {
+    bbn.fn.post("cdn/github/info", {
       url: e.model.git,
       only_info: true
     }, function(d){
@@ -28,9 +28,9 @@ var libraryEdit = function(e){
         for (var prop in d.data){
           if ( (prop !== 'name') && (prop !== 'latest') && (e.model[prop] !== undefined) ){
             if ( prop === 'licence' ){
-              var lic = appui.fn.get_field(data.licences, 'name', d.data[prop], 'licence');
+              var lic = bbn.fn.get_field(data.licences, 'name', d.data[prop], 'licence');
               if ( !lic ){
-                lic = appui.fn.get_field(data.licences, 'licence', d.data[prop], 'licence');
+                lic = bbn.fn.get_field(data.licences, 'licence', d.data[prop], 'licence');
               }
               if ( lic ){
                 e.model.set(prop, lic);
