@@ -1,7 +1,7 @@
 <?php
 /** @var $ctrl \bbn\mvc\controller */
 
-$templates = \bbn\file\dir::get_files($ctrl->plugin_path('appui-cdn').'/mvc/html/templates');
+$templates = \bbn\file\dir::get_files($ctrl->plugin_path('appui-cdn').'mvc/html/templates');
 if ( !empty($templates) ){
   $templates = array_map(function($t){
     return './templates/'.basename($t, '.php');

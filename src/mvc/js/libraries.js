@@ -211,7 +211,7 @@ var librariesGridInit = function(){
 
       kcont.bind('activate', function(){
         // Resize and center
-        bbn.fn.analyzeContent(cont);
+        bbn.fn.analyzeContent(cont, true);
         $("div.appui-form-label", cont).css('padding-right', '0');
         kcont.center();
       });

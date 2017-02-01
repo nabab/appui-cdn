@@ -12,15 +12,25 @@ var versionAdd = function(versionData, libData){
     ){
       bbn.fn.popup($("#932f9u4923rjasdu09j3333").html(), kendo.format(data.lng.add_version, libData.data.title), bbn.env.width - 100, false, function(cont){
 
+        var obs = new kendo.observable(versionData.data);
+
         var kcont = cont.data("kendoWindow");
 
         // Show form
         $("#asdahf8923489yhf98923hr", cont).show();
 
-        kendo.bind(cont, versionData.data);
+        kendo.bind(cont, obs);
+
+        obs.bind("change", function(a, b){
+          bbn.fn.log("CHANGED", a, b, this);
+        });
+
+        bbn.fn.log(versionData.data.version ? "V " + versionData.data.version : "NO version");
 
         // Set version's name readonly
         $("#u93248safn328dasuq89yu", cont).attr('readonly', 'readonly');
+
+        $("#u93248safn328dasuq89yu", cont).click(function(){bbn.fn.log(obs.get("version"))});
 
         // Create files treeviews
         $("#ashd3538y1i35h8oasdj023", cont).kendoTreeView({

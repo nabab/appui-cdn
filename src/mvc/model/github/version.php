@@ -6,7 +6,6 @@
  * Time: 11:48
  */
 /** @var $model \bbn\mvc\model */
-
 if ( !empty($model->data['git_user']) && !empty($model->data['git_repo']) && defined('BBN_GITHUB_TOKEN') ){
   $git = new \Github\Client();
   $git->authenticate(BBN_GITHUB_TOKEN, Github\Client::AUTH_HTTP_TOKEN);
