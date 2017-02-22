@@ -1,0 +1,351 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-04-15 13:22+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../../mvc/public/management.php:16
+msgid "Title"
+msgstr "Titolo"
+
+#: ../../../mvc/public/management.php:17
+msgid "Folder name"
+msgstr "Nome della cartella"
+
+#: ../../../mvc/html/management.php:5
+msgid "Libraries"
+msgstr "Librerie"
+
+#: ../../../mvc/html/management.php:8
+msgid "Configurations"
+msgstr "Configurazioni"
+
+#: ../../../mvc/html/management.php:28 ../../../mvc/html/management.php:90
+msgid "INFO"
+msgstr "INFO"
+
+#: ../../../mvc/html/management.php:30
+msgid "Title:"
+msgstr "Titolo:"
+
+#: ../../../mvc/html/management.php:34
+msgid "Folder name:"
+msgstr ""
+
+#: ../../../mvc/html/management.php:38
+msgid "Function name:"
+msgstr ""
+
+#: ../../../mvc/html/management.php:42
+msgid "Latest version:"
+msgstr ""
+
+#: ../../../mvc/html/management.php:46
+msgid "Author:"
+msgstr ""
+
+#: ../../../mvc/html/management.php:50
+msgid "Licence:"
+msgstr ""
+
+#: ../../../mvc/html/management.php:54
+msgid "WebSite:"
+msgstr ""
+
+#: ../../../mvc/html/management.php:58
+msgid "Download:"
+msgstr ""
+
+#: ../../../mvc/html/management.php:62
+msgid "Documentation:"
+msgstr ""
+
+#: ../../../mvc/html/management.php:66
+msgid "Support:"
+msgstr ""
+
+#: ../../../mvc/html/management.php:70
+msgid "GitHub:"
+msgstr ""
+
+#: ../../../mvc/html/management.php:79
+msgid "VERSIONS"
+msgstr ""
+
+#: ../../../mvc/html/management.php:92
+msgid "Version:"
+msgstr ""
+
+#: ../../../mvc/html/management.php:94
+msgid "Date:"
+msgstr ""
+
+#: ../../../mvc/html/management.php:96
+msgid "Used:"
+msgstr ""
+
+#: ../../../mvc/html/management.php:104
+msgid "CONTENT"
+msgstr ""
+
+#: ../../../mvc/html/management.php:110
+msgid "DEPENDENCIES"
+msgstr ""
+
+#: ../../../mvc/html/management.php:120 ../../../mvc/public/management.php:39
+msgid "Name"
+msgstr ""
+
+#: ../../../mvc/html/management.php:124 ../../../mvc/html/management.php:153
+#: ../../../mvc/public/management.php:38
+msgid "Files"
+msgstr ""
+
+#: ../../../mvc/html/management.php:128
+msgid "Files Order (drag&drop)"
+msgstr ""
+
+#: ../../../mvc/html/management.php:132
+msgid "Languages"
+msgstr ""
+
+#: ../../../mvc/html/management.php:136
+msgid "Themes"
+msgstr ""
+
+#: ../../../mvc/html/management.php:140
+msgid "Dependecies"
+msgstr ""
+
+#: ../../../mvc/html/management.php:149
+msgid "Path string"
+msgstr ""
+
+#: ../../../mvc/html/management.php:161 ../../../mvc/public/management.php:32
+#: ../../../mvc/public/management.php:66 ../../../mvc/public/management.php:68
+msgid "Save"
+msgstr ""
+
+#: ../../../mvc/html/management.php:165 ../../../mvc/public/management.php:33
+#: ../../../mvc/public/management.php:67 ../../../mvc/public/management.php:69
+msgid "Cancel"
+msgstr ""
+
+#: ../../../mvc/public/management.php:18
+msgid "Function Name"
+msgstr ""
+
+#: ../../../mvc/public/management.php:19
+msgid "latest"
+msgstr ""
+
+#: ../../../mvc/public/management.php:20
+msgid "Author"
+msgstr ""
+
+#: ../../../mvc/public/management.php:21
+msgid "Licence"
+msgstr ""
+
+#: ../../../mvc/public/management.php:22
+msgid "Select one"
+msgstr ""
+
+#: ../../../mvc/public/management.php:23
+msgid "Web Site"
+msgstr ""
+
+#: ../../../mvc/public/management.php:24
+msgid "Download"
+msgstr ""
+
+#: ../../../mvc/public/management.php:25
+msgid "Doc"
+msgstr ""
+
+#: ../../../mvc/public/management.php:26
+msgid "Git Hub"
+msgstr ""
+
+#: ../../../mvc/public/management.php:27
+msgid "Supp"
+msgstr ""
+
+#: ../../../mvc/public/management.php:28
+msgid "info"
+msgstr ""
+
+#: ../../../mvc/public/management.php:29
+msgid "edit"
+msgstr ""
+
+#: ../../../mvc/public/management.php:30
+msgid "New Library's Version"
+msgstr ""
+
+#: ../../../mvc/public/management.php:31 ../../../mvc/public/management.php:65
+#: ../../../mvc/public/management.php:67
+msgid "Mod."
+msgstr ""
+
+#: ../../../mvc/public/management.php:34 ../../../mvc/public/management.php:68
+#: ../../../mvc/public/management.php:70
+msgid "Destroy"
+msgstr ""
+
+#: ../../../mvc/public/management.php:35
+msgid "Del"
+msgstr ""
+
+#: ../../../mvc/public/management.php:36 ../../../mvc/public/management.php:69
+#: ../../../mvc/public/management.php:71
+msgid "Are you sure that you want to delete this entry?"
+msgstr ""
+
+#: ../../../mvc/public/management.php:37
+msgid "Next"
+msgstr ""
+
+#: ../../../mvc/public/management.php:40
+msgid "Before"
+msgstr ""
+
+#: ../../../mvc/public/management.php:41
+msgid "Set the folder name first, please."
+msgstr ""
+
+#: ../../../mvc/public/management.php:42 ../../../mvc/public/management.php:50
+#: ../../../mvc/public/management.php:52
+msgid "Version"
+msgstr ""
+
+#: ../../../mvc/public/management.php:43
+msgid "Date"
+msgstr ""
+
+#: ../../../mvc/public/management.php:45
+msgid "NO DEPENDENCIES"
+msgstr ""
+
+#: ../../../mvc/public/management.php:46
+msgid "Edit library's version"
+msgstr ""
+
+#: ../../../mvc/public/management.php:47
+msgid "Select dependences..."
+msgstr ""
+
+#: ../../../mvc/public/management.php:48
+msgid "Add"
+msgstr ""
+
+#: ../../../mvc/public/management.php:49 ../../../mvc/public/management.php:51
+msgid "library's version"
+msgstr ""
+
+#: ../../../mvc/public/management.php:51 ../../../mvc/public/management.php:53
+msgid "Add theme file"
+msgstr ""
+
+#: ../../../mvc/public/management.php:52 ../../../mvc/public/management.php:54
+msgid "New Library"
+msgstr ""
+
+#: ../../../mvc/public/management.php:53 ../../../mvc/public/management.php:55
+msgid "Library"
+msgstr ""
+
+#: ../../../mvc/public/management.php:54 ../../../mvc/public/management.php:56
+msgid "Search library"
+msgstr ""
+
+#: ../../../mvc/public/management.php:55 ../../../mvc/public/management.php:57
+msgid "Edit Library"
+msgstr ""
+
+#: ../../../mvc/public/management.php:61 ../../../mvc/public/management.php:63
+msgid "Hash"
+msgstr ""
+
+#: ../../../mvc/public/management.php:62 ../../../mvc/public/management.php:64
+msgid "Configuration"
+msgstr ""
+
+#: ../../../mvc/public/management.php:64 ../../../mvc/public/management.php:66
+msgid "cached"
+msgstr ""
+
+#: ../../../mvc/public/management.php:70 ../../../mvc/public/management.php:72
+msgid "Search configuration"
+msgstr ""
+
+#: ../../../mvc/model/libraries.php:53
+msgid "Error to add new library's version."
+msgstr ""
+
+#: ../../../mvc/model/versions.php:49
+msgid "All library's versions (subfolders) are existing into database."
+msgstr ""
+
+#: ../../../mvc/model/versions.php:53
+msgid ""
+"The library's directory isn't existing or you don't have a version folder "
+"inserted."
+msgstr ""
+
+#: ../../../mvc/model/versions.php:240
+msgid "Error to delete a version's dependency"
+msgstr ""
+
+#: ../../../mvc/model/versions.php:253
+msgid "Error to insert a new version's dependency"
+msgstr ""
+
+#: ../../../mvc/public/management.php:19
+msgid "Latest"
+msgstr ""
+
+#: ../../../mvc/public/management.php:22
+msgid "Select one..."
+msgstr ""
+
+#: ../../../mvc/public/management.php:23
+msgid "WebSite"
+msgstr ""
+
+#: ../../../mvc/public/management.php:25
+msgid "Doc."
+msgstr ""
+
+#: ../../../mvc/public/management.php:26
+msgid "GitHub"
+msgstr ""
+
+#: ../../../mvc/public/management.php:27
+msgid "Supp."
+msgstr ""
+
+#: ../../../mvc/public/management.php:35
+msgid "Del."
+msgstr ""
+
+#: ../../../mvc/public/management.php:49
+msgid "Add {0}'s new version"
+msgstr ""
+
+#: ../../../mvc/public/management.php:50
+msgid " Library: {0} - Version: {1}"
+msgstr ""
