@@ -197,7 +197,7 @@ var versionAdd = function(versionData, libData){
 
         // Set latest checked
         $("#hw4o5923noasd890324yho", cont).attr({checked: 'checked'}).click(function(){
-          var eleCont = $(this).closest("div.appui-form-field");
+          var eleCont = $(this).closest("div.bbn-form-field");
           if ( $(this).is(':checked') ){
             var dd = $("#khasdknasduiiyi3rhas", cont).data("kendoDropDownList");
             dd.destroy();
@@ -348,7 +348,7 @@ var versionAdd = function(versionData, libData){
         // Slave dependencies
         if ( versionData.data.slave_dependencies && versionData.data.slave_dependencies.length ){
           $("#asdahf8923489yhf98923hr", cont).append($("#hfashio3289yasdnuqwy8232").html());
-          var cbCont = $("form", "div.appui-form-field:last", cont);
+          var cbCont = $("form", "div.bbn-form-field:last", cont);
           $.each(versionData.data.slave_dependencies, function(i, e){
             $('<div>' +
               '<input id="' + i + 'sd_' + e.name + '" class="k-checkbox" type="checkbox"' +
@@ -360,18 +360,18 @@ var versionAdd = function(versionData, libData){
 
         // Check all slave dependencies
         $("i.ds-check.fa-check-square-o", cont).parent().click(function(){
-          $("input:checkbox", $(this).closest("div.appui-form-field")).prop("checked", true);
+          $("input:checkbox", $(this).closest("div.bbn-form-field")).prop("checked", true);
         });
 
         // Uncheck all slave dependecies
         $("i.ds-check.fa-square-o", cont).parent().click(function(){
-          $("input:checkbox:checked", $(this).closest("div.appui-form-field")).prop("checked", false);
+          $("input:checkbox:checked", $(this).closest("div.bbn-form-field")).prop("checked", false);
         });
 
         // Add save and cancel buttons
         $("#asdahf8923489yhf98923hr", cont).append(
-          '<div class="appui-form-label" style="padding: 0; width: 120px"></div>' +
-          '<div class="appui-form-field" style="text-align: right">' +
+          '<div class="bbn-form-label" style="padding: 0; width: 120px"></div>' +
+          '<div class="bbn-form-field" style="text-align: right">' +
           '<a href="#" class="k-button k-button-icontext" style="margin-right: 5px">' +
           '<span class="k-icon k-update"></span>' +
           data.lng.save +
@@ -397,7 +397,7 @@ var versionAdd = function(versionData, libData){
             latest: latest,
             internal: $("#khasdknasduiiyi3rhas", cont).length ? $("#khasdknasduiiyi3rhas", cont).data("kendoDropDownList").value() : '',
             dependencies: $("#732ijfasASdha92389yasdh9823", cont).data("kendoGrid").dataSource.data().toJSON(),
-            slave_dependencies: bbn.fn.formdata($("form", "div.appui-form-field", cont)).slave_dep
+            slave_dependencies: bbn.fn.formdata($("form", "div.bbn-form-field", cont)).slave_dep
           }, function(i){
             if ( i.data.success ){
               if ( latest ){

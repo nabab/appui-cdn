@@ -33,7 +33,7 @@ var libraryAdd = function(e){
         kendo.bind($("#lkasu9rnos9ufsdfw9udfsdy8923", cont), e.model);
 
         bbn.fn.analyzeContent(cont);
-        $("div.appui-form-label", cont).css('padding-right', '0');
+        $("div.bbn-form-label", cont).css('padding-right', '0');
         kcont.center();
 
         // Initialize the dropdown for licence
@@ -253,8 +253,8 @@ var libraryAdd = function(e){
                   });
 
                   // Remove latest checkboxes
-                  $("#hw4o5923noasd890324yho", cont).closest("div.appui-form-field").prev().remove();
-                  $("#hw4o5923noasd890324yho", cont).closest("div.appui-form-field").remove();
+                  $("#hw4o5923noasd890324yho", cont).closest("div.bbn-form-field").prev().remove();
+                  $("#hw4o5923noasd890324yho", cont).closest("div.bbn-form-field").remove();
 
                   // Dependecies grid
                   $("#732ijfasASdha92389yasdh9823", cont).kendoGrid({

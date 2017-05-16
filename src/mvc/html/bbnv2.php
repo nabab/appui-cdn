@@ -1,4 +1,4 @@
-<div class="appui-full-content">
+<div class="bbn-full-content">
   <bbn-table :source="occurences" ref="table">
     <table>
       <thead>

@@ -10,4 +10,4 @@ $ctrl->data['db'] = new \bbn\db([
   'db' => BBN_CDN_DB
 ]);
 
-$ctrl->init_locale('it', 'appui-cdn');
+$ctrl->init_locale('it', 'bbn-cdn');
