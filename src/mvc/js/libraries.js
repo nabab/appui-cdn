@@ -1,9 +1,6 @@
 (function(){
   // All libraries grid
   var librariesGridInit = function (){
-    var librariesGrid = $("#RRsj983Jfjnv2kasihj234"),
-        updatesBt;
-
     librariesGrid.kendoGrid({
       dataSource: {
         transport: {
