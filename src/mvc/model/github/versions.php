@@ -5,6 +5,7 @@
  * Date: 21/12/2016
  * Time: 18:24
  */
+
 if ( !empty($model->data['git_user']) && !empty($model->data['git_repo']) && defined('BBN_GITHUB_TOKEN') ){
   $git = new \Github\Client();
   $git->authenticate(BBN_GITHUB_TOKEN, Github\Client::AUTH_HTTP_TOKEN);
@@ -12,9 +13,10 @@ if ( !empty($model->data['git_user']) && !empty($model->data['git_repo']) && def
   // Get the latest version
   $latest = '';
   try {
-    $l = $git->api('repo')->releases()->latest($model->data['git_user'], $model->data['git_repo']);
-    $latest = !empty($l) ? $l['name'] : '';
-
+    if ( $releases = $git->api('repo')->releases() ){
+      $l = $releases->latest($model->data['git_user'], $model->data['git_repo']);
+      $latest = !empty($l) ? $l['tag_name'] : '';
+    }
   }
   catch (Throwable $e) {
     try {
@@ -28,11 +30,16 @@ if ( !empty($model->data['git_user']) && !empty($model->data['git_repo']) && def
     }
   }
 
-  // Get all versions
-  try {
-    $versions = $git->api('repo')->releases()->all($model->data['git_user'], $model->data['git_repo']);
+  if ( $releases ){
+    try {
+      $versions = $releases->all($model->data['git_user'], $model->data['git_repo']);
+    }
+    catch (Throwable $e){
+      $versions = [];
+    }
   }
-  catch (Throwable $e){
+  // Can't ger versions
+  else {
     $versions = [];
   }
   // Create a list of versions like idversion => nameversion
@@ -41,13 +48,13 @@ if ( !empty($model->data['git_user']) && !empty($model->data['git_repo']) && def
     foreach ( $versions as $ver ){
       array_push($tmp, [
         'id' => $ver['id'],
-        'text' => $ver['name'] . ($latest === $ver['name'] ? ' ---> latest <---' : ''),
-        'is_latest' => $latest === $ver['name']
+        'text' => $ver['tag_name'] . ($latest === $ver['tag_name'] ? ' ---> latest <---' : ''),
+        'is_latest' => $latest === $ver['tag_name']
       ]);
     }
     $versions = $tmp;
   }
-  else {
+  else if ( $latest ){
     $versions = [[
       'id' => $latest,
       'text' => $latest . ' ---> latest <---',

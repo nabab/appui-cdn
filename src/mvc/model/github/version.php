@@ -34,7 +34,7 @@ if ( !empty($model->data['git_user']) && !empty($model->data['git_repo']) && def
     ($version = \bbn\x::to_object($git->api('repo')->releases()->show($model->data['git_user'], $model->data['git_repo'], $model->data['git_id_ver'])))
   ){
     // Version's name
-    $version_name = $version->name;
+    $version_name = $version->tag_name;
     // Get assets
     if ( $ass = $git->api('repo')->releases()->assets()->all($model->data['git_user'], $model->data['git_repo'], $model->data['git_id_ver']) ){
       $down_url = $ass[0]['browser_download_url'];
