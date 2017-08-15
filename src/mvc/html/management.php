@@ -1,4 +1,13 @@
-<!-- CDN tabstrip -->
+<div class="bbn-100">
+  <div class="bbn-w-100 bbn-full-height" style="overflow: hidden">
+    <div id="RRsj983Jfjnv2kasihj234" class="bbn-full-height"></div>
+  </div>
+  <?php foreach ( $templates as $tpl ){ ?>
+  <?=$tpl?>
+  <?php } ?>
+</div>
+
+<!-- CDN tabstrip -- >
 <div class="bbn-100">
   <div id="pe49ajAssj3knvVvn323" class="bbn-h-100">
     <ul>
@@ -10,11 +19,11 @@
       </li>
     </ul>
     <div class="bbn-full-height" style="padding: 0; margin: 0; border: 0">
-      <!-- All libraries grid -->
+      <!-- All libraries grid -- >
       <div id="RRsj983Jfjnv2kasihj234" class="bbn-h-100"></div>
     </div>
     <div class="bbn-full-height" style="padding: 0; margin: 0; border: 0">
-      <!-- All configurations grid -->
+      <!-- All configurations grid -- >
       <div id="98324nas9t4pash9d2n3ifau" class="bbn-h-100"></div>
     </div>
   </div>

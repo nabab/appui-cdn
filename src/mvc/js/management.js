@@ -2011,8 +2011,9 @@
               versionEdit(e);
             }
           });
-        },
+        };
         // CDN tabstrip
+        /*
         cdnTabStrip = $("#pe49ajAssj3knvVvn323").kendoTabStrip({
           animation: {
             open: {
@@ -2027,11 +2028,14 @@
             }
           }
         }).data("kendoTabStrip");
+        */
+    librariesGridInit();
+    isActivated = true;
 
-    cdnTabStrip.trigger("activate");
+    //cdnTabStrip.trigger("activate");
 
     // Main TabStrip container padding fix
-    $("#pe49ajAssj3knvVvn323").closest("div.k-content").css("padding", 0);
+    //$("#pe49ajAssj3knvVvn323").closest("div.k-content").css("padding", 0);
   };
 })();
 
