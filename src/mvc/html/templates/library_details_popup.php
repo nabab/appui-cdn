@@ -1,7 +1,7 @@
 <!-- Library details popup -->
 <script type="text/html" id="i3h34uefn94uh3rnfe9sfd23u">
   <!-- Info panel -->
-  <div class="k-block bbn-full-height">
+  <div class="k-block" v-bbn-fill-height>
     <div class="k-header k-shadow" style="text-align: center"><?=_("INFO")?></div>
     <!--<div style="padding: 10px; height: 310px">-->
     <div style="padding: 10px">
