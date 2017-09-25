@@ -1,6 +1,6 @@
 <div class="bbn-100">
-  <div class="bbn-w-100" v-bbn-fill-height style="overflow: hidden">
-    <div id="RRsj983Jfjnv2kasihj234" class="bbn-full-height"></div>
+  <div class="bbn-100">
+    <div id="RRsj983Jfjnv2kasihj234" class="bbn-100"></div>
   </div>
   <?php foreach ( $templates as $tpl ){ ?>
   <?=$tpl?>
