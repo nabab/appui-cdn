@@ -26,7 +26,7 @@ if ( !empty($model->data['db']) &&
     }
   }
   if ( $model->data['db']->update('libraries', $change, ['name' => $id]) ){
-    return $model->data;
+    return $change;
   }
   return false;
 }

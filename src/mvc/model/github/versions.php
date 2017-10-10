@@ -54,7 +54,16 @@ if ( !empty($model->data['git_user']) && !empty($model->data['git_repo']) && def
     }
     $versions = $tmp;
   }
-  else if ( $latest ){
+  /*else if ( !empty($tags) ){
+    $versions = array_map(function($t){
+      return [
+        'id' => $t['name'],
+        'text' => $t['name'],
+        'is_latest' => false
+      ];
+    }, $tags );
+  }*/
+  else if ( !empty($latest) ){
     $versions = [[
       'id' => $latest,
       'text' => $latest . ' ---> latest <---',

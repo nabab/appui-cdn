@@ -49,7 +49,7 @@
 
     <div class="bbn-form-label bbn-r"><?=_("GitHub")?></div>
     <div class="bbn-form-field">
-      <input class="k-textbox" v-bbn-fill-width name="git" data-bind="value: git" type="text">
+      <input class="k-textbox" name="git" data-bind="value: git" type="text">
       <a class="k-button fa fa-download" title="<?=("Import library's info from GitHub")?>" data-bind="visible: git"></a>
     </div>
 
