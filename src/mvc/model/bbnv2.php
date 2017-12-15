@@ -34,11 +34,11 @@ foreach ( $files as $f ){
       $c = substr($c, $pos + 4);
       if ( $idx = strpos($c, '.') ){
         $var = substr($c, 0, $idx);
-        $c = substr($c, strlen($var) + 1);
-        if ( in_array($var, $vars) && ($res = preg_match('/[^A-z0-9_]/', $c, $matches, PREG_OFFSET_CAPTURE)) ){
+        $c = substr($c, \strlen($var) + 1);
+        if ( \in_array($var, $vars) && ($res = preg_match('/[^A-z0-9_]/', $c, $matches, PREG_OFFSET_CAPTURE)) ){
           $i = $matches[0][1];
           $key = substr($c, 0, $i);
-          $c = substr($c, strlen($key) + 1);
+          $c = substr($c, \strlen($key) + 1);
           if ( !isset($bbn[$key]) ){
             $bbn[$key] = [
               'name' => $key,

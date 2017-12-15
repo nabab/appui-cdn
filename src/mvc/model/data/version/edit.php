@@ -8,7 +8,7 @@
 /** @var $model \bbn\mvc\model */
 
 // Returns the files data for the content treeviews with checked, all libraries list and if the version is latest. (EDIT MODE)
-if ( !empty($model->data['db']) && !empty($model->data['version']) && defined('BBN_CDN_PATH') ){
+if ( !empty($model->data['db']) && !empty($model->data['version']) && \defined('BBN_CDN_PATH') ){
   $ver = $model->data['db']->rselect('versions', ['name', 'library', 'content'], ['id' => $model->data['version']]);
   $p = BBN_CDN_PATH . 'lib/' . $ver['library'] . '/' . $ver['name'];
   $cont = json_decode($ver['content'], 1);
@@ -19,12 +19,12 @@ if ( !empty($model->data['db']) && !empty($model->data['version']) && defined('B
     if ( !empty($paths) ){
       foreach ( $paths as $p ){
         if ( empty($ext) || (!empty($ext) && ( (\bbn\str::file_ext($p) === $ext) || (\bbn\str::file_ext($p) === '') ) ) ){
-          $pa = substr($p, strlen($ver_path), strlen($p));
+          $pa = substr($p, \strlen($ver_path), \strlen($p));
           $r = [
             'text' => basename($p),
-            'path' => (strpos($pa, '/') === 0) ? substr($pa, 1, strlen($pa)) : $pa
+            'path' => (strpos($pa, '/') === 0) ? substr($pa, 1, \strlen($pa)) : $pa
           ];
-          if ( !empty($c) && in_array($r['path'], $c) ){
+          if ( !empty($c) && \in_array($r['path'], $c) ){
             $r['checked'] = 1;
           }
           if ( is_dir($p) ){

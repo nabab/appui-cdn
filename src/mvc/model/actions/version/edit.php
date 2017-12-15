@@ -49,7 +49,7 @@ if ( !empty($model->data['db']) &&
         $model->data['id_ver']
       );
       foreach ( $old_dep as $old ){
-        if ( !in_array($old, array_keys($dependencies)) ){
+        if ( !\in_array($old, array_keys($dependencies)) ){
           if ( !$model->data['db']->delete('dependencies', [
             'id_slave' => $model->data['id_ver'],
             'id_master' => $old
@@ -59,7 +59,7 @@ if ( !empty($model->data['db']) &&
         }
       }
       foreach ( $dependencies as $idd => $dep ){
-        if ( !in_array($idd, $old_dep) ){
+        if ( !\in_array($idd, $old_dep) ){
           if ( !$model->data['db']->insert('dependencies', [
             'id_slave' => $model->data['id_ver'],
             'id_master' => $idd,

@@ -5,7 +5,7 @@
 $db =& $model->data['db'];
 
 // Get all configurations
-if ( !empty($db) && count($model->data) === 1 ){
+if ( !empty($db) && \count($model->data) === 1 ){
   return [];
   $confs = $db->rselect_all('configurations');
   foreach ( $confs as $i => $conf ){
@@ -27,7 +27,7 @@ if ( !empty($db) && count($model->data) === 1 ){
 
 // Add new configuration
 else if ( !empty($db) &&
-  (count($model->data) > 2) &&
+  (\count($model->data) > 2) &&
   !empty($model->data['hash']) &&
   !empty($model->data['config'])
 ){
@@ -37,7 +37,7 @@ else if ( !empty($db) &&
 
 // Update configuration
 else if ( !empty($db) &&
-  (count($model->data) > 2) &&
+  (\count($model->data) > 2) &&
   !empty($model->data['hash']) &&
   !empty($model->data['new_hash']) &&
   !empty($model->data['config'])
@@ -54,7 +54,7 @@ else if ( !empty($db) &&
 
 // Delete configuration
 else if ( !empty($db) &&
-  (count($model->data) === 2) &&
+  (\count($model->data) === 2) &&
   !empty($model->data['hash'])
 ){
   if ( $db->delete('configurations', ['hash' => $model->data['hash']]) ){

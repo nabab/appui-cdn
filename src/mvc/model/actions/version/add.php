@@ -27,13 +27,15 @@ if ( !empty($model->data['db']) &&
     'theme_files' => $themes
   ];
   if ( !empty($model->data['latest']) ){
-    $internal = $model->data['db']->get_one("
+    $internal = $model->data['db']->get_one(<<<'SQLITE'
     SELECT MAX(internal)
     FROM versions
-    WHERE library = ?",
+    WHERE library = ?
+SQLITE
+,
       $model->data['name']
     );
-    if ( is_null($internal) ){
+    if ( \is_null($internal) ){
       $internal = 0;
     }
     else {
@@ -43,10 +45,12 @@ if ( !empty($model->data['db']) &&
   else if ( isset($model->data['internal']) && \bbn\str::is_integer($model->data['internal']) ){
     $internal = $model->data['internal'];
     if ( $model->data['db']->select_one('versions', 'internal', ['internal' => $internal]) ){
-      $model->data['db']->query("
+      $model->data['db']->query(<<<SQLITE
       UPDATE versions SET internal = internal+1
       WHERE internal >= ?
-        AND library = ?",
+        AND library = ?
+SQLITE
+,
         $internal,
         $model->data['name']
       );
@@ -63,10 +67,12 @@ if ( !empty($model->data['db']) &&
     if ( !empty($model->data['dependencies']) ){
       foreach ( $model->data['dependencies'] as $dep ){
         if ( $model->data['db']->select_one('dependencies', 'order', ['order' => $dep['order']]) ){
-          $model->data['db']->query('
+          $model->data['db']->query(<<<'SQLITE'
           UPDATE "dependencies" SET "order" = "order"+1
           WHERE "order" >= ?
-            AND "id_slave" = ?',
+            AND "id_slave" = ?
+SQLITE
+,
             $dep['order'],
             $id
           );
@@ -83,14 +89,16 @@ if ( !empty($model->data['db']) &&
     if ( !empty($model->data['slave_dependencies']) ){
       foreach ( $model->data['slave_dependencies'] AS $lib => $yes ){
         if ( !empty($yes) ){
-          $id_slave = $model->data['db']->get_one("
+          $id_slave = $model->data['db']->get_one(<<<SQLITE
             SELECT versions.id
             FROM versions
             JOIN libraries
               ON versions.library = libraries.name
               AND versions.name = libraries.latest
             WHERE libraries.name = ?
-            LIMIT 1",
+            LIMIT 1
+SQLITE
+,
             $lib
           );
           if ( !empty($id_slave) ){

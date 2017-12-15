@@ -2,7 +2,7 @@
 /** @var $ctrl \bbn\mvc\controller */
 
 // SQLITE connection
-if ( !defined('BBN_CDN_DB') ){
+if ( !\defined('BBN_CDN_DB') ){
   die("You need to define in order to use this plugin.");
 }
 $ctrl->data['db'] = new \bbn\db([

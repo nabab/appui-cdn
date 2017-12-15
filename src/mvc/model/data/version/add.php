@@ -6,7 +6,7 @@
  * Time: 10:24
  */
 /** @var $model \bbn\mvc\model */
-if ( !empty($model->data['folder']) && !empty($model->data['db']) && defined('BBN_CDN_PATH') ){
+if ( !empty($model->data['folder']) && !empty($model->data['db']) && \defined('BBN_CDN_PATH') ){
   // Library path
   $model->data['lib_path'] = BBN_CDN_PATH . 'lib/' . $model->data['folder'] . '/';
 
@@ -57,10 +57,10 @@ if ( !empty($model->data['folder']) && !empty($model->data['db']) && defined('BB
     $res = [];
     foreach ( \bbn\file\dir::get_files($path, 1) as $p ){
       if ( empty($ext) || (!empty($ext) && ( (\bbn\str::file_ext($p) === $ext) || (\bbn\str::file_ext($p) === '') ) ) ){
-        $pa = substr($p, strlen($ver_path), strlen($p));
+        $pa = substr($p, \strlen($ver_path), \strlen($p));
         $r = [
           'text' => basename($p),
-          'path' => (strpos($pa, '/') === 0) ? substr($pa, 1, strlen($pa)) : $pa
+          'path' => (strpos($pa, '/') === 0) ? substr($pa, 1, \strlen($pa)) : $pa
         ];
         if ( is_dir($p) ){
           $r['items'] = tree($p, $ver_path, $ext);
