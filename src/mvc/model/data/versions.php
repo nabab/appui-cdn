@@ -6,11 +6,12 @@
  * Time: 09:43
  */
 /** @var $model \bbn\mvc\model */
+$res['success'] = false;
 
 if ( !empty($model->data['db']) && !empty($model->data['id_lib']) ){
   // Get all library's versions
   $versions =  $model->data['db']->get_rows("
-    SELECT versions.*, 
+    SELECT versions.*,
       CASE WHEN versions.name = libraries.latest THEN 1 ELSE 0 END AS is_latest
     FROM versions
     JOIN libraries
@@ -42,7 +43,7 @@ if ( !empty($model->data['db']) && !empty($model->data['id_lib']) ){
       JOIN libraries
         ON versions.library = libraries.name
         AND versions.name = libraries.latest
-      JOIN dependencies 
+      JOIN dependencies
         ON versions.id = dependencies.id_master
       JOIN versions AS vers
         ON dependencies.id_slave = vers.id
@@ -57,5 +58,10 @@ if ( !empty($model->data['db']) && !empty($model->data['id_lib']) ){
     // Make version's files TreeView
     $versions[$i]['files_tree'] = \bbn\x::make_tree((array)json_decode($ver['content']));
   }
-  return $versions;
+  $res = [
+    'success' => true,
+    'versions' => $versions
+  ];
+  return $res;
 }
+return $res;

@@ -1,9 +1,14 @@
 (()=>{
   return {
+    created(){
+      bbn.vue.setComponentRule('cdn/components/', 'appui-cdn-management');
+      //for button in colums action
+      bbn.vue.addComponent('popup/info_lib');
+      bbn.vue.addComponent('popup/library_edit');
+      bbn.vue.unsetComponentRule();
+    },
     data(){
-      return{
-
-      }
+      return{}
     },
     methods:{
       buttons(row, col, idx){
@@ -38,18 +43,48 @@
           }
         ];
       },
+
+      /* this function is activated at the click of the info button and
+       *  its task is to display a popup with all the information related to the selected library
+       */
       info(row, col, idx){
-        bbn.vue.closest(this, 'bbn-tab').popup().open({
-          width: 850,
-          height: 450,
-          title: bbn._("Info") + ': '+ row.name,
-          component: this.$options.components['cdn-management-info-lib'],
-          source: row
+        let obj = {
+          info : row,
+          versions: []
+        };
+        bbn.fn.post('cdn/data/versions', {id_lib: row.name}, d =>{
+          if ( d.data.success ){
+            if ( d.data.versions ){
+              for ( let ele of d.data.versions ){
+                obj.versions.push({
+                  name: ele.name,
+                  date: moment(ele.date_added).format('DD/MM/YYYY')
+                });
+              }
+            }
+            bbn.vue.closest(this, 'bbn-tab').popup().open({
+              width: 480,
+              height: 700,
+              title: bbn._("Info") + ': '+ row.name,
+              component: 'appui-cdn-management-popup-info_lib',
+              source: obj
+            })
+          }
         });
       },
       edit(row, col, idx){
-        return this.$refs.table.edit(row, bbn._("Edit Library"), idx);
+          bbn.vue.closest(this, 'bbn-tab').popup().open({
+            width: 900,
+            height: 600,
+            title: bbn._("Edit Library"),
+            component: 'appui-cdn-management-popup-library_edit',
+            source: {row: row, licences: this.source.licences}
+          });
+
       },
+      /*edit(row, col, idx){
+        return this.$refs.table.edit(row, bbn._("Edit Library"), idx);
+      },*/
       removeLib(row, col, idx){
         return this.$refs.table.edit(row, bbn._("Delete library"), idx);
       },
@@ -106,51 +141,6 @@
       },
       showIconSupportLink(ele){
         return ( ele.support_link && ele.support_link.length ) ? "<div class='bbn-c'><a class='appui-no' href='"  + ele + "'" + "target='_blank'>" + "<i class='fa fa-ambulance'</i></a></div>" : '';
-      },
-    },
-    components: {
-      //for show info
-      'cdn-management-info-lib':{
-        template: '#cdn-management-info-lib',
-        name:'cdn-management-info-lib',
-        props: ['source'],
-        data(){
-          return {
-            infos:[
-              {text: 'Title', value: this.source.title ? this.source.title : '--' },
-              {text: 'Folder name', value: this.source.name ? this.source.title : '--' },
-              {text: 'Function name', value: this.source.fname ? this.source.title : '--' },
-              {text: 'Latest version', value: this.source.latest ? this.source.title : '--' },
-              {text: 'Author', value: this.source.author ? this.source.title : '--' },
-              {text: 'Description', value: this.source.description ? this.source.description : '--' },
-              {text: 'Licence', value: this.source.licence ? this.source.licence : '--' },
-              {text: 'WebSite', value: this.source.website ? this.source.website : '--' },
-              {text: 'Download', value: this.source.download_link ? this.source.download_link : '--' },
-              {text: 'Documentation', value: this.source.doc_link ? this.source.doc_link : '--' },
-              {text: 'Support', value: this.source.git ? this.source.git : '--' },
-              {text: 'Github', value: this.source.support_link ? this.source.support_link : '--' },
-            ]
-          }
-        },
-        computed: {
-          cols(){
-            if ( this.source ){
-              return [
-                {
-                  title: ' ',
-                  field: 'text',
-                  width: "180"
-                },
-                {
-                  title: ' ',
-                  field: 'value',
-                  width: "300"
-                }
-              ];
-            }
-            return [];
-          }
-        }
       },
     }
   }

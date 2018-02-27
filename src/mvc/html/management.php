@@ -4,7 +4,7 @@
            :info="true"
            :sortable="true"
            :editable="true"
-           :order="[{field: 'title', dir: 'DESC'}]"
+           :order="[{field: 'title', dir: 'ASC'}]"
 >
   <bbn-column title="<?=_("Title")?>"
               field="title"
@@ -67,22 +67,3 @@
               :buttons="buttons"
   ></bbn-column>
 </bbn-table>
-<script type="text/x-template" id="cdn-management-info-lib">
-  <bbn-splitter orientation="horizontal">
-    <bbn-pane :size="500">
-      <div class="bbn-w-100 k-header bbn-middle">
-        <strong>
-          "<?=_("INFO")?>"
-        </strong>
-      </div>
-      <bbn-table
-        :title="'<?=_("Information")?>'"
-        :source="infos"
-        :columns="cols"
-      >
-      </bbn-table>
-    </bbn-pane>
-    <bbn-pane>
-    </bbn-pane>
-  </bbn-splitter>
-</script>
