@@ -1,10 +1,24 @@
 (()=>{
+  let management;
   return {
+    mixins: [bbn.vue.localStorageComponent],
     created(){
-      bbn.vue.setComponentRule('cdn/components/', 'appui-cdn-management');
+      management = this;
+      let mixins = [{
+        data(){
+          return {
+            management: management
+          }
+        },
+      }];
+      bbn.vue.setComponentRule('cdn/components/management', 'appui-cdn-management');
       //for button in colums action
-      bbn.vue.addComponent('popup/info_lib');
-      bbn.vue.addComponent('popup/library_edit');
+      bbn.vue.addComponent('popup/info_lib', mixins);
+      bbn.vue.addComponent('popup/toolbar/update', mixins);
+      bbn.vue.addComponent('popup/tree_files', mixins);
+      bbn.vue.addComponent('popup/toolbar/library_add', mixins);
+      bbn.vue.addComponent('library_edit', mixins);
+      bbn.vue.addComponent('libraries_toolbar', mixins);
       bbn.vue.unsetComponentRule();
     },
     data(){
@@ -16,7 +30,6 @@
           {
             text: "Info",
             command:()=>{
-              //'<a class="k-button k-grid-d-info fa fa-info" href="javascript:;"></a>'
               this.info(row, col, idx);
             },
             icon: 'fa fa-info',
@@ -26,7 +39,7 @@
           {
             text: 'Edit',
             command:()=>{
-              this.edit(row, col, idx);
+              this.editLibrary(row, col, idx);
             },
             icon: 'fa fa-edit',
             title: 'edit',
@@ -52,7 +65,7 @@
           info : row,
           versions: []
         };
-        bbn.fn.post('cdn/data/versions', {id_lib: row.name}, d =>{
+        bbn.fn.post(this.source.root + 'data/versions', {id_lib: row.name}, d =>{
           if ( d.data.success ){
             if ( d.data.versions ){
               for ( let ele of d.data.versions ){
@@ -72,24 +85,21 @@
           }
         });
       },
-      edit(row, col, idx){
-          bbn.vue.closest(this, 'bbn-tab').popup().open({
-            width: 900,
-            height: 600,
-            title: bbn._("Edit Library"),
-            component: 'appui-cdn-management-popup-library_edit',
-            source: {row: row, licences: this.source.licences}
-          });
-
+      editLibrary(row, col, idx){
+        return this.$refs.cdn_management.edit(row,  {
+          title: bbn._("Edit Library"),
+          height: '80%',
+          width: '60%'
+        }, idx);
       },
       /*edit(row, col, idx){
         return this.$refs.table.edit(row, bbn._("Edit Library"), idx);
       },*/
       removeLib(row, col, idx){
-        return this.$refs.table.edit(row, bbn._("Delete library"), idx);
+        return this.$refs.cdn_management.edit(row, bbn._("Delete library"), idx);
       },
       create(o){
-        bbn.fn.post('cdn/configurations', o.data, function(d){
+        bbn.fn.post(this.source.root +'configurations', o.data, function(d){
           if ( d.data && d.data.length ){
             o.success(d.data);
           }
@@ -99,7 +109,7 @@
         });
       },
       update(o){
-        bbn.fn.post('cdn/configurations', o.data, function(d){
+        bbn.fn.post(this.source.root + 'configurations', o.data, function(d){
           if ( d.data ){
             o.success(d.data);
           }
@@ -110,7 +120,7 @@
       },
       destroy(o){
         if ( o.data.hash !== undefined ){
-          bbn.fn.post('cdn/configurations', {hash: o.data.hash}, function(d){
+          bbn.fn.post(this.source.root +'configurations', {hash: o.data.hash}, function(d){
             if ( d.data.success ){
               o.success();
             }
@@ -122,25 +132,25 @@
       },
       //for render
       showIconAuthor(ele){
-        return ( ele.author && ele.author.length ) ? '<div class="bbn-c"><i class="fa fa-user bbn-xl" title="' + ele + '"></i></div>' : '';
+        return ( ele.author && ele.author.length ) ? '<div class="bbn-c"><i class="fa fa-user bbn-xl" title="' + ele.author + '"></i></div>' : '';
       },
       showIconLicense(ele){
         return ( ele.licence && ele.licence.length ) ? "<div class='bbn-c'><i class='fa fa-copyright'></i></div>" : '';
       },
       showIconWeb(ele){
-        return ( ele.website && ele.website.length ) ? "<div class='bbn-c'><a class='appui-no' href='"  + ele + "'" + "target='_blank'>" + "<i class='fa fa-globe'</i></a></div>" : '';
+        return ( ele.website && ele.website.length ) ? "<div class='bbn-c'><a class='appui-no' href='"  + ele.website + "'" + "target='_blank'>" + "<i class='fa fa-globe'</i></a></div>" : '';
       },
       showIconDownload(ele){
-        return ( ele.download_link && ele.download_link.length ) ? "<div class='bbn-c'><a class='appui-no' href='"  + ele + "'" + "target='_blank'>" + "<i class='fa fa-download'</i></a></div>" : '';
+        return ( ele.download_link && ele.download_link.length ) ? "<div class='bbn-c'><a class='appui-no' href='"  + ele.download_link + "'" + "target='_blank'>" + "<i class='fa fa-download'</i></a></div>" : '';
       },
       showIconDoc(ele){
-        return ( ele.doc_link && ele.doc_link.length ) ? "<div class='bbn-c'><a class='appui-no' href='"  + ele + "'" + "target='_blank'>" + "<i class='fa fa-book'</i></a></div>" : '';
+        return ( ele.doc_link && ele.doc_link.length ) ? "<div class='bbn-c'><a class='appui-no' href='"  + ele.doc_link + "'" + "target='_blank'>" + "<i class='fa fa-book'</i></a></div>" : '';
       },
       showIconGit(ele){
-        return ( ele.git && ele.git.length ) ? "<div class='bbn-c'><a class='appui-no' href='"  + ele + "'" + "target='_blank'>" + "<i class='fa fa-github'</i></a></div>" : '';
+        return ( ele.git && ele.git.length ) ? "<div class='bbn-c'><a class='appui-no' href='"  + ele.git + "'" + "target='_blank'>" + "<i class='fa fa-github'</i></a></div>" : '';
       },
       showIconSupportLink(ele){
-        return ( ele.support_link && ele.support_link.length ) ? "<div class='bbn-c'><a class='appui-no' href='"  + ele + "'" + "target='_blank'>" + "<i class='fa fa-ambulance'</i></a></div>" : '';
+        return ( ele.support_link && ele.support_link.length ) ? "<div class='bbn-c'><a class='appui-no' href='"  + ele.support_link + "'" + "target='_blank'>" + "<i class='fa fa-ambulance'</i></a></div>" : '';
       },
     }
   }

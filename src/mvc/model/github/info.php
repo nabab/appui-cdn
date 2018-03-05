@@ -37,6 +37,7 @@ if ( !empty($model->data['git_user']) && !empty($model->data['git_repo']) ){
 
   if ( empty($model->data['only_info']) ){
     // Get all versions list and the latest version
+
     $ver_lat = $model->get_model('./versions', $model->data);
   }
 

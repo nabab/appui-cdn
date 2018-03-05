@@ -14,6 +14,7 @@ else{
 $ctrl->combo('CDN Management', [
   'all_conf' => $ctrl->get_model('./configurations', ['db' => $ctrl->data['db']]),
   'all_lib' => $ctrl->get_model('./data/libraries', ['db' => $ctrl->data['db']]),
+  'root' => APPUI_CDN_ROOT,
   'licences' => $ctrl->get_model('./licences'),
   'lng' => [
     'title' => _("Title"),

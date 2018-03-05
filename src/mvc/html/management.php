@@ -1,9 +1,11 @@
 
-<bbn-table ref="management"
+<bbn-table ref="cdn_management"
            :source="source.all_lib"
            :info="true"
            :sortable="true"
            :editable="true"
+           editor="appui-cdn-management-library_edit"
+           toolbar="appui-cdn-management-libraries_toolbar"
            :order="[{field: 'title', dir: 'ASC'}]"
 >
   <bbn-column title="<?=_("Title")?>"

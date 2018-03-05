@@ -25,7 +25,7 @@ if ( !empty($model->data['db']) &&
       $change[$n] = $v;
     }
   }
-  if ( $model->data['db']->update('libraries', $change, ['name' => $id]) ){
+  if ( $model->data['db']->update('libraries', $change, ['name' => $id]) ){    
     return $change;
   }
   return false;

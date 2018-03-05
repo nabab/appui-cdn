@@ -10,4 +10,8 @@ $ctrl->data['db'] = new \bbn\db([
   'db' => BBN_CDN_DB
 ]);
 
+if ( !\defined('APPUI_CDN_ROOT') ){
+  define('APPUI_CDN_ROOT', $ctrl->plugin_url('appui-cdn').'/');
+}
+
 $ctrl->init_locale('it', 'bbn-cdn');
