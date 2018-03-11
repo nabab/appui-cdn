@@ -1,12 +1,21 @@
 (() => {
+  var editLib;
   return {
     data(){
       return {
-        licencesList:[],
+        licencesList: [],
+        checkedFile: [],
+        referenceNodeTree: [],
+        copyItemsTree: [],
         dataVersion: {},
+        //for tables languages file and theme of library
         data:{
-          languages: []
+          languages: [],
+          themes: [],
+          latest: true,
+          internal: ""
         },
+        fileMove:"",
         //languages:[{path:" "}],
         configuratorLibrary: false,
         //for tree file at click next
@@ -108,39 +117,100 @@
       //for tree
       selectElement(){
         alert("select");
-      },//for dragdrop file in tree
+      },
+      /* FIRST INSERT LIBRARY */
+      //for map tree in section "next"
+      treeFiles(ele){
+        if ( ele.items ){
+          ele.items.forEach((item, idx) => {
+            ele.items[idx] = this.treeFiles(item);
+          });
+        }
+        return {
+          data: ele,
+          path: ele.path,
+          items: ele.items || [],
+          icon: ele.items ? 'fa fa-folder' : 'fa fa-file',
+          text: ele.text,
+          num: ele.items ? ele.items.length : 0,
+          numChildren: ele.items ? ele.items.length : 0
+        }
+      },
+      //for dragdrop file in tree
       orderFiles(){
         bbn.fn.warning(" ORDER FILES");
         bbn.fn.log(" ORDER FILES", arguments);
       },
       checkFile(){
-        bbn.fn.warning(" check FILES");
-        bbn.fn.log(" check FILES", arguments);
+        this.copyItemsTree = $.extend({},this.$refs.filesListTree.items);
+        this.referenceNodeTree = this.$refs.filesListTree.checked;
       },
       uncheckFile(){
-        bbn.fn.warning(" uncheck FILES");
-        bbn.fn.log(" uncheck FILES", arguments);
+        this.referenceNodeTree = this.$refs.filesListTree.checked;
       },
-      buttonLanguageCols(){
+      // return button delete in the table
+      buttonDeleteLanguages(){
         return [{
           text: "destroy",
           icon: "fa fa-trash",
-          command: ()=>{ alert("delete") },
+          command: (row, col, id )=>{
+            return this.$refs.tableLanguages.delete(id, bbn._("Are you sure you want to delete?"));
+          },
           notext: true
         }]
       },
-      //for map tree in section "next"
-      treeFiles(ele){
-        return {
-          data: ele,
-          path: ele.path,
-          items: ele.items || [],
-          icon: ele.items ? 'fa-fa-folder' : 'fa fa-file',
-          text: ele.text,
-          id: this.identification++,
-          num: ele.items ? ele.items.length : 0,
-          numChildren: ele.items ? ele.items.length : 0
-        }
+      buttonDeleteThemes(){
+        return [{
+          text: "destroy",
+          icon: "fa fa-trash",
+          command: (row, col, id )=>{
+            return this.$refs.tableThemes.delete(id, bbn._("Are you sure you want to delete?"));
+          },
+          notext: true
+        }]
+      },
+      //buttons table  depandacies
+      buttonsTableDepandencies(row, col, idx){
+        return [
+          {
+            text: 'Edit',
+            command:()=>{
+            //  this.editDepandancie(row, col, idx);
+            },
+            icon: 'fa fa-edit',
+            title: 'edit',
+            notext: true
+          },
+          {
+           text: 'Delete',
+           command:()=>{
+            // this.removeDepandancie(row,col,idx);
+           },
+           icon: 'fa fa-trash',
+           title: 'delete',
+           notext: true
+          }
+        ];
+      },
+      /*editDepandancie(){
+
+      },
+      removeDepandancie()(
+
+      ),*/
+      //TEST
+      move(file){
+        bbn.fn.warning("MOveeee");
+        bbn.fn.log("move", arguments);
+        this.fileMove = file;
+      },
+      //TEST
+      moveUp(){
+        alert("up")
+      },
+      //TEST
+      moveDown(){
+        alert("down")
       }
     },
     computed:{
@@ -162,9 +232,39 @@
       //for action form
       currentAction(){
         return this.addLibrary ? this.actionsPath.add :  this.actionsPath.edit
+      },//for tree order files
+      treeOrderSource(){
+        if ( this.referenceNodeTree.length ){
+          let arr = [];
+          for( let i in this.referenceNodeTree ){
+            arr.push({
+              text: this.referenceNodeTree[i],
+              path: this.referenceNodeTree[i],
+              icon: 'fa fa-file',
+              id: this.identification++,
+            });
+          }
+          return arr
+        }
+        return [];
       },
-
-
+      //source for dropdown list internal at click latest checkbox
+      sourceInternal(){
+        if ( this.dataVersion.internal.length ){
+          return this.dataVersion.internal
+        }
+        else{
+          return [
+            {
+              text: '0',
+              value: '0'
+            }
+          ]
+        }
+      }
+    },
+    created(){
+      editLib = this;
     },
     mounted(){
       let licences = this.management.source.licences;
@@ -179,24 +279,56 @@
     },
     components: {
       //button in title column grid add file language
-      'appui-cdn-management-btn-language-add-file':{
-        name: 'appui-cdn-management-btn-language-add-file',
+      'appui-cdn-management-btn-add-languages-row-table':{
+        name: 'appui-cdn-management-btn-add-languages-row-table',
         template:`<bbn-button @click="openTreeLanguage" :title="titleButton" icon="fa fa-plus"></bbn-button>`,
         props: ['source'],
         data(){
           return{
             titleButton: bbn._('Add file language'),
-            sourceTree:  bbn.vue.closest(this,"bbn-form").$parent.dataVersion.files_tree,            
+            sourceTree:  editLib.dataVersion.languages_tree,
           }
         },
         methods:{
           openTreeLanguage(){
             bbn.vue.closest(this, 'bbn-tab').popup().open({
-              height: '80%',
-              width: '40%',
-              title: bbn._("Tree Files"),
+              height: '60%',
+              width: '30%',
+              title: bbn._("Files:"),
               component:'appui-cdn-management-popup-tree_files',
-              source: {tree: this.sourceTree}
+              source: {tree: this.sourceTree, table: bbn.vue.closest(this,"bbn-form").$parent.data.languages},
+              onClose: () =>{
+                bbn.vue.closest(this,'bbn-table').updateData()
+              }
+            });
+          },
+        }
+      },
+      //button in title column grid add themes language
+      'appui-cdn-management-btn-add-themes-row-table':{
+        name: 'appui-cdn-management-btn-add-themes-row-table',
+        template:`<bbn-button @click="openTreeThemes" :title="titleButton" icon="fa fa-plus"></bbn-button>`,
+        props: ['source'],
+        data(){
+          return{
+            titleButton: bbn._('Add theme'),
+            sourceTree:  editLib.dataVersion.languages_tree,
+          }
+        },
+        methods:{
+          openTreeThemes(){
+            bbn.vue.closest(this, 'bbn-tab').popup().open({
+              height: '60%',
+              width: '30%',
+              title: bbn._("Files:"),
+              component:'appui-cdn-management-popup-tree_files',
+              source: {
+                tree: this.sourceTree,
+                table: bbn.vue.closest(this,"bbn-form").$parent.data.themes
+              },
+              onClose: () =>{
+                bbn.vue.closest(this,'bbn-table').updateData()
+              }
             });
           },
         }

@@ -88,8 +88,8 @@
       editLibrary(row, col, idx){
         return this.$refs.cdn_management.edit(row,  {
           title: bbn._("Edit Library"),
-          height: '80%',
-          width: '60%'
+          height: '95%',
+          width: '85%'
         }, idx);
       },
       /*edit(row, col, idx){

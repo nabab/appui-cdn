@@ -73,7 +73,6 @@
       <?=_("Support")?>
     </label>
     <bbn-input v-model="source.row.support_link"></bbn-input>
-
     <label v-if="source.row.versions.length"><?=_("Version")?></label>
     <bbn-dropdown v-if="source.row.versions.length"
                   style="width: 50%"
@@ -102,8 +101,10 @@
               </span>
               <bbn-tree :source="dataVersion.files_tree"
                         :checkable="true"
+                        @check="checkFile"
+                        @uncheck="uncheckFile"
                         :map="treeFiles"
-                        uid="id"
+                        uid="path"
                         ref="filesListTree"
               ></bbn-tree>
             </div>
@@ -113,18 +114,37 @@
               <div class="bbn-padded bbn-full-screen">
                 <div class="bbn-block bbn-h-50 bbn-w-20">
                   <strong>
-                    <?=_("Files Order (drag&drop)")?>
+                    <?=_("Files Order")?>
                   </strong>
+                  <br>
+                  <strong>
+                    <?=_("Move File:")?>
+                  </strong>
+                  <br>
+                  <span class="bbn-badge w3-green" v-text="fileMove"></span>
+                  <div>
+                    <bbn-button v-if="fileMove" icon="fa fa-arrow-up" @click="moveUp"></bbn-button>
+                    <bbn-button v-if="fileMove" icon="fa fa-arrow-down" @click="moveDown"></bbn-button>
+                  </div>
                 </div>
                 <div class="bbn-block bbn-h-100 bbn-w-80">
-                  <div class="bbn-full-screen">
+                  <div class="bbn-padded">
                     <div class="bbn-100">
-                      <!--<bbn-tree :source="treeFiles"
+                    <!--  <bbn-tree v-if="treeOrderSource"
+                                :source="treeOrderSource"
                                 :draggable="true"
+                                @dragStart="move"
                                 @dragEnd="orderFiles"
                                 @select="selectElement"
                                 ref="orderFilesTree"
                       ></bbn-tree>-->
+                      <template v-for="(file, index ) in treeOrderSource">
+                        <strong>
+                          <bbn-button icon="fa fa-check" @click="move(file.path)"></bbn-button>
+                          <span v-text="file.path"></span>
+                        </strong>
+                        <br>
+                      </template>
                     </div>
                   </div>
                 </div>
@@ -134,24 +154,100 @@
         </bbn-splitter>
       </bbn-pane>
       <bbn-pane>
-          <div class="bbn-padded bbn-full-screen">
-            <div>
+        <bbn-splitter orientation="vertical">
+          <bbn-pane>
+            <div class="bbn-flex-height">
+              <!--LANGUAGES-->
+              <div class="bbn-padded">
+                <span>
+                  <strong>
+                    <?=_('Languages')?>
+                  </strong>
+                </span>
+              </div>
+              <!--TABLE LANGUAGES-->
+              <div class="bbn-flex-fill">
+                <bbn-table :source="data.languages"
+                           ref="tableLanguages"
+                  >
+                    <bbn-column title="<?=_('Files')?>"
+                                field="path"
+                    ></bbn-column>
+                    <bbn-column :tcomponent="$options.components['appui-cdn-management-btn-add-languages-row-table']"
+                                width="50"
+                                :buttons="buttonDeleteLanguages"
+                    ></bbn-column>
+                </bbn-table>
+              </div>
+              <!--THEMES-->
+              <div class="bbn-padded">
+                <span>
+                  <strong>
+                    <?=_("Themes")?>
+                  </strong>
+                </span>
+              </div>
+                <!--TABLE THEMES-->
+              <div class="bbn-flex-fill">
+                <bbn-table :source="data.themes"
+                           ref="tableThemes"
+                >
+                  <bbn-column title="<?=_('Files')?>"
+                              field="path"
+                  ></bbn-column>
+                  <bbn-column :tcomponent="$options.components['appui-cdn-management-btn-add-themes-row-table']"
+                              width="50"
+                              :buttons="buttonDeleteThemes"
+                  ></bbn-column>
+                </bbn-table>
+              </div>
+              <!--LATEST-->
+              <div class="bbn-padded">
+                <span>
+                  <strong>
+                    <?=_("Latest")?>
+                  </strong>
+                </span>
+                <bbn-checkbox v-model= "data.latest"
+                              :novalue= "false"
+                ></bbn-checkbox>
+                <!--INTERNAL-->
+                <bbn-dropdown v-if="!data.latest"
+                              :source="sourceInternal"
+                              v-model="data.internal"
+                ></bbn-dropdown>
+              </div>
               <span>
                 <strong>
-                  <?=_("Languages")?>
+                  <?=_("Dependecies")?>
                 </strong>
               </span>
+              <div class="bbn-padded">
+              </div>
+                <!--TABLE Dependecies-->
+              <div class="bbn-flex-fill">
+                <bbn-table  :source="dataVersion.dependencies"
+                            ref= "tableDependecies"
+                            title= "<?=_('Dependecies')?>"
+                >
+                  <bbn-column title="<?=_('Library')?>"
+                              field="lib_name"
+                  ></bbn-column>
+                  <bbn-column title="<?=_('Version')?>"
+                              field="id_ver"
+                  ></bbn-column>
+                  <bbn-column title="<?=_('Order')?>"
+                              field="order"
+                  ></bbn-column>
+                  <bbn-column :tcomponent="$options.components['appui-cdn-management-btn-add-themes-row-table']"
+                              width="50"
+                              :buttons="buttonsTableDepandencies"
+                  ></bbn-column>
+                </bbn-table>
+              </div>
             </div>
-            <bbn-table :source="data.languages">
-              <bbn-column title="<?=_('Files:')?>"
-                          field="path"
-              ></bbn-column>
-              <bbn-column :tcomponent="$options.components['appui-cdn-management-btn-language-add-file']"
-                          width="50"
-                          :buttons="buttonLanguageCols"
-              ></bbn-column>
-            </bbn-table>
-          </div>
+          </bbn-pane>
+        </bbn-splitter>
       </bbn-pane>
     </bbn-splitter>
 
