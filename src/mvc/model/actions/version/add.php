@@ -15,7 +15,8 @@ if ( !empty($model->data['db']) &&
 ){
   $languages = [];
   $themes = [];
-  foreach ( json_decode($model->data['languages'], 1) as $l ){
+  //old
+  /*foreach ( json_decode($model->data['languages'], 1) as $l ){
     array_push($languages, $l['path']);
   }
   foreach ( json_decode($model->data['themes'], 1) as $l ){
@@ -25,7 +26,19 @@ if ( !empty($model->data['db']) &&
     'files' => !empty($model->data['files']) ? json_decode($model->data['files'], 1) : [],
     'lang' => $languages,
     'theme_files' => $themes
+  ];*/
+  foreach ( $model->data['languages'] as $l ){
+    array_push($languages, $l['path']);
+  }
+  foreach ( $model->data['themes'] as $l ){
+    array_push($themes, $l['path']);
+  }
+  $content = [
+    'files' => !empty($model->data['files']) ? $model->data['files']  : [],
+    'lang' => $languages,
+    'theme_files' => $themes
   ];
+
   if ( !empty($model->data['latest']) ){
     $internal = $model->data['db']->get_one(<<<'SQLITE'
     SELECT MAX(internal)

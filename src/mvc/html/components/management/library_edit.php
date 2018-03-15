@@ -2,6 +2,7 @@
 <bbn-form class="bbn-full-screen"
           :action="currentAction"
           :source="source.row"
+          :data="complementaryData"
           ref="form_library"
           @failure="failure"
           @success="success"
@@ -37,12 +38,15 @@
     <label class="bbn-r">
       <?=_("Licence")?>
     </label>
-    <bbn-dropdown style="width:200px"
-                  ref="listLicences"
-                  placeholder= "<?=_('Select one')?>"
-                  :source="licencesList"
-                  v-model="source.row.licence"
-    ></bbn-dropdown>
+    <div>
+      <bbn-dropdown style="width:200px"
+                    ref="listLicences"
+                    placeholder= "<?=_('Select one')?>"
+                    :source="licencesList"
+                    v-model="source.row.licence"
+      ></bbn-dropdown>
+      <bbn-input v-model="source.row.licence"></bbn-input>
+    </div>
 
     <label>
       <?=_("Web site")?>
@@ -87,17 +91,15 @@
       <bbn-pane>
         <bbn-splitter orientation="horizontal">
           <bbn-pane>
-            <div class="bbn-padded bbn-full-screen">
-              <span>
-                <strong>
-                  <?=_("Name:")?>
-                </strong>
+            <div class="bbn-padded bbn-grid-fields bbn-100"
+                 style="grid-auto-rows: max-content auto"
+            >
+              <span class="bbn-b">
+                <?=_("Name:")?>
               </span>
               <bbn-input style="width: 100%" required v-model="dataVersion.version"></bbn-input>
-              <span>
-                <strong>
-                  <?=_("Files:")?>
-                </strong>
+              <span class="bbn-b">
+                <?=_("Files:")?>
               </span>
               <bbn-tree :source="dataVersion.files_tree"
                         :checkable="true"
@@ -111,105 +113,128 @@
           </bbn-pane>
           <bbn-pane>
             <div class="bbn-padded">
-              <div class="bbn-padded bbn-full-screen">
-                <div class="bbn-block bbn-h-50 bbn-w-20">
-                  <strong>
-                    <?=_("Files Order")?>
-                  </strong>
-                  <br>
-                  <strong>
-                    <?=_("Move File:")?>
-                  </strong>
-                  <br>
-                  <span class="bbn-badge w3-green" v-text="fileMove"></span>
-                  <div>
-                    <bbn-button v-if="fileMove" icon="fa fa-arrow-up" @click="moveUp"></bbn-button>
-                    <bbn-button v-if="fileMove" icon="fa fa-arrow-down" @click="moveDown"></bbn-button>
-                  </div>
-                </div>
-                <div class="bbn-block bbn-h-100 bbn-w-80">
+              <div class="w3-card bbn-c bbn-v-middle">
+                <span class="bbn-b">
+                  <?=_('Select files for order')?>
+                </span>
+              </div>
+            </div>
+            <div class="bbn-padded bbn-grid-fields bbn-100" v-if ="treeOrderSource.length">
+              <div>
+                <span class="bbn-b" style="padding-bottom: 5px">
+                  <?=_("Move File:")?>
+                </span>
+                <br>
+                <div class="w3-card bbn-c" v-if="fileMove">
                   <div class="bbn-padded">
-                    <div class="bbn-100">
-                    <!--  <bbn-tree v-if="treeOrderSource"
-                                :source="treeOrderSource"
-                                :draggable="true"
-                                @dragStart="move"
-                                @dragEnd="orderFiles"
-                                @select="selectElement"
-                                ref="orderFilesTree"
-                      ></bbn-tree>-->
-                      <template v-for="(file, index ) in treeOrderSource">
-                        <strong>
-                          <bbn-button icon="fa fa-check" @click="move(file.path)"></bbn-button>
-                          <span v-text="file.path"></span>
-                        </strong>
-                        <br>
-                      </template>
-                    </div>
+                    <bbn-button icon="fa fa-arrow-up" @click="moveUp"></bbn-button>
+                  </div>
+                  <div class="bbn-padded">
+                    <bbn-button icon="fa fa-arrow-down" @click="moveDown"></bbn-button>
                   </div>
                 </div>
               </div>
+              <div>
+                <template v-for="file in treeOrderSource">
+                  <div v-text="file"
+                       :style="{color: file === fileMove ? 'red' : 'inherit'}"
+                       @click="selectFileMove(file)"
+                       class="bbn-p bbn-b"
+                  ></div>
+                </template>
+              </div>
             </div>
+
           </bbn-pane>
         </bbn-splitter>
       </bbn-pane>
       <bbn-pane>
         <bbn-splitter orientation="vertical">
-          <bbn-pane>
-            <div class="bbn-flex-height">
-              <!--LANGUAGES-->
-              <div class="bbn-padded">
-                <span>
-                  <strong>
-                    <?=_('Languages')?>
-                  </strong>
-                </span>
-              </div>
+          <bbn-pane :scrollable="true">
+
               <!--TABLE LANGUAGES-->
-              <div class="bbn-flex-fill">
+              <div style="height: 100px" class="bbn-w-100">
                 <bbn-table :source="data.languages"
                            ref="tableLanguages"
                   >
-                    <bbn-column title="<?=_('Files')?>"
+                    <bbn-column title="<?=_('Languages Files')?>"
                                 field="path"
+
                     ></bbn-column>
-                    <bbn-column :tcomponent="$options.components['appui-cdn-management-btn-add-languages-row-table']"
+                    <bbn-column :tcomponent="$options.components.languages"
                                 width="50"
                                 :buttons="buttonDeleteLanguages"
                     ></bbn-column>
                 </bbn-table>
               </div>
-              <!--THEMES-->
-              <div class="bbn-padded">
-                <span>
-                  <strong>
-                    <?=_("Themes")?>
-                  </strong>
-                </span>
-              </div>
-                <!--TABLE THEMES-->
-              <div class="bbn-flex-fill">
+              <!--TABLE THEMES-->
+              <div style="height: 100px" class="bbn-w-100">
                 <bbn-table :source="data.themes"
                            ref="tableThemes"
                 >
-                  <bbn-column title="<?=_('Files')?>"
+                  <bbn-column title="<?=_('Themes')?>"
                               field="path"
+
                   ></bbn-column>
-                  <bbn-column :tcomponent="$options.components['appui-cdn-management-btn-add-themes-row-table']"
+                  <bbn-column :tcomponent="$options.components.themes"
                               width="50"
                               :buttons="buttonDeleteThemes"
                   ></bbn-column>
                 </bbn-table>
               </div>
+              <!--TABLE Dependecies-->
+              <div style="height: 180px" class="bbn-w-100">
+                <bbn-table  :source="dataVersion.dependencies"
+                            ref="tableDependecies"
+                            editable="inline"
+                            :toolbar="[{
+                              text: '<strong>'+'<?=_('Add dependencies')?>' + '</strong>',
+                              icon: 'fa fa-plus',
+                              command: 'edit'
+                            }]"
+                            @saveItem="saveDependencies"
+                >
+                  <bbn-column title="<?=_('Library')?>"
+                              field="lib_name"
+                              :source="listLib"
+                  ></bbn-column>
+                  <bbn-column title="<?=_('Version')?>"
+                              field="id_ver"
+                              :editor="$options.components.versions"
+                  ></bbn-column>
+                  <bbn-column title="<?=_('Order')?>"
+                              field="order"
+                              width="100"
+                              type="number"
+                  ></bbn-column>
+                  <bbn-column title=" "
+                              width="100"
+                              :buttons="buttonsTableDepandencies"
+                  ></bbn-column>
+
+                </bbn-table>
+              </div>
+
+              <div class="bbn-c bbn-w-100" v-if="dataVersion.dependencies_html.length">
+                <div class="bbn-w-50 w3-card bbn-padded bbn-grid-fields">
+                  <div>
+                    <span class="bbn-b" v-text="_('Dependecies')"></span>
+                    <br>
+                    <span class="bbn-b" style="color:red" v-text="source.row.title"></span>
+                  </div>
+                  <div v-html="dataVersion.dependencies_html"></div>
+                </div>
+              </div>
+
               <!--LATEST-->
-              <div class="bbn-padded">
-                <span>
-                  <strong>
+              <div style="height: 180px" class="bbn-w-100 bbn-padded">
+
+                  <span class="bbn-b">
                     <?=_("Latest")?>
-                  </strong>
-                </span>
+                  </span>
                 <bbn-checkbox v-model= "data.latest"
                               :novalue= "false"
+                              :disabled="checkedLatest"
                 ></bbn-checkbox>
                 <!--INTERNAL-->
                 <bbn-dropdown v-if="!data.latest"
@@ -217,35 +242,6 @@
                               v-model="data.internal"
                 ></bbn-dropdown>
               </div>
-              <span>
-                <strong>
-                  <?=_("Dependecies")?>
-                </strong>
-              </span>
-              <div class="bbn-padded">
-              </div>
-                <!--TABLE Dependecies-->
-              <div class="bbn-flex-fill">
-                <bbn-table  :source="dataVersion.dependencies"
-                            ref= "tableDependecies"
-                            title= "<?=_('Dependecies')?>"
-                >
-                  <bbn-column title="<?=_('Library')?>"
-                              field="lib_name"
-                  ></bbn-column>
-                  <bbn-column title="<?=_('Version')?>"
-                              field="id_ver"
-                  ></bbn-column>
-                  <bbn-column title="<?=_('Order')?>"
-                              field="order"
-                  ></bbn-column>
-                  <bbn-column :tcomponent="$options.components['appui-cdn-management-btn-add-themes-row-table']"
-                              width="50"
-                              :buttons="buttonsTableDepandencies"
-                  ></bbn-column>
-                </bbn-table>
-              </div>
-            </div>
           </bbn-pane>
         </bbn-splitter>
       </bbn-pane>

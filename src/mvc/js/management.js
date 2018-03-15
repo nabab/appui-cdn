@@ -96,9 +96,20 @@
         return this.$refs.table.edit(row, bbn._("Edit Library"), idx);
       },*/
       removeLib(row, col, idx){
-        return this.$refs.cdn_management.edit(row, bbn._("Delete library"), idx);
+        bbn.fn.log("delete", row, col, idx)
+        bbn.fn.confirm(bbn._("Delete library") + " "+  row.name + "?" , ()=>{
+          bbn.fn.post(this.source.root + 'actions/library/delete', {name: row.name}, (d) => {
+            if ( d.data.success ){
+              appui.success(bbn._("Delete"));
+              this.$refs.cdn_management.updateData();
+            }
+            else{
+              appui.error(bbn._("Error"));
+            }
+          });
+        });
       },
-      create(o){
+      /*create(o){
         bbn.fn.post(this.source.root +'configurations', o.data, function(d){
           if ( d.data && d.data.length ){
             o.success(d.data);
@@ -129,7 +140,7 @@
             }
           });
         }
-      },
+      },*/
       //for render
       showIconAuthor(ele){
         return ( ele.author && ele.author.length ) ? '<div class="bbn-c"><i class="fa fa-user bbn-xl" title="' + ele.author + '"></i></div>' : '';

@@ -32,7 +32,7 @@
     methods:{
       importGithub(){
         if ( this.urlGit.length ){
-          bbn.fn.post(this.management.source.root +"github/info", {
+          bbn.fn.post(this.management.source.root + "github/info", {
               url: this.urlGit,
               only_info: false
             },
@@ -66,7 +66,7 @@
                   width: '60%',
                   title: bbn._("Import library of github:"),
                   component:'appui-cdn-management-library_edit',
-                  source: {row: d.data, add: true}
+                  source: {row: d.data, addLibrary: true}
                 });
               }
             }
@@ -94,7 +94,7 @@
                 latest: "",
                 version: ""
               },
-              add: true
+              addLibrary: true
             }
         });
       }

@@ -65,6 +65,25 @@ if ( !empty($model->data['git_user']) && !empty($model->data['git_repo']) && \de
       $dependencies .= "<div>$l $v</div>";
     }
   }
+  if ( !empty($version_name) &&
+    $git->api('repo')->contents()->exists(
+      $model->data['git_user'],
+      $model->data['git_repo'],
+      'package.json',
+      $version_name
+    ) &&
+    ($package = json_decode($git->api('repo')->contents()->download(
+      $model->data['git_user'],
+      $model->data['git_repo'],
+      'package.json',
+      $version_name
+    ), true)) &&
+    !empty($package['dependencies'])
+  ){
+    foreach ( $package['dependencies'] as $l => $v ){
+      $dependencies .= "<div>$l $v</div>";
+    }
+  }
   if ( !empty($down_url) && !empty($version_name) ){
     // Set the file's path
     $fz = BBN_USER_PATH.'tmp/'.basename($down_url);

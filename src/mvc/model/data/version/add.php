@@ -72,6 +72,7 @@ if ( !empty($model->data['folder']) && !empty($model->data['db']) && \defined('B
     }
     return $res;
   }
+  \bbn\x::log([$github], "github");
   return [
     // Files' tree
     'files_tree' => tree($ver[0], $ver[0]),
@@ -89,13 +90,13 @@ if ( !empty($model->data['folder']) && !empty($model->data['db']) && \defined('B
     "),
     // Dependencies from latest version
     'dependencies' => $model->data['db']->get_rows('
-      SELECT "vers"."id" AS id_ver, "vers"."name" AS version, "libr"."name" AS lib_name, 
+      SELECT "vers"."id" AS id_ver, "vers"."name" AS version, "libr"."name" AS lib_name,
         "libr"."title" AS lib_title, "dependencies"."order"
       FROM "versions"
       JOIN "libraries"
         ON "versions"."library" = "libraries"."name"
         AND "versions"."name" = "libraries"."latest"
-      JOIN "dependencies" 
+      JOIN "dependencies"
         ON "versions"."id" = "dependencies"."id_slave"
       JOIN "versions" AS vers
         ON "dependencies"."id_master" = "vers"."id"
@@ -112,7 +113,7 @@ if ( !empty($model->data['folder']) && !empty($model->data['db']) && \defined('B
       JOIN libraries
         ON versions.library = libraries.name
         AND versions.name = libraries.latest
-      JOIN dependencies 
+      JOIN dependencies
         ON versions.id = dependencies.id_master
       JOIN versions AS vers
         ON dependencies.id_slave = vers.id

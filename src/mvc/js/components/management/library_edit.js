@@ -7,13 +7,25 @@
         checkedFile: [],
         referenceNodeTree: [],
         copyItemsTree: [],
-        dataVersion: {},
+        dataVersion: {
+          dependencies: [],
+          dependencies_html: "",
+          files_tree : [],
+          internal: [],
+          languages_tree: [],
+          lib_ver : [],
+          slave_dependencies : [],
+          version: ""
+        },
+        listLib:[],
+        //for edit
+        newName: "",
         //for tables languages file and theme of library
         data:{
           languages: [],
           themes: [],
           latest: true,
-          internal: ""
+          internal: 0
         },
         fileMove:"",
         //languages:[{path:" "}],
@@ -90,10 +102,10 @@
       },//// only case of add library for info and select the files
       next(){
         //let's check if you do it next for the first time or not
-        if ( this.source.add &&
+        if ( this.source.addLibrary &&
            this.source.row.name &&
-           this.source.row.title &&
-           $.isEmptyObject(this.dataVersion)
+           this.source.row.title /*&&
+           $.isEmptyObject(this.dataVersion)*/
           ){
             bbn.fn.post(this.management.source.root +'data/version/add', {
               folder: this.source.row.name,
@@ -103,8 +115,16 @@
               git_latest_ver: this.source.row.latest !== undefined ? this.source.row.latest : false
             }, d =>{
                if( d.data ){
-                  this.dataVersion = d.data;
-                  this.configuratorLibrary = true;
+                 for(let i in this.dataVersion){
+                   this.dataVersion[i] = (d.data && d.data[i].length) ? d.data[i] : []
+                 }
+                 this.configuratorLibrary = true;
+                 //for dropdown list library in table depanadancies
+                 for ( let val of d.data.lib_ver){
+                   if ( bbn.fn.search(this.listLib, 'text', val.lib_name) < 0 ){
+                     this.listLib.push({text: val.lib_name, value: val.lib_name});
+                   }
+                 };
                }
             });
         }
@@ -114,11 +134,7 @@
           }
         }
       },
-      //for tree
-      selectElement(){
-        alert("select");
-      },
-      /* FIRST INSERT LIBRARY */
+        /* FIRST INSERT LIBRARY */
       //for map tree in section "next"
       treeFiles(ele){
         if ( ele.items ){
@@ -135,11 +151,6 @@
           num: ele.items ? ele.items.length : 0,
           numChildren: ele.items ? ele.items.length : 0
         }
-      },
-      //for dragdrop file in tree
-      orderFiles(){
-        bbn.fn.warning(" ORDER FILES");
-        bbn.fn.log(" ORDER FILES", arguments);
       },
       checkFile(){
         this.copyItemsTree = $.extend({},this.$refs.filesListTree.items);
@@ -169,13 +180,64 @@
           notext: true
         }]
       },
+      // for order list file
+      selectFileMove(file){
+        this.fileMove = file;
+      },
+      //FOR MOVE
+      moveDown(){
+        let sourceOrder = this.treeOrderSource,
+            idx;
+        this.treeOrderSource.forEach((file, i) => {
+          if( this.fileMove === file){
+            idx = i;
+          }
+        });
+        if ( this.treeOrderSource[idx + 1] !== undefined ){
+          let support = this.treeOrderSource[idx + 1];
+          sourceOrder[idx + 1] = sourceOrder[idx];
+          sourceOrder[idx] = support;
+          this.referenceNodeTree = sourceOrder;
+        }
+        else{
+          let support = this.treeOrderSource[0];
+          sourceOrder[0] = sourceOrder[idx];
+          sourceOrder[idx] = support;
+          this.referenceNodeTree = sourceOrder;
+        }
+      },
+      moveUp(){
+        let sourceOrder = this.treeOrderSource,
+            idx;
+        this.treeOrderSource.forEach((file, i) => {
+          if( this.fileMove === file){
+            idx = i;
+          }
+        });
+        if ( this.treeOrderSource[idx - 1] !== undefined ){
+          let support = this.treeOrderSource[idx - 1];
+          sourceOrder[idx - 1] = sourceOrder[idx];
+          sourceOrder[idx] = support;
+          this.referenceNodeTree = sourceOrder;
+        }
+        else{
+          let max = bbn.fn.count(this.treeOrderSource)-1,
+              support = this.treeOrderSource[max];
+
+          sourceOrder[max] = sourceOrder[idx];
+          sourceOrder[idx] = support;
+          this.referenceNodeTree = sourceOrder;
+        }
+      },
+      //DEPANDANCIES TABLE
       //buttons table  depandacies
+      /*TODO*/
       buttonsTableDepandencies(row, col, idx){
         return [
           {
             text: 'Edit',
             command:()=>{
-            //  this.editDepandancie(row, col, idx);
+              this.editDepandancie(row, col, idx);
             },
             icon: 'fa fa-edit',
             title: 'edit',
@@ -183,66 +245,66 @@
           },
           {
            text: 'Delete',
-           command:()=>{
-            // this.removeDepandancie(row,col,idx);
+           command: (row, col, id )=>{
+             return this.$refs.tableDependecies.delete(id, bbn._("Are you sure you want to delete?"));
            },
            icon: 'fa fa-trash',
            title: 'delete',
            notext: true
           }
         ];
-      },
-      /*editDepandancie(){
-
-      },
-      removeDepandancie()(
-
-      ),*/
-      //TEST
-      move(file){
-        bbn.fn.warning("MOveeee");
-        bbn.fn.log("move", arguments);
-        this.fileMove = file;
-      },
-      //TEST
-      moveUp(){
-        alert("up")
-      },
-      //TEST
-      moveDown(){
-        alert("down")
+      },/*TODO*/
+      /*editDepandancie(row, col, idx){
+        let libraries = [];
+        this.dataVersion.lib_ver.each( (val, i)=>{
+          if ( bbn.fn.search(libraries, 'lib_name', row.lib_name) < 0 ){
+            libraries.push(row);
+          }
+        });
+        return this.$refs.tableDependecies.edit(row,  {
+          title: bbn._("Edit Depandancie"),
+          height: '95%',
+          width: '85%'
+        }, idx);
+      },*/
+      saveDependencies(row, col, idx){
+        bbn.fn.log("SAVE", row, col, idx)
+        if ( !row.id_ver || !row.lib_name || (bbn.fn.search(this.dataVersion.dependencies, 'order', row.order) > 0) ){
+          appui.error(bbn._("error information to add to the addiction"));
+        }
+        else {
+          this.$refs.tableDependecies.add(row);
+          this.$refs.tableDependecies.updateData();
+          this.$refs.tableDependecies._removeTmp();
+          //this.$refs.tableDependecies.editedRow = false;
+        }
       }
     },
     computed:{
       //for button form
       currentButton(){
         // case for edit table cdn managment
-        if (  !this.source.add && $.isEmptyObject(this.dataVersion) ){
+        if (  !this.source.addLibrary && $.isEmptyObject(this.dataVersion) ){
           return ['submit', 'cancel'];
         }
         // case for add library of the toolbar first form
-        if ( this.source.add && !this.configuratorLibrary ) {
+        if ( this.source.addLibrary && !this.configuratorLibrary ) {
           return this.btns.preCompile
         }
         // case for add library and click next for configurator library before saving
-        if ( this.source.add && this.configuratorLibrary ){
+        if ( this.source.addLibrary && this.configuratorLibrary ){
           return this.btns.next
         }
       },
       //for action form
       currentAction(){
-        return this.addLibrary ? this.actionsPath.add :  this.actionsPath.edit
+        return this.source.addLibrary ? this.actionsPath.add :  this.actionsPath.edit
       },//for tree order files
       treeOrderSource(){
         if ( this.referenceNodeTree.length ){
           let arr = [];
           for( let i in this.referenceNodeTree ){
-            arr.push({
-              text: this.referenceNodeTree[i],
-              path: this.referenceNodeTree[i],
-              icon: 'fa fa-file',
-              id: this.identification++,
-            });
+            arr.push( this.referenceNodeTree[i] );
           }
           return arr
         }
@@ -261,6 +323,20 @@
             }
           ]
         }
+      },//for first isert lib or no
+      checkedLatest(){
+        return  bbn.fn.count(this.sourceInternal) === 1 ? true : false
+      },
+      //for form senction 2 first of save library
+      complementaryData(){
+        return {
+          vname: this.dataVersion.version,
+          files: this.treeOrderSource,
+          languages: this.data.languages,
+          themes: this.data.themes,
+          new_name: this.newName,
+          dependencies: this.dataVersion.dependencies
+        }
       }
     },
     created(){
@@ -276,11 +352,11 @@
           })
         }
       }
+
     },
     components: {
       //button in title column grid add file language
-      'appui-cdn-management-btn-add-languages-row-table':{
-        name: 'appui-cdn-management-btn-add-languages-row-table',
+      'languages':{
         template:`<bbn-button @click="openTreeLanguage" :title="titleButton" icon="fa fa-plus"></bbn-button>`,
         props: ['source'],
         data(){
@@ -291,6 +367,12 @@
         },
         methods:{
           openTreeLanguage(){
+            /*let dataTree = []
+            for ( let ob of this.sourecTree ){
+              if ( (ob.path.indexOf(.js) > -1) || ob.items ){
+                dataTree.push(ob)
+              }
+            }*/
             bbn.vue.closest(this, 'bbn-tab').popup().open({
               height: '60%',
               width: '30%',
@@ -305,8 +387,7 @@
         }
       },
       //button in title column grid add themes language
-      'appui-cdn-management-btn-add-themes-row-table':{
-        name: 'appui-cdn-management-btn-add-themes-row-table',
+      'themes':{
         template:`<bbn-button @click="openTreeThemes" :title="titleButton" icon="fa fa-plus"></bbn-button>`,
         props: ['source'],
         data(){
@@ -331,6 +412,34 @@
               }
             });
           },
+        }
+      },
+      'versions':{
+        template:`<bbn-dropdown :source="listVersion" @change="getVersion"></bbn-dropdown>`,
+        props: ['source'],
+        data(){
+          return {
+            lib_ver: editLib.dataVersion.lib_ver
+          }
+        },
+        methods:{
+          getVersion(version){
+            this.source.id_ver = version;
+          }
+        },
+        computed:{
+          listVersion(){
+            if ( this.source.lib_name ){
+              let arr =[];
+              for ( let val of this.lib_ver ){
+                if ( val.lib_name === this.source.lib_name ){
+                  arr.push({text: val.version, value: val.id_ver});
+                }
+              }
+              return arr
+            }
+            return []
+          }
         }
       }
     }

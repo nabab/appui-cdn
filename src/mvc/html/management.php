@@ -4,6 +4,7 @@
            :info="true"
            :sortable="true"
            :editable="true"
+           :pageable="true"
            editor="appui-cdn-management-library_edit"
            toolbar="appui-cdn-management-libraries_toolbar"
            :order="[{field: 'title', dir: 'ASC'}]"
