@@ -31,13 +31,12 @@
       <?=_('Updates')?>
     </bbn-button>
   </div>
-  <!-- Search library -->
-  <!-- TODO-->
+  <!-- Search library -->  
   <div style="float: right; display: inline-block">
     <i class="fa fa-search" style="margin: 0 5px"></i>
     <bbn-input style="width: 300px"
                placeholder="Search library"
-               @keydown.enter="searchLibrary"
+               v-model="library"
     ></bbn-input>
   </div>
 </div>

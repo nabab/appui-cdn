@@ -22,7 +22,10 @@
       bbn.vue.unsetComponentRule();
     },
     data(){
-      return{}
+      return{
+        searchContent: [],
+        search: false
+      }
     },
     methods:{
       buttons(row, col, idx){
@@ -163,6 +166,170 @@
       showIconSupportLink(ele){
         return ( ele.support_link && ele.support_link.length ) ? "<div class='bbn-c'><a class='appui-no' href='"  + ele.support_link + "'" + "target='_blank'>" + "<i class='fa fa-ambulance'</i></a></div>" : '';
       },
+    },
+    computed:{
+      sourceTable(){
+        if ( this.searchContent.length ){
+          return this.searchContent
+        }
+        return this.source.all_lib
+      }
+    },
+    watch:{
+        sourceTable(val){
+          if ( val && this.search ){
+            this.$nextTick(()=>{
+              this.$refs.cdn_management.updateData()
+            });
+          }
+        }
+    },
+    components: {
+      'cdn-management-table-lib-versions':{
+        template: '#apst-cdn-management-table-lib-versions',
+        name:'cdn-management-table-lib-versions',
+        props: ['source'],
+        data(){
+          return{
+            link: management.source.root + 'data/versions',
+            versionsInfo: []
+          }
+        },
+        methods:{
+          buttonsVersion(row, col, idx){
+            return [
+              {
+                text: "Info",
+                command:(row, col, idx) => {
+                  this.infoVersion(row, col, idx);
+                },
+                icon: 'fa fa-info',
+                title: 'info',
+                notext: true
+              },
+              {
+                text: 'Edit',
+                command:(row, col, idx)=>{
+                  this.editVersion(row, col, idx);
+                },
+                icon: 'fa fa-edit',
+                title: 'edit',
+                notext: true
+              },
+              {
+               text: 'Delete',
+               command:(row, col, idx)=>{
+                 this.deleteVersion(row, col, idx);
+               },
+               icon: 'fa fa-trash',
+               title: 'delete',
+               notext: true
+              }
+            ];
+          },
+          infoVersion(row, col, idx){
+            let infos = row;
+            let arr = [];
+            infos.content = JSON.parse(infos.content);
+
+            for(let i in infos.content) {
+              if ( (i === "files") || (i === "lang") || (i === "theme_files") ){
+                let obj ={
+                    text: i ,
+                    numChildren: infos.content[i].length,
+                    num: infos.content[i].length,
+                    icon: 'fa fa-folder',
+                    items: []
+                  };
+                if ( infos.content[i].length ){
+                  infos.content[i].forEach((file,id)=>{
+                    obj.items.push({
+                      text: file,
+                      num: 0,
+                      numchildren: 0,
+                      icon: 'fa fa-file'
+                    })
+                  });
+                }
+                arr.push(obj);
+              }
+            };
+            infos.content = arr;
+            bbn.vue.closest(this, 'bbn-tab').popup().open({
+              width: 365,
+              height: 380,
+              title: bbn._("Info version "),
+              component: this.$options.components.info,
+              source:infos
+            })
+          },
+          editVersion(row, col, idx){
+            return this.$refs.tableVersionsLib.edit(row,  {
+              title: bbn._("Edit Version"),
+              height: '95%',
+              width: '85%'
+            }, idx)
+            /*bbn.vue.closest(this, 'bbn-tab').popup().open({
+              width: 365,
+              height: 380,
+              title: bbn._("edit version "),
+              component: ,
+              source:infos
+            })*/
+          },
+          deleteVersion(row, col, id){
+            if ( (row.id !== undefined) && (rowlibrary !== undefined) ){
+              bbn.fn.post( management.source.root + 'actions/version/delete', {
+                id_ver: row.id,
+                library: row.library
+              }, d => {
+                if ( d.data.success ){
+                  /*if ( row.is_latest ){
+                    let uidRow = d.data.uid;
+                    d.data.set('latest', p.data.latest);
+                    librariesGrid.data("kendoGrid").expandRow("tr[data-uid=" + uidRow + "]");
+                  }*/
+                  appui.success(bbn._("Delete version"));
+                }
+                else{
+                  appui.error(bbn._("Error delete version"));
+                }
+              });
+            }
+          },
+        },
+        mounted(){
+          bbn.fn.post(this.link, {id_lib: this.source.name}, d => {
+            if ( d.data.success ){
+              this.versionsInfo = d.data.versions
+            }
+          });
+        },
+        components: {
+          //button info version
+          'info':{
+            template:
+            ` <div class="bbn-full-screen">
+                <div class="bbn-padded bbn-h-100 bbn-grid-fields"
+                     style="grid-auto-rows: max-content max-content max-content max-content auto"
+                 >
+                  <span v-text="_('Id:')" class="bbn-l bbn-b"></span>
+                  <bbn-input v-text="source.id"></bbn-input>
+                  <span v-text="_('Name:')" class="bbn-l bbn-b"></span>
+                  <bbn-input v-text="source.name" class="bbn-l bbn-b"></bbn-input>
+                  <span v-text="_('Library')" class="bbn-l bbn-b"></span>
+                  <bbn-input v-text="source.library"></bbn-input>
+                  <span v-text="_('Date added')" class="bbn-r bbn-b"></span>
+                  <bbn-input v-text="source.date_added" readonly></bbn-input>
+                  <span v-text="_('Content:')" class="bbn-l bbn-b" v-if="source.content"></span>
+                  <bbn-tree :source="source.content"  v-if="source.content">
+                  </bbn-tree>
+                </div>
+              </div>`,
+            props:['source']
+          }
+        }
+      }
     }
   }
 })();

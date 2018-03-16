@@ -1,12 +1,13 @@
 
 <bbn-table ref="cdn_management"
-           :source="source.all_lib"
+           :source="sourceTable"
            :info="true"
            :sortable="true"
            :editable="true"
            :pageable="true"
            editor="appui-cdn-management-library_edit"
            toolbar="appui-cdn-management-libraries_toolbar"
+           :expander="$options.components['cdn-management-table-lib-versions']"
            :order="[{field: 'title', dir: 'ASC'}]"
 >
   <bbn-column title="<?=_("Title")?>"
@@ -70,3 +71,23 @@
               :buttons="buttons"
   ></bbn-column>
 </bbn-table>
+
+<script type="text/x-template" id="apst-cdn-management-table-lib-versions">
+  <div style="height: 100px" v-if="versionsInfo.length">
+    <bbn-table :source="versionsInfo"
+               :editable="true"
+               editor="appui-cdn-management-library_edit"
+               ref="tableVersionsLib"
+     >
+      <bbn-column title="<?=_('Version')?>"
+                  field="name"
+      ></bbn-column>
+      <bbn-column title="<?=_('Date')?>"
+                  field="date_added"
+      ></bbn-column>
+      <bbn-column :width="130"
+                  :buttons="buttonsVersion"
+      ></bbn-column>
+    </bbn-table>
+  </div>
+</script>

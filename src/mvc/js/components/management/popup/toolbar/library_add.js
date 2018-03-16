@@ -5,7 +5,7 @@
         urlGit: "",
         btns:[
           {
-            text: 'calcel',
+            text: 'Calcel',
             command: ()=>{
               bbn.vue.closest(this, "bbn-popup").close();
             },
@@ -17,13 +17,13 @@
              this.addManualyLib()
             },
             title: 'skip',
-            icon: 'fa fa-angle-right'
-        },{
+            icon: 'fa fa-angle-double-right'
+          },{
             text: 'Import',
             command: ()=>{
              this.importGithub()
             },
-            icon: "fa fa-angle-double-right",
+            icon: "fa fa-angle-right",
             title: 'import',
           }
         ]
@@ -63,10 +63,20 @@
                 }
                 bbn.vue.closest(this, 'bbn-tab').popup().open({
                   height: '80%',
-                  width: '60%',
+                  width: '70%',
                   title: bbn._("Import library of github:"),
                   component:'appui-cdn-management-library_edit',
-                  source: {row: d.data, addLibrary: true}
+                  source: {
+                    row: d.data,
+                    actionsPost:{
+                      add:{
+                        library: true,
+                        version: false,
+                      },
+                      editVersion: false
+                    },
+                    import: true
+                  }
                 });
               }
             }
@@ -94,7 +104,14 @@
                 latest: "",
                 version: ""
               },
-              addLibrary: true
+              actionsPost:{
+                add:{
+                  library: true,
+                  version: false,
+                },
+                editVersion: false
+              },
+              import: false
             }
         });
       }

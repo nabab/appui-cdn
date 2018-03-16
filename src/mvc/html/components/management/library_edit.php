@@ -77,8 +77,8 @@
       <?=_("Support")?>
     </label>
     <bbn-input v-model="source.row.support_link"></bbn-input>
-    <label v-if="source.row.versions.length"><?=_("Version")?></label>
-    <bbn-dropdown v-if="source.row.versions.length"
+    <label v-if="source.row.versions"><?=_("Version")?></label>
+    <bbn-dropdown v-if="source.row.versions"
                   style="width: 50%"
                   v-model="source.row.git_id"
                   :source="source.row.versions"
@@ -119,7 +119,7 @@
                 </span>
               </div>
             </div>
-            <div class="bbn-padded bbn-grid-fields bbn-100" v-if ="treeOrderSource.length">
+            <div class="bbn-padded bbn-grid-fields bbn-100" v-if ="treeOrderSource">
               <div>
                 <span class="bbn-b" style="padding-bottom: 5px">
                   <?=_("Move File:")?>
@@ -201,6 +201,7 @@
                   <bbn-column title="<?=_('Version')?>"
                               field="id_ver"
                               :editor="$options.components.versions"
+                              :render="showVersion"
                   ></bbn-column>
                   <bbn-column title="<?=_('Order')?>"
                               field="order"
@@ -209,6 +210,7 @@
                   ></bbn-column>
                   <bbn-column title=" "
                               width="100"
+                              class="bbn-c"
                               :buttons="buttonsTableDepandencies"
                   ></bbn-column>
 

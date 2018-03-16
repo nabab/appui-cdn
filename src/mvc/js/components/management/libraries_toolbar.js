@@ -3,7 +3,8 @@
     data(){
       return {
         updateList: [],
-        countList: false
+        countList: false,
+        library:""
       }
     },
     methods:{
@@ -36,11 +37,14 @@
           });
         }
       },
-      // TODO
-      searchLibrary(){
-      /*  $("#F4LLL9jdn3nhasS38sh301dfs", ele).kendoAutoComplete({
-              placeholder: data.lng.search_library + '...'
-            });*/
+      searchLibrary(ele){
+        this.management.searchContent = [];
+        for(let lib of this.management.source.all_lib){
+          if ( lib.name.indexOf(this.library.toLowerCase()) > -1 ){
+            this.management.searchContent.push(lib);
+          }
+        }
+        this.management.search = true;
       }
     },
     computed:{
@@ -53,6 +57,11 @@
         return true;
       }
     },
+    watch:{
+      library(val, oldVal){
+        this.searchLibrary();
+      }
+    }
 
   }
 })();

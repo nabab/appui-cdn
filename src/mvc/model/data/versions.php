@@ -7,6 +7,9 @@
  */
 /** @var $model \bbn\mvc\model */
 $res['success'] = false;
+/*if ( !empty($model->data['data']['id_lib']) && !isset($model->data['id_lib']) ){
+  $model->data['id_lib'] = $model->data['data']['id_lib'];
+}*/
 
 if ( !empty($model->data['db']) && !empty($model->data['id_lib']) ){
   // Get all library's versions

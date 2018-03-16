@@ -33,36 +33,30 @@
         //for tree file at click next
         identification: 0,
         actionsPath:{
-          edit: 'cdn/actions/library/edit',
-          add:  'cdn/actions/library/add',
+          library:{
+            edit: 'cdn/actions/library/edit',
+            add: 'cdn/actions/library/add'
+          },
+          version:{
+            edit: 'cdn/actions/version/edit',
+            add: 'cdn/actions/version/add'
+          }
         },//construct buttons for general form
-        btns:{
-          preCompile:[{
+        btnsNext:[{
+          text: "prev",
+          title: "prev",
+          icon: 'fa fa-arrow-circle-o-left',
+          command: ()=>{ this.configuratorLibrary = false }
+        },{
             text: "cancel",
             icon: 'fa fa-ban',
             command: ()=>{ this.$refs.form_library.cancel() },
-          },{
-            text: "next",
-            title: "next",
-            icon: 'fa fa-arrow-circle-o-right',
-            command: ()=>{ this.next() }
-          }],
-          next:[{
-            text: "before",
-            title: "before",
-            icon: 'fa fa-arrow-circle-o-left',
-            command: ()=>{ this.configuratorLibrary = false }
-          },{
-              text: "cancel",
-              icon: 'fa fa-ban',
-              command: ()=>{ this.$refs.form_library.cancel() },
-          },{
-              text: "Save",
-              icon: 'fa fa-check-circle-o',
-              command: ()=>{ this.$refs.form_library.submit() },
-            }
-          ]
-        }
+        },{
+            text: "Save",
+            icon: 'fa fa-check-circle-o',
+            command: ()=>{ this.$refs.form_library.submit() },
+          }
+        ]
       }
     },
     methods:{
@@ -231,18 +225,8 @@
       },
       //DEPANDANCIES TABLE
       //buttons table  depandacies
-      /*TODO*/
       buttonsTableDepandencies(row, col, idx){
         return [
-          {
-            text: 'Edit',
-            command:()=>{
-              this.editDepandancie(row, col, idx);
-            },
-            icon: 'fa fa-edit',
-            title: 'edit',
-            notext: true
-          },
           {
            text: 'Delete',
            command: (row, col, id )=>{
@@ -253,22 +237,12 @@
            notext: true
           }
         ];
-      },/*TODO*/
-      /*editDepandancie(row, col, idx){
-        let libraries = [];
-        this.dataVersion.lib_ver.each( (val, i)=>{
-          if ( bbn.fn.search(libraries, 'lib_name', row.lib_name) < 0 ){
-            libraries.push(row);
-          }
-        });
-        return this.$refs.tableDependecies.edit(row,  {
-          title: bbn._("Edit Depandancie"),
-          height: '95%',
-          width: '85%'
-        }, idx);
-      },*/
+      },
+      //at select a version depandacies render in this function for show at number version and not your id
+      showVersion(ele){
+        return bbn.fn.get_field(this.dataVersion.lib_ver, "id_ver", ele.id_ver, "version");
+      },
       saveDependencies(row, col, idx){
-        bbn.fn.log("SAVE", row, col, idx)
         if ( !row.id_ver || !row.lib_name || (bbn.fn.search(this.dataVersion.dependencies, 'order', row.order) > 0) ){
           appui.error(bbn._("error information to add to the addiction"));
         }
@@ -289,16 +263,36 @@
         }
         // case for add library of the toolbar first form
         if ( this.source.addLibrary && !this.configuratorLibrary ) {
-          return this.btns.preCompile
+          return this.preCompileButtons
         }
         // case for add library and click next for configurator library before saving
         if ( this.source.addLibrary && this.configuratorLibrary ){
-          return this.btns.next
+          return this.btnsNext
         }
       },
       //for action form
       currentAction(){
-        return this.source.addLibrary ? this.actionsPath.add :  this.actionsPath.edit
+        if ( this.source.actionsPost ){
+
+          // FOR ADD LIBRARY OR VERSION
+          if ( this.source.actionsPost.add ){
+            // add library
+            if ( this.source.actionsPost.add.library && !this.source.actionsPost.add.version ){
+              return this.actionsPath.library.add
+            }
+            //add version
+            if ( !this.source.actionsPost.add.library && this.source.actionsPost.add.version ){
+              return this.actionsPath.version.add
+            }
+          } //FOR EDIT VERSION
+          if ( this.source.actionsPost.editVersion ){
+              return this.actionsPath.version.edit
+            }
+          }
+        }//FOR EDIT LIBRARY
+
+        return 'cdn/actions/library/edit'//this.actionsPath.library.edit
+
       },//for tree order files
       treeOrderSource(){
         if ( this.referenceNodeTree.length ){
@@ -336,6 +330,35 @@
           themes: this.data.themes,
           new_name: this.newName,
           dependencies: this.dataVersion.dependencies
+        }
+      },
+      //case manualy or no library abilitation button next
+      preCompileButtons(){
+        if ( !this.source.row.title && !this.source.row.name ){
+          return [{
+            text: "cancel",
+            icon: 'fa fa-ban',
+            command: ()=>{ this.$refs.form_library.cancel() },
+          },{
+            text: "next",
+            title: "next",
+            icon: 'fa fa-arrow-circle-o-right',
+            disabled: true,
+            command: ()=>{ this.next() }
+          }];
+        }
+        else{
+          return [{
+            text: "cancel",
+            icon: 'fa fa-ban',
+            command: ()=>{ this.$refs.form_library.cancel() },
+          },{
+            text: "next",
+            title: "next",
+            icon: 'fa fa-arrow-circle-o-right',
+            disabled: false,
+            command: ()=>{ this.next() }
+          }];
         }
       }
     },
