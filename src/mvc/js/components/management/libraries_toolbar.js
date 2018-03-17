@@ -9,6 +9,11 @@
     },
     methods:{
       add(){
+        this.management.action.post = this.management.source.root + 'actions/library/add';
+        this.management.action.addLib = true;
+        this.management.action.addVers = false;
+        this.management.action.editLib =  false;
+        this.management.action.editVers =  false;
         bbn.vue.closest(this, 'bbn-tab').popup().open({
           width: "80%",
           height: "20%",

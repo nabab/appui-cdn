@@ -60,6 +60,7 @@ if ( !empty($model->data['db']) && !empty($model->data['id_lib']) ){
 
     // Make version's files TreeView
     $versions[$i]['files_tree'] = \bbn\x::make_tree((array)json_decode($ver['content']));
+    //$versions[$i]['files_tree'] = json_decode($ver['content']);
   }
   $res = [
     'success' => true,

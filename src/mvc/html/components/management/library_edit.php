@@ -1,6 +1,6 @@
 
 <bbn-form class="bbn-full-screen"
-          :action="currentAction"
+          :action="management.action.post"
           :source="source.row"
           :data="complementaryData"
           ref="form_library"
@@ -108,6 +108,7 @@
                         :map="treeFiles"
                         uid="path"
                         ref="filesListTree"
+                        @ready="checkedNode"
               ></bbn-tree>
             </div>
           </bbn-pane>
@@ -217,7 +218,7 @@
                 </bbn-table>
               </div>
 
-              <div class="bbn-c bbn-w-100" v-if="dataVersion.dependencies_html.length">
+              <div class="bbn-c bbn-w-100" v-if="dataVersion.dependencies_html">
                 <div class="bbn-w-50 w3-card bbn-padded bbn-grid-fields">
                   <div>
                     <span class="bbn-b" v-text="_('Dependecies')"></span>

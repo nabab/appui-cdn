@@ -68,13 +68,6 @@
                   component:'appui-cdn-management-library_edit',
                   source: {
                     row: d.data,
-                    actionsPost:{
-                      add:{
-                        library: true,
-                        version: false,
-                      },
-                      editVersion: false
-                    },
                     import: true
                   }
                 });
@@ -103,13 +96,6 @@
                 support_link: "",
                 latest: "",
                 version: ""
-              },
-              actionsPost:{
-                add:{
-                  library: true,
-                  version: false,
-                },
-                editVersion: false
               },
               import: false
             }

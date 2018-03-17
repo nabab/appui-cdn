@@ -24,7 +24,14 @@
     data(){
       return{
         searchContent: [],
-        search: false
+        search: false,
+        action:{
+          post: "",
+          addLib: false,
+          addVers: false,
+          editLib: false,
+          editVers: false
+        }
       }
     },
     methods:{
@@ -42,6 +49,11 @@
           {
             text: 'Edit',
             command:()=>{
+              this.action.post = this.source.root + 'actions/library/edit'
+              this.action.addLib = false;
+              this.action.addVers = false;
+              this.action.editLib =  true;
+              this.action.editVers =  false;
               this.editLibrary(row, col, idx);
             },
             icon: 'fa fa-edit',
@@ -210,6 +222,11 @@
               {
                 text: 'Edit',
                 command:(row, col, idx)=>{
+                  management.action.post = management.source.root + 'actions/version/edit'
+                  management.action.addLib = false;
+                  management.action.addVers = false;
+                  management.action.editLib =  false;
+                  management.action.editVers =  true;
                   this.editVersion(row, col, idx);
                 },
                 icon: 'fa fa-edit',
@@ -264,18 +281,11 @@
             })
           },
           editVersion(row, col, idx){
-            return this.$refs.tableVersionsLib.edit(row,  {
+            return this.$refs.tableVersionsLib.edit(row,{
               title: bbn._("Edit Version"),
               height: '95%',
               width: '85%'
             }, idx)
-            /*bbn.vue.closest(this, 'bbn-tab').popup().open({
-              width: 365,
-              height: 380,
-              title: bbn._("edit version "),
-              component: ,
-              source:infos
-            })*/
           },
           deleteVersion(row, col, id){
             if ( (row.id !== undefined) && (rowlibrary !== undefined) ){

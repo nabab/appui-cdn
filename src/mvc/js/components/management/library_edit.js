@@ -96,7 +96,7 @@
       },//// only case of add library for info and select the files
       next(){
         //let's check if you do it next for the first time or not
-        if ( this.source.addLibrary &&
+        if ( this.management.action.addLib &&
            this.source.row.name &&
            this.source.row.title /*&&
            $.isEmptyObject(this.dataVersion)*/
@@ -252,48 +252,35 @@
           this.$refs.tableDependecies._removeTmp();
           //this.$refs.tableDependecies.editedRow = false;
         }
+      },//for edit version
+      checkedNode(){
+        alert("entrato")
+        if (  this.management.action.editVers ){
+        alert();
+          this.$refs.filesListTree.checked= this.referenceNodeTree;
+        }
       }
     },
     computed:{
       //for button form
       currentButton(){
-        // case for edit table cdn managment
-        if (  !this.source.addLibrary && $.isEmptyObject(this.dataVersion) ){
-          return ['submit', 'cancel'];
-        }
-        // case for add library of the toolbar first form
-        if ( this.source.addLibrary && !this.configuratorLibrary ) {
-          return this.preCompileButtons
-        }
-        // case for add library and click next for configurator library before saving
-        if ( this.source.addLibrary && this.configuratorLibrary ){
-          return this.btnsNext
-        }
-      },
-      //for action form
-      currentAction(){
-        if ( this.source.actionsPost ){
-
-          // FOR ADD LIBRARY OR VERSION
-          if ( this.source.actionsPost.add ){
-            // add library
-            if ( this.source.actionsPost.add.library && !this.source.actionsPost.add.version ){
-              return this.actionsPath.library.add
-            }
-            //add version
-            if ( !this.source.actionsPost.add.library && this.source.actionsPost.add.version ){
-              return this.actionsPath.version.add
-            }
-          } //FOR EDIT VERSION
-          if ( this.source.actionsPost.editVersion ){
-              return this.actionsPath.version.edit
-            }
+        if( this.management.action ){
+          // case for edit table cdn managment
+          if ( this.management.action.editLib  && $.isEmptyObject(this.dataVersion) ){
+            return ['cancel', 'submit'];
           }
-        }//FOR EDIT LIBRARY
-
-        return 'cdn/actions/library/edit'//this.actionsPath.library.edit
-
-      },//for tree order files
+              // case for add library of the toolbar first form
+          if ( this.management.action.addLib && !this.configuratorLibrary ) {
+            return this.preCompileButtons
+          }
+          // case for add library and click next for configurator library before saving
+          if ( (this.management.action.addLib || this.management.action.addVers || this.management.action.editVers) && this.configuratorLibrary ){
+            return this.btnsNext
+          }
+        }
+        return ['cancel']
+      },
+    //for tree order files
       treeOrderSource(){
         if ( this.referenceNodeTree.length ){
           let arr = [];
@@ -374,8 +361,31 @@
             value: ele.licence
           })
         }
+      }//if edit version
+      if ( this.management.action.editVers ){
+        this.configuratorLibrary = true;
+        bbn.fn.post(  "cdn/data/version/edit", { version: this.source.row.id}, d => {
+          if ( d.data !== undefined ){
+            this.dataVersion.dependencies = d.data.dependencies;
+            this.dataVersion.files_tree = d.data.files_tree;
+            this.dataVersion.version = this.source.row.name;
+            let arr = [];
+            for( let obj of d.data.files ){
+              arr.push(obj.path);
+            }
+            editLib.dataVersion.languages_tree = d.datafiles_tree;
+            this.referenceNodeTree = arr;
+            this.data.themes = d.data.themes;
+            this.data.languages = d.data.languages;
+            this.dataVersion.lib_ver = d.data.lib_ver;
+            for ( let val of d.data.lib_ver){
+              if ( bbn.fn.search(this.listLib, 'text', val.lib_name) < 0 ){
+                this.listLib.push({text: val.lib_name, value: val.lib_name});
+              }
+            }
+          }
+        });
       }
-
     },
     components: {
       //button in title column grid add file language
