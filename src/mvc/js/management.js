@@ -1,5 +1,6 @@
 (()=>{
-  let management;
+  let management,
+      tableVersions;
   return {
     mixins: [bbn.vue.localStorageComponent],
     created(){
@@ -200,6 +201,9 @@
       'cdn-management-table-lib-versions':{
         template: '#apst-cdn-management-table-lib-versions',
         name:'cdn-management-table-lib-versions',
+        created (){
+          tableVersions = this;
+        },
         props: ['source'],
         data(){
           return{
@@ -247,8 +251,8 @@
           infoVersion(row, col, idx){
             let infos = row;
             let arr = [];
+            bbn.fn.log("infos", infos);
             infos.content = JSON.parse(infos.content);
-
             for(let i in infos.content) {
               if ( (i === "files") || (i === "lang") || (i === "theme_files") ){
                 let obj ={
@@ -337,6 +341,30 @@
                 </div>
               </div>`,
             props:['source']
+          },
+          'addVersions' : {
+            template: `<bbn-button icon="fa fa-plus" @click="add"></bbn-button>`,
+            props:['source'],
+            methods:{
+              add(){
+                management.action.post = management.source.root + 'actions/version/add'
+                management.action.addLib = false;
+                management.action.addVers = true;
+                management.action.editLib =  false;
+                management.action.editVers =  false;
+                console.log("guarda", tableVersions);
+                bbn.vue.closest(this, 'bbn-tab').popup().open({
+                  height: '60%',
+                  width: '85%',
+                  title: bbn._("Add version:"),
+                  component:'appui-cdn-management-library_edit',
+                  source: tableVersions.source,
+                  onClose: () =>{
+                    bbn.vue.closest(this,'bbn-table').updateData()
+                  }
+                });
+              }
+            }
           }
         }
       }

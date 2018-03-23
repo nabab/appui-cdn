@@ -97,7 +97,7 @@
               <span class="bbn-b">
                 <?=_("Name:")?>
               </span>
-              <bbn-input style="width: 100%" required v-model="dataVersion.version"></bbn-input>
+              <bbn-input style="width: 100%" v-model="dataVersion.version"></bbn-input>
               <span class="bbn-b">
                 <?=_("Files:")?>
               </span>

@@ -13,6 +13,7 @@
           files_tree : [],
           internal: [],
           languages_tree: [],
+          themes_tree: [],
           lib_ver : [],
           slave_dependencies : [],
           version: ""
@@ -254,9 +255,7 @@
         }
       },//for edit version
       checkedNode(){
-        alert("entrato")
         if (  this.management.action.editVers ){
-        alert();
           this.$refs.filesListTree.checked= this.referenceNodeTree;
         }
       }
@@ -266,7 +265,7 @@
       currentButton(){
         if( this.management.action ){
           // case for edit table cdn managment
-          if ( this.management.action.editLib  && $.isEmptyObject(this.dataVersion) ){
+          if ( this.management.action.editLib  /*&& $.isEmptyObject(this.dataVersion)*/ ){
             return ['cancel', 'submit'];
           }
               // case for add library of the toolbar first form
@@ -306,7 +305,7 @@
         }
       },//for first isert lib or no
       checkedLatest(){
-        return  bbn.fn.count(this.sourceInternal) === 1 ? true : false
+        return  bbn.fn.count(this.sourceInternal) === 1 && !this.management.action.editVers ? true : false
       },
       //for form senction 2 first of save library
       complementaryData(){
@@ -373,7 +372,8 @@
             for( let obj of d.data.files ){
               arr.push(obj.path);
             }
-            editLib.dataVersion.languages_tree = d.datafiles_tree;
+            this.dataVersion.languages_tree = d.data.languages_tree;
+            this.dataVersion.themes_tree = d.data.themes_tree;
             this.referenceNodeTree = arr;
             this.data.themes = d.data.themes;
             this.data.languages = d.data.languages;
@@ -384,6 +384,12 @@
               }
             }
           }
+        });
+      }//if add version
+      if ( this.management.action.addVers ){
+        bbn.fn.post("cdn/data/version/add", {folder: this.source.name}, (d)=>{
+          bbn.fn.log(d);
+          alert();
         });
       }
     },
@@ -426,7 +432,7 @@
         data(){
           return{
             titleButton: bbn._('Add theme'),
-            sourceTree:  editLib.dataVersion.languages_tree,
+            sourceTree:  editLib.dataVersion.themes_tree,
           }
         },
         methods:{

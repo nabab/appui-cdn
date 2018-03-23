@@ -78,6 +78,7 @@
                :editable="true"
                editor="appui-cdn-management-library_edit"
                ref="tableVersionsLib"
+
      >
       <bbn-column title="<?=_('Version')?>"
                   field="name"
@@ -86,6 +87,7 @@
                   field="date_added"
       ></bbn-column>
       <bbn-column :width="130"
+                  :tcomponent="$options.components.addVersions"
                   :buttons="buttonsVersion"
       ></bbn-column>
     </bbn-table>
