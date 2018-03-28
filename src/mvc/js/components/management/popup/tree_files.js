@@ -28,10 +28,8 @@
         bbn.vue.closest(this, "bbn-popup").close();
       },
       selectElement(node){
-        bbn.fn.log("selectElement", node);
         if ( node.data.file ){
-          this.element = node.data.path;
-          //this.$set(this, "element", node.data.path);
+          this.element = node.data.path;      
         }
       }
     }

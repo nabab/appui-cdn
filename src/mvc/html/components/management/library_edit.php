@@ -1,4 +1,3 @@
-
 <bbn-form class="bbn-full-screen"
           :action="management.action.post"
           :source="source.row"
@@ -41,7 +40,6 @@
     <div>
       <bbn-dropdown style="width:200px"
                     ref="listLicences"
-                    placeholder= "<?=_('Select one')?>"
                     :source="licencesList"
                     v-model="source.row.licence"
       ></bbn-dropdown>
@@ -85,7 +83,7 @@
                   ref="listVersions"
     ></bbn-dropdown>
   </div>
-   <!--932f9u4923rjasdu09j3333-->
+  <!--SECOND STEP,VIEW FOR EDIT AND OR ADD VERSION -->
   <div v-else>
     <bbn-splitter orientation="vertical">
       <bbn-pane>
@@ -97,7 +95,7 @@
               <span class="bbn-b">
                 <?=_("Name:")?>
               </span>
-              <bbn-input style="width: 100%" v-model="dataVersion.version"></bbn-input>
+              <bbn-input style="width: 100%" v-model="dataVersion.version" :disabled="editAddVersion"></bbn-input>
               <span class="bbn-b">
                 <?=_("Files:")?>
               </span>
@@ -145,14 +143,12 @@
                 </template>
               </div>
             </div>
-
           </bbn-pane>
         </bbn-splitter>
       </bbn-pane>
       <bbn-pane>
         <bbn-splitter orientation="vertical">
           <bbn-pane :scrollable="true">
-
               <!--TABLE LANGUAGES-->
               <div style="height: 100px" class="bbn-w-100">
                 <bbn-table :source="data.languages"
@@ -240,7 +236,7 @@
                               :disabled="checkedLatest"
                 ></bbn-checkbox>
                 <!--INTERNAL-->
-                <bbn-dropdown v-if="!data.latest"
+                <bbn-dropdown v-if="data.latest"
                               :source="sourceInternal"
                               v-model="data.internal"
                 ></bbn-dropdown>

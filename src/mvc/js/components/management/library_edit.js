@@ -55,7 +55,14 @@
         },{
             text: "Save",
             icon: 'fa fa-check-circle-o',
-            command: ()=>{ this.$refs.form_library.submit() },
+            command: ()=>{
+              if ( this.referenceNodeTree.length ){
+                this.$refs.form_library.submit()
+              }
+              else{
+                alert(bbn._("No file order"));
+              }
+            },
           }
         ]
       }
@@ -80,7 +87,7 @@
                     }
                   }
                   /*else {
-                    e.model.set(prop, d.data[prop]);
+                    e.model.set(prop, d.data[prop]);f
                   }*/
                 }
               }
@@ -111,7 +118,10 @@
             }, d =>{
                if( d.data ){
                  for(let i in this.dataVersion){
-                   this.dataVersion[i] = (d.data && d.data[i].length) ? d.data[i] : []
+                   this.dataVersion[i] = (d.data && d.data[i]) ? d.data[i] : []
+                   if (i === "themes_tree"){
+                     this.dataVersion[i] = d.data.files_tree ?  d.data.files_tree : [];
+                   }
                  }
                  this.configuratorLibrary = true;
                  //for dropdown list library in table depanadancies
@@ -258,9 +268,51 @@
         if (  this.management.action.editVers ){
           this.$refs.filesListTree.checked= this.referenceNodeTree;
         }
+      },
+      //is called to the mounted in case of edit version
+      editVersion(){
+        this.configuratorLibrary = true;
+        bbn.fn.post("cdn/data/version/edit", {version: this.source.row.id}, d => {
+          if ( d.data !== undefined ){
+            this.dataVersion.dependencies = d.data.dependencies;
+            this.dataVersion.files_tree = d.data.files_tree;
+            this.dataVersion.version = this.source.row.name;
+            let arr = [];
+            for( let obj of d.data.files ){
+              arr.push(obj.path);
+            }
+            this.dataVersion.languages_tree = d.data.languages_tree;
+            this.dataVersion.themes_tree = d.data.themes_tree;
+            this.referenceNodeTree = arr;
+            this.data.themes = d.data.themes;
+            this.data.languages = d.data.languages;
+            this.dataVersion.lib_ver = d.data.lib_ver;
+            // for dropdown list dependencies
+            for ( let val of d.data.lib_ver){
+              if ( bbn.fn.search(this.listLib, 'text', val.lib_name) < 0 ){
+                this.listLib.push({text: val.lib_name, value: val.lib_name});
+              }
+            }
+          }
+        });
+      },
+      addVersion(){
+        this.configuratorLibrary = true;
+        this.dataVersion = this.source.row;
+        this.dataVersion.themes_tree = this.source.row.files_tree;
+        // for dropdown list dependencies
+        for ( let val of this.source.row.lib_ver){
+          if ( bbn.fn.search(this.listLib, 'text', val.lib_name) < 0 ){
+            this.listLib.push({text: val.lib_name, value: val.lib_name});
+          }
+        }
       }
     },
     computed:{
+      //disabled or no input name version
+      editAddVersion(){
+        return ( this.management.action.editVers || this.management.action.addVers ) ? true : false
+      },
       //for button form
       currentButton(){
         if( this.management.action ){
@@ -303,7 +355,7 @@
             }
           ]
         }
-      },//for first isert lib or no
+      },//for first insert lib or no
       checkedLatest(){
         return  bbn.fn.count(this.sourceInternal) === 1 && !this.management.action.editVers ? true : false
       },
@@ -315,7 +367,9 @@
           languages: this.data.languages,
           themes: this.data.themes,
           new_name: this.newName,
-          dependencies: this.dataVersion.dependencies
+          dependencies: this.dataVersion.dependencies,
+          name: this.source.name || "",
+          latest : this.data.latest
         }
       },
       //case manualy or no library abilitation button next
@@ -346,7 +400,7 @@
             command: ()=>{ this.next() }
           }];
         }
-      }
+      },
     },
     created(){
       editLib = this;
@@ -360,37 +414,13 @@
             value: ele.licence
           })
         }
-      }//if edit version
+      }
+      //if edit version
       if ( this.management.action.editVers ){
-        this.configuratorLibrary = true;
-        bbn.fn.post(  "cdn/data/version/edit", { version: this.source.row.id}, d => {
-          if ( d.data !== undefined ){
-            this.dataVersion.dependencies = d.data.dependencies;
-            this.dataVersion.files_tree = d.data.files_tree;
-            this.dataVersion.version = this.source.row.name;
-            let arr = [];
-            for( let obj of d.data.files ){
-              arr.push(obj.path);
-            }
-            this.dataVersion.languages_tree = d.data.languages_tree;
-            this.dataVersion.themes_tree = d.data.themes_tree;
-            this.referenceNodeTree = arr;
-            this.data.themes = d.data.themes;
-            this.data.languages = d.data.languages;
-            this.dataVersion.lib_ver = d.data.lib_ver;
-            for ( let val of d.data.lib_ver){
-              if ( bbn.fn.search(this.listLib, 'text', val.lib_name) < 0 ){
-                this.listLib.push({text: val.lib_name, value: val.lib_name});
-              }
-            }
-          }
-        });
+        this.editVersion();
       }//if add version
       if ( this.management.action.addVers ){
-        bbn.fn.post("cdn/data/version/add", {folder: this.source.name}, (d)=>{
-          bbn.fn.log(d);
-          alert();
-        });
+        this.addVersion();
       }
     },
     components: {

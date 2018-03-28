@@ -18,6 +18,7 @@
       bbn.vue.addComponent('popup/toolbar/update', mixins);
       bbn.vue.addComponent('popup/tree_files', mixins);
       bbn.vue.addComponent('popup/toolbar/library_add', mixins);
+      bbn.vue.addComponent('popup/versions_from_github', mixins);
       bbn.vue.addComponent('library_edit', mixins);
       bbn.vue.addComponent('libraries_toolbar', mixins);
       bbn.vue.unsetComponentRule();
@@ -50,11 +51,13 @@
           {
             text: 'Edit',
             command:()=>{
+              /*
               this.action.post = this.source.root + 'actions/library/edit'
               this.action.addLib = false;
               this.action.addVers = false;
               this.action.editLib =  true;
-              this.action.editVers =  false;
+              this.action.editVers =  false;*/
+              this.actions('editLib');
               this.editLibrary(row, col, idx);
             },
             icon: 'fa fa-edit',
@@ -103,7 +106,7 @@
       },
       editLibrary(row, col, idx){
         return this.$refs.cdn_management.edit(row,  {
-          title: bbn._("Edit Library"),
+          title: this.source.lng.editLib,
           height: '95%',
           width: '85%'
         }, idx);
@@ -111,13 +114,39 @@
       /*edit(row, col, idx){
         return this.$refs.table.edit(row, bbn._("Edit Library"), idx);
       },*/
+      actions(type){
+        switch(type){
+          case 'addVers':
+            this.action.post = this.source.root + 'actions/version/add';
+            break;
+          case 'editVers':
+            this.action.post = this.source.root + 'actions/version/edit';
+          break;
+          case 'addLib':
+            this.action.post = this.source.root + 'actions/library/add';
+            break;
+          case 'editLib':
+            this.action.post = this.source.root + "actions/library/edit";
+            break;
+        }
+        for(let typeAction in this.action){
+          if ( typeAction === type ){
+            this.action[typeAction] = true;
+          }
+          else{
+            if (typeAction !== 'post'){
+              this.action[typeAction] = false;
+            }
+          }
+        }
+      },
       removeLib(row, col, idx){
         bbn.fn.log("delete", row, col, idx)
         bbn.fn.confirm(bbn._("Delete library") + " "+  row.name + "?" , ()=>{
           bbn.fn.post(this.source.root + 'actions/library/delete', {name: row.name}, (d) => {
             if ( d.data.success ){
               appui.success(bbn._("Delete"));
-              this.$refs.cdn_management.updateData();
+              bbn.vue.find(bbn.vue.closest(this, 'bbn-tab'), 'bbn-table').updateData();
             }
             else{
               appui.error(bbn._("Error"));
@@ -125,38 +154,6 @@
           });
         });
       },
-      /*create(o){
-        bbn.fn.post(this.source.root +'configurations', o.data, function(d){
-          if ( d.data && d.data.length ){
-            o.success(d.data);
-          }
-          else {
-            o.error();
-          }
-        });
-      },
-      update(o){
-        bbn.fn.post(this.source.root + 'configurations', o.data, function(d){
-          if ( d.data ){
-            o.success(d.data);
-          }
-          else {
-            o.error();
-          }
-        });
-      },
-      destroy(o){
-        if ( o.data.hash !== undefined ){
-          bbn.fn.post(this.source.root +'configurations', {hash: o.data.hash}, function(d){
-            if ( d.data.success ){
-              o.success();
-            }
-            else{
-              o.error();
-            }
-          });
-        }
-      },*/
       //for render
       showIconAuthor(ele){
         return ( ele.author && ele.author.length ) ? '<div class="bbn-c"><i class="fa fa-user bbn-xl" title="' + ele.author + '"></i></div>' : '';
@@ -226,11 +223,7 @@
               {
                 text: 'Edit',
                 command:(row, col, idx)=>{
-                  management.action.post = management.source.root + 'actions/version/edit'
-                  management.action.addLib = false;
-                  management.action.addVers = false;
-                  management.action.editLib =  false;
-                  management.action.editVers =  true;
+                  management.actions('editVers');
                   this.editVersion(row, col, idx);
                 },
                 icon: 'fa fa-edit',
@@ -251,7 +244,6 @@
           infoVersion(row, col, idx){
             let infos = row;
             let arr = [];
-            bbn.fn.log("infos", infos);
             infos.content = JSON.parse(infos.content);
             for(let i in infos.content) {
               if ( (i === "files") || (i === "lang") || (i === "theme_files") ){
@@ -286,23 +278,19 @@
           },
           editVersion(row, col, idx){
             return this.$refs.tableVersionsLib.edit(row,{
-              title: bbn._("Edit Version"),
+              title: this.source.lng.edit_library,
               height: '95%',
               width: '85%'
             }, idx)
           },
           deleteVersion(row, col, id){
-            if ( (row.id !== undefined) && (rowlibrary !== undefined) ){
+            if ( (row.id !== undefined) && (row.library !== undefined) ){
               bbn.fn.post( management.source.root + 'actions/version/delete', {
                 id_ver: row.id,
                 library: row.library
               }, d => {
                 if ( d.data.success ){
-                  /*if ( row.is_latest ){
-                    let uidRow = d.data.uid;
-                    d.data.set('latest', p.data.latest);
-                    librariesGrid.data("kendoGrid").expandRow("tr[data-uid=" + uidRow + "]");
-                  }*/
+                  this.$refs.tableVersionsLib.updateData();
                   appui.success(bbn._("Delete version"));
                 }
                 else{
@@ -347,20 +335,37 @@
             props:['source'],
             methods:{
               add(){
-                management.action.post = management.source.root + 'actions/version/add'
-                management.action.addLib = false;
-                management.action.addVers = true;
-                management.action.editLib =  false;
-                management.action.editVers =  false;
-                console.log("guarda", tableVersions);
-                bbn.vue.closest(this, 'bbn-tab').popup().open({
-                  height: '60%',
-                  width: '85%',
-                  title: bbn._("Add version:"),
-                  component:'appui-cdn-management-library_edit',
-                  source: tableVersions.source,
-                  onClose: () =>{
-                    bbn.vue.closest(this,'bbn-table').updateData()
+                management.actions("addVers");
+                bbn.fn.post("cdn/data/version/add", {folder: tableVersions.source.name}, (d)=>{
+                  if ( d.data.github ){
+                    bbn.fn.confirm( management.source.lng.versionGithubImport, ()=>{
+                      bbn.fn.post( management.source.root + 'github/versions', {url: d.data.github}, ele => {
+                        bbn.vue.closest(this, 'bbn-tab').popup().open({
+                          height: '25%',
+                          width: '50%',
+                          title: management.source.lng.githubVersion,
+                          component:'appui-cdn-management-popup-versions_from_github',
+                          source: $.extend({}, ele.data, {folder: tableVersions.source.name})
+                        });
+                      });
+                    });
+                  }
+                  else if( d.data &&
+                    d.data.files_tree &&
+                    d.data.files_tree &&
+                    d.data.languages_tree
+                  ){
+                    bbn.fn.log("guarrrrrrrrrda", d);
+                    bbn.vue.closest(this, 'bbn-tab').popup().open({
+                      height: '95%',
+                      width: '85%',
+                      title: bbn._('Add version library') + " " + tableVersions.source.name,
+                      component:'appui-cdn-management-library_edit',
+                      source: $.extend({row: d.data}, {name: tableVersions.source.name})
+                    });
+                  }
+                  else{
+                    bbn.fn.alert(management.source.lng.noNewVersion);
                   }
                 });
               }

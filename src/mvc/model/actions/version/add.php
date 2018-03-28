@@ -6,6 +6,15 @@
  * Time: 09:48
  */
 /** @var $model \bbn\mvc\model */
+\bbn\x::log([
+  $model->data['db'],
+  $model->data['name'],
+  $model->data['vname'],
+  $model->data['files'],
+  $model->data['languages'],
+  $model->data['themes']
+  ],"addVersion");
+
 if ( !empty($model->data['db']) &&
   !empty($model->data['name']) &&
   !empty($model->data['vname']) &&
@@ -38,7 +47,6 @@ if ( !empty($model->data['db']) &&
     'lang' => $languages,
     'theme_files' => $themes
   ];
-
   if ( !empty($model->data['latest']) ){
     $internal = $model->data['db']->get_one(<<<'SQLITE'
     SELECT MAX(internal)
@@ -76,6 +84,7 @@ SQLITE
     'date_added' => date('Y-m-d H:i:s', time()),
     'internal' => $internal
   ]) ) {
+    \bbn\x::log([$model->data],"addVersion");
     $id = $model->data['db']->last_id();
     if ( !empty($model->data['dependencies']) ){
       foreach ( $model->data['dependencies'] as $dep ){
