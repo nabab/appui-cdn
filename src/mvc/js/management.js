@@ -51,12 +51,6 @@
           {
             text: 'Edit',
             command:()=>{
-              /*
-              this.action.post = this.source.root + 'actions/library/edit'
-              this.action.addLib = false;
-              this.action.addVers = false;
-              this.action.editLib =  true;
-              this.action.editVers =  false;*/
               this.actions('editLib');
               this.editLibrary(row, col, idx);
             },
@@ -185,7 +179,7 @@
         return this.source.all_lib
       }
     },
-    watch:{
+    watch:{//for search libray in table
         sourceTable(val){
           if ( val && this.search ){
             this.$nextTick(()=>{
@@ -195,6 +189,7 @@
         }
     },
     components: {
+      //component for table versions of th e library
       'cdn-management-table-lib-versions':{
         template: '#apst-cdn-management-table-lib-versions',
         name:'cdn-management-table-lib-versions',

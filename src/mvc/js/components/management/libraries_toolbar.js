@@ -4,7 +4,7 @@
       return {
         updateList: [],
         countList: false,
-        library:""
+        searchNameLibrary:""
       }
     },
     methods:{
@@ -41,7 +41,7 @@
       searchLibrary(ele){
         this.management.searchContent = [];
         for(let lib of this.management.source.all_lib){
-          if ( lib.name.indexOf(this.library.toLowerCase()) > -1 ){
+          if ( lib.name.indexOf(this.searchNameLibrary.toLowerCase()) > -1 ){
             this.management.searchContent.push(lib);
           }
         }
@@ -59,7 +59,7 @@
       }
     },
     watch:{
-      library(val, oldVal){
+      searchNameLibrary(val, oldVal){
         this.searchLibrary();
       }
     }
