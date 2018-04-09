@@ -15,6 +15,8 @@ if ( !empty($model->data['db']) &&
     !empty($model->data['themes']) )
 ){
 
+  $lib = $model->data['db']->rselect('libraries', ['latest'], ['name' => $model->data['library']]);
+
   $languages = [];
   $themes = [];
   foreach ( $model->data['languages'] as $l ){
@@ -30,13 +32,29 @@ if ( !empty($model->data['db']) &&
   ];
   if ( $model->data['db']->update('versions', ['content' => json_encode($content)], ['id' => $model->data['id']]) ){
     if ( !empty($model->data['is_latest']) ){
-      $ver_lib = $model->data['db']->rselect('versions', ['name', 'library'], ['id' => $model->data['id']]);
-//die(var_dump($ver_lib));
+      //$ver_lib = $model->data['db']->rselect('versions', ['name', 'library'], ['id' => $model->data['id']]);
+      //$lib = $model->data['db']->rselect('libraries', ['latest'], ['name' => $model->data['library']]);
 
-      if (($model->data['name'] !== $ver_lib['name']) && !$model->data['db']->update('libraries', ['latest' => $ver_lib['name']], ['name' => $ver_lib['library']])){
+      if ( ($model->data['name'] !== $lib['latest']) &&
+        !$model->data['db']->update('libraries', ['latest' => $model->data['name']], ['name' => $model->data['library']])
+      ){
         return ['error' => 'Error to update latest library\'s version'];
       }
-    }
+    }//temporaney add a latest if latest in blibraries is empty
+  /*  if ( isset($lib) && empty($lib['latest']) ){
+      $all_versions = $model->data['db']->rselect_all(
+        "versions", // table
+        ['name'], // column name
+        ["library" => $model->data['library']], // WHERE
+        ["id" => DESC] // ORDER
+      );
+
+      if( !empty($all_versions) &&
+        (!$model->data['db']->update('libraries', ['latest' => $all_versions[0]['name']], ['name' => $model->data['library']]))
+      ){
+        return ['error' => 'Error to add latest library\'s version'];
+      }
+    }*/
     if ( !empty($model->data['dependencies']) ){
       $dependencies = [];
       foreach ( $model->data['dependencies'] as $dep ){

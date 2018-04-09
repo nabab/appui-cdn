@@ -26,7 +26,8 @@
           languages: [],
           themes: [],
           latest: true,
-          internal: 0
+          internal: 0,
+          versions:[]
         },
         fileMove:"",
         //languages:[{path:" "}],
@@ -42,30 +43,123 @@
             edit: 'cdn/actions/version/edit',
             add: 'cdn/actions/version/add'
           }
-        },//construct buttons for general form
-        btnsNext:[{
-          text: "prev",
-          title: "prev",
-          icon: 'fa fa-arrow-circle-o-left',
-          command: ()=>{ this.configuratorLibrary = false }
-        },{
-            text: "cancel",
-            icon: 'fa fa-ban',
-            command: ()=>{ this.$refs.form_library.cancel() },
-        },{
-            text: "Save",
-            icon: 'fa fa-check-circle-o',
-            command: ()=>{
-              if ( this.referenceNodeTree.length ){
-                this.$refs.form_library.submit()
-              }
-              else{
-                alert(bbn._("No file order"));
-              }
-            },
-          }
-        ]
+        }
       }
+    },
+    computed:{
+      list(){
+        if ( bbn.fn.count(this.dataVersion.dependencies) > 0 ){
+          let d = this.dataVersion.dependencies.slice();
+          return this.listLib.filter( lib => {
+            let exists = false;
+            for ( let obj of d ){
+              if ( obj.lib_name === lib.value ){
+                console.log("ddddfvfv",obj)
+                exists = true;
+              }
+            }
+            return !exists;
+          });
+        }
+        else{
+          return this.listLib;
+        }
+      },
+      //disabled or no input name version
+      disabledEditVersion(){
+        return ( this.management.action.editVers || this.management.action.addVers ) ? true : false
+      },
+      //for button form
+      currentButton(){
+        if ( this.management.action ){
+          // case for add library of the toolbar first form
+          if ( this.management.action.addLib && !this.configuratorLibrary ) {
+            return [
+              'cancel',
+              {
+                text: "Next",
+                title: "next",
+                class:"k-primary",
+                icon: 'fa fa-arrow-circle-o-right',
+                disabled: (!this.source.row.title && !this.source.row.name)  ? true : false,
+                command: ()=>{ this.next() }
+              }
+            ];
+          }
+          // case for add library and click next for configurator library before saving
+          if ( this.management.action.addLib  && this.configuratorLibrary ){
+            return [
+              {
+                text: "Prev",
+                title: "Prev",
+                icon: 'fa fa-arrow-circle-o-left',
+                command: ()=>{ this.configuratorLibrary = false }
+              },
+              'cancel',
+              {
+                text: "Save",
+                icon: 'fa fa-check-circle-o',
+                class:"k-primary",
+                command: ()=>{
+                  if ( this.referenceNodeTree.length ){
+                    this.$refs.form_library.submit()
+                  }
+                  else{
+                    alert(bbn._("No selected files"));
+                  }
+                }
+              }
+            ]
+          }// case for edit table cdn managment or edit and add versions
+          if ( this.management.action.addVers || this.management.action.editVers || this.management.action.editLib){
+            return [
+              'cancel',
+              {
+                text: "Save",
+                class:"k-primary",
+                icon: 'fa fa-check-circle-o',
+                command: ()=>{
+                  if ( this.referenceNodeTree.length ){
+                    this.$refs.form_library.submit()
+                  }
+                  else{
+                    bbn.vue.closest(this, 'bbn-popup').alert(bbn._("No file order"));
+                  }
+                },
+              }
+            ]
+          }
+        }
+        return ['cancel']
+      },
+    //for tree order files
+      treeOrderSource(){
+        if ( this.referenceNodeTree.length ){
+          let arr = [];
+          for( let i in this.referenceNodeTree ){
+            arr.push( this.referenceNodeTree[i] );
+          }
+          return arr
+        }
+        return [];
+      },
+      //for first insert lib or no
+      abilitationCheckedLatest(){
+       return  !!this.data.latest
+      },
+      //for form senction 2 first of save library
+      complementaryData(){
+        return {
+          vname: this.dataVersion.version,
+          files: this.treeOrderSource,
+          languages: this.data.languages,
+          themes: this.data.themes,
+          new_name: this.newName,
+          dependencies: this.dataVersion.dependencies,
+          name: this.source.name || "",
+          is_latest : this.data.latest
+        }
+      },
     },
     methods:{
       getInfo(){
@@ -86,9 +180,6 @@
                       this.source.row.licence = lic;
                     }
                   }
-                  /*else {
-                    e.model.set(prop, d.data[prop]);f
-                  }*/
                 }
               }
             }
@@ -96,8 +187,12 @@
         );
       },
       success(){
-        bbn.vue.find(bbn.vue.closest(this, 'bbn-tab'), 'bbn-table').updateData();
-        appui.success(bbn._('Success!'));
+        this.management.refreshManagement();
+        this.$nextTick(()=>{
+          bbn.vue.closest(this, "bbn-tab").getComponent().$refs.cdn_management.updateData()
+          bbn.vue.closest(this, "bbn-popup").close();
+          appui.success(bbn._('Success!'));
+        });
       },
       failure(){
         appui.error(bbn._('A problem has occurred'));
@@ -126,8 +221,8 @@
                  this.configuratorLibrary = true;
                  //for dropdown list library in table depanadancies
                  for ( let val of d.data.lib_ver){
-                   if ( bbn.fn.search(this.listLib, 'text', val.lib_name) < 0 ){
-                     this.listLib.push({text: val.lib_name, value: val.lib_name});
+                   if ( bbn.fn.search(this.listLib, 'text', val.lib_title) < 0 ){
+                     this.listLib.push({text: val.lib_title, value: val.lib_name});
                    }
                  };
                }
@@ -254,16 +349,28 @@
         return bbn.fn.get_field(this.dataVersion.lib_ver, "id_ver", ele.id_ver, "version");
       },
       saveDependencies(row, col, idx){
-        if ( !row.id_ver || !row.lib_name || (bbn.fn.search(this.dataVersion.dependencies, 'order', row.order) > 0) ){
+        if ( !row.id_ver ||
+           !row.lib_name ||
+           (bbn.fn.search(this.dataVersion.dependencies, 'order', row.order) >= 0) ||
+           (bbn.fn.search(this.dataVersion.dependencies, 'order', row.lib_name) >= 0) ||
+           (!Number.isInteger(row.order))  ){
           appui.error(bbn._("error information to add to the addiction"));
         }
         else {
+          //this.runList(this.$refs.tableDependecies.currentData);
           this.$refs.tableDependecies.add(row);
           this.$refs.tableDependecies.updateData();
           this.$refs.tableDependecies._removeTmp();
           //this.$refs.tableDependecies.editedRow = false;
         }
-      },//for edit version
+      },
+      renderLibName(row){
+        let idx =  bbn.fn.search(this.listLib, 'value', row.lib_name);
+        if ( idx > -1 ){
+          return this.listLib[idx]['value'];
+        }
+      },
+      //for edit version
       checkedNode(){
         if (  this.management.action.editVers ){
           this.$refs.filesListTree.checked= this.referenceNodeTree;
@@ -272,8 +379,9 @@
       //is called to the mounted in case of edit version
       editVersion(){
         this.configuratorLibrary = true;
-        bbn.fn.post("cdn/data/version/edit", {version: this.source.row.id}, d => {
+        bbn.fn.post("cdn/data/version/edit", {version: this.source.row.id, library: this.source.row.library}, d => {
           if ( d.data !== undefined ){
+
             this.dataVersion.dependencies = d.data.dependencies;
             this.dataVersion.files_tree = d.data.files_tree;
             this.dataVersion.version = this.source.row.name;
@@ -287,10 +395,15 @@
             this.data.themes = d.data.themes;
             this.data.languages = d.data.languages;
             this.dataVersion.lib_ver = d.data.lib_ver;
+            this.data.versions = d.data.versions;
+            this.data.internal = this.source.row.internal;
+            this.data.latest = this.source.row.is_latest;
+            delete this.source.row.is_latest;
+            delete this.source.row.files_tree;
             // for dropdown list dependencies
             for ( let val of d.data.lib_ver){
-              if ( bbn.fn.search(this.listLib, 'text', val.lib_name) < 0 ){
-                this.listLib.push({text: val.lib_name, value: val.lib_name});
+              if ( bbn.fn.search(this.listLib, 'text', val.lib_title) < 0 ){
+                this.listLib.push({text: val.lib_title, value: val.lib_name});
               }
             }
           }
@@ -299,108 +412,15 @@
       addVersion(){
         this.configuratorLibrary = true;
         this.dataVersion = this.source.row;
+        this.data.versions = this.source.versions;
         this.dataVersion.themes_tree = this.source.row.files_tree;
         // for dropdown list dependencies
         for ( let val of this.source.row.lib_ver){
-          if ( bbn.fn.search(this.listLib, 'text', val.lib_name) < 0 ){
-            this.listLib.push({text: val.lib_name, value: val.lib_name});
+          if ( bbn.fn.search(this.listLib, 'text', val.lib_title) < 0 ){
+            this.listLib.push({text: val.lib_title, value: val.lib_name});
           }
         }
       }
-    },
-    computed:{
-      //disabled or no input name version
-      editAddVersion(){
-        return ( this.management.action.editVers || this.management.action.addVers ) ? true : false
-      },
-      //for button form
-      currentButton(){
-        if( this.management.action ){
-          // case for edit table cdn managment
-          if ( this.management.action.editLib  /*&& $.isEmptyObject(this.dataVersion)*/ ){
-            return ['cancel', 'submit'];
-          }
-              // case for add library of the toolbar first form
-          if ( this.management.action.addLib && !this.configuratorLibrary ) {
-            return this.preCompileButtons
-          }
-          // case for add library and click next for configurator library before saving
-          if ( (this.management.action.addLib || this.management.action.addVers || this.management.action.editVers) && this.configuratorLibrary ){
-            return this.btnsNext
-          }
-        }
-        return ['cancel']
-      },
-    //for tree order files
-      treeOrderSource(){
-        if ( this.referenceNodeTree.length ){
-          let arr = [];
-          for( let i in this.referenceNodeTree ){
-            arr.push( this.referenceNodeTree[i] );
-          }
-          return arr
-        }
-        return [];
-      },
-      //source for dropdown list internal at click latest checkbox
-      sourceInternal(){
-        if ( this.dataVersion.internal.length ){
-          return this.dataVersion.internal
-        }
-        else{
-          return [
-            {
-              text: '0',
-              value: '0'
-            }
-          ]
-        }
-      },//for first insert lib or no
-      checkedLatest(){
-        return  bbn.fn.count(this.sourceInternal) === 1 && !this.management.action.editVers ? true : false
-      },
-      //for form senction 2 first of save library
-      complementaryData(){
-        return {
-          vname: this.dataVersion.version,
-          files: this.treeOrderSource,
-          languages: this.data.languages,
-          themes: this.data.themes,
-          new_name: this.newName,
-          dependencies: this.dataVersion.dependencies,
-          name: this.source.name || "",
-          latest : this.data.latest
-        }
-      },
-      //case manualy or no library abilitation button next
-      preCompileButtons(){
-        if ( !this.source.row.title && !this.source.row.name ){
-          return [{
-            text: "cancel",
-            icon: 'fa fa-ban',
-            command: ()=>{ this.$refs.form_library.cancel() },
-          },{
-            text: "next",
-            title: "next",
-            icon: 'fa fa-arrow-circle-o-right',
-            disabled: true,
-            command: ()=>{ this.next() }
-          }];
-        }
-        else{
-          return [{
-            text: "cancel",
-            icon: 'fa fa-ban',
-            command: ()=>{ this.$refs.form_library.cancel() },
-          },{
-            text: "next",
-            title: "next",
-            icon: 'fa fa-arrow-circle-o-right',
-            disabled: false,
-            command: ()=>{ this.next() }
-          }];
-        }
-      },
     },
     created(){
       editLib = this;
@@ -443,7 +463,7 @@
               }
             }*/
             bbn.vue.closest(this, 'bbn-tab').popup().open({
-              height: '60%',
+              height: '80%',
               width: '30%',
               title: bbn._("Files:"),
               component:'appui-cdn-management-popup-tree_files',
@@ -468,7 +488,7 @@
         methods:{
           openTreeThemes(){
             bbn.vue.closest(this, 'bbn-tab').popup().open({
-              height: '60%',
+              height: '80%',
               width: '30%',
               title: bbn._("Files:"),
               component:'appui-cdn-management-popup-tree_files',

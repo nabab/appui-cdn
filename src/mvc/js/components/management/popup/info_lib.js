@@ -4,10 +4,10 @@
       return {
         infos:[
           {text: 'Title', value: this.source.info.title ? this.source.info.title : '--' },
-          {text: 'Folder name', value: this.source.info.name ? this.source.info.title : '--' },
-          {text: 'Function name', value: this.source.info.fname ? this.source.info.title : '--' },
-          {text: 'Latest version', value: this.source.info.latest ? this.source.info.title : '--' },
-          {text: 'Author', value: this.source.info.author ? this.source.info.title : '--' },
+          {text: 'Folder name', value: this.source.info.name ? this.source.info.name : '--' },
+          {text: 'Function name', value: this.source.info.fname ? this.source.info.fname : '--' },
+          {text: 'Latest version', value: this.source.info.latest ? this.source.info.latest : '--' },
+          {text: 'Author', value: this.source.info.author ? this.source.info.author : '--' },
           {text: 'Description', value: this.source.info.description ? this.source.info.description : '--' },
           {text: 'Licence', value: this.source.info.licence ? this.source.info.licence : '--' },
           {text: 'WebSite', value: this.source.info.website ? this.source.info.website : '--' },

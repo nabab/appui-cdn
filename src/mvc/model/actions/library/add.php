@@ -6,7 +6,7 @@
  * Time: 18:59
  */
 /** @var $model \bbn\mvc\model */
-
+  \bbn\x::log([$model->data, "prima"], "ADDLibrary");
 if ( !empty($model->data['db']) &&
   !empty($model->data['name']) &&
   !empty($model->data['title']) &&

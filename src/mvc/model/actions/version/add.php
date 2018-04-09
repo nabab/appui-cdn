@@ -7,13 +7,7 @@
  */
 /** @var $model \bbn\mvc\model */
 \bbn\x::log([
-  $model->data['db'],
-  $model->data['name'],
-  $model->data['vname'],
-  $model->data['files'],
-  $model->data['languages'],
-  $model->data['themes']
-  ],"addVersion");
+  $model->data ],"addVersionAction");
 
 if ( !empty($model->data['db']) &&
   !empty($model->data['name']) &&
@@ -47,7 +41,7 @@ if ( !empty($model->data['db']) &&
     'lang' => $languages,
     'theme_files' => $themes
   ];
-  if ( !empty($model->data['latest']) ){
+  if ( !empty($model->data['is_latest']) ){
     $internal = $model->data['db']->get_one(<<<'SQLITE'
     SELECT MAX(internal)
     FROM versions
@@ -105,7 +99,7 @@ SQLITE
         ]);
       }
     }
-    if ( !empty($model->data['latest']) ){
+    if ( !empty($model->data['is_latest']) ){
       $model->data['db']->update('libraries', ['latest' => $model->data['vname']], ['name' => $model->data['name']]);
     }
     if ( !empty($model->data['slave_dependencies']) ){

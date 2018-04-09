@@ -73,9 +73,9 @@ if ( !empty($model->data['db']) && !empty($model->data['version']) && \defined('
     "),
     // all versions' dependencies
     'dependencies' => $model->data['db']->get_rows('
-      SELECT "libraries"."title" AS lib_title, "libraries"."name" AS lib_name, 
+      SELECT "libraries"."title" AS lib_title, "libraries"."name" AS lib_name,
         "versions"."name" AS version, "versions"."id" AS id_ver,
-        MAX("versions"."internal") AS internal, "dependencies"."order" 
+        MAX("versions"."internal") AS internal, "dependencies"."order"
       FROM "versions"
       JOIN "dependencies"
         ON "versions"."id" = "dependencies"."id_master"
@@ -85,7 +85,17 @@ if ( !empty($model->data['db']) && !empty($model->data['version']) && \defined('
       GROUP BY "versions"."library"
       ORDER BY "libraries"."title" COLLATE NOCASE ASC',
       $model->data['version']
-    ),
+    ),//temporaeny add versions
+    'versions' =>  $model->data['db']->get_rows("
+        SELECT versions.*,
+          CASE WHEN versions.name = libraries.latest THEN 1 ELSE 0 END AS is_latest
+        FROM versions
+        JOIN libraries
+          ON versions.library = libraries.name
+        WHERE versions.library = ?
+        ORDER BY internal DESC",
+        $model->data['library']
+      )
     //'dependencies' => $model->data['db']->get_column_values('dependencies', 'id_master', ['id_slave' => $model->data['version']])
   ];
   if ( $model->data['db']->select_one('libraries', 'latest', ['name' => $ver['library']]) === $ver['name'] ){

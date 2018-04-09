@@ -5,26 +5,29 @@
         urlGit: "",
         btns:[
           {
-            text: 'Calcel',
+            text: bbn._('Cancel'),
             command: ()=>{
               bbn.vue.closest(this, "bbn-popup").close();
             },
             icon: 'fa fa-ban',
-            title: 'cancel',
+            title: bbn._('cancel'),
           },{
-            text: 'Skip',
+            text: bbn._('Skip'),
             command: ()=>{
              this.addManualyLib()
             },
-            title: 'skip',
-            icon: 'fa fa-angle-double-right'
+            title: bbn._('skip'),
+            icon: 'fa fa-angle-double-right',
+            class: "k-primary",
           },{
-            text: 'Import',
+            text: bbn._('Import'),
             command: ()=>{
              this.importGithub()
             },
             icon: "fa fa-angle-right",
-            title: 'import',
+            title: bbn._('import'),
+            class: "",
+            disabled: true
           }
         ]
       }
@@ -75,6 +78,9 @@
             }
           );
         }
+        else{
+          bbn.vue.closest(this, "bbn-popup").alert(bbn._("Empty url github"));
+        }
       },
       addManualyLib(){
         bbn.vue.closest(this, 'bbn-tab').popup().open({
@@ -100,6 +106,24 @@
               import: false
             }
         });
+      }
+    },
+    watch:{
+      //if a value is entered to the input then we enable the button otherwise no
+      urlGit(url){
+        let idImport = bbn.fn.search(this.btns, 'text', 'Import'),
+          idSkip = bbn.fn.search(this.btns, 'text', 'Skip');
+        if ( url.length ){
+          this.btns[idImport].class = "k-primary";
+          this.btns[idImport].disabled = false;
+          this.btns[idSkip].class = "";
+        }
+        else{
+          this.btns[idImport].class = "";
+          this.btns[idImport].disabled = true;
+          this.btns[idSkip].class = "k-primary";
+
+        }
       }
     }
   }

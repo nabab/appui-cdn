@@ -14,5 +14,11 @@
                 @select="selectElement"
       ></bbn-tree>
     </div>
+    <bbn-button v-if="element.length"
+                @click="addLanguage"
+                icon="fa fa-plus"
+    >
+      <?=_("add")?>
+    </bbn-button>
   </div>
 </div>

@@ -72,7 +72,7 @@ if ( !empty($model->data['folder']) && !empty($model->data['db']) && \defined('B
     }
     return $res;
   }
-  \bbn\x::log([$ver, $dirs], "addVersionnnns");
+
   return [
     // Files' tree
     'files_tree' => tree($ver[0], $ver[0]),
@@ -122,13 +122,14 @@ if ( !empty($model->data['folder']) && !empty($model->data['db']) && \defined('B
       WHERE libraries.name = ?
       ORDER BY libr.name ASC",
       $model->data['folder']
-    ),
+    ),/*
     'internal' => $model->data['db']->get_rows("
       SELECT internal AS text, internal AS value
       FROM versions
       WHERE library = ?",
       $model->data['folder']
-    ),
+    ),*/
+    'title' => $model->data['db']->select_one('libraries', 'title', ['name' => $model->data['folder']]),
     'dependencies_html' => !empty($github['dependencies']) ? $github['dependencies'] : ''
   ];
 }

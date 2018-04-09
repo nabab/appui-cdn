@@ -46,7 +46,7 @@
           }
         }
         this.management.search = true;
-      }
+      }      
     },
     computed:{
       //for disable o no in button on toolbar "update"
