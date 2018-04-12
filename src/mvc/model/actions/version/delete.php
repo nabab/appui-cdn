@@ -6,11 +6,22 @@
  * Time: 09:52
  */
 /** @var $model \bbn\mvc\model */
-
+//die(var_dump($model->data['id_ver'], $model->data['library'], $model->data['name']));
 if ( !empty($model->data['db']) &&
   !empty($model->data['id_ver']) &&
   !empty($model->data['library'])
 ){
+  //add for delete material folder
+  if ( !empty($model->data['removeFolder']) &&
+    !empty($model->data['library']) &&
+    !empty($model->data['name'])
+  ){
+    $path_folder =  BBN_CDN_PATH.'lib/'.$model->data['library'].'/'.$model->data['name'];
+    $delete_folder = \bbn\file\dir::delete($path_folder.'/');
+    if( empty($delete_folder) ){
+      return ['error' => _('Error delete folder')];
+    }
+  }
   // Get version's name and library's name
   $ver = $model->data['db']->rselect('versions', ['name', 'library'], ['id' => $model->data['id_ver']]);
   // Delete version
@@ -18,10 +29,6 @@ if ( !empty($model->data['db']) &&
     // Delete dependences
     $model->data['db']->delete('dependencies', ['id_slave' => $model->data['id_ver']]);
     $model->data['db']->delete('dependencies', ['id_master' => $model->data['id_ver']]);
-    //add for delete material folder
-    $name_folder_version = $ver['name'];
-    $lib_path = BBN_CDN_PATH . 'lib/' . $model->data['library'] . '/'.$name_folder_version;
-
     // Check if it's the latest library's version
     if ( $ver['name'] === $model->data['db']->select_one('libraries', 'latest', ['name' => $ver['library']]) ){
       // Get previous version's name
@@ -42,7 +49,6 @@ if ( !empty($model->data['db']) &&
 
     return [
       'success' => 1,
-    //'delete_folder' => \bbn\file\dir::delete($lib_path),
       'latest' => $model->data['db']->get_one("
         SELECT name, MAX(internal)
         FROM versions

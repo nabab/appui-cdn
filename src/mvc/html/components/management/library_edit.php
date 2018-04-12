@@ -17,8 +17,8 @@
     <label class="bbn-r">
       <?=_("Folder name")?>
     </label>
-    <bbn-input v-model="source.row.name"></bbn-input>
-
+    <bbn-input v-if="management.action.editLib" v-model="newName"></bbn-input>
+    <bbn-input v-else v-model="source.row.name"></bbn-input>
     <label class="bbn-r">
       <?=_("Function name")?>
     </label>
@@ -86,7 +86,7 @@
   <!--SECOND STEP,VIEW FOR EDIT AND OR ADD VERSION -->
   <div v-else>
     <bbn-splitter orientation="vertical">
-      <bbn-pane>
+      <bbn-pane :size="350">
         <bbn-splitter orientation="horizontal">
           <bbn-pane>
             <div class="bbn-padded bbn-grid-fields bbn-100"
@@ -124,7 +124,7 @@
                   <?=_("Move File:")?>
                 </span>
                 <br>
-                <div class="w3-card bbn-c" v-if="fileMove">
+                <div class="w3-card bbn-c" v-if="fileMove" style="margin-top: 15px">
                   <div class="bbn-padded">
                     <bbn-button icon="fa fa-arrow-up" @click="moveUp"></bbn-button>
                   </div>
@@ -146,104 +146,152 @@
           </bbn-pane>
         </bbn-splitter>
       </bbn-pane>
+      <!-- tables -->
       <bbn-pane>
-        <bbn-splitter orientation="vertical">
+        <bbn-splitter orientation="horizontal">
+          <bbn-pane :size="160">
+            <div class="bbn-padded">
+              <bbn-button v-if = "!tableShow.languages"
+                          icon = "fa fa-eye"
+                          @click = "()=>{tableShow.languages= true}"
+              ></bbn-button>
+              <bbn-button v-else
+                          icon = "fa fa-eye-slash"
+                          @click = "()=>{tableShow.languages= false}"
+              ></bbn-button>
+              <span class="bbn-b"
+                    v-text = "_('Languages')"
+                    :style = "{color: tableShow.languages ? 'red' : 'inherit'}"
+              >
+              </span>
+            </div>
+            <div class="bbn-padded">
+              <bbn-button v-if = "!tableShow.themes"
+                          icon = "fa fa-eye"
+                          @click ="()=>{tableShow.themes= true}"
+              ></bbn-button>
+              <bbn-button v-else
+                          icon = "fa fa-eye-slash"
+                          @click = "()=>{tableShow.themes= false}"
+              ></bbn-button>
+              <span class = "bbn-b"
+                    v-text = "_('Themes')"
+                    :style = "{color: tableShow.themes ? 'red' : 'inherit'}"
+              >
+              </span>
+            </div>
+            <div class="bbn-padded">
+              <bbn-button v-if = "!tableShow.dependencies"
+                          icon = "fa fa-eye"
+                          @click = "()=>{tableShow.dependencies= true}"
+              ></bbn-button>
+              <bbn-button v-else
+                          icon = "fa fa-eye-slash"
+                          @click = "()=>{tableShow.dependencies= false}"
+              ></bbn-button>
+              <span class = "bbn-b"
+                    v-text = "_('Dependencies')"
+                    :style = "{color: tableShow.dependencies ? 'red' : 'inherit'}">
+              </span>
+            </div>
+            <div class="bbn-w-100 bbn-padded">
+              <bbn-checkbox v-model= "data.latest"
+                            :disabled="abilitationCheckedLatest"
+              ></bbn-checkbox>
+              <span class="bbn-b">
+                <?=_("Latest")?>
+              </span>
+            </div>
+          </bbn-pane>
           <bbn-pane :scrollable="true">
-              <!--TABLE LANGUAGES-->
-              <div style="height: 100px" class="bbn-w-100">
-                <bbn-table :source="data.languages"
-                           ref="tableLanguages"
-                  >
-                    <bbn-column title="<?=_('Languages Files')?>"
-                                field="path"
-
-                    ></bbn-column>
-                    <bbn-column :tcomponent="$options.components.languages"
-                                width="50"
-                                :buttons="buttonDeleteLanguages"
-                    ></bbn-column>
-                </bbn-table>
-              </div>
-              <!--TABLE THEMES-->
-              <div style="height: 100px" class="bbn-w-100">
-                <bbn-table :source="data.themes"
-                           ref="tableThemes"
+            <!--TABLE LANGUAGES-->
+            <div class="bbn-w-100" style="height: 220px" v-if="tableShow.languages">
+              <bbn-table v-if="tableShow.languages"
+                         :source="data.languages"
+                         ref="tableLanguages"
+                         class="bbn-full-screen"
                 >
-                  <bbn-column title="<?=_('Themes')?>"
+                  <bbn-column title="<?=_('Languages Files')?>"
                               field="path"
 
                   ></bbn-column>
-                  <bbn-column :tcomponent="$options.components.themes"
+                  <bbn-column :tcomponent="$options.components.languages"
                               width="50"
-                              :buttons="buttonDeleteThemes"
+                              :buttons="buttonDeleteLanguages"
                   ></bbn-column>
-                </bbn-table>
-              </div>
-              <!--TABLE Dependecies-->
-              <div style="height: 180px" class="bbn-w-100">
-                <bbn-table  :source="dataVersion.dependencies"
-                            ref="tableDependecies"
-                            editable="inline"
-                            :toolbar="[{
-                              text: '<strong>'+'<?=_('Add dependencies')?>' + '</strong>',
-                              icon: 'fa fa-plus',
-                              command: 'edit'
-                            }]"
-                            @saveItem="saveDependencies"
-                >
-                  <bbn-column title="<?=_('Library')?>"
-                              field="lib_name"
-                              :source="list"
-                              :render="renderLibName"
-                  ></bbn-column>
-                  <bbn-column title="<?=_('Version')?>"
-                              field="id_ver"
-                              :editor="$options.components.versions"
-                              :render="showVersion"
-                  ></bbn-column>
-                  <bbn-column title="<?=_('Order')?>"
-                              field="order"
-                              width="100"
-                              type="number"
-                  ></bbn-column>
-                  <bbn-column title=" "
-                              width="100"
-                              class="bbn-c"
-                              :buttons="buttonsTableDepandencies"
-                  ></bbn-column>
+              </bbn-table>
+            </div>
+            <!--TABLE THEMES-->
+            <div class="bbn-w-100" style="height: 220px" v-if="tableShow.themes">
+              <bbn-table v-if="tableShow.themes"
+                         :source="data.themes"
+                         ref="tableThemes"
+                         class="bbn-full-screen"
+              >
+                <bbn-column title="<?=_('Themes')?>"
+                            field="path"
 
-                </bbn-table>
-              </div>
+                ></bbn-column>
+                <bbn-column :tcomponent="$options.components.themes"
+                            width="50"
+                            :buttons="buttonDeleteThemes"
+                ></bbn-column>
+              </bbn-table>
+            </div>
+            <!--TABLE Dependecies-->
+            <div class="bbn-w-100" style="height: 220px" v-if="tableShow.dependencies">
+              <bbn-table v-if="tableShow.dependencies"
+                         :source="dataVersion.dependencies"
+                         ref="tableDependecies"
+                         editable="inline"
+                         class="bbn-full-screen"
+                         :toolbar="[{
+                           text: '<strong>'+'<?=_('Add dependencies')?>' + '</strong>',
+                           icon: 'fa fa-plus',
+                           command: 'edit'
+                         }]"
+                        @saveItem="saveDependencies"
+              >
+                <bbn-column title="<?=_('Library')?>"
+                            field="lib_name"
+                            :source="list"
+                            :render="renderLibName"
+                ></bbn-column>
+                <bbn-column title="<?=_('Version')?>"
+                            field="id_ver"
+                            :editor="$options.components.versions"
+                            :render="showVersion"
+                ></bbn-column>
+                <bbn-column title="<?=_('Order')?>"
+                            field="order"
+                            width="100"
+                            type="number"
+                ></bbn-column>
+                <bbn-column title=" "
+                            width="100"
+                            class="bbn-c"
+                            :buttons="buttonsTableDepandencies"
+                ></bbn-column>
 
-              <div class="bbn-c bbn-w-100" v-if="dataVersion.dependencies_html.lenght">
-                <div class="bbn-w-50 w3-card bbn-padded bbn-grid-fields">
-                  <div>
-                    <span class="bbn-b" v-text="_('Dependecies')"></span>
-                    <br>
-                    <span class="bbn-b" style="color:red" v-text="source.row.title"></span>
-                  </div>
-                  <div v-html="dataVersion.dependencies_html"></div>
-                </div>
-              </div>
-
-              <!--LATEST-->
-              <div style="height: 180px" class="bbn-w-100 bbn-padded">
-                <span class="bbn-b">
-                  <?=_("Latest")?>
-                </span>
-                <bbn-checkbox v-model= "data.latest"
-                              :disabled="abilitationCheckedLatest"
-                ></bbn-checkbox>
-                <!--INTERNAL-->
-                <!--bbn-dropdown v-if="source.row.internal"
-                              :source="source.row.internal"
-                              v-model="data.internal"
-                ></bbn-dropdown-->
-              </div>
+              </bbn-table>
+            </div>
           </bbn-pane>
         </bbn-splitter>
       </bbn-pane>
+      <bbn-pane  v-if="dataVersion.dependencies_html.lenght"
+                :scrollable="true"
+      >
+        <div class="bbn-c bbn-w-100" v-if="dataVersion.dependencies_html.lenght">
+          <div class="bbn-w-50 w3-card bbn-padded bbn-grid-fields">
+            <div>
+              <span class="bbn-b" v-text="_('Dependecies')"></span>
+              <br>
+              <span class="bbn-b" style="color:red" v-text="source.row.title"></span>
+            </div>
+            <div v-html="dataVersion.dependencies_html"></div>
+          </div>
+        </div>
+      </bbn-pane>
     </bbn-splitter>
-
- </div>
+  </div>
 </bbn-form>

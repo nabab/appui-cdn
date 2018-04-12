@@ -43,10 +43,16 @@
             edit: 'cdn/actions/version/edit',
             add: 'cdn/actions/version/add'
           }
+        },//for show tables in form
+        tableShow:{
+          languages: false,
+          themes: false,
+          dependencies:false
         }
       }
     },
     computed:{
+      // for source colum of the table depandancies
       list(){
         if ( bbn.fn.count(this.dataVersion.dependencies) > 0 ){
           let d = this.dataVersion.dependencies.slice();
@@ -54,7 +60,6 @@
             let exists = false;
             for ( let obj of d ){
               if ( obj.lib_name === lib.value ){
-                console.log("ddddfvfv",obj)
                 exists = true;
               }
             }
@@ -119,11 +124,22 @@
                 class:"k-primary",
                 icon: 'fa fa-check-circle-o',
                 command: ()=>{
-                  if ( this.referenceNodeTree.length ){
-                    this.$refs.form_library.submit()
-                  }
+                  //case edit library
+                  if ( this.management.action.editLib ){
+                    if ( this.source.row.title.length || this.source.row.name.length ){
+                      this.$refs.form_library.submit()
+                    }
+                    else{
+                      bbn.vue.closest(this, 'bbn-popup').alert(bbn._("No name library or no name folder library"));
+                    }
+                  }//case edit or sdd version
                   else{
-                    bbn.vue.closest(this, 'bbn-popup').alert(bbn._("No file order"));
+                    if ( this.referenceNodeTree.length ){
+                      this.$refs.form_library.submit()
+                    }
+                    else{
+                      bbn.vue.closest(this, 'bbn-popup').alert(bbn._("No file order"));
+                    }
                   }
                 },
               }
@@ -141,6 +157,7 @@
           }
           return arr
         }
+        this.fileMove = "";
         return [];
       },
       //for first insert lib or no
@@ -189,7 +206,6 @@
       success(){
         this.management.refreshManagement();
         this.$nextTick(()=>{
-          bbn.vue.closest(this, "bbn-tab").getComponent().$refs.cdn_management.updateData()
           bbn.vue.closest(this, "bbn-popup").close();
           appui.success(bbn._('Success!'));
         });
@@ -348,22 +364,30 @@
       showVersion(ele){
         return bbn.fn.get_field(this.dataVersion.lib_ver, "id_ver", ele.id_ver, "version");
       },
+      //at click editline table dependencies
       saveDependencies(row, col, idx){
-        if ( !row.id_ver ||
-           !row.lib_name ||
-           (bbn.fn.search(this.dataVersion.dependencies, 'order', row.order) >= 0) ||
-           (bbn.fn.search(this.dataVersion.dependencies, 'order', row.lib_name) >= 0) ||
-           (!Number.isInteger(row.order))  ){
-          appui.error(bbn._("error information to add to the addiction"));
+        //error in case no lib or version for dependencies
+        if ( !row.id_ver || !row.lib_name ){
+          appui.error(bbn._("Error information to add to the addiction"));
+        }
+        //error in case no lib or version or existing order number for dependencies
+        else if( bbn.fn.search(this.dataVersion.dependencies, 'order', row.order) >= 0 ){
+           appui.error(bbn._("order number error already exists"));
+        }
+         //error in case no lib or version or existing lib  in list of dependencies
+        else if ( bbn.fn.search(this.dataVersion.dependencies, 'lib_name', row.lib_name) >= 0 ){
+          appui.error(bbn._("Dependencies already inserted"));
+        }
+        //if we insert a value that is not an integer as the order number
+        else if ( !Number.isInteger(row.order) ){
+          appui.error(bbn._("The order is not an integer"));
         }
         else {
-          //this.runList(this.$refs.tableDependecies.currentData);
           this.$refs.tableDependecies.add(row);
           this.$refs.tableDependecies.updateData();
           this.$refs.tableDependecies._removeTmp();
-          //this.$refs.tableDependecies.editedRow = false;
         }
-      },
+      },//for to display dependency names in the table because the source that is attributed to the column is a computed and updates every time we insert a new dependency
       renderLibName(row){
         let idx =  bbn.fn.search(this.listLib, 'value', row.lib_name);
         if ( idx > -1 ){
@@ -381,7 +405,6 @@
         this.configuratorLibrary = true;
         bbn.fn.post("cdn/data/version/edit", {version: this.source.row.id, library: this.source.row.library}, d => {
           if ( d.data !== undefined ){
-
             this.dataVersion.dependencies = d.data.dependencies;
             this.dataVersion.files_tree = d.data.files_tree;
             this.dataVersion.version = this.source.row.name;
@@ -442,6 +465,14 @@
       if ( this.management.action.addVers ){
         this.addVersion();
       }
+      if ( this.management.action.editLib ){
+        this.newName = this.source.row.name;
+      }
+      if ( this.management.action.addLib ){
+/*        let popup = bbn.vue.closest(this, 'bbn-tab').popup(),
+            id_popup = bbn.fn.count(popup.popups)-2;
+        popup.close(id_popup);*/
+      }
     },
     components: {
       //button in title column grid add file language
@@ -456,14 +487,8 @@
         },
         methods:{
           openTreeLanguage(){
-            /*let dataTree = []
-            for ( let ob of this.sourecTree ){
-              if ( (ob.path.indexOf(.js) > -1) || ob.items ){
-                dataTree.push(ob)
-              }
-            }*/
             bbn.vue.closest(this, 'bbn-tab').popup().open({
-              height: '80%',
+              height: '70%',
               width: '30%',
               title: bbn._("Files:"),
               component:'appui-cdn-management-popup-tree_files',
@@ -488,7 +513,7 @@
         methods:{
           openTreeThemes(){
             bbn.vue.closest(this, 'bbn-tab').popup().open({
-              height: '80%',
+              height: '70%',
               width: '30%',
               title: bbn._("Files:"),
               component:'appui-cdn-management-popup-tree_files',

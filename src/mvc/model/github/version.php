@@ -107,6 +107,7 @@ if ( !empty($model->data['git_user']) && !empty($model->data['git_repo']) && \de
           foreach ( \bbn\file\dir::get_files($dirs[0], true) as $dir ){
             \bbn\file\dir::move($dir, $path.basename($dir));
           }
+          \bbn\x::log($dirs, "addLi");
           \bbn\file\dir::delete($dirs[0]);
 
           return [

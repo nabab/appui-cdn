@@ -74,6 +74,7 @@
                     import: true
                   }
                 });
+
               }
             }
           );
@@ -83,7 +84,8 @@
         }
       },
       addManualyLib(){
-        bbn.vue.closest(this, 'bbn-tab').popup().open({
+        let pop = bbn.vue.closest(this, 'bbn-tab').popup();        
+        pop.open({
             height: '80%',
             width: '60%',
             title: bbn._("Add library"),

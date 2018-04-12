@@ -6,17 +6,14 @@
  * Time: 18:59
  */
 /** @var $model \bbn\mvc\model */
-  \bbn\x::log([$model->data, "prima"], "ADDLibrary");
 if ( !empty($model->data['db']) &&
   !empty($model->data['name']) &&
   !empty($model->data['title']) &&
   !empty($model->data['vname']) &&
   ( !empty($model->data['files']) ||
     !empty($model->data['languages']) ||
-    !empty($model->data['themes']) ) &&
-  empty($model->data['edit'])
+    !empty($model->data['themes']) )
 ){
-  \bbn\x::log($model->data, "ADDLibrary");
   if ( $model->data['db']->insert('libraries', [
     'name' => $model->data['name'],
     'fname' => $model->data['fname'],
@@ -35,7 +32,6 @@ if ( !empty($model->data['db']) &&
   ]) ){
     $ver = $model->get_model('./../version/add', $model->data);
     if ( !empty($ver['success']) ){
-      \bbn\x::log($ver, "ADDLibrary");
       return $model->data['db']->get_rows("
         SELECT *
         FROM libraries

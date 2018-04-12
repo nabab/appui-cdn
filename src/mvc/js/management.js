@@ -123,21 +123,27 @@
         }
       },
       removeLib(row, col, idx){
-
-        bbn.fn.confirm(bbn._("Delete library") + " "+  row.name + "?" , ()=>{
+        /*bbn.fn.confirm(bbn._("Delete library") + " "+  row.name + "?" , ()=>{
           bbn.fn.post(this.source.root + 'actions/library/delete', {name: row.name}, (d) => {
             if ( d.data.success ){
               appui.success(bbn._("Delete"));
-              //bbn.vue.find(bbn.vue.closest(this, 'bbn-tab'), 'bbn-table').updateData();
-              this.refreshManagement;
+              this.refreshManagement();
             }
             else{
               appui.error(bbn._("Error"));
             }
           });
-        });
+        });*/
+        bbn.vue.closest(this, 'bbn-tab').popup().open({
+          width: 500,
+          height: 200,
+          title: bbn._("Remove library"),
+          component: 'appui-cdn-management-popup-remove',
+          source: $.extend(row, {deleteLib: true, action:this.source.root + 'actions/library/delete'})
+        })
+
       },
-      //for render
+      //for render icon table
       showIconAuthor(ele){
         return ( ele.author && ele.author.length ) ? '<div class="bbn-c"><i class="fa fa-user bbn-xl" title="' + ele.author + '"></i></div>' : '';
       },
@@ -161,8 +167,8 @@
       },
       refreshManagement(){
         bbn.fn.post(this.source.root + "management", {refresh: true}, d => {
-          if( d.data != undefined ){
-            this.source.all_lib = d.data.all_lib;
+          if( d.all_lib != undefined ){
+            this.source.all_lib = d.all_lib;
             this.$nextTick(()=>{
               this.$refs.cdn_management.updateData()
             });
@@ -186,6 +192,7 @@
       bbn.vue.addComponent('popup/tree_files', mixins);
       bbn.vue.addComponent('popup/toolbar/library_add', mixins);
       bbn.vue.addComponent('popup/versions_from_github', mixins);
+      bbn.vue.addComponent('popup/remove', mixins);
       bbn.vue.addComponent('library_edit', mixins);
       bbn.vue.addComponent('toolbar', mixins);
       bbn.vue.addComponent('versions', mixins);
@@ -200,5 +207,17 @@
           }
         }
     },
+    /*components:{
+      'deleteLib':{
+        template: `<div class="bbn-padded"><span class="bbn-b bbn-xxl" v-text="textDelete"></span><div class="bbn-vmiddle"><span class="bbn-b bbn-r" v-text="deleteFolderText"></span><bbn-switch class="bbn-l"></bbn-switch></div></div>`,
+        props: ['source'],
+        data(){
+          return{
+            textDelete: bbn._("Delete library") +  " " +  this.source.title + "?",
+            deleteFolderText: bbn._("Do you want to delete the folder" ) + " " +   this.source.name + " " +  bbn._("in cdn?")
+          }
+        }
+      }
+    }*/
   }
 })();

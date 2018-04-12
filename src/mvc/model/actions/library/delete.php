@@ -8,6 +8,12 @@
 /** @var $model \bbn\mvc\model */
 
 if ( !empty($model->data['db']) && !empty($model->data['name']) ){
+  if ( !empty($model->data['removeFolder']) ){
+    $path_folder = BBN_CDN_PATH.'lib/'.$model->data['name'];
+    if( empty(\bbn\file\dir::delete($path_folder)) ){
+      return ['error' => _('Error delete folder')];
+    }
+  }
   if ( $model->data['db']->delete('libraries', ['name' => $model->data['name']]) ){
     // Get all library's versions' id
     $versions = $model->data['db']->rselect_all('versions', ['id'], ['library' => $model->data['name']]);

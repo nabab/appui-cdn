@@ -1,24 +1,23 @@
-<div class="bbn-full-screen">
-  <div class="bbn-flex-height bbn-padded">
-    <div>
-      <bbn-input class="bbn-w-100"
-                 placeholder="select file"
+<div class="bbn-padded bbn-full-screen bbn-flex-height">
+  <div class="bbn-flex-fill">
+    <div class="bbn-flex-width bbn-h-20 bbn-vmiddle">
+      <bbn-input placeholder="<?=_('Select file')?>"
                  v-model="element"
                  @keydown.enter="addLanguage"
+                 class="bbn-w-100 bbn-h-20 bbn-padded"
       ></bbn-input>
+      <bbn-button @click="addLanguage"
+                  icon="fa fa-plus"
+                  title="<?=_('Add file')?>"
+                  v-if ="element.length"
+                  class="bbn-flex-fill bbn-h-20"
+      ></bbn-button>
     </div>
-    <div class="bbn-padded bbn-flex-fill">
-      <bbn-tree :source="source.tree"
-                :map="mapMenu"
-                class="bbn-full-screen"
-                @select="selectElement"
-      ></bbn-tree>
-    </div>
-    <bbn-button v-if="element.length"
-                @click="addLanguage"
-                icon="fa fa-plus"
-    >
-      <?=_("add")?>
-    </bbn-button>
+  </div>
+  <div class="bbn-h-100">
+    <bbn-tree :source="source.tree"
+              :map="mapMenu"
+              @select="selectElement"
+    ></bbn-tree>
   </div>
 </div>

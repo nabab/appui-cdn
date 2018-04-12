@@ -28,16 +28,6 @@
             component:'appui-cdn-management-library_edit',
             source: $.extend({row: ele.data}, {name: this.source.folder})
           });
-          /*
-          this.$nextTick(()=>{
-            bbn.vue.closest(this, 'bbn-tab').popup().open({
-              height: '95%',
-              width: '85%',
-              title: bbn._('Add version library') + " " + this.source.folder,
-              component:'appui-cdn-management-library_edit',
-              source: $.extend({row: ele.data}, {name: this.source.folder})
-            });
-          });*/
         }
       }
     },

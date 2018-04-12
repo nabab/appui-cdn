@@ -6,8 +6,6 @@
  * Time: 09:48
  */
 /** @var $model \bbn\mvc\model */
-\bbn\x::log([
-  $model->data ],"addVersionAction");
 
 if ( !empty($model->data['db']) &&
   !empty($model->data['name']) &&
@@ -78,7 +76,6 @@ SQLITE
     'date_added' => date('Y-m-d H:i:s', time()),
     'internal' => $internal
   ]) ) {
-    \bbn\x::log([$model->data],"addVersion");
     $id = $model->data['db']->last_id();
     if ( !empty($model->data['dependencies']) ){
       foreach ( $model->data['dependencies'] as $dep ){

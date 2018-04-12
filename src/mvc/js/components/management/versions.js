@@ -78,12 +78,12 @@
       },
       editVersion(row, col, idx){
         return this.$refs.tableVersionsLib.edit(row,{
-          title: this.management.source.lng.edit_library,
-          height: '95%',
+          title: bbn._('Edit the version of the') + ' ' + row.library + ' ' + bbn._('library'), //this.management.source.lng.edit_library,
+          height: '98%',
           width: '85%',
         }, idx)
       },
-      deleteVersion(row, col, id){
+      deleteVersion(row, col, id){/*
         bbn.vue.closest(this, "bbn-tab").popup().confirm(bbn._('Are you sure you want to delete?'), ()=>{
           if ( (row.id !== undefined) && (row.library !== undefined) ){
             bbn.fn.post( this.management.source.root + 'actions/version/delete', {
@@ -91,7 +91,7 @@
               library: row.library
             }, d => {
               if ( d.data.success ){
-                this.$refs.tableVersionsLib.updateData();
+                this.management.refreshManagement();
                 appui.success(bbn._("Delete version"));
               }
               else{
@@ -99,10 +99,16 @@
               }
             });
           }
-        });
-
+        });*/
+        bbn.vue.closest(this, 'bbn-tab').popup().open({
+          width: 500,
+          height: 200,
+          title: bbn._("Remove version in library") +  " " + this.source.title,
+          component: 'appui-cdn-management-popup-remove',
+          source: $.extend(row, {titleLibrary: this.source.title, action:this.management.source.root + 'actions/version/delete'})
+        })
       },
-    },  
+    },
     created(){
       tableVersions = this;
     },
@@ -141,15 +147,15 @@
         props:['source'],
         methods:{
           add(){
-            this.management.actions("addVers");
+            tableVersions.management.actions("addVers");
             bbn.fn.post("cdn/data/version/add", {folder: tableVersions.source.name}, (d)=>{
               if ( d.data.github ){
-                bbn.fn.confirm( this.management.source.lng.versionGithubImport, ()=>{
-                  bbn.fn.post( this.management.source.root + 'github/versions', {url: d.data.github}, ele => {
+                bbn.fn.confirm( tableVersions.management.source.lng.versionGithubImport, ()=>{
+                  bbn.fn.post( tableVersions.management.source.root + 'github/versions', {url: d.data.github}, ele => {
                     bbn.vue.closest(this, 'bbn-tab').popup().open({
                       height: '25%',
                       width: '50%',
-                      title: this.management.source.lng.githubVersion,
+                      title: tableVersions.management.source.lng.githubVersion,
                       component:'appui-cdn-management-popup-versions_from_github',
                       source: $.extend({}, ele.data, {folder: tableVersions.source.name, versions: tableVersions.versionsInfo})
                     });
@@ -169,7 +175,7 @@
                 });
               }
               else{
-                bbn.fn.alert(this.management.source.lng.noNewVersion);
+                bbn.fn.alert(tableVersions.management.source.lng.noNewVersion);
               }
             });
           }
