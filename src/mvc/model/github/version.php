@@ -39,6 +39,7 @@ if ( !empty($model->data['git_user']) && !empty($model->data['git_repo']) && \de
     // Get assets
     if ( $ass = $git->api('repo')->releases()->assets()->all($model->data['git_user'], $model->data['git_repo'], $model->data['git_id_ver']) ){
       $down_url = $ass[0]['browser_download_url'];
+      $content_type = $ass[0]['content_type'];
     }
     else {
       $down_url = 'https://github.com/'.$model->data['git_user'].'/'.$model->data['git_repo'].'/archive/'.$version_name.'.zip';
@@ -84,41 +85,50 @@ if ( !empty($model->data['git_user']) && !empty($model->data['git_repo']) && \de
       $dependencies .= "<div>$l $v</div>";
     }
   }
+
   if ( !empty($down_url) && !empty($version_name) ){
     // Set the file's path
     $fz = BBN_USER_PATH.'tmp/'.basename($down_url);
     // Download the version file
     file_put_contents($fz, fopen($down_url, 'r'));
     if ( is_file($fz) ){
-      // Extract the zip file
-      $zip = new ZipArchive();
-      if ( $zip->open($fz) === true ){
-        $path = $model->data['lib_path'].$version_name.'/';
-        if ( is_dir($path) ){
-          \bbn\file\dir::delete($path);
-        }
-        if ( \bbn\file\dir::create_path($path) &&
-          $zip->extractTo($path)
-        ){
-          // Delete the zip file
-          \bbn\file\dir::delete($fz);
-          // Delete the first directory (move its children files|directories to the root version's directory)
-          $dirs = \bbn\file\dir::get_dirs($path);
-          foreach ( \bbn\file\dir::get_files($dirs[0], true) as $dir ){
-            \bbn\file\dir::move($dir, $path.basename($dir));
-          }
-          \bbn\x::log($dirs, "addLi");
-          \bbn\file\dir::delete($dirs[0]);
+      $path = $model->data['lib_path'].$version_name.'/';
+      if ( is_dir($path) ){
+        \bbn\file\dir::delete($path);
+      }
+      //case no zip but single file javascript
 
-          return [
-            'success' => true,
-            'version' => $version_name,
-            'dependencies' => $dependencies
-          ];
+      if ( (strpos($fz, '.js') !== false) && !empty($content_type) && (strpos($content_type, 'javascript') !== false) ){
+        if ( \bbn\file\dir::create_path($path) ){
+          file_put_contents($path.basename($down_url), fopen($fz, 'r'));
+          \bbn\file\dir::delete($fz);
         }
       }
+      // Extract the zip file
+      else{
+        $zip = new ZipArchive();
+        if ( $zip->open($fz) === true ){
+                  if ( \bbn\file\dir::create_path($path) &&
+            $zip->extractTo($path)
+          ){
+            // Delete the zip file
+            \bbn\file\dir::delete($fz);
+          }
+        }
+      }
+      // Delete the first directory (move its children files|directories to the root version's directory)
+      if( $dirs = \bbn\file\dir::get_dirs($path) ){
+        foreach ( \bbn\file\dir::get_files($dirs[0], true) as $dir ){
+          \bbn\file\dir::move($dir, $path.basename($dir));
+        }
+        \bbn\file\dir::delete($dirs[0]);
+      }
+      return [
+        'success' => true,
+        'version' => $version_name,
+        'dependencies' => $dependencies
+      ];
     }
   }
-
 }
 return ['success' => false];

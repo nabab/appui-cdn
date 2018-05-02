@@ -226,23 +226,26 @@
               git_user:  this.source.row.user !== undefined ? this.source.row.user : false,
               git_repo: this.source.row.repo !== undefined ? this.source.row.repo : false,
               git_latest_ver: this.source.row.latest !== undefined ? this.source.row.latest : false
-            }, d =>{
-               if( d.data ){
-                 for(let i in this.dataVersion){
-                   this.dataVersion[i] = (d.data && d.data[i]) ? d.data[i] : []
-                   if (i === "themes_tree"){
-                     this.dataVersion[i] = d.data.files_tree ?  d.data.files_tree : [];
-                   }
-                 }
-                 this.configuratorLibrary = true;
-                 //for dropdown list library in table depanadancies
-                 for ( let val of d.data.lib_ver){
-                   if ( bbn.fn.search(this.listLib, 'text', val.lib_title) < 0 ){
-                     this.listLib.push({text: val.lib_title, value: val.lib_name});
-                   }
-                 };
-               }
-            });
+            }, d => {
+                if ( d.data ){
+                  for(let i in this.dataVersion){
+                    this.dataVersion[i] = (d.data && d.data[i]) ? d.data[i] : []
+                    if (i === "themes_tree"){
+                      this.dataVersion[i] = d.data.files_tree ?  d.data.files_tree : [];
+                    }
+                  }
+                  this.configuratorLibrary = true;
+                  //for dropdown list library in table depanadancies
+                  if ( d.data.lib_ver.length ){
+                    for ( let val of d.data.lib_ver){
+                      if ( bbn.fn.search(this.listLib, 'text', val.lib_title) < 0 ){
+                        this.listLib.push({text: val.lib_title, value: val.lib_name});
+                      }
+                    };
+                  }
+                }
+              }
+            );
         }
         else{
           if ( !$.isEmptyObject(this.dataVersion) ){

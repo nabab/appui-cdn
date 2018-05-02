@@ -1,4 +1,3 @@
-
 <bbn-table ref="cdn_management"
            :source="sourceTable"
            class="bbn-w-100"

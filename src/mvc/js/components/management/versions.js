@@ -1,5 +1,4 @@
 (() => {
-  var tableVersions;
   return {
     data(){
       return {
@@ -109,9 +108,6 @@
         })
       },
     },
-    created(){
-      tableVersions = this;
-    },
     mounted(){
       bbn.fn.post(this.link, {id_lib: this.source.name}, d => {
         if ( d.data.success ){
@@ -145,19 +141,24 @@
       'addVersions' : {
         template: `<bbn-button icon="fa fa-plus" @click="add"></bbn-button>`,
         props:['source'],
+        data(){
+          return {
+            tableVersions: bbn.vue.closest(this, "appui-cdn-management-versions")
+          }
+        },
         methods:{
           add(){
-            tableVersions.management.actions("addVers");
-            bbn.fn.post("cdn/data/version/add", {folder: tableVersions.source.name}, (d)=>{
+            this.tableVersions.management.actions("addVers");
+            bbn.fn.post(this.tableVersions.management.source.root +'data/version/add', {folder: this.tableVersions.source.name}, (d)=>{
               if ( d.data.github ){
-                bbn.fn.confirm( tableVersions.management.source.lng.versionGithubImport, ()=>{
-                  bbn.fn.post( tableVersions.management.source.root + 'github/versions', {url: d.data.github}, ele => {
+                bbn.fn.confirm( this.tableVersions.management.source.lng.versionGithubImport, ()=>{
+                  bbn.fn.post( this.tableVersions.management.source.root + 'github/versions', {url: d.data.github}, ele => {
                     bbn.vue.closest(this, 'bbn-tab').popup().open({
                       height: '25%',
                       width: '50%',
-                      title: tableVersions.management.source.lng.githubVersion,
+                      title: this.tableVersions.management.source.lng.githubVersion,
                       component:'appui-cdn-management-popup-versions_from_github',
-                      source: $.extend({}, ele.data, {folder: tableVersions.source.name, versions: tableVersions.versionsInfo})
+                      source: $.extend({}, ele.data, {folder: this.tableVersions.source.name, versions: ele.data.versions})
                     });
                   });
                 });
@@ -169,13 +170,13 @@
                 bbn.vue.closest(this, 'bbn-tab').popup().open({
                   height: '95%',
                   width: '85%',
-                  title: bbn._('Add version library') + " " + tableVersions.source.name,
+                  title: bbn._('Add version library') + " " + this.tableVersions.source.name,
                   component:'appui-cdn-management-library_edit',
-                  source: $.extend({row: d.data}, {name: tableVersions.source.name, versions: tableVersions.versionsInfo})
+                  source: $.extend({row: d.data}, {name: this.tableVersions.source.name, versions: this.tableVersions.versionsInfo})
                 });
               }
               else{
-                bbn.fn.alert(tableVersions.management.source.lng.noNewVersion);
+                bbn.fn.alert(this.tableVersions.management.source.lng.noNewVersion);
               }
             });
           }

@@ -64,17 +64,21 @@
                     d.data.versions = vers.length ? vers : [];
                   }
                 }
-                bbn.vue.closest(this, 'bbn-tab').popup().open({
-                  height: '80%',
-                  width: '70%',
-                  title: bbn._("Import library of github:"),
-                  component:'appui-cdn-management-library_edit',
-                  source: {
-                    row: d.data,
-                    import: true
-                  }
-                });
-
+                if ( d.data['versions'].length ){
+                  bbn.vue.closest(this, 'bbn-tab').popup().open({
+                    height: '80%',
+                    width: '70%',
+                    title: bbn._("Import library of github:"),
+                    component:'appui-cdn-management-library_edit',
+                    source: {
+                      row: d.data,
+                      import: true
+                    }
+                  });
+                }
+                else{
+                  bbn.vue.closest(this, 'bbn-tab').popup().alert(bbn._("Releases not found"));
+                }
               }
             }
           );
@@ -84,7 +88,7 @@
         }
       },
       addManualyLib(){
-        let pop = bbn.vue.closest(this, 'bbn-tab').popup();        
+        let pop = bbn.vue.closest(this, 'bbn-tab').popup();
         pop.open({
             height: '80%',
             width: '60%',

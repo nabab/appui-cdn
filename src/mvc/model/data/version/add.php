@@ -8,20 +8,19 @@
 /** @var $model \bbn\mvc\model */
 if ( !empty($model->data['folder']) && !empty($model->data['db']) && \defined('BBN_CDN_PATH') ){
   // Library path
-  $model->data['lib_path'] = BBN_CDN_PATH . 'lib/' . $model->data['folder'] . '/';
+  $model->data['lib_path'] = \bbn\file\dir::create_path(BBN_CDN_PATH . 'lib/' . $model->data['folder']);
+  if ( $model->data['lib_path'] ){
+    $model->data['lib_path'] .= '/';
+  }
 
   // GitHub
   if ( !empty($model->data['git_user']) &&
     !empty($model->data['git_repo']) &&
     (!empty($model->data['git_id_ver']) || !empty($model->data['git_latest_ver']))
   ){
-    if ( !is_dir($model->data['lib_path']) ){
-      \bbn\file\dir::create_path($model->data['lib_path']);
-    }
     if ( is_dir($model->data['lib_path']) ){
       $github = $model->get_model('./../../github/version', $model->data);
     }
-
   }
 
   // Check if the library's subfolders are already inserted into db and use the first not included as version
@@ -72,7 +71,6 @@ if ( !empty($model->data['folder']) && !empty($model->data['db']) && \defined('B
     }
     return $res;
   }
-
   return [
     // Files' tree
     'files_tree' => tree($ver[0], $ver[0]),
