@@ -118,12 +118,12 @@
                 </span>
               </div>
             </div>
-            <div class="bbn-padded bbn-grid-fields bbn-100" v-if ="treeOrderSource">
-              <div>
-                <span class="bbn-b" style="padding-bottom: 5px">
-                  <?=_("Move File:")?>
-                </span>
-                <br>
+            <div class="bbn-padded bbn-100 bbn-flex-width" v-if ="treeOrderSource">
+              <div class="bbn-h-100 bbn-padded">
+                <div class="bbn-b bbn-c" style="padding-bottom: 5px">
+                  <?=_("Move File")?>
+                </div>
+
                 <div class="w3-card bbn-c" v-if="fileMove" style="margin-top: 15px">
                   <div class="bbn-padded">
                     <bbn-button icon="fa fa-arrow-up" @click="moveUp"></bbn-button>
@@ -133,14 +133,16 @@
                   </div>
                 </div>
               </div>
-              <div>
-                <template v-for="file in treeOrderSource">
-                  <div v-text="file"
-                       :style="{color: file === fileMove ? 'red' : 'inherit'}"
-                       @click="selectFileMove(file)"
-                       class="bbn-p bbn-b"
-                  ></div>
-                </template>
+              <div class="bbn-h-100 bbn-flex-fill">
+                <bbn-scroll>
+                  <template v-for="file in treeOrderSource">
+                    <div v-text="file"
+                         :style="{color: file === fileMove ? 'red' : 'inherit'}"
+                         @click="selectFileMove(file)"
+                         class="bbn-p bbn-b"
+                    ></div>
+                  </template>
+                </bbn-scroll>
               </div>
             </div>
           </bbn-pane>
