@@ -123,7 +123,7 @@
         }
       },
       removeLib(row, col, idx){
-        /*bbn.fn.confirm(bbn._("Delete library") + " "+  row.name + "?" , ()=>{
+        /*appui.confirm(bbn._("Delete library") + " "+  row.name + "?" , ()=>{
           bbn.fn.post(this.source.root + 'actions/library/delete', {name: row.name}, (d) => {
             if ( d.data.success ){
               appui.success(bbn._("Delete"));

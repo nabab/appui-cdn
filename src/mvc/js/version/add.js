@@ -418,11 +418,11 @@ var versionAdd = function(versionData, libData){
       });
     }
     else if ( versionData.data && versionData.data.github ) {
-      bbn.fn.confirm(data.lng.versionGithubImport, function(){
+      appui.confirm(data.lng.versionGithubImport, function(){
         fromGitHub(versionData.data.github, libData);
       });
     }
     else {
-      bbn.fn.alert(data.lng.noNewVersion);
+      appui.alert(data.lng.noNewVersion);
     }
 };

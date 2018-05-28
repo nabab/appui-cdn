@@ -19,7 +19,7 @@
         });
       },
       checkUpdate(){
-        bbn.fn.confirm(this.management.source.lng.checkUpdates, ()=>{
+        appui.confirm(this.management.source.lng.checkUpdates, ()=>{
           bbn.fn.post(this.management.source.root + 'github/updates', {}, d =>{
             if ( d.data && d.data.length ){
               this.updateList = d.data;

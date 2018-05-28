@@ -143,7 +143,7 @@
         props:['source'],
         data(){
           return {
-            tableVersions: bbn.vue.closest(this, "appui-cdn-management-versions")
+            tableVersions: this.closest("appui-cdn-management-versions")
           }
         },
         methods:{
@@ -151,9 +151,9 @@
             this.tableVersions.management.actions("addVers");
             bbn.fn.post(this.tableVersions.management.source.root +'data/version/add', {folder: this.tableVersions.source.name}, (d)=>{
               if ( d.data.github ){
-                bbn.fn.confirm( this.tableVersions.management.source.lng.versionGithubImport, ()=>{
+                this.confirm( this.tableVersions.management.source.lng.versionGithubImport, ()=>{
                   bbn.fn.post( this.tableVersions.management.source.root + 'github/versions', {url: d.data.github}, ele => {
-                    bbn.vue.closest(this, 'bbn-tab').popup().open({
+                    this.getPopup().open({
                       height: '25%',
                       width: '50%',
                       title: this.tableVersions.management.source.lng.githubVersion,
@@ -167,7 +167,7 @@
                 d.data.files_tree &&
                 d.data.languages_tree
               ){
-                bbn.vue.closest(this, 'bbn-tab').popup().open({
+                this.getPopup().open({
                   height: '95%',
                   width: '85%',
                   title: bbn._('Add version library') + " " + this.tableVersions.source.name,
@@ -176,7 +176,7 @@
                 });
               }
               else{
-                bbn.fn.alert(this.tableVersions.management.source.lng.noNewVersion);
+                this.alert(this.tableVersions.management.source.lng.noNewVersion);
               }
             });
           }
