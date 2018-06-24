@@ -43,12 +43,8 @@
             edit: 'cdn/actions/version/edit',
             add: 'cdn/actions/version/add'
           }
-        },//for show tables in form
-        tableShow:{
-          languages: false,
-          themes: false,
-          dependencies:false
-        }
+        },
+        table: ''
       }
     },
     computed:{
@@ -85,7 +81,7 @@
                 text: "Next",
                 title: "next",
                 class:"k-primary",
-                icon: 'fa fa-arrow-circle-o-right',
+                icon: 'far fa-arrow-circle-right',
                 disabled: (!this.source.row.title && !this.source.row.name)  ? true : false,
                 command: ()=>{ this.next() }
               }
@@ -97,13 +93,13 @@
               {
                 text: "Prev",
                 title: "Prev",
-                icon: 'fa fa-arrow-circle-o-left',
+                icon: 'far fa-arrow-circle-left',
                 command: ()=>{ this.configuratorLibrary = false }
               },
               'cancel',
               {
                 text: "Save",
-                icon: 'fa fa-check-circle-o',
+                icon: 'far fa-check-circle',
                 class:"k-primary",
                 command: ()=>{
                   if ( this.referenceNodeTree.length ){
@@ -122,7 +118,7 @@
               {
                 text: "Save",
                 class:"k-primary",
-                icon: 'fa fa-check-circle-o',
+                icon: 'far fa-check-circle',
                 command: ()=>{
                   //case edit library
                   if ( this.management.action.editLib ){
@@ -371,11 +367,7 @@
       saveDependencies(row, col, idx){
         //error in case no lib or version for dependencies
         if ( !row.id_ver || !row.lib_name ){
-          appui.error(bbn._("Error information to add to the addiction"));
-        }
-        //error in case no lib or version or existing order number for dependencies
-        else if( bbn.fn.search(this.dataVersion.dependencies, 'order', row.order) >= 0 ){
-           appui.error(bbn._("order number error already exists"));
+          appui.error(bbn._("ID_VERSION or LIBRARY NAME is missing"));
         }
          //error in case no lib or version or existing lib  in list of dependencies
         else if ( bbn.fn.search(this.dataVersion.dependencies, 'lib_name', row.lib_name) >= 0 ){
@@ -446,6 +438,9 @@
             this.listLib.push({text: val.lib_title, value: val.lib_name});
           }
         }
+      },
+      showTable(type){
+        this.table = (type === this.table) ? '' : type;
       }
     },
     created(){
@@ -472,7 +467,7 @@
         this.newName = this.source.row.name;
       }
       if ( this.management.action.addLib ){
-/*        let popup = bbn.vue.closest(this, 'bbn-tab').popup(),
+/*        let popup = bbn.vue.closest(this, 'bbns-tab').popup(),
             id_popup = bbn.fn.count(popup.popups)-2;
         popup.close(id_popup);*/
       }
@@ -490,7 +485,7 @@
         },
         methods:{
           openTreeLanguage(){
-            bbn.vue.closest(this, 'bbn-tab').popup().open({
+            this.getPopup().open({
               height: '70%',
               width: '30%',
               title: bbn._("Files:"),
@@ -515,7 +510,7 @@
         },
         methods:{
           openTreeThemes(){
-            bbn.vue.closest(this, 'bbn-tab').popup().open({
+            this.getPopup().open({
               height: '70%',
               width: '30%',
               title: bbn._("Files:"),

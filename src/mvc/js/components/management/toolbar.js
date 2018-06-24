@@ -10,7 +10,7 @@
     methods:{
       add(){
         this.management.actions('addLib');
-        bbn.vue.closest(this, 'bbn-tab').popup().open({
+        this.getPopup().open({
           width: "80%",
           height: "20%",
           title: bbn._("GitHub Link:"),
@@ -29,7 +29,7 @@
       },
       showUpdate(){
         if (this.updateList.length && !this.disabledButton ){
-          bbn.vue.closest(this, 'bbn-tab').popup().open({
+          this.getPopup().open({
             width: 700,
             height: 500,
             title: bbn._("GitHub updates:"),

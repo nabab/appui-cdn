@@ -7,19 +7,19 @@
              ref="tableVersionsLib"
              class="bbn-full-screen"
   >
-    <bbn-column title="<?=_('Version')?>"
+    <bbns-column title="<?=_('Version')?>"
                 field="name"
                 cls="bbn-c"
-    ></bbn-column>
-    <bbn-column title="<?=_('Date')?>"
+    ></bbns-column>
+    <bbns-column title="<?=_('Date')?>"
                 field="date_added"
                 type="date"
                 cls="bbn-c"
-    ></bbn-column>
-    <bbn-column :width="130"
+    ></bbns-column>
+    <bbns-column :width="130"
                 :tcomponent="$options.components.addVersions"
                 :buttons="buttonsTable"
                 cls="bbn-c"
-    ></bbn-column>
+    ></bbns-column>
   </bbn-table>
 </div>

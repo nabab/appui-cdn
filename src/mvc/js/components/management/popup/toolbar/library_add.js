@@ -65,7 +65,7 @@
                   }
                 }
                 if ( d.data['versions'].length ){
-                  bbn.vue.closest(this, 'bbn-tab').popup().open({
+                  this.getPopup().open({
                     height: '80%',
                     width: '70%',
                     title: bbn._("Import library of github:"),
@@ -77,7 +77,7 @@
                   });
                 }
                 else{
-                  bbn.vue.closest(this, 'bbn-tab').popup().alert(bbn._("Releases not found"));
+                  bbn.vue.closest(this, 'bbns-tab').popup().alert(bbn._("Releases not found"));
                 }
               }
             }
@@ -88,7 +88,7 @@
         }
       },
       addManualyLib(){
-        let pop = bbn.vue.closest(this, 'bbn-tab').popup();
+        let pop = bbn.vue.closest(this, 'bbns-tab').popup();
         pop.open({
             height: '80%',
             width: '60%',

@@ -28,17 +28,17 @@
           title="<?=_("Versions")?>"
           :source="versions"
         >
-          <bbn-column   title="<?=_("Name")?>"
+          <bbns-column   title="<?=_("Name")?>"
                         field="name"
                         :width="150"
                         cls="bbn-c"
-          ></bbn-column>
-          <bbn-column   title="<?=_("Date")?>"
+          ></bbns-column>
+          <bbns-column   title="<?=_("Date")?>"
                         field="date"
                         :width="150"
                         type="date"
                         cls="bbn-c"
-          ></bbn-column>
+          ></bbns-column>
         </bbn-table>
       </div>
     </div>

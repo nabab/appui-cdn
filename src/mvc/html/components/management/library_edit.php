@@ -152,51 +152,34 @@
       <bbn-pane>
         <bbn-splitter orientation="horizontal">
           <bbn-pane :size="160">
-            <div class="bbn-padded">
-              <bbn-button v-if = "!tableShow.languages"
-                          icon = "fa fa-eye"
-                          @click = "()=>{tableShow.languages= true}"
-              ></bbn-button>
-              <bbn-button v-else
-                          icon = "fa fa-eye-slash"
-                          @click = "()=>{tableShow.languages= false}"
-              ></bbn-button>
-              <span class="bbn-b"
-                    v-text = "_('Languages')"
-                    :style = "{color: tableShow.languages ? 'red' : 'inherit'}"
+            <div class="bbn-padded bbn-w-100"  style="margin-bottom: 20px">
+              <bbn-button :icon = "table === 'languages' ? 'far fa-eye-slash' : 'fa fa-eye'"
+                          @click = "showTable('languages')"
+                          class="bbn-w-100"
+                          :style = "{color: table === 'languages' ? 'red' : 'inherit'}"
               >
-              </span>
+                <?=_('Languages')?>
+              </bbn-button>
             </div>
-            <div class="bbn-padded">
-              <bbn-button v-if = "!tableShow.themes"
-                          icon = "fa fa-eye"
-                          @click ="()=>{tableShow.themes= true}"
-              ></bbn-button>
-              <bbn-button v-else
-                          icon = "fa fa-eye-slash"
-                          @click = "()=>{tableShow.themes= false}"
-              ></bbn-button>
-              <span class = "bbn-b"
-                    v-text = "_('Themes')"
-                    :style = "{color: tableShow.themes ? 'red' : 'inherit'}"
+            <div class="bbn-padded bbn-w-100" style="margin-bottom: 20px">
+              <bbn-button :icon = "table === 'themes' ? 'far fa-eye-slash' : 'fa fa-eye'"
+                          @click = "showTable('themes')"
+                          class="bbn-w-100"
+                          :style = "{color: table === 'themes' ? 'red' : 'inherit'}"
               >
-              </span>
+                <?=_('Themes')?>
+              </bbn-button>
+            </div>
+            <div class="bbn-padded bbn-w-100 " style="margin-bottom: 20px">
+              <bbn-button :icon = "table === 'dependencies' ? 'far fa-eye-slash' : 'fa fa-eye'"
+                          @click = "showTable('dependencies')"
+                          class="bbn-w-100"
+                          :style = "{color: table === 'dependencies' ? 'red' : 'inherit'}"
+              >
+                <?=_('Dependencies')?>
+              </bbn-button>
             </div>
             <div class="bbn-padded">
-              <bbn-button v-if = "!tableShow.dependencies"
-                          icon = "fa fa-eye"
-                          @click = "()=>{tableShow.dependencies= true}"
-              ></bbn-button>
-              <bbn-button v-else
-                          icon = "fa fa-eye-slash"
-                          @click = "()=>{tableShow.dependencies= false}"
-              ></bbn-button>
-              <span class = "bbn-b"
-                    v-text = "_('Dependencies')"
-                    :style = "{color: tableShow.dependencies ? 'red' : 'inherit'}">
-              </span>
-            </div>
-            <div class="bbn-w-100 bbn-padded">
               <bbn-checkbox v-model= "data.latest"
                             :disabled="abilitationCheckedLatest"
               ></bbn-checkbox>
@@ -206,75 +189,72 @@
             </div>
           </bbn-pane>
           <bbn-pane :scrollable="true">
-            <!--TABLE LANGUAGES-->
-            <div class="bbn-w-100" style="height: 220px" v-if="tableShow.languages">
-              <bbn-table v-if="tableShow.languages"
-                         :source="data.languages"
+            <div class="bbn-full-screen">
+              <!--TABLE LANGUAGES-->
+              <bbn-table :source="data.languages"
                          ref="tableLanguages"
-                         class="bbn-full-screen"
-                >
-                  <bbn-column title="<?=_('Languages Files')?>"
-                              field="path"
+                         class="bbn-100"
+                         v-if="table === 'languages'"
+                         key="table_languages"
 
-                  ></bbn-column>
-                  <bbn-column :tcomponent="$options.components.languages"
+              >
+                <bbns-column title="<?=_('Languages Files')?>"
+                              field="path"
+                ></bbns-column>
+                <bbns-column :tcomponent="$options.components.languages"
                               width="50"
                               :buttons="buttonDeleteLanguages"
-                  ></bbn-column>
+                ></bbns-column>
               </bbn-table>
-            </div>
-            <!--TABLE THEMES-->
-            <div class="bbn-w-100" style="height: 220px" v-if="tableShow.themes">
-              <bbn-table v-if="tableShow.themes"
-                         :source="data.themes"
-                         ref="tableThemes"
-                         class="bbn-full-screen"
+              <!--TABLE THEMES-->
+              <bbn-table :source="data.themes"
+                           ref="tableThemes"
+                           class="bbn-100"
+                           v-if="table === 'themes'"
+                           key="table_themes"
               >
-                <bbn-column title="<?=_('Themes')?>"
+                <bbns-column title="<?=_('Themes')?>"
                             field="path"
-
-                ></bbn-column>
-                <bbn-column :tcomponent="$options.components.themes"
-                            width="50"
-                            :buttons="buttonDeleteThemes"
-                ></bbn-column>
+                ></bbns-column>
+                <bbns-column :tcomponent="$options.components.themes"
+                              width="50"
+                              :buttons="buttonDeleteThemes"
+                ></bbns-column>
               </bbn-table>
-            </div>
-            <!--TABLE Dependecies-->
-            <div class="bbn-w-100" style="height: 220px" v-if="tableShow.dependencies">
-              <bbn-table v-if="tableShow.dependencies"
-                         :source="dataVersion.dependencies"
+              <!--TABLE Dependecies-->
+              <bbn-table :source="dataVersion.dependencies"
                          ref="tableDependecies"
                          editable="inline"
-                         class="bbn-full-screen"
+                         class="bbn-100"
                          :toolbar="[{
                            text: '<strong>'+'<?=_('Add dependencies')?>' + '</strong>',
                            icon: 'fa fa-plus',
                            command: 'edit'
                          }]"
                         @saveItem="saveDependencies"
+                        v-if="table === 'dependencies'"
+                        key="table_dependencies"
               >
-                <bbn-column title="<?=_('Library')?>"
+                <bbns-column title="<?=_('Library')?>"
                             field="lib_name"
                             :source="list"
                             :render="renderLibName"
-                ></bbn-column>
-                <bbn-column title="<?=_('Version')?>"
+                ></bbns-column>
+                <bbns-column title="<?=_('Version')?>"
                             field="id_ver"
                             :editor="$options.components.versions"
                             :render="showVersion"
-                ></bbn-column>
-                <bbn-column title="<?=_('Order')?>"
+                ></bbns-column>
+                <bbns-column title="<?=_('Order')?>"
                             field="order"
                             width="100"
                             type="number"
-                ></bbn-column>
-                <bbn-column title=" "
+                ></bbns-column>
+                <bbns-column title=" "
                             width="100"
                             class="bbn-c"
                             :buttons="buttonsTableDepandencies"
-                ></bbn-column>
-
+                ></bbns-column>
               </bbn-table>
             </div>
           </bbn-pane>

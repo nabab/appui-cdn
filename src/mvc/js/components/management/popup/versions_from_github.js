@@ -21,7 +21,7 @@
       success(ele){
         if ( ele.data ){
           bbn.vue.closest(this, 'bbn-popup').close();
-          bbn.vue.closest(this, 'bbn-tab').popup().open({
+          this.getPopup().open({
             height: '95%',
             width: '85%',
             title: bbn._('Add version library') + " " + this.source.folder,

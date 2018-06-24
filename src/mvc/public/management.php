@@ -1,6 +1,5 @@
 <?php
 /** @var $ctrl \bbn\mvc\controller */
-
 $templates = \bbn\file\dir::get_files($ctrl->plugin_path('appui-cdn').'mvc/html/templates');
 if ( !empty($templates) ){
   $ctrl->data['templates'] = array_map(function($t)use($ctrl){
@@ -17,7 +16,7 @@ if( isset($ctrl->post['refresh']) && !empty($ctrl->post['refresh']) ){
   ];
 }
 else{
- $ctrl->combo('CDN Management', [
+  $ctrl->combo('CDN Management', [
     'all_conf' => $ctrl->get_model('./configurations', ['db' => $ctrl->data['db']]),
     'all_lib' => $ctrl->get_model('./data/libraries', ['db' => $ctrl->data['db']]),
     'root' => APPUI_CDN_ROOT,

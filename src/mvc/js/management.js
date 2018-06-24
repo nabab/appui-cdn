@@ -76,7 +76,7 @@
                 });
               }
             }
-            bbn.vue.closest(this, 'bbn-tab').popup().open({
+            this.getPopup().open({
               width: 580,
               height: 700,
               title: bbn._("Info") + ': '+ row.name,
@@ -134,7 +134,7 @@
             }
           });
         });*/
-        bbn.vue.closest(this, 'bbn-tab').popup().open({
+       this.getPopup().open({
           width: 500,
           height: 200,
           title: bbn._("Remove library"),
@@ -185,18 +185,6 @@
           }
         },
       }];
-      bbn.vue.setComponentRule('cdn/components/management', 'appui-cdn-management');
-      //for button in colums action
-      bbn.vue.addComponent('popup/info_lib', mixins);
-      bbn.vue.addComponent('popup/toolbar/update', mixins);
-      bbn.vue.addComponent('popup/tree_files', mixins);
-      bbn.vue.addComponent('popup/toolbar/library_add', mixins);
-      bbn.vue.addComponent('popup/versions_from_github', mixins);
-      bbn.vue.addComponent('popup/remove', mixins);
-      bbn.vue.addComponent('library_edit', mixins);
-      bbn.vue.addComponent('toolbar', mixins);
-      bbn.vue.addComponent('versions', mixins);
-      bbn.vue.unsetComponentRule();
     },
     watch:{//for search libray in table
         sourceTable(val){

@@ -67,7 +67,7 @@
           }
         };
         infos.content = arr;
-        bbn.vue.closest(this, 'bbn-tab').popup().open({
+        this.getPopup().open({
           width: 365,
           height: 380,
           title: bbn._("Info version "),
@@ -83,7 +83,7 @@
         }, idx)
       },
       deleteVersion(row, col, id){/*
-        bbn.vue.closest(this, "bbn-tab").popup().confirm(bbn._('Are you sure you want to delete?'), ()=>{
+        bbn.vue.closest(this, "bbns-tab").popup().confirm(bbn._('Are you sure you want to delete?'), ()=>{
           if ( (row.id !== undefined) && (row.library !== undefined) ){
             bbn.fn.post( this.management.source.root + 'actions/version/delete', {
               id_ver: row.id,
@@ -99,7 +99,7 @@
             });
           }
         });*/
-        bbn.vue.closest(this, 'bbn-tab').popup().open({
+        this.getPopup().open({
           width: 500,
           height: 200,
           title: bbn._("Remove version in library") +  " " + this.source.title,
