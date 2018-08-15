@@ -46,9 +46,12 @@
           }
         }
         this.management.search = true;
-      }      
+      }
     },
     computed:{
+      management(){
+        return this.closest("bbns-tab").getComponent()
+      },
       //for disable o no in button on toolbar "update"
       disabledButton(){
         if ( this.updateList.length ){
@@ -63,6 +66,5 @@
         this.searchLibrary();
       }
     }
-
   }
 })();

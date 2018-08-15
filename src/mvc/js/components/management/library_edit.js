@@ -48,6 +48,9 @@
       }
     },
     computed:{
+      management(){
+        return this.closest("bbns-tab").getComponent()
+      },
       // for source colum of the table depandancies
       list(){
         if ( bbn.fn.count(this.dataVersion.dependencies) > 0 ){

@@ -18,7 +18,7 @@
     </bbn-button>
 
     <!-- GitHub Updates-->
-    <span style="margin: 0 5px 0 10px"><i class="fa fa-github"></i>GitHub:</span>
+    <span style="margin: 0 5px 0 10px"><i class="fab fa-github"></i>GitHub:</span>
     <bbn-button @click="checkUpdate"
                 icon="fa fa-refresh"
                 style="margin-right: 5px"

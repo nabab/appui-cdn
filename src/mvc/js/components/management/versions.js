@@ -1,8 +1,10 @@
 (() => {
+  let infoVersions= "";
   return {
     data(){
       return {
         link: 'cdn/data/versions',
+        management: this.closest("bbns-tab").getComponent(),
         versionsInfo: []
       }
     },
@@ -65,7 +67,7 @@
             }
             arr.push(obj);
           }
-        };
+        }
         infos.content = arr;
         this.getPopup().open({
           width: 365,
@@ -75,7 +77,7 @@
           source:infos
         })
       },
-      editVersion(row, col, idx){
+      editVersion(row, col, idx){      
         return this.$refs.tableVersionsLib.edit(row,{
           title: bbn._('Edit the version of the') + ' ' + row.library + ' ' + bbn._('library'), //this.management.source.lng.edit_library,
           height: '98%',
@@ -115,6 +117,9 @@
         }
       });
     },
+    created(){
+      infoVersions = this;
+    },
     components: {
       //button info version
       'info':{
@@ -143,13 +148,19 @@
         props:['source'],
         data(){
           return {
-            tableVersions: this.closest("appui-cdn-management-versions")
+            //tableVersions: this.closest("appui-cdn-management-versions")
+            tableVersions:{
+              source: infoVersions.source,
+              management: infoVersions.management
+            }
           }
         },
         methods:{
           add(){
             this.tableVersions.management.actions("addVers");
-            bbn.fn.post(this.tableVersions.management.source.root +'data/version/add', {folder: this.tableVersions.source.name}, (d)=>{
+            bbn.fn.post(this.tableVersions.management.source.root +'data/version/add', {
+              folder: this.tableVersions.source.name
+            }, (d)=>{
               if ( d.data.github ){
                 this.confirm( this.tableVersions.management.source.lng.versionGithubImport, ()=>{
                   bbn.fn.post( this.tableVersions.management.source.root + 'github/versions', {url: d.data.github}, ele => {

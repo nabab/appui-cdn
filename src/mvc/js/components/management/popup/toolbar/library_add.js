@@ -32,6 +32,11 @@
         ]
       }
     },
+    computed:{
+      management(){
+        return this.closest("bbns-tab").getComponent()
+      }
+    },
     methods:{
       importGithub(){
         if ( this.urlGit.length ){
