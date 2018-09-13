@@ -4,7 +4,7 @@
            :info="true"
            :sortable="true"
            :editable="true"
-           :pageable="true"
+           :pageable="true"          
            editor="appui-cdn-management-library_edit"
            toolbar="appui-cdn-management-toolbar"
            expander="appui-cdn-management-versions"
