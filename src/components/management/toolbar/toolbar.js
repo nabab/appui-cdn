@@ -3,7 +3,7 @@
     data(){
       return {
         updateList: [],
-        countList: false,
+        totalUpdateList: 0,
         searchNameLibrary:""
       }
     },
@@ -21,8 +21,9 @@
       checkUpdate(){
         appui.confirm(this.management.source.lng.checkUpdates, ()=>{
           bbn.fn.post(this.management.source.root + 'github/updates', {}, d =>{
-            if ( d.data && d.data.length ){
-              this.updateList = d.data;
+            if ( d.data.updates.length  ){
+              this.updateList = d.data.updates;
+              this.totalUpdateList = d.data.total;
             }
           });
         });
@@ -32,9 +33,11 @@
           this.getPopup().open({
             width: 700,
             height: 500,
-            title: bbn._("GitHub updates:"),
+            title: bbn._("GitHub updates") + ' ' + this.totalUpdateList + ' ' + bbn._("libraries"),
             component: 'appui-cdn-management-popup-toolbar-update',
-            source: this.updateList
+            source: {
+              list: this.updateList
+            }
           });
         }
       },
@@ -54,8 +57,7 @@
       },
       //for disable o no in button on toolbar "update"
       disabledButton(){
-        if ( this.updateList.length ){
-          this.countList = this.updateList.length;
+        if ( this.updateList.length && (this.totalUpdateList > 0) ){
           return false;
         }
         return true;

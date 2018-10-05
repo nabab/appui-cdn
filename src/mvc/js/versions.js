@@ -86,13 +86,13 @@
       }, {
         title: '',
         width: 120,
-        headerTemplate: '<a href="javascript:;" class="k-button k-button-icontext k-grid-add fa fa-plus add-ver"></a>',
+        headerTemplate: '<a href="javascript:;" class="k-button k-button-icontext k-grid-add fas fa-plus add-ver"></a>',
         headerAttributes: {
           style: "text-align: center"
         },
         command: [{
           name: "info",
-          template: '<a class="k-button k-grid-d-info fa fa-info" href="javascript:;"></a>'
+          template: '<a class="k-button k-grid-d-info fas fa-info" href="javascript:;"></a>'
         }, {
           name: "edit",
           text: {
@@ -100,11 +100,11 @@
             update: data.lng.save,
             cancel: data.lng.cancel,
           },
-          template: '<a class="k-button k-grid-edit fa fa-edit" href="javascript:;"></a>'
+          template: '<a class="k-button k-grid-edit fas fa-edit" href="javascript:;"></a>'
         }, {
           name: "destroy",
           text: data.lng.del,
-          template: '<a class="k-button k-grid-delete fa fa-trash" href="javascript:;"></a>'
+          template: '<a class="k-button k-grid-delete fas fa-trash" href="javascript:;"></a>'
         }]
       }],
       dataBound: function (db){

@@ -7,8 +7,10 @@
  */
 /** @var $model \bbn\mvc\model */
 if ( !empty($model->data['folder']) && !empty($model->data['db']) && \defined('BBN_CDN_PATH') ){
+
   // Library path
   $model->data['lib_path'] = \bbn\file\dir::create_path(BBN_CDN_PATH . 'lib/' . $model->data['folder']);
+
   if ( $model->data['lib_path'] ){
     $model->data['lib_path'] .= '/';
   }
@@ -71,6 +73,10 @@ if ( !empty($model->data['folder']) && !empty($model->data['db']) && \defined('B
     }
     return $res;
   }
+
+
+
+
   return [
     // Files' tree
     'files_tree' => tree($ver[0], $ver[0]),
@@ -105,8 +111,8 @@ if ( !empty($model->data['folder']) && !empty($model->data['db']) && \defined('B
       $model->data['folder']
     ),
     // All slave dependencies
-    'slave_dependencies' => $model->data['db']->get_rows("
-      SELECT libr.name, libr.title
+    'slave_dependencies' =>  $model->data['db']->get_rows("
+      SELECT vers.id AS id_slave, libr.name, libr.title
       FROM versions
       JOIN libraries
         ON versions.library = libraries.name

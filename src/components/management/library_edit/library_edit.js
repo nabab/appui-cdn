@@ -44,7 +44,8 @@
             add: 'cdn/actions/version/add'
           }
         },
-        table: ''
+        table: '',
+        listNoUpdate:[],
       }
     },
     computed:{
@@ -172,6 +173,8 @@
           themes: this.data.themes,
           new_name: this.newName,
           dependencies: this.dataVersion.dependencies,
+          no_update_dependents: this.listNoUpdate,
+          last_dependencies: this.dataVersion.slave_dependencies,
           name: this.source.name || "",
           is_latest : this.data.latest
         }
@@ -264,7 +267,7 @@
           data: ele,
           path: ele.path,
           items: ele.items || [],
-          icon: ele.items ? 'fa fa-folder' : 'fa fa-file',
+          icon: ele.items ? 'fas fa-folder' : 'fas fa-file',
           text: ele.text,
           num: ele.items ? ele.items.length : 0,
           numChildren: ele.items ? ele.items.length : 0
@@ -281,7 +284,7 @@
       buttonDeleteLanguages(){
         return [{
           text: "destroy",
-          icon: "fa fa-trash",
+          icon: "fas fa-trash",
           command: (row, col, id )=>{
             return this.$refs.tableLanguages.delete(id, bbn._("Are you sure you want to delete?"));
           },
@@ -291,7 +294,7 @@
       buttonDeleteThemes(){
         return [{
           text: "destroy",
-          icon: "fa fa-trash",
+          icon: "fas fa-trash",
           command: (row, col, id )=>{
             return this.$refs.tableThemes.delete(id, bbn._("Are you sure you want to delete?"));
           },
@@ -356,7 +359,7 @@
            command: (row, col, id )=>{
              return this.$refs.tableDependecies.delete(id, bbn._("Are you sure you want to delete?"));
            },
-           icon: 'fa fa-trash',
+           icon: 'fas fa-trash',
            title: 'delete',
            notext: true
           }
@@ -444,6 +447,47 @@
       },
       showTable(type){
         this.table = (type === this.table) ? '' : type;
+      },
+      buttonUploadDepandance(ele){
+        let i = bbn.fn.search(this.listNoUpdate, 'name', ele.name)
+        if ( i > -1 ){
+          this.listNoUpdate.splice(i,1);
+        }
+      },
+      buttonNoUpload(ele){
+        let i = bbn.fn.search(this.listUpdate, 'name', ele.name)
+        if ( i === -1 ){
+          this.listNoUpdate.push(ele);
+        }
+      },
+        /*return [
+          {
+            text: bbn._('Update last version'),
+            command: ( row, col, id)=>{
+              let i = bbn.fn.search(this.listUpdate, 'name', row.name)
+              if ( i > -1 ){
+                this.listUpdate.splice(i,1);
+              }
+              this.listUpdate.push(row);
+            },
+            icon: 'zmdi zmdi-thumb-up',
+            title: bbn._('Update last version'),
+            notext: true,
+
+            style:"width:50%; color: green"
+          },{
+          text: bbn._('no update'),
+          command: ( row, col, id)=>{
+            this.listNoUpdate.push(row);
+          },
+          icon: 'fas fa-ban',
+          title: bbn._('No update'),
+          notext: true,
+          style:"width:50%; color: red"
+        }]*/
+      //},
+      getDependent(){
+        this.showTable('dependent');
       }
     },
     created(){
@@ -476,9 +520,34 @@
       }
     },
     components: {
+      'update':{
+        template:`<bbn-switch v-model="update"
+                              :value="true"
+                              :novalue="false"
+                              :noIcon="false"
+                              offIcon="fas fa-ban"
+                              onIcon="far fa-check-circle"                               
+                  ></bbn-switch>`,
+        props: ['source'],
+        data(){
+          return {
+            update: true
+          }
+        },
+        watch:{
+          update(val){
+            if ( val === false ){
+              editLib.buttonNoUpload(this.source);
+            }
+            else{
+              editLib.buttonUploadDepandance(this.source);
+            }
+          }
+        }
+      },
       //button in title column grid add file language
       'languages':{
-        template:`<bbn-button @click="openTreeLanguage" :title="titleButton" icon="fa fa-plus"></bbn-button>`,
+        template:`<bbn-button @click="openTreeLanguage" :title="titleButton" icon="fas fa-plus"></bbn-button>`,
         props: ['source'],
         data(){
           return{
@@ -503,7 +572,7 @@
       },
       //button in title column grid add themes language
       'themes':{
-        template:`<bbn-button @click="openTreeThemes" :title="titleButton" icon="fa fa-plus"></bbn-button>`,
+        template:`<bbn-button @click="openTreeThemes" :title="titleButton" icon="fas fa-plus"></bbn-button>`,
         props: ['source'],
         data(){
           return{

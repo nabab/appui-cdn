@@ -4,14 +4,13 @@
       return {
         buttonsAction:[
           {
-            text: "Import",
-            icon: 'fa fa-download',
-            command: ()=>{ this.$refs.form_versions_fromGithub.submit() },
-          },
-          {
             text: "cancel",
-            icon: 'fa fa-ban',
+            icon: 'fas fa-ban',
             command: ()=>{ this.$refs.form_versions_fromGithub.cancel() },
+          },{
+            text: "Import",
+            icon: 'fas fa-download',
+            command: ()=>{ this.$refs.form_versions_fromGithub.submit() },
           }
         ],
         git_id_ver:"",
@@ -44,12 +43,20 @@
           return arr;
         }
       },
+      last_version(){
+        let i = bbn.fn.search(this.source.versions, 'is_latest', true);
+        if ( i === -1 ){
+          return false;
+        }
+        return this.source.versions[i]['id'];
+      },
       dataPost(){
         return {
           folder: this.source.folder,
           git_repo: this.source.git_repo,
           git_user: this.source.git_user,
-          git_id_ver: this.git_id_ver
+          git_id_ver: this.git_id_ver,
+          git_latest_ver: this.last_version
         }
       }
     }

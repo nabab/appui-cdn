@@ -16,7 +16,7 @@
             command:(row, col, idx) => {
               this.infoVersion(row, col, idx);
             },
-            icon: 'fa fa-info',
+            icon: 'fas fa-info',
             title: 'info',
             notext: true
           },
@@ -26,7 +26,7 @@
               this.management.actions('editVers');
               this.editVersion(row, col, idx);
             },
-            icon: 'fa fa-edit',
+            icon: 'fas fa-edit',
             title: 'edit',
             notext: true
           },
@@ -35,7 +35,7 @@
            command:(row, col, idx)=>{
              this.deleteVersion(row, col, idx);
            },
-           icon: 'fa fa-trash',
+           icon: 'fas fa-trash',
            title: 'delete',
            notext: true,
            disabled: this.versionsInfo.length !== 1 ? false : true
@@ -52,7 +52,7 @@
                 text: i ,
                 numChildren: infos.content[i].length,
                 num: infos.content[i].length,
-                icon: 'fa fa-folder',
+                icon: 'fas fa-folder',
                 items: []
               };
             if ( infos.content[i].length ){
@@ -61,7 +61,7 @@
                   text: file,
                   num: 0,
                   numchildren: 0,
-                  icon: 'fa fa-file'
+                  icon: 'fas fa-file'
                 })
               });
             }
@@ -144,7 +144,7 @@
         props:['source']
       },
       'addVersions' : {
-        template: `<bbn-button icon="fa fa-plus" @click="add"></bbn-button>`,
+        template: `<bbn-button icon="fas fa-plus" @click="add"></bbn-button>`,
         props:['source'],
         data(){
           return {

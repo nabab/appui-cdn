@@ -4,7 +4,7 @@
            :info="true"
            :sortable="true"
            :editable="true"
-           :pageable="true"          
+           :pageable="true"
            editor="appui-cdn-management-library_edit"
            toolbar="appui-cdn-management-toolbar"
            expander="appui-cdn-management-versions"
@@ -31,7 +31,6 @@
               cls="bbn-c"
               :width="85"
   ></bbns-column>
-
   <bbns-column title="<?=_("Author")?>"
                field="author"
                :width="70"
@@ -52,13 +51,13 @@
   ></bbns-column>
   <bbns-column title="<?=_("Download")?>"
                field="download_link"
-               :width="70"
+               :width="110"
                :render="showIconDownload"
                cls="bbn-c"
   ></bbns-column>
   <bbns-column title="<?=_("Documentation")?>"
                field="doc_link"
-               :width="70"
+               :width="110"
                :render="showIconDoc"
                cls="bbn-c"
   ></bbns-column>
@@ -74,7 +73,7 @@
                :render="showIconSupportLink"
                cls="bbn-c"
   ></bbns-column>
-  <bbns-column cls="bbn-c"
+  <bbns-column cls="bbn-c buttonTable"
                :buttons="buttons"
   ></bbns-column>
 </bbn-table>

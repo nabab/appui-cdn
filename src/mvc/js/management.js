@@ -26,14 +26,21 @@
     },
     methods:{
       buttons(row, col, idx){
-        return [
-          {
+        return [ {
+           text: bbn._('Dependencies'),
+           command: ()=>{
+             this.dependencies(row, col, idx);
+           },
+           icon: 'fas fa-code-branch',
+           title: bbn._('Dependencies'),
+           notext: true,
+         },{
             text: "Info",
             command:()=>{
               this.info(row, col, idx);
             },
-            icon: 'fa fa-info',
-            title: 'info',
+            icon: 'fas fa-info',
+            title: bbn._('Info'),
             notext: true
           },
           {
@@ -42,8 +49,8 @@
               this.actions('editLib');
               this.editLibrary(row, col, idx);
             },
-            icon: 'fa fa-edit',
-            title: 'edit',
+            icon: 'fas fa-edit',
+            title: bbn._('Edit'),
             notext: true
           },
           {
@@ -51,13 +58,60 @@
            command:()=>{
              this.removeLib(row,col,idx);
            },
-           icon: 'fa fa-trash',
-           title: 'delete',
+           icon: 'fas fa-trash',
+           title: bbn._('Delete'),
            notext: true
           }
         ];
       },
+      dependencies(row){
+        bbn.fn.post(this.source.root+'data/dependencies',{folder: row.name}, d => {
+          var dependent = [],
+              depend = [];
+          if ( d.data.dependent.length > 0 ){
+            dependent = d.data.dependent.slice();
+            d.data.dependent.forEach((val, i)=>{
+              bbn.fn.post(this.source.root + 'github/update', {library: val.name}, d =>{
+                if (d.data.update){
+                  dependent[i]['update'] = d.data.update;
+                  dependent[i]['latest'] = d.data.latest;
+                  bbn.fn.log("dependent",  dependent, i);
+                }
+              });
+            });
+            bbn.fn.log("dependent",  dependent);
+          }
+          if ( d.data.depend.length > 0 ){
+            depend = d.data.depend.slice();
+            d.data.dependent.forEach((val, i)=>{
+              bbn.fn.post(this.source.root + 'github/update', {library: val.name}, d =>{
+                if (d.data.update){
+                  depend[i]['update'] = d.data.update;
+                  depend[i]['latest'] = d.data.latest;
+                }
+              });
+              bbn.fn.log("depend", depend);
+            });
+          }
 
+          if ( (depend.length > 0) || (dependent.length > 0) ){
+            this.getPopup().open({
+              width: 700,
+              height: 500,
+              title: bbn._('Dependencies library')+" "+row.name+" "+row.latest,
+              component:'appui-cdn-management-popup-dependencies',
+              source: {
+                depend: d.data.depend,
+                dependent: d.data.dependent,
+                listUpdate: false
+              }
+            });
+          }
+          else{
+            this.alert("No dependencies on cdn");
+          }
+        })
+      },
       /* this function is activated at the click of the info button and
        *  its task is to display a popup with all the information related to the selected library
        */
@@ -145,25 +199,25 @@
       },
       //for render icon table
       showIconAuthor(ele){
-        return ( ele.author && ele.author.length ) ? '<div class="bbn-c"><i class="fa fa-user bbn-xl" title="' + ele.author + '"></i></div>' : '';
+        return ( ele.author && ele.author.length ) ? '<div class="bbn-c"><i class="fas fa-user bbn-xl" title="' + ele.author + '"></i></div>' : '';
       },
       showIconLicense(ele){
-        return ( ele.licence && ele.licence.length ) ? "<div class='bbn-c'><i class='fa fa-copyright'></i></div>" : '';
+        return ( ele.licence && ele.licence.length ) ? "<div class='bbn-c'><i class='fas fa-copyright'></i></div>" : '';
       },
       showIconWeb(ele){
-        return ( ele.website && ele.website.length ) ? "<div class='bbn-c'><a class='appui-no' href='"  + ele.website + "'" + "target='_blank'>" + "<i class='fa fa-globe'></i></a></div>" : '';
+        return ( ele.website && ele.website.length ) ? "<div class='bbn-c'><a class='appui-no' href='"  + ele.website + "'" + "target='_blank'>" + "<i class='fas fa-globe'></i></a></div>" : '';
       },
       showIconDownload(ele){
-        return ( ele.download_link && ele.download_link.length ) ? "<div class='bbn-c'><a class='appui-no' href='"  + ele.download_link + "'" + "target='_blank'>" + "<i class='fa fa-download'</i></a></div>" : '';
+        return ( ele.download_link && ele.download_link.length ) ? "<div class='bbn-c'><a class='appui-no' href='"  + ele.download_link + "'" + "target='_blank'>" + "<i class='fas fa-download'</i></a></div>" : '';
       },
       showIconDoc(ele){
-        return ( ele.doc_link && ele.doc_link.length ) ? "<div class='bbn-c'><a class='appui-no' href='"  + ele.doc_link + "'" + "target='_blank'>" + "<i class='fa fa-book'></i></a></div>" : '';
+        return ( ele.doc_link && ele.doc_link.length ) ? "<div class='bbn-c'><a class='appui-no' href='"  + ele.doc_link + "'" + "target='_blank'>" + "<i class='fas fa-book'></i></a></div>" : '';
       },
       showIconGit(ele){
         return ( ele.git && ele.git.length ) ? "<div class='bbn-c'><a class='appui-no' href='"  + ele.git + "'" + "target='_blank'>" + "<i class='fab fa-github'></i></a></div>" : '';
       },
       showIconSupportLink(ele){
-        return ( ele.support_link && ele.support_link.length ) ? "<div class='bbn-c'><a class='appui-no' href='"  + ele.support_link + "'" + "target='_blank'>" + "<i class='fa fa-ambulance'></i></a></div>" : '';
+        return ( ele.support_link && ele.support_link.length ) ? "<div class='bbn-c'><a class='appui-no' href='"  + ele.support_link + "'" + "target='_blank'>" + "<i class='fas fa-ambulance'></i></a></div>" : '';
       },
       refreshManagement(){
         bbn.fn.post(this.source.root + "management", {refresh: true}, d => {

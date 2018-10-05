@@ -6,7 +6,6 @@
  * Time: 09:48
  */
 /** @var $model \bbn\mvc\model */
-
 if ( !empty($model->data['db']) &&
   !empty($model->data['name']) &&
   !empty($model->data['vname']) &&
@@ -96,10 +95,42 @@ SQLITE
         ]);
       }
     }
+
+
     if ( !empty($model->data['is_latest']) ){
       $model->data['db']->update('libraries', ['latest' => $model->data['vname']], ['name' => $model->data['name']]);
     }
+
     if ( !empty($model->data['slave_dependencies']) ){
+      if ( !empty($model->data['no_update_dependents']) ){
+        $updates= array_map(function($lib){
+           foreach($model->data['no_update_dependents'] as $ele){
+             if ( $ele['id_slave'] !== $lib['id_slave']){
+               return $lib['id_slave'];
+             }
+           }
+        }, $model->data['slave_dependencies']);
+      }
+      else{
+        $updates= array_map(function($lib){
+
+          return $lib['id_slave'];
+        }, $model->data['slave_dependencies']);
+      }
+    }
+    if( !empty($update) ){
+      foreach ( $updates AS $id_slave ){
+        if ( !empty($id_slave) ){
+          $model->data['db']->insert('dependencies', [
+            'id_master' => $id,
+            'id_slave' => $id_slave
+          ]);
+        }
+      }
+    }
+
+
+      /*
       foreach ( $model->data['slave_dependencies'] AS $lib => $yes ){
         if ( !empty($yes) ){
           $id_slave = $model->data['db']->get_one(<<<SQLITE
@@ -121,7 +152,7 @@ SQLITE
             ]);
           }
         }
-      }
+      }*/
     }
   }
   return ['success' => 1];

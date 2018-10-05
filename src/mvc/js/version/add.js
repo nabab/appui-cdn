@@ -102,14 +102,14 @@ var versionAdd = function(versionData, libData){
           }, {
             title: '',
             width: 50,
-            headerTemplate: '<a href="javascript:;" class="k-button k-button-icontext k-grid-add fa fa-plus add-lang"></a>',
+            headerTemplate: '<a href="javascript:;" class="k-button k-button-icontext k-grid-add fas fa-plus add-lang"></a>',
             headerAttributes: {
               style: "text-align: center"
             },
             command: [{
               name: "destroy",
               test: data.lng.del,
-              template: '<a class="k-button k-grid-delete fa fa-trash" href="javascript:;"></a>'
+              template: '<a class="k-button k-grid-delete fas fa-trash" href="javascript:;"></a>'
             }]
           }]
         });
@@ -155,14 +155,14 @@ var versionAdd = function(versionData, libData){
           }, {
             title: '',
             width: 50,
-            headerTemplate: '<a href="javascript:;" class="k-button k-button-icontext k-grid-add fa fa-plus add-theme"></a>',
+            headerTemplate: '<a href="javascript:;" class="k-button k-button-icontext k-grid-add fas fa-plus add-theme"></a>',
             headerAttributes: {
               style: "text-align: center"
             },
             command: [{
               name: "destroy",
               test: data.lng.del,
-              template: '<a class="k-button k-grid-delete fa fa-trash" href="javascript:;"></a>'
+              template: '<a class="k-button k-grid-delete fas fa-trash" href="javascript:;"></a>'
             }]
           }]
         });
@@ -302,7 +302,7 @@ var versionAdd = function(versionData, libData){
           }, {
             title: '',
             width: 100,
-            headerTemplate: '<a href="#" class="k-button k-grid-add fa fa-plus add-dep"></a>',
+            headerTemplate: '<a href="#" class="k-button k-grid-add fas fa-plus add-dep"></a>',
             headerAttributes: {
               style: "text-align: center"
             },
@@ -321,7 +321,7 @@ var versionAdd = function(versionData, libData){
               }
             }, {
               name: 'destroy',
-              template: '<a class="k-button k-grid-delete fa fa-trash" href="javascript:;"></a>'
+              template: '<a class="k-button k-grid-delete fas fa-trash" href="javascript:;"></a>'
             }]
           }],
           dataBound: function(){

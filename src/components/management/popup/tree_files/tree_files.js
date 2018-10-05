@@ -16,7 +16,7 @@
           data: ele,
           path: ele.path,
           items: ele.items || [],
-          icon: ele.items ? 'fa fa-folder' : 'fa fa-file',
+          icon: ele.items ? 'fas fa-folder' : 'fas fa-file',
           file: ele.items ? false : true,
           text: ele.text,
           num: ele.items ? ele.items.length : 0,

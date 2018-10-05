@@ -7,7 +7,7 @@
                  class="bbn-w-100 bbn-h-20 bbn-padded"
       ></bbn-input>
       <bbn-button @click="addLanguage"
-                  icon="fa fa-plus"
+                  icon="fas fa-plus"
                   title="<?=_('Add file')?>"
                   v-if ="element.length"
                   class="bbn-flex-fill bbn-h-20"

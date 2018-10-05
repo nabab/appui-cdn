@@ -65,7 +65,7 @@
     <div class="bbn-flex-width">
       <bbn-input class="bbn-flex-fill" v-model="source.row.git"></bbn-input>
       <bbn-button @click="getInfo"
-                  icon="fa fa-download"
+                  icon="fas fa-download"
                   title="<?=_("Import library's info from GitHub")?>"
                   v-if="source.row.git"
       ></bbn-button>
@@ -126,10 +126,10 @@
 
                 <div class="w3-card bbn-c" v-if="fileMove" style="margin-top: 15px">
                   <div class="bbn-padded">
-                    <bbn-button icon="fa fa-arrow-up" @click="moveUp"></bbn-button>
+                    <bbn-button icon="fas fa-arrow-up" @click="moveUp"></bbn-button>
                   </div>
                   <div class="bbn-padded">
-                    <bbn-button icon="fa fa-arrow-down" @click="moveDown"></bbn-button>
+                    <bbn-button icon="fas fa-arrow-down" @click="moveDown"></bbn-button>
                   </div>
                 </div>
               </div>
@@ -153,7 +153,7 @@
         <bbn-splitter orientation="horizontal">
           <bbn-pane :size="160">
             <div class="bbn-padded bbn-w-100"  style="margin-bottom: 20px">
-              <bbn-button :icon = "table === 'languages' ? 'far fa-eye-slash' : 'fa fa-eye'"
+              <bbn-button :icon = "table === 'languages' ? 'far fa-eye-slash' : 'fas fa-eye'"
                           @click = "showTable('languages')"
                           class="bbn-w-100"
                           :style = "{color: table === 'languages' ? 'red' : 'inherit'}"
@@ -162,7 +162,7 @@
               </bbn-button>
             </div>
             <div class="bbn-padded bbn-w-100" style="margin-bottom: 20px">
-              <bbn-button :icon = "table === 'themes' ? 'far fa-eye-slash' : 'fa fa-eye'"
+              <bbn-button :icon = "table === 'themes' ? 'far fa-eye-slash' : 'fas fa-eye'"
                           @click = "showTable('themes')"
                           class="bbn-w-100"
                           :style = "{color: table === 'themes' ? 'red' : 'inherit'}"
@@ -171,12 +171,22 @@
               </bbn-button>
             </div>
             <div class="bbn-padded bbn-w-100 " style="margin-bottom: 20px">
-              <bbn-button :icon = "table === 'dependencies' ? 'far fa-eye-slash' : 'fa fa-eye'"
+              <bbn-button :icon = "table === 'dependencies' ? 'far fa-eye-slash' : 'fas fa-eye'"
                           @click = "showTable('dependencies')"
                           class="bbn-w-100"
                           :style = "{color: table === 'dependencies' ? 'red' : 'inherit'}"
               >
                 <?=_('Dependencies')?>
+              </bbn-button>
+            </div>
+            <div class="bbn-padded bbn-w-100 " style="margin-bottom: 20px">
+              <bbn-button :icon= "table === 'dependent' ? 'far fa-eye-slash' : 'fas fa-eye'"
+                          @click= "getDependent"
+                          class= "bbn-w-100"
+                          :style= "{color: table === 'dependent' ? 'red' : 'inherit'}"
+                          v-if= "management.action.addVers === true"
+              >
+                <?=_('Dependent')?>
               </bbn-button>
             </div>
             <div class="bbn-padded">
@@ -228,7 +238,7 @@
                          class="bbn-100"
                          :toolbar="[{
                            text: '<strong>'+'<?=_('Add dependencies')?>' + '</strong>',
-                           icon: 'fa fa-plus',
+                           icon: 'fas fa-plus',
                            command: 'edit'
                          }]"
                         @saveItem="saveDependencies"
@@ -252,8 +262,24 @@
                 ></bbns-column>
                 <bbns-column title=" "
                             width="100"
-                            class="bbn-c"
+                            cls="bbn-c"
                             :buttons="buttonsTableDepandencies"
+                ></bbns-column>
+              </bbn-table>
+              <!--TABLE Dependent-->
+              <bbn-table :source="dataVersion.slave_dependencies"
+                         ref="tableDependent"
+                         cls="bbn-100"
+                         v-if="table === 'dependent' && management.action.addVers === true"
+                         key="table_dependent"
+              >
+                <bbns-column title="<?=_('Title')?>"
+                             field="title"
+                ></bbns-column>
+                <bbns-column title="<?=_('Update')?>"
+                             width="100"
+                             :component="$options.components.update",
+                             cls="bbn-c"
                 ></bbns-column>
               </bbn-table>
             </div>

@@ -12,7 +12,7 @@
     </div>
     <div class="bbn-form-label bbn-r fix-width no-padding"></div>
     <div class="bbn-form-field bbn-r">
-      <button class="k-button" type="submit"><i class="fa fa-download"></i> <?=_("Import")?></button>
+      <button class="k-button" type="submit"><i class="fas fa-download"></i> <?=_("Import")?></button>
       <button class="k-button" type="button" onclick="bbn.fn.closePopup();"><i class="fas fa-times"></i> <?=_("Cancel")?></button>
     </div>
   </form>

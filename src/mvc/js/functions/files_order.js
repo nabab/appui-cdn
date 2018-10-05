@@ -23,7 +23,7 @@ var addDelFilesOrder = function(item, forceAdd){
       if ( item.checked || forceAdd ){
         $("#joisfd8723hifwe78238hds", cont).append(
           '<div path="' + item.path + '" class="k-alt" style="margin-bottom: 5px;">' +
-            '<i class="fa fa-arrows" style="margin-right: 5px"></i>' + item.path +
+            '<i class="fas fa-arrows" style="margin-right: 5px"></i>' + item.path +
           '</div>'
         );
       }

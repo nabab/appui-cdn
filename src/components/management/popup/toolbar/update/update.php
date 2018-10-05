@@ -1,4 +1,4 @@
-<bbn-table :source="source">
+<bbn-table :source="source.list">
   <bbns-column title= "<?=_('Library')?>"
               field= "title"
   ></bbns-column>
@@ -11,8 +11,9 @@
               cls= "bbn-c w3-red"
   ></bbns-column>
   <bbns-column title= " "
-              width= 110
-              field= "title"
-              :buttons= "buttons"
+               width= 140
+               field= "title"
+               :buttons= "buttons"
+               cls= "bbn-c"
   ></bbns-column>
 </bbn-table>

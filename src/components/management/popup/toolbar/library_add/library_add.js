@@ -9,7 +9,7 @@
             command: ()=>{
               bbn.vue.closest(this, "bbn-popup").close();
             },
-            icon: 'fa fa-ban',
+            icon: 'fas fa-ban',
             title: bbn._('cancel'),
           },{
             text: bbn._('Skip'),
@@ -17,14 +17,14 @@
              this.addManualyLib()
             },
             title: bbn._('skip'),
-            icon: 'fa fa-angle-double-right',
+            icon: 'fas fa-angle-double-right',
             class: "k-primary",
           },{
             text: bbn._('Import'),
             command: ()=>{
              this.importGithub()
             },
-            icon: "fa fa-angle-right",
+            icon: "fas fa-angle-right",
             title: bbn._('import'),
             class: "",
             disabled: true

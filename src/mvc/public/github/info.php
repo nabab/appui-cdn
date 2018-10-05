@@ -19,6 +19,12 @@ if ( !empty($ctrl->post['url']) &&
     'git_user' =>  $ctrl->post['url'][0],
     'git_repo' => $ctrl->post['url'][1]
   ]);
+  if ( !empty($ctrl->post['info_package_json']) ){
+    $ctrl->data = \bbn\x::merge_arrays($ctrl->data, [
+      'info_package_json' => $ctrl->post['info_package_json']
+    ]);
+  }
+  // die(var_dump("dentro",$ctrl->post));
   if ( isset($ctrl->post['only_info']) ){
     $ctrl->data['only_info'] = $ctrl->post['only_info'];
   }
