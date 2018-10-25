@@ -118,7 +118,7 @@
                 </span>
               </div>
             </div>
-            <div class="bbn-padded bbn-100 bbn-flex-width" v-if ="treeOrderSource">
+            <div class="bbn-flex-width" v-if ="treeOrderSource">
               <div class="bbn-h-100 bbn-padded">
                 <div class="bbn-b bbn-c" style="padding-bottom: 5px">
                   <?=_("Move File")?>
@@ -133,7 +133,7 @@
                   </div>
                 </div>
               </div>
-              <div class="bbn-h-100 bbn-flex-fill">
+              <div class="bbn-flex-fill">
                 <bbn-scroll>
                   <template v-for="file in treeOrderSource">
                     <div v-text="file"

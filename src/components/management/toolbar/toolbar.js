@@ -42,9 +42,11 @@
         }
       },
       searchLibrary(ele){
+        let name = '';
         this.management.searchContent = [];
         for(let lib of this.management.source.all_lib){
-          if ( lib.name.indexOf(this.searchNameLibrary.toLowerCase()) > -1 ){
+          name = lib.name.toLowerCase();
+          if ( name.indexOf(ele.toLowerCase()) === 0 ){
             this.management.searchContent.push(lib);
           }
         }
@@ -65,7 +67,13 @@
     },
     watch:{
       searchNameLibrary(val, oldVal){
-        this.searchLibrary();
+        if( val.length ){
+          this.management.search = true;
+        }
+        else{
+          this.management.search = false;
+        }
+        this.searchLibrary(val);
       }
     }
   }

@@ -17,20 +17,26 @@
               this.infoVersion(row, col, idx);
             },
             icon: 'fas fa-info',
-            title: 'info',
+            title: bbn._('info'),
             notext: true
-          },
-          {
+          },{
             text: 'Edit',
             command:(row, col, idx)=>{
               this.management.actions('editVers');
               this.editVersion(row, col, idx);
             },
             icon: 'fas fa-edit',
-            title: 'edit',
+            title: bbn._('Edit'),
             notext: true
-          },
-          {
+          },{
+            text: 'Scripts',
+            command: (row, col, idx) =>{
+              this.viewPackageJson(row, col, idx)
+            },
+            icon: 'fas fa-play',
+            title: 'scripts',
+            notext: true
+          },{
            text: 'Delete',
            command:(row, col, idx)=>{
              this.deleteVersion(row, col, idx);
@@ -41,6 +47,40 @@
            disabled: this.versionsInfo.length !== 1 ? false : true
           }
         ];
+      },
+      viewPackageJson(row, col, idx){
+        bbn.fn.post(appui.plugins['appui-cdn'] + '/data/version/get_file',
+          {
+            file: 'package.json',
+            library: row.library,
+            version: row.name
+          },
+          d => {
+            if ( d.success ){
+              let listScripts = [];
+              if ( d.data['scripts'] !== undefined ){
+                Object.keys(d.data['scripts']).forEach( key => {
+                  listScripts.push({
+                    text: key,
+                    value: d.data['scripts'][key]
+                  })
+                });
+              }
+              this.getPopup().open({
+                width: 550,
+                height: 200,
+                title: bbn._("Script package.json"),
+                component: this.$options.components.packgeJson,
+                source: {
+                  scripts: listScripts
+                }
+              });
+            }
+            else{
+              appui.error(bbn._('Error'));
+            }
+          }
+        );
       },
       infoVersion(row, col, idx){
         let infos = row;
@@ -77,7 +117,7 @@
           source:infos
         })
       },
-      editVersion(row, col, idx){      
+      editVersion(row, col, idx){
         return this.$refs.tableVersionsLib.edit(row,{
           title: bbn._('Edit the version of the') + ' ' + row.library + ' ' + bbn._('library'), //this.management.source.lng.edit_library,
           height: '98%',
@@ -121,6 +161,31 @@
       infoVersions = this;
     },
     components: {
+      'packgeJson':{
+        template:
+        ` <div class="bbn-full-screen">
+            <div v-if="source.scripts.length > 0" class="bbn-flex-height">
+              <div class="bbn-padded bbn-grid-fields"
+                   style="grid-auto-rows: max-content max-content max-content max-content auto"
+              >
+               <span v-text="_('Scripts:')" class="bbn-l bbn-b"></span>
+               <bbn-dropdown :source="source.scripts" v-model="contentScript"></bbn-dropdown>
+              </div>
+              <div v-if="contentScript.length" class="bbn-flex-fill bbn-w-100 bbn-middle">
+               <div class="w3-card bbn-padded">
+                <span class="bbn-b" v-text="contentScript"></span>
+               </div>
+              </div>
+            </div>
+            <div v-else class="bbn-middle bbn-b bbn-h-100 bbn-xl" v-text="_('No Script')"></div>
+          </div>`,
+        props:['source'],
+        data(){
+          return {
+            contentScript: ''
+          }
+        }
+      },
       //button info version
       'info':{
         template:

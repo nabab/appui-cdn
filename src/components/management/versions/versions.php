@@ -16,7 +16,7 @@
                 type="date"
                 cls="bbn-c"
     ></bbns-column>
-    <bbns-column :width="130"
+    <bbns-column :width="220"
                 :tcomponent="$options.components.addVersions"
                 :buttons="buttonsTable"
                 cls="bbn-c"

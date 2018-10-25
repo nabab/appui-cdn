@@ -20,21 +20,21 @@
         if ( this.searchContent.length ){
           //filter data table for search libraries
           return this.searchContent
-        }//all libraries for table
-        return this.source.all_lib
+        }
+        //all libraries for table
+        if ( this.search === false ){
+          return this.source.all_lib
+        }
+        else {
+          return []
+        }
+
+
       }
     },
     methods:{
       buttons(row, col, idx){
-        return [ {
-           text: bbn._('Dependencies'),
-           command: ()=>{
-             this.dependencies(row, col, idx);
-           },
-           icon: 'fas fa-code-branch',
-           title: bbn._('Dependencies'),
-           notext: true,
-         },{
+        return [{
             text: "Info",
             command:()=>{
               this.info(row, col, idx);
@@ -63,54 +63,6 @@
            notext: true
           }
         ];
-      },
-      dependencies(row){
-        bbn.fn.post(this.source.root+'data/dependencies',{folder: row.name}, d => {
-          var dependent = [],
-              depend = [];
-          if ( d.data.dependent.length > 0 ){
-            dependent = d.data.dependent.slice();
-            d.data.dependent.forEach((val, i)=>{
-              bbn.fn.post(this.source.root + 'github/update', {library: val.name}, d =>{
-                if (d.data.update){
-                  dependent[i]['update'] = d.data.update;
-                  dependent[i]['latest'] = d.data.latest;
-                  bbn.fn.log("dependent",  dependent, i);
-                }
-              });
-            });
-            bbn.fn.log("dependent",  dependent);
-          }
-          if ( d.data.depend.length > 0 ){
-            depend = d.data.depend.slice();
-            d.data.dependent.forEach((val, i)=>{
-              bbn.fn.post(this.source.root + 'github/update', {library: val.name}, d =>{
-                if (d.data.update){
-                  depend[i]['update'] = d.data.update;
-                  depend[i]['latest'] = d.data.latest;
-                }
-              });
-              bbn.fn.log("depend", depend);
-            });
-          }
-
-          if ( (depend.length > 0) || (dependent.length > 0) ){
-            this.getPopup().open({
-              width: 700,
-              height: 500,
-              title: bbn._('Dependencies library')+" "+row.name+" "+row.latest,
-              component:'appui-cdn-management-popup-dependencies',
-              source: {
-                depend: d.data.depend,
-                dependent: d.data.dependent,
-                listUpdate: false
-              }
-            });
-          }
-          else{
-            this.alert("No dependencies on cdn");
-          }
-        })
       },
       /* this function is activated at the click of the info button and
        *  its task is to display a popup with all the information related to the selected library
@@ -177,17 +129,6 @@
         }
       },
       removeLib(row, col, idx){
-        /*appui.confirm(bbn._("Delete library") + " "+  row.name + "?" , ()=>{
-          bbn.fn.post(this.source.root + 'actions/library/delete', {name: row.name}, (d) => {
-            if ( d.data.success ){
-              appui.success(bbn._("Delete"));
-              this.refreshManagement();
-            }
-            else{
-              appui.error(bbn._("Error"));
-            }
-          });
-        });*/
        this.getPopup().open({
           width: 500,
           height: 200,
@@ -195,29 +136,47 @@
           component: 'appui-cdn-management-popup-remove',
           source: $.extend(row, {deleteLib: true, action:this.source.root + 'actions/library/delete'})
         })
-
       },
       //for render icon table
       showIconAuthor(ele){
-        return ( ele.author && ele.author.length ) ? '<div class="bbn-c"><i class="fas fa-user bbn-xl" title="' + ele.author + '"></i></div>' : '';
+        return ( ele.author && ele.author.length ) ?
+         `<i class='fas fa-user paddingIcon' title="` + ele.author + `"></i>` : '';
       },
       showIconLicense(ele){
-        return ( ele.licence && ele.licence.length ) ? "<div class='bbn-c'><i class='fas fa-copyright'></i></div>" : '';
+        return ( ele.licence && ele.licence.length ) ?
+         `<i class='fas fa-copyright paddingIcon'></i>` : '';
       },
       showIconWeb(ele){
-        return ( ele.website && ele.website.length ) ? "<div class='bbn-c'><a class='appui-no' href='"  + ele.website + "'" + "target='_blank'>" + "<i class='fas fa-globe'></i></a></div>" : '';
+        return ( ele.website && ele.website.length ) ?
+        `<a class='appui-no' href='` + ele.website + `' target='_blank'><i class='fas fa-globe paddingIcon'></i></a>` : ''
+        ;
       },
       showIconDownload(ele){
-        return ( ele.download_link && ele.download_link.length ) ? "<div class='bbn-c'><a class='appui-no' href='"  + ele.download_link + "'" + "target='_blank'>" + "<i class='fas fa-download'</i></a></div>" : '';
+        return ( ele.download_link && ele.download_link.length ) ?
+        `<a class='appui-no' href='`+ ele.download_link +`' target='_blank'><i class='fas fa-download paddingIcon'></i></a>` : '';
       },
       showIconDoc(ele){
-        return ( ele.doc_link && ele.doc_link.length ) ? "<div class='bbn-c'><a class='appui-no' href='"  + ele.doc_link + "'" + "target='_blank'>" + "<i class='fas fa-book'></i></a></div>" : '';
+        return ( ele.doc_link && ele.doc_link.length ) ?
+        `<a class='appui-no' href='`+ ele.doc_link + `' target='_blank'><i class='fas fa-book paddingIcon'></i></a>` : '';
       },
       showIconGit(ele){
-        return ( ele.git && ele.git.length ) ? "<div class='bbn-c'><a class='appui-no' href='"  + ele.git + "'" + "target='_blank'>" + "<i class='fab fa-github'></i></a></div>" : '';
+        return ( ele.git && ele.git.length ) ?
+        `<a class='appui-no' href='`+ ele.git +`' target='_blank'><i class='fab fa-github paddingIcon'></i></a>` : '';
       },
       showIconSupportLink(ele){
-        return ( ele.support_link && ele.support_link.length ) ? "<div class='bbn-c'><a class='appui-no' href='"  + ele.support_link + "'" + "target='_blank'>" + "<i class='fas fa-ambulance'></i></a></div>" : '';
+        return ( ele.support_link && ele.support_link.length ) ?
+         `<a class='appui-no' href='` + ele.support_link + `' target='_blank'><i class='fas fa-ambulance'></i></a>` : '';
+      },
+      showInfos(ele){
+        return `<div>
+          ${this.showIconAuthor(ele)}
+          ${this.showIconLicense(ele)}
+          ${this.showIconWeb(ele)}
+          ${this.showIconDownload(ele)}
+          ${this.showIconDoc(ele)}
+          ${this.showIconGit(ele)}
+          ${this.showIconSupportLink(ele)}
+        </div>`
       },
       refreshManagement(){
         bbn.fn.post(this.source.root + "management", {refresh: true}, d => {

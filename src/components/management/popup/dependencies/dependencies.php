@@ -20,20 +20,12 @@
                    group="depend"
                    class="bbn-c"
       ></bbns-column>
-      <bbns-column v-if="source.listUpdate !== false"
-                   title=" "
+      <bbns-column title=" "
                    field="lib_name"
                    group="depend"
                    class="bbn-c"
                    :render="showIconUpdate"
-      ></bbns-column>
-      <bbns-column v-else
-                   title=" "
-                   field="update"
-                   group="depend"
-                   class="bbn-c"
-                   :render="showIconUpdateOfManagment"
-      ></bbns-column>
+      ></bbns-column>      
      </bbn-table>
   </bbn-pane>
   <bbn-pane>
@@ -53,8 +45,7 @@
                    group="dependent"
                    class="bbn-c"
       ></bbns-column>
-      <bbns-column v-if="source.listUpdate !== false"
-                   title=" "
+      <bbns-column title=" "
                    field="name"
                    group="dependent"
                    class="bbn-c"

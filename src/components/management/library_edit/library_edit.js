@@ -321,9 +321,8 @@
           this.referenceNodeTree = sourceOrder;
         }
         else{
-          let support = this.treeOrderSource[0];
-          sourceOrder[0] = sourceOrder[idx];
-          sourceOrder[idx] = support;
+          let support = sourceOrder.pop();
+          sourceOrder.unshift(support);
           this.referenceNodeTree = sourceOrder;
         }
       },
@@ -342,12 +341,15 @@
           this.referenceNodeTree = sourceOrder;
         }
         else{
-          let max = bbn.fn.count(this.treeOrderSource)-1,
-              support = this.treeOrderSource[max];
-
-          sourceOrder[max] = sourceOrder[idx];
-          sourceOrder[idx] = support;
+          let support = sourceOrder.shift();
+          sourceOrder.push(support);
           this.referenceNodeTree = sourceOrder;
+          // let max = bbn.fn.count(this.treeOrderSource)-1,
+          //     support = this.treeOrderSource[max];
+          //
+          // sourceOrder[max] = sourceOrder[idx];
+          // sourceOrder[idx] = support;
+          // this.referenceNodeTree = sourceOrder;
         }
       },
       //DEPANDANCIES TABLE
@@ -526,7 +528,7 @@
                               :novalue="false"
                               :noIcon="false"
                               offIcon="fas fa-ban"
-                              onIcon="far fa-check-circle"                               
+                              onIcon="far fa-check-circle"
                   ></bbn-switch>`,
         props: ['source'],
         data(){

@@ -11,9 +11,6 @@
           return `<div class='bbn-c'><i title='` + this.source.listUpdate[id]['latest'] +  `' class='fas fa-upload w3-red bbn-xxl'></i></div>`;
         }
         return '';
-      },
-      showIconUpdateOfManagment(ele){
-        return ele.update === true ? `<div class='bbn-c'><i title='` + ele['latest'] +  `' class='fas fa-upload w3-red bbn-xxl'></i></div>`
       }
     },
     created(){

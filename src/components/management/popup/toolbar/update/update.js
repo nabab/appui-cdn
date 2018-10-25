@@ -15,16 +15,14 @@
            icon: 'fas fa-code-branch',
            title: bbn._('Dependencies'),
            notext: true,
-           style:"width:30%"
          },{
-           text: bbn._('Dependencies new version'),
+           text: bbn._('Info package.json new version'),
            command: ()=>{
              this.infoNewVersion(row, col, idx);
            },
            notext: true,
            icon: 'fas fa-eye',
-           title: bbn._('new'),
-           style:"width:30%"
+           title: bbn._('new')
          },{
             text: bbn._('Update'),
             command: () => {
@@ -32,8 +30,7 @@
             },
             icon: 'fas fa-cogs',
             title: bbn._('Update'),
-            notext: true,
-            style:"width:30%"
+            notext: true
           }
         ]
       },
@@ -53,7 +50,7 @@
             });
           }
           else{
-            alert("nessuse dipendenze nel cdn");
+            this.alert(bbn._("No dependencies in the cdn"));
           }
         })
       },
@@ -99,7 +96,7 @@
           url: row.github,
           info_package_json: true
         }, d => {
-          bbn.fn.log("REsult", d);
+          bbn.fn.log("Result package.json", d);
         });
       }
     }
