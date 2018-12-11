@@ -12,16 +12,31 @@
             ele.items[idx] = this.mapMenu(item);
           });
         }
-        return {
+        let obj = {
           data: ele,
           path: ele.path,
           items: ele.items || [],
-          icon: ele.items ? 'fas fa-folder' : 'fas fa-file',
-          file: ele.items ? false : true,
+          icon: 'fas fa-file',
+          file: true,
           text: ele.text,
           num: ele.items ? ele.items.length : 0,
           numChildren: ele.items ? ele.items.length : 0
+        };
+        if ( obj.items.length > 0 ){
+          obj.file = false;
+          obj.icon = 'fas fa-folder';
         }
+        return obj;
+        // return {
+        //   data: ele,
+        //   path: ele.path,
+        //   items: ele.items || [],
+        //   icon: ele.items.length !== 0 'fas fa-folder' : 'fas fa-file',
+        //   file: ele.items.length !== 0 ? false : true,
+        //   text: ele.text,
+        //   num: ele.items ? ele.items.length : 0,
+        //   numChildren: ele.items ? ele.items.length : 0
+        // }
       },
       addLanguage(){
         this.source.table.push({path: this.element});
@@ -29,7 +44,7 @@
       },
       selectElement(node){
         if ( node.data.file ){
-          this.element = node.data.path;      
+          this.element = node.data.path;
         }
       }
     }

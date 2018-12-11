@@ -200,13 +200,13 @@
       }];
     },
     watch:{//for search libray in table
-        sourceTable(val){
-          if ( val && this.search ){
-            this.$nextTick(()=>{
-              this.$refs.cdn_management.updateData()
-            });
-          }
+      sourceTable(val){
+        if ( val && this.search ){
+          this.$nextTick(()=>{
+            this.$refs.cdn_management.updateData()
+          });
         }
+      }
     },
     /*components:{
       'deleteLib':{

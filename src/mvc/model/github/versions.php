@@ -20,12 +20,14 @@ if ( !empty($model->data['git_user']) && !empty($model->data['git_repo']) && \de
   catch (Throwable $e) {
     try {
       $tags = $git->api('repo')->tags($model->data['git_user'], $model->data['git_repo']);
+
     }
     catch (Throwable $e){
       $tags = [];
     }
     if ( !empty($tags) && !empty($tags[0]['name']) ){
       $latest = $tags[0]['name'];
+
     }
   }
   if ( $releases ){
@@ -39,7 +41,7 @@ if ( !empty($model->data['git_user']) && !empty($model->data['git_repo']) && \de
   // Can't ger versions
   else {
     $versions = [];
-  }
+  }  
   // Create a list of versions like idversion => nameversion
   if ( !empty($versions) && \is_array($versions) ){
     $tmp = [];

@@ -110,7 +110,7 @@
               ></bbn-tree>
             </div>
           </bbn-pane>
-          <bbn-pane>
+          <bbn-pane class="bbn-flex-height">
             <div class="bbn-padded">
               <div class="w3-card bbn-c bbn-v-middle">
                 <span class="bbn-b">
@@ -118,12 +118,11 @@
                 </span>
               </div>
             </div>
-            <div class="bbn-flex-width" v-if ="treeOrderSource">
-              <div class="bbn-h-100 bbn-padded">
+            <div class="bbn-flex-fill bbn-h-100 bbn-flex-width" v-if ="treeOrderSource">
+              <div class="bbn-padded">
                 <div class="bbn-b bbn-c" style="padding-bottom: 5px">
                   <?=_("Move File")?>
                 </div>
-
                 <div class="w3-card bbn-c" v-if="fileMove" style="margin-top: 15px">
                   <div class="bbn-padded">
                     <bbn-button icon="fas fa-arrow-up" @click="moveUp"></bbn-button>

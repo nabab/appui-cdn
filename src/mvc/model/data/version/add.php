@@ -74,9 +74,6 @@ if ( !empty($model->data['folder']) && !empty($model->data['db']) && \defined('B
     return $res;
   }
 
-
-
-
   return [
     // Files' tree
     'files_tree' => tree($ver[0], $ver[0]),

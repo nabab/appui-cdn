@@ -263,7 +263,23 @@
             ele.items[idx] = this.treeFiles(item);
           });
         }
-        return {
+        
+        let obj = {
+          data: ele,
+          path: ele.path,
+          items: ele.items || [],
+          icon: 'fas fa-file',
+          file: true,
+          text: ele.text,
+          num: ele.items ? ele.items.length : 0,
+          numChildren: ele.items ? ele.items.length : 0
+        };
+        if ( obj.items.length > 0 ){
+          obj.file = false;
+          obj.icon = 'fas fa-folder';
+        }
+        return obj;
+        /*return {
           data: ele,
           path: ele.path,
           items: ele.items || [],
@@ -271,7 +287,7 @@
           text: ele.text,
           num: ele.items ? ele.items.length : 0,
           numChildren: ele.items ? ele.items.length : 0
-        }
+        }*/
       },
       checkFile(){
         this.copyItemsTree = $.extend({},this.$refs.filesListTree.items);
