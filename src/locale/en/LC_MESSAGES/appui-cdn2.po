@@ -7,10 +7,10 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2018-12-10 13:59+0100\n"
-"POT-Revision-Date: 2018-12-10 13:59+0100\n"
+"POT-Creation-Date: 2018-12-26 12:26+0100\n"
+"POT-Revision-Date: 2018-12-26 12:26+0100\n"
 "Language: en\n"
-"X-Domain: appui-cdn10\n"
+"X-Domain: appui-cdn2\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/library_edit/library_edit.js
@@ -66,6 +66,7 @@ msgstr "Add theme"
 msgid "Are you sure you want to close?"
 msgstr "Are you sure you want to close?"
 
+#: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/library_edit/library_edit.php
 #: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/management.php
 #: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/library_add.php
 #: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/library_edit.php
@@ -73,6 +74,7 @@ msgstr "Are you sure you want to close?"
 msgid "Title"
 msgstr "Title"
 
+#: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/library_edit/library_edit.php
 #: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/management.php
 #: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/library_add.php
 #: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/library_edit.php
@@ -80,17 +82,20 @@ msgstr "Title"
 msgid "Folder name"
 msgstr "Folder name"
 
+#: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/library_edit/library_edit.php
 #: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/library_add.php
 #: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/library_edit.php
 #: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/public/management.php
 msgid "Function name"
 msgstr "Function Name"
 
+#: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/library_edit/library_edit.php
 #: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/library_add.php
 #: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/library_edit.php
 msgid "Description"
 msgstr "Description"
 
+#: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/library_edit/library_edit.php
 #: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/management.php
 #: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/library_add.php
 #: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/library_edit.php
@@ -98,6 +103,7 @@ msgstr "Description"
 msgid "Author"
 msgstr "Author"
 
+#: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/library_edit/library_edit.php
 #: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/management.php
 #: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/library_add.php
 #: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/library_edit.php
@@ -105,6 +111,7 @@ msgstr "Author"
 msgid "Licence"
 msgstr "Licence"
 
+#: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/library_edit/library_edit.php
 #: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/management.php
 #: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/library_add.php
 #: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/library_edit.php
@@ -112,6 +119,7 @@ msgstr "Licence"
 msgid "Web site"
 msgstr "Web site"
 
+#: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/library_edit/library_edit.php
 #: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/management.php
 #: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/library_add.php
 #: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/library_edit.php
@@ -119,6 +127,7 @@ msgstr "Web site"
 msgid "Download"
 msgstr "Download"
 
+#: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/library_edit/library_edit.php
 #: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/management.php
 #: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/library_add.php
 #: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/library_edit.php
@@ -126,6 +135,7 @@ msgstr "Download"
 msgid "Documentation"
 msgstr "Documentation"
 
+#: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/library_edit/library_edit.php
 #: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/management.php
 #: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/library_add.php
 #: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/library_edit.php
@@ -137,6 +147,7 @@ msgstr "GitHub"
 msgid "Import library's info from GitHub"
 msgstr "Import library's info from GitHub"
 
+#: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/library_edit/library_edit.php
 #: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/management.php
 #: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/library_add.php
 #: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/library_edit.php
@@ -144,6 +155,9 @@ msgstr "Import library's info from GitHub"
 msgid "Support"
 msgstr "Support"
 
+#: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/library_edit/library_edit.php
+#: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/popup/dependencies/dependencies.php
+#: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/versions/versions.php
 #: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/library_add.php
 #: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/library_edit.php
 #: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/versions_from_github.php
@@ -163,10 +177,12 @@ msgstr "Select files for order"
 msgid "Move File"
 msgstr "Move File"
 
+#: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/library_edit/library_edit.php
 #: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/library_version.php
 msgid "Languages"
 msgstr "Languages"
 
+#: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/library_edit/library_edit.php
 #: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/library_version.php
 msgid "Themes"
 msgstr "Themes"
@@ -180,6 +196,7 @@ msgstr "DEPENDENCIES"
 msgid "Dependent"
 msgstr "Dependent"
 
+#: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/library_edit/library_edit.php
 #: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/management.php
 #: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/library_version.php
 #: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/public/management.php
@@ -194,10 +211,14 @@ msgstr "Languages Files"
 msgid "Add dependencies"
 msgstr "Add dependencies"
 
+#: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/library_edit/library_edit.php
+#: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/popup/dependencies/dependencies.php
+#: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/popup/toolbar/update/update.php
 #: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/public/management.php
 msgid "Library"
 msgstr "Library"
 
+#: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/library_edit/library_edit.php
 #: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/public/management.php
 msgid "Order"
 msgstr "Order"
@@ -215,6 +236,7 @@ msgstr "DEPEND"
 msgid "DEPENDENT"
 msgstr "Dependent"
 
+#: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/popup/info_lib/info_lib.php
 #: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/js/management.js
 msgid "Info"
 msgstr "Info"
@@ -227,11 +249,14 @@ msgstr "Information"
 msgid "Versions"
 msgstr "VERSIONS"
 
+#: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/popup/info_lib/info_lib.php
 #: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/library_version.php
 #: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/public/management.php
 msgid "Name"
 msgstr "Name"
 
+#: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/popup/info_lib/info_lib.php
+#: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/versions/versions.php
 #: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/public/management.php
 msgid "Date"
 msgstr "Date"
@@ -272,6 +297,7 @@ msgstr "Do you want delete version"
 msgid "Delete the folder version"
 msgstr "Delete the folder version"
 
+#: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/popup/toolbar/library_add/library_add.js
 #: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/language_theme.php
 #: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/versions_from_github.php
 #: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/public/management.php
@@ -282,6 +308,7 @@ msgstr "Cancel"
 msgid "cancel"
 msgstr "Cancel"
 
+#: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/popup/toolbar/library_add/library_add.js
 #: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/public/management.php
 msgid "Skip"
 msgstr "Skip"
@@ -290,6 +317,7 @@ msgstr "Skip"
 msgid "skip"
 msgstr "Skip"
 
+#: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/popup/toolbar/library_add/library_add.js
 #: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/versions_from_github.php
 #: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/public/management.php
 msgid "Import"
@@ -315,6 +343,7 @@ msgstr "Empty url github"
 msgid "Add library"
 msgstr "Add library"
 
+#: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/popup/toolbar/library_add/library_add.php
 #: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/github_link.php
 msgid "Import from GitHub link"
 msgstr "Import from GitHub link"
@@ -369,6 +398,7 @@ msgstr "Select version"
 msgid "GitHub Link:"
 msgstr "GitHub Link:"
 
+#: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/toolbar/toolbar.js
 #: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/public/management.php
 msgid "GitHub updates"
 msgstr "GitHub updates"
@@ -389,32 +419,39 @@ msgstr "Management"
 msgid "Libraries:"
 msgstr "Libraries:"
 
+#: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/toolbar/toolbar.php
 #: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/libraries_toolbar.php
 #: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/public/management.php
 msgid "Add"
 msgstr "Add"
 
+#: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/toolbar/toolbar.php
 #: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/libraries_toolbar.php
 msgid "Check updates from GitHub"
 msgstr "Check updates from GitHub"
 
+#: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/toolbar/toolbar.php
 #: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/libraries_toolbar.php
 msgid "Check updates"
 msgstr "Check updates"
 
+#: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/toolbar/toolbar.php
 #: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/libraries_toolbar.php
 msgid "Show updates"
 msgstr "Show updates"
 
+#: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/toolbar/toolbar.php
 #: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/libraries_toolbar.php
 #: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/public/management.php
 msgid "Updates"
 msgstr "Updates"
 
+#: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/versions/versions.js
 #: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/public/management.php
 msgid "info"
 msgstr "Info"
 
+#: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/versions/versions.js
 #: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/js/management.js
 msgid "Edit"
 msgstr "Edit"
