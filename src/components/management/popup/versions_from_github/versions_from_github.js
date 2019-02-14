@@ -43,12 +43,15 @@
           return arr;
         }
       },
-      last_version(){
+      lastVersion(){
         let i = bbn.fn.search(this.source.versions, 'is_latest', true);
         if ( i === -1 ){
           return false;
         }
         return this.source.versions[i]['id'];
+      },
+      versionName(){
+        return bbn.fn.get_field(this.source.versions, 'id', this.git_id_ver, 'version');
       },
       dataPost(){
         return {
@@ -56,7 +59,8 @@
           git_repo: this.source.git_repo,
           git_user: this.source.git_user,
           git_id_ver: this.git_id_ver,
-          git_latest_ver: this.last_version
+          git_latest_ver: this.lastVersion,
+          version: this.versionName
         }
       }
     }

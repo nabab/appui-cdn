@@ -225,8 +225,21 @@
             this.tableVersions.management.actions("addVers");
             bbn.fn.post(this.tableVersions.management.source.root +'data/version/add', {
               folder: this.tableVersions.source.name
-            }, (d)=>{
-              if ( d.data.github ){
+            }, d => {
+              if( d.data && (d.data.folders_versions !== undefined) ){
+                this.getPopup().open({
+                  height: '200px',
+                  width: '450px',
+                  title: bbn._('Exsist folders version') + " " + this.tableVersions.source.name,
+                  component:'appui-cdn-management-popup-list_folders',
+                  source: {
+                    folders: d.data.folders_versions,
+                    name: this.tableVersions.source.name,
+                    github: d.data.github
+                  }
+                });
+              }
+              else if ( d.data.github && (d.data.folders_versions === undefined) ){
                 this.confirm( this.tableVersions.management.source.lng.versionGithubImport, ()=>{
                   bbn.fn.post( this.tableVersions.management.source.root + 'github/versions', {url: d.data.github}, ele => {
                     this.getPopup().open({
@@ -237,18 +250,6 @@
                       source: $.extend({}, ele.data, {folder: this.tableVersions.source.name, versions: ele.data.versions})
                     });
                   });
-                });
-              }
-              else if( d.data &&
-                d.data.files_tree &&
-                d.data.languages_tree
-              ){
-                this.getPopup().open({
-                  height: '95%',
-                  width: '85%',
-                  title: bbn._('Add version library') + " " + this.tableVersions.source.name,
-                  component:'appui-cdn-management-library_edit',
-                  source: $.extend({row: d.data}, {name: this.tableVersions.source.name, versions: this.tableVersions.versionsInfo})
                 });
               }
               else{

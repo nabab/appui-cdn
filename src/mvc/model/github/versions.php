@@ -11,6 +11,7 @@ if ( !empty($model->data['git_user']) && !empty($model->data['git_repo']) && \de
   $git->authenticate(BBN_GITHUB_TOKEN, Github\Client::AUTH_HTTP_TOKEN);
   // Get the latest version
   $latest = '';
+  $o = $git->api('repo')->releases();
   try {
     if ( $releases = $git->api('repo')->releases() ){
       $l = $releases->latest($model->data['git_user'], $model->data['git_repo']);
@@ -41,7 +42,7 @@ if ( !empty($model->data['git_user']) && !empty($model->data['git_repo']) && \de
   // Can't ger versions
   else {
     $versions = [];
-  }  
+  }
   // Create a list of versions like idversion => nameversion
   if ( !empty($versions) && \is_array($versions) ){
     $tmp = [];
@@ -49,7 +50,8 @@ if ( !empty($model->data['git_user']) && !empty($model->data['git_repo']) && \de
       array_push($tmp, [
         'id' => $ver['id'],
         'text' => $ver['tag_name'] . ($latest === $ver['tag_name'] ? ' ---> latest <---' : ''),
-        'is_latest' => $latest === $ver['tag_name']
+        'is_latest' => $latest === $ver['tag_name'],
+        'version' => $ver['tag_name']
       ]);
     }
     $versions = $tmp;

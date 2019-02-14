@@ -2,8 +2,8 @@
 /** @var $ctrl \bbn\mvc\controller */
 
 // SQLITE connection
-if ( !\defined('BBN_CDN_DB') ){
-  die("You need to define in order to use this plugin.");
+if ( !\defined('BBN_CDN_DB') && file_exists(BBN_DATA_PATH.'db/cdn.sqlite') ){
+  define('BBN_CDN_DB', BBN_DATA_PATH.'db/cdn.sqlite');
 }
 $ctrl->data['db'] = new \bbn\db([
   'engine' => 'sqlite',
@@ -13,3 +13,4 @@ $ctrl->data['db'] = new \bbn\db([
 if ( !\defined('APPUI_CDN_ROOT') ){
   define('APPUI_CDN_ROOT', $ctrl->plugin_url('appui-cdn').'/');
 }
+return 1;
