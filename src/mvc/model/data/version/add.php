@@ -17,7 +17,7 @@ if ( !empty($model->data['folder']) && !empty($model->data['db']) && \defined('B
   // GitHub
   if ( !empty($model->data['git_user']) &&
     !empty($model->data['git_repo']) &&
-    (!empty($model->data['git_id_ver']) || !empty($model->data['git_latest_ver']))
+    (!empty($model->data['git_id_ver']) || !empty($model->data['git_latest_ver']) || !empty($model->data['tags']))
   ){
     if ( is_dir($model->data['lib_path']) ){
       $github = $model->get_model('./../../github/version', $model->data);

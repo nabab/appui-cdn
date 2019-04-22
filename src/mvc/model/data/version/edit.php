@@ -63,6 +63,7 @@ if ( !empty($model->data['db']) && !empty($model->data['version']) && \defined('
     'languages_tree' => tree($p, $p, 0, 'js'),
     'themes' => $themes,
     'themes_tree' => tree($p, $p),
+    'theme_prepend' => !empty($cont['theme_prepend']),
     // all libraries list
     'lib_ver' => $model->data['db']->get_rows("
       SELECT libraries.title AS lib_title, libraries.name AS lib_name, versions.name AS version, versions.id AS id_ver

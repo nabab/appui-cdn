@@ -3,6 +3,7 @@
   return {
     data(){
       return {
+        management: this.closest("bbn-container").getComponent(),
         licencesList: [],
         checkedFile: [],
         referenceNodeTree: [],
@@ -46,12 +47,14 @@
         },
         table: '',
         listNoUpdate:[],
+        theme_prepend: false,
+        check_prepend: true
       }
     },
     computed:{
-      management(){
-        return this.closest("bbns-tab").getComponent()
-      },
+    //  management(){
+//        return this.closest("bbn-container").getComponent()
+    //  },
       // for source colum of the table depandancies
       list(){
         if ( bbn.fn.count(this.dataVersion.dependencies) > 0 ){
@@ -85,7 +88,7 @@
                 text: "Next",
                 title: "next",
                 class:"k-primary",
-                icon: 'far fa-arrow-circle-right',
+                icon: 'nf nf-fa-arrow_circle_right',
                 disabled: (!this.source.row.title && !this.source.row.name)  ? true : false,
                 command: ()=>{ this.next() }
               }
@@ -97,13 +100,13 @@
               {
                 text: "Prev",
                 title: "Prev",
-                icon: 'far fa-arrow-circle-left',
+                icon: 'nf nf-fa-arrow_circle_left',
                 command: ()=>{ this.configuratorLibrary = false }
               },
               'cancel',
               {
                 text: "Save",
-                icon: 'far fa-check-circle',
+                icon: 'nf nf-fa-check_circle',
                 class:"k-primary",
                 command: ()=>{
                   if ( this.referenceNodeTree.length ){
@@ -122,7 +125,7 @@
               {
                 text: "Save",
                 class:"k-primary",
-                icon: 'far fa-check-circle',
+                icon: 'nf nf-fa-check_circle',
                 command: ()=>{
                   //case edit library
                   if ( this.management.action.editLib ){
@@ -176,9 +179,10 @@
           no_update_dependents: this.listNoUpdate,
           last_dependencies: this.dataVersion.slave_dependencies,
           name: this.source.name || "",
-          is_latest : this.data.latest
+          is_latest : this.data.latest,
+          theme_prepend: this.theme_prepend && (this.data.themes.length > 0) ? true : false
         }
-      },
+      }
     },
     methods:{
       getInfo(){
@@ -188,8 +192,13 @@
           },
           (d) => {
             if ( d.data ){
-              for (var prop in d.data){
-                if ( (prop !== 'name') && (prop !== 'latest') && (this[prop] !== undefined) ){
+              bbn.fn.each( d.data, (val, prop) =>{
+                // if ( (prop !== 'name') &&
+                //   (prop !== 'latest') &&
+                bbn.fn.log("propooo", prop)
+                alert();
+                if ( this.source.row[prop] !== undefined ){
+                  this.source.row[prop] = val;
                   if ( prop === 'licence' ){
                     let lic = bbn.fn.get_field(data.licences, 'name', d.data[prop], 'licence');
                     if ( !lic ){
@@ -200,7 +209,7 @@
                     }
                   }
                 }
-              }
+              });
             }
           }
         );
@@ -229,22 +238,23 @@
               git_repo: this.source.row.repo !== undefined ? this.source.row.repo : false,
               git_latest_ver: this.source.row.latest !== undefined ? this.source.row.latest : false
             }, d => {
-                if ( d.data ){
+                if ( d.data && d.data.folders_versions ){
+                 bbn.fn.each( d.data.folders_versions, folder =>{
+
                   for(let i in this.dataVersion){
-                    this.dataVersion[i] = (d.data && d.data[i]) ? d.data[i] : []
+                    this.dataVersion[i] = ( folder[i]) ? folder[i] : []
                     if (i === "themes_tree"){
-                      this.dataVersion[i] = d.data.files_tree ?  d.data.files_tree : [];
+                      this.dataVersion[i] = folder.files_tree ?  folder.files_tree : [];
                     }
                   }
                   this.configuratorLibrary = true;
                   //for dropdown list library in table depanadancies
-                  if ( d.data.lib_ver.length ){
-                    for ( let val of d.data.lib_ver){
+                    for ( let val of folder.lib_ver){
                       if ( bbn.fn.search(this.listLib, 'text', val.lib_title) < 0 ){
                         this.listLib.push({text: val.lib_title, value: val.lib_name});
                       }
                     };
-                  }
+                  });
                 }
               }
             );
@@ -263,12 +273,12 @@
             ele.items[idx] = this.treeFiles(item);
           });
         }
-        
+
         let obj = {
           data: ele,
           path: ele.path,
           items: ele.items || [],
-          icon: 'fas fa-file',
+          icon: 'nf nf-fa-file',
           file: true,
           text: ele.text,
           num: ele.items ? ele.items.length : 0,
@@ -276,14 +286,14 @@
         };
         if ( obj.items.length > 0 ){
           obj.file = false;
-          obj.icon = 'fas fa-folder';
+          obj.icon = 'nf nf-fa-folder';
         }
         return obj;
         /*return {
           data: ele,
           path: ele.path,
           items: ele.items || [],
-          icon: ele.items ? 'fas fa-folder' : 'fas fa-file',
+          icon: ele.items ? 'nf nf-fa-folder' : 'nf nf-fa-file',
           text: ele.text,
           num: ele.items ? ele.items.length : 0,
           numChildren: ele.items ? ele.items.length : 0
@@ -300,7 +310,7 @@
       buttonDeleteLanguages(){
         return [{
           text: "destroy",
-          icon: "fas fa-trash",
+          icon: "nf nf-fa-trash",
           command: (row, col, id )=>{
             return this.$refs.tableLanguages.delete(id, bbn._("Are you sure you want to delete?"));
           },
@@ -310,9 +320,12 @@
       buttonDeleteThemes(){
         return [{
           text: "destroy",
-          icon: "fas fa-trash",
+          icon: "nf nf-fa-trash",
           command: (row, col, id )=>{
             return this.$refs.tableThemes.delete(id, bbn._("Are you sure you want to delete?"));
+            // if ( this.$refs.tableThemes.currentData.length === 0 ){
+            //   this.check_prepend = false;
+            // }
           },
           notext: true
         }]
@@ -377,7 +390,7 @@
            command: (row, col, id )=>{
              return this.$refs.tableDependecies.delete(id, bbn._("Are you sure you want to delete?"));
            },
-           icon: 'fas fa-trash',
+           icon: 'nf nf-fa-trash',
            title: 'delete',
            notext: true
           }
@@ -406,7 +419,7 @@
           this.$refs.tableDependecies.updateData();
           this.$refs.tableDependecies._removeTmp();
         }
-      },//for to display dependency names in the table because the source that is attributed to the column is a computed and updates every time we insert a new dependency
+      },//for to display dependency names in _cthe table because the source that is attributed to the column is a computed and updates every time we insert a new dependency
       renderLibName(row){
         let idx =  bbn.fn.search(this.listLib, 'value', row.lib_name);
         if ( idx > -1 ){
@@ -440,6 +453,7 @@
             this.data.versions = d.data.versions;
             this.data.internal = this.source.row.internal;
             this.data.latest = this.source.row.is_latest;
+            this.theme_prepend = d.data.theme_prepend;
             delete this.source.row.is_latest;
             delete this.source.row.files_tree;
             // for dropdown list dependencies
@@ -457,7 +471,7 @@
         this.data.versions = this.source.versions;
         this.dataVersion.themes_tree = this.source.row.files_tree;
         // for dropdown list dependencies
-        for ( let val of this.source.row.lib_ver){
+        for ( let val of this.source.row.lib_ver ){
           if ( bbn.fn.search(this.listLib, 'text', val.lib_title) < 0 ){
             this.listLib.push({text: val.lib_title, value: val.lib_name});
           }
@@ -498,7 +512,7 @@
           command: ( row, col, id)=>{
             this.listNoUpdate.push(row);
           },
-          icon: 'fas fa-ban',
+          icon: 'nf nf-fa-ban',
           title: bbn._('No update'),
           notext: true,
           style:"width:50%; color: red"
@@ -532,7 +546,7 @@
         this.newName = this.source.row.name;
       }
       if ( this.management.action.addLib ){
-/*        let popup = bbn.vue.closest(this, 'bbns-tab').popup(),
+/*        let popup = bbn.vue.closest(this, 'bbn-container').popup(),
             id_popup = bbn.fn.count(popup.popups)-2;
         popup.close(id_popup);*/
       }
@@ -543,8 +557,8 @@
                               :value="true"
                               :novalue="false"
                               :noIcon="false"
-                              offIcon="fas fa-ban"
-                              onIcon="far fa-check-circle"
+                              offIcon="nf nf-fa-ban"
+                              onIcon="nf nf-fa-check_circle"
                   ></bbn-switch>`,
         props: ['source'],
         data(){
@@ -565,7 +579,7 @@
       },
       //button in title column grid add file language
       'languages':{
-        template:`<bbn-button @click="openTreeLanguage" :title="titleButton" icon="fas fa-plus"></bbn-button>`,
+        template:`<bbn-button @click="openTreeLanguage" :title="titleButton" icon="nf nf-fa-plus"></bbn-button>`,
         props: ['source'],
         data(){
           return{
@@ -590,7 +604,7 @@
       },
       //button in title column grid add themes language
       'themes':{
-        template:`<bbn-button @click="openTreeThemes" :title="titleButton" icon="fas fa-plus"></bbn-button>`,
+        template:`<bbn-button @click="openTreeThemes" :title="titleButton" icon="nf nf-fa-plus"></bbn-button>`,
         props: ['source'],
         data(){
           return{
@@ -614,6 +628,26 @@
               }
             });
           },
+        }
+      },
+      'prepend_theme':{
+        template:`<bbn-checkbox v-model="checkTheme"
+                                :value="true"
+                                :novalue="false"
+                                :label="labelCheck"
+                                v-if="show"
+                  ></bbn-checkbox>`,
+        data(){
+          return {
+            show: editLib.table === "themes",
+            labelCheck: bbn._('Theme Prepend'),
+            checkTheme: editLib.complementaryData.theme_prepend
+          }
+        },
+        watch:{
+          checkTheme(val){
+            editLib.$set(editLib, 'theme_prepend', val)
+          }
         }
       },
       'versions':{

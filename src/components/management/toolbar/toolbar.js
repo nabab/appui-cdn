@@ -55,7 +55,7 @@
     },
     computed:{
       management(){
-        return this.closest("bbns-tab").getComponent()
+        return this.closest("bbn-container").getComponent()
       },
       //for disable o no in button on toolbar "update"
       disabledButton(){

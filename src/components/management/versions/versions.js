@@ -4,7 +4,7 @@
     data(){
       return {
         link: 'cdn/data/versions',
-        management: this.closest("bbns-tab").getComponent(),
+        management: this.closest("bbn-container").getComponent(),
         versionsInfo: []
       }
     },
@@ -16,7 +16,7 @@
             command:(row, col, idx) => {
               this.infoVersion(row, col, idx);
             },
-            icon: 'fas fa-info',
+            icon: 'nf nf-fa-info',
             title: bbn._('info'),
             notext: true
           },{
@@ -25,7 +25,7 @@
               this.management.actions('editVers');
               this.editVersion(row, col, idx);
             },
-            icon: 'fas fa-edit',
+            icon: 'nf nf-fa-edit',
             title: bbn._('Edit'),
             notext: true
           },{
@@ -33,7 +33,7 @@
             command: (row, col, idx) =>{
               this.viewPackageJson(row, col, idx)
             },
-            icon: 'fas fa-play',
+            icon: 'nf nf-fa-play',
             title: 'scripts',
             notext: true
           },{
@@ -41,7 +41,7 @@
            command:(row, col, idx)=>{
              this.deleteVersion(row, col, idx);
            },
-           icon: 'fas fa-trash',
+           icon: 'nf nf-fa-trash',
            title: 'delete',
            notext: true,
            disabled: this.versionsInfo.length !== 1 ? false : true
@@ -92,7 +92,7 @@
                 text: i ,
                 numChildren: infos.content[i].length,
                 num: infos.content[i].length,
-                icon: 'fas fa-folder',
+                icon: 'nf nf-fa-folder',
                 items: []
               };
             if ( infos.content[i].length ){
@@ -101,7 +101,7 @@
                   text: file,
                   num: 0,
                   numchildren: 0,
-                  icon: 'fas fa-file'
+                  icon: 'nf nf-fa-file'
                 })
               });
             }
@@ -125,7 +125,7 @@
         }, idx)
       },
       deleteVersion(row, col, id){/*
-        bbn.vue.closest(this, "bbns-tab").popup().confirm(bbn._('Are you sure you want to delete?'), ()=>{
+        bbn.vue.closest(this, "bbn-container").popup().confirm(bbn._('Are you sure you want to delete?'), ()=>{
           if ( (row.id !== undefined) && (row.library !== undefined) ){
             bbn.fn.post( this.management.source.root + 'actions/version/delete', {
               id_ver: row.id,
@@ -154,6 +154,9 @@
       bbn.fn.post(this.link, {id_lib: this.source.name}, d => {
         if ( d.data.success ){
           this.versionsInfo = d.data.versions
+          this.$nextTick(() => {
+            this.closest('bbn-table').updateTable()
+          })
         }
       });
     },
@@ -172,7 +175,7 @@
                <bbn-dropdown :source="source.scripts" v-model="contentScript"></bbn-dropdown>
               </div>
               <div v-if="contentScript.length" class="bbn-flex-fill bbn-w-100 bbn-middle">
-               <div class="w3-card bbn-padded">
+               <div class="bbn-card bbn-padded">
                 <span class="bbn-b" v-text="contentScript"></span>
                </div>
               </div>
@@ -209,7 +212,7 @@
         props:['source']
       },
       'addVersions' : {
-        template: `<bbn-button icon="fas fa-plus" @click="add"></bbn-button>`,
+        template: `<bbn-button icon="nf nf-fa-plus" @click="add"></bbn-button>`,
         props:['source'],
         data(){
           return {

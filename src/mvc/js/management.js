@@ -39,7 +39,7 @@
             command:()=>{
               this.info(row, col, idx);
             },
-            icon: 'fas fa-info',
+            icon: 'nf nf-fa-info',
             title: bbn._('Info'),
             notext: true
           },
@@ -49,7 +49,7 @@
               this.actions('editLib');
               this.editLibrary(row, col, idx);
             },
-            icon: 'fas fa-edit',
+            icon: 'nf nf-fa-edit',
             title: bbn._('Edit'),
             notext: true
           },
@@ -58,7 +58,7 @@
            command:()=>{
              this.removeLib(row,col,idx);
            },
-           icon: 'fas fa-trash',
+           icon: 'nf nf-fa-trash',
            title: bbn._('Delete'),
            notext: true
           }
@@ -140,32 +140,32 @@
       //for render icon table
       showIconAuthor(ele){
         return ( ele.author && ele.author.length ) ?
-         `<i class='fas fa-user paddingIcon' title="` + ele.author + `"></i>` : '';
+         `<i class='nf nf-fa-user paddingIcon' title="` + ele.author + `"></i>` : '';
       },
       showIconLicense(ele){
         return ( ele.licence && ele.licence.length ) ?
-         `<i class='fas fa-copyright paddingIcon'></i>` : '';
+         `<i class='nf nf-fa-copyright paddingIcon'></i>` : '';
       },
       showIconWeb(ele){
         return ( ele.website && ele.website.length ) ?
-        `<a class='appui-no' href='` + ele.website + `' target='_blank'><i class='fas fa-globe paddingIcon'></i></a>` : ''
+        `<a class='appui-no' href='` + ele.website + `' target='_blank'><i class='nf nf-fa-globe paddingIcon'></i></a>` : ''
         ;
       },
       showIconDownload(ele){
         return ( ele.download_link && ele.download_link.length ) ?
-        `<a class='appui-no' href='`+ ele.download_link +`' target='_blank'><i class='fas fa-download paddingIcon'></i></a>` : '';
+        `<a class='appui-no' href='`+ ele.download_link +`' target='_blank'><i class='nf nf-fa-download paddingIcon'></i></a>` : '';
       },
       showIconDoc(ele){
         return ( ele.doc_link && ele.doc_link.length ) ?
-        `<a class='appui-no' href='`+ ele.doc_link + `' target='_blank'><i class='fas fa-book paddingIcon'></i></a>` : '';
+        `<a class='appui-no' href='`+ ele.doc_link + `' target='_blank'><i class='nf nf-fa-book paddingIcon'></i></a>` : '';
       },
       showIconGit(ele){
         return ( ele.git && ele.git.length ) ?
-        `<a class='appui-no' href='`+ ele.git +`' target='_blank'><i class='fab fa-github paddingIcon'></i></a>` : '';
+        `<a class='appui-no' href='`+ ele.git +`' target='_blank'><i class='nf nf-fa-github paddingIcon'></i></a>` : '';
       },
       showIconSupportLink(ele){
         return ( ele.support_link && ele.support_link.length ) ?
-         `<a class='appui-no' href='` + ele.support_link + `' target='_blank'><i class='fas fa-ambulance'></i></a>` : '';
+         `<a class='appui-no' href='` + ele.support_link + `' target='_blank'><i class='nf nf-fa-ambulance'></i></a>` : '';
       },
       showInfos(ele){
         return `<div>

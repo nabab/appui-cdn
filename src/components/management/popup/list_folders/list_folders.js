@@ -2,21 +2,22 @@
   return{
     data(){
       return {
-        buttonsAction:[
-          {
-            text: bbn._("cancel"),
-            icon: 'fas fa-ban',
-            command: ()=>{ this.$refs.form.cancel() },
-          }, {
-            text: bbn._("Skip"),
-            icon: 'fas fa-angle-double-right',
-            command: this.skipListVersionsGitHub
-          }, {
-            text: bbn._("Import"),
-            icon: 'fas fa-download',
-            command: ()=>{ this.$refs.form.submit() },
-          }
-        ],
+        // buttonsAction:[
+        //   {
+        //     text: bbn._("cancel"),
+        //     icon: 'nf nf-fa-ban',
+        //     command: ()=>{ this.$refs.form.cancel() },
+        //   }, {
+        //     text: bbn._("Skip"),
+        //     icon: 'nf nf-fa-angle_double_right',
+        //     command: this.skipListVersionsGitHub
+        //   }, {
+        //     text: bbn._("Import"),
+        //     icon: 'nf nf-fa-download',
+        //     command: ()=>{ this.$refs.form.submit() },
+        //     disabled: this.folder !== undefined
+        //   }
+        // ],
         folderId:"",
 
       }
@@ -53,7 +54,7 @@
       },
       deleteFolder(){
         if ( (this.folder !== undefined) && (this.folder.version !== undefined) ){
-          bbn.fn.post('cdn/actions/folder_version/remove', {
+          bbn.fn.post(appui.plugins['appui-cdn']+'/actions/folder_version/remove', {
             folder: this.source.name,
             version_folder: this.folder.version
           }, d => {
@@ -88,6 +89,24 @@
       },
       folder(){
         return this.source.folders[this.folderId];
+      },
+      buttonsAction(){
+        return [
+          {
+            text: bbn._("cancel"),
+            icon: 'nf nf-fa-ban',
+            command: ()=>{ this.$refs.form.cancel() },
+          }, {
+            text: bbn._("Skip"),
+            icon: 'nf nf-fa-angle_double_right',
+            command: this.skipListVersionsGitHub
+          }, {
+            text: bbn._("Import"),
+            icon: 'nf nf-fa-download',
+            command: ()=>{ this.$refs.form.submit() },
+            disabled: this.folder === undefined
+          }
+        ];
       }
     }
   }

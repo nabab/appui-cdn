@@ -7,8 +7,21 @@
           @success="success"
           confirm-leave="<?=_("Are you sure you want to close?")?>"
           :buttons="currentButton"
+          :scrollable="false"
+          style="display: grid; grid-template-rows: auto max-content"
+
 >
  <div class="bbn-padded bbn-grid-fields" v-if="!configuratorLibrary">
+   <label><?=_("GitHub")?></label>
+   <div class="bbn-flex-width">
+     <bbn-input class="bbn-flex-fill" v-model="source.row.git"></bbn-input>
+     <bbn-button @click="getInfo"
+                 icon="nf nf-fa-download"
+                 title="<?=_("Import library's info from GitHub")?>"
+                 v-if="source.row.git"
+     ></bbn-button>
+   </div>
+
     <label class="bbn-r">
       <?=_("Title")?>
     </label>
@@ -61,16 +74,6 @@
     </label>
     <bbn-input v-model="source.row.doc_link"></bbn-input>
 
-    <label><?=_("GitHub")?></label>
-    <div class="bbn-flex-width">
-      <bbn-input class="bbn-flex-fill" v-model="source.row.git"></bbn-input>
-      <bbn-button @click="getInfo"
-                  icon="fas fa-download"
-                  title="<?=_("Import library's info from GitHub")?>"
-                  v-if="source.row.git"
-      ></bbn-button>
-    </div>
-
     <label class="bbn-r">
       <?=_("Support")?>
     </label>
@@ -83,9 +86,11 @@
                   ref="listVersions"
     ></bbn-dropdown>
   </div>
+
   <!--SECOND STEP,VIEW FOR EDIT AND OR ADD VERSION -->
-  <div v-else>
-    <bbn-splitter orientation="vertical">
+  <div class="secondStep bbn-padded" v-else>
+    <bbn-splitter :scrollable="false"
+                  orientation="vertical">
       <bbn-pane :size="350">
         <bbn-splitter orientation="horizontal">
           <bbn-pane>
@@ -112,7 +117,7 @@
           </bbn-pane>
           <bbn-pane class="bbn-flex-height">
             <div class="bbn-padded">
-              <div class="w3-card bbn-c bbn-v-middle">
+              <div class="bbn-card bbn-c bbn-v-middle">
                 <span class="bbn-b">
                   <?=_('Select files for order')?>
                 </span>
@@ -123,12 +128,12 @@
                 <div class="bbn-b bbn-c" style="padding-bottom: 5px">
                   <?=_("Move File")?>
                 </div>
-                <div class="w3-card bbn-c" v-if="fileMove" style="margin-top: 15px">
+                <div class="bbn-card bbn-c" v-if="fileMove" style="margin-top: 15px">
                   <div class="bbn-padded">
-                    <bbn-button icon="fas fa-arrow-up" @click="moveUp"></bbn-button>
+                    <bbn-button icon="nf nf-fa-arrow_up" @click="moveUp"></bbn-button>
                   </div>
                   <div class="bbn-padded">
-                    <bbn-button icon="fas fa-arrow-down" @click="moveDown"></bbn-button>
+                    <bbn-button icon="nf nf-fa-arrow_down" @click="moveDown"></bbn-button>
                   </div>
                 </div>
               </div>
@@ -152,7 +157,7 @@
         <bbn-splitter orientation="horizontal">
           <bbn-pane :size="160">
             <div class="bbn-padded bbn-w-100"  style="margin-bottom: 20px">
-              <bbn-button :icon = "table === 'languages' ? 'far fa-eye-slash' : 'fas fa-eye'"
+              <bbn-button :icon = "table === 'languages' ? 'nf nf-fa-eye_slash' : 'nf nf-fa-eye'"
                           @click = "showTable('languages')"
                           class="bbn-w-100"
                           :style = "{color: table === 'languages' ? 'red' : 'inherit'}"
@@ -161,7 +166,7 @@
               </bbn-button>
             </div>
             <div class="bbn-padded bbn-w-100" style="margin-bottom: 20px">
-              <bbn-button :icon = "table === 'themes' ? 'far fa-eye-slash' : 'fas fa-eye'"
+              <bbn-button :icon = "table === 'themes' ? 'nf nf-fa-eye_slash' : 'nf nf-fa-eye'"
                           @click = "showTable('themes')"
                           class="bbn-w-100"
                           :style = "{color: table === 'themes' ? 'red' : 'inherit'}"
@@ -170,7 +175,7 @@
               </bbn-button>
             </div>
             <div class="bbn-padded bbn-w-100 " style="margin-bottom: 20px">
-              <bbn-button :icon = "table === 'dependencies' ? 'far fa-eye-slash' : 'fas fa-eye'"
+              <bbn-button :icon = "table === 'dependencies' ? 'nf nf-fa-eye_slash' : 'nf nf-fa-eye'"
                           @click = "showTable('dependencies')"
                           class="bbn-w-100"
                           :style = "{color: table === 'dependencies' ? 'red' : 'inherit'}"
@@ -179,7 +184,7 @@
               </bbn-button>
             </div>
             <div class="bbn-padded bbn-w-100 " style="margin-bottom: 20px">
-              <bbn-button :icon= "table === 'dependent' ? 'far fa-eye-slash' : 'fas fa-eye'"
+              <bbn-button :icon= "table === 'dependent' ? 'nf nf-fa-eye_slash' : 'nf nf-fa-eye'"
                           @click= "getDependent"
                           class= "bbn-w-100"
                           :style= "{color: table === 'dependent' ? 'red' : 'inherit'}"
@@ -197,15 +202,13 @@
               </span>
             </div>
           </bbn-pane>
-          <bbn-pane :scrollable="true">
-            <div class="bbn-full-screen">
+          <bbn-pane>
               <!--TABLE LANGUAGES-->
               <bbn-table :source="data.languages"
                          ref="tableLanguages"
-                         class="bbn-100"
                          v-if="table === 'languages'"
                          key="table_languages"
-
+                         :scrollable="true"
               >
                 <bbns-column title="<?=_('Languages Files')?>"
                               field="path"
@@ -217,15 +220,16 @@
               </bbn-table>
               <!--TABLE THEMES-->
               <bbn-table :source="data.themes"
-                           ref="tableThemes"
-                           class="bbn-100"
-                           v-if="table === 'themes'"
-                           key="table_themes"
+                         ref="tableThemes"
+                         v-if="table === 'themes'"
+                         key="table_themes"
+                         :scrollable="true"
+                         :toolbar="$options.components.prepend_theme"
               >
                 <bbns-column title="<?=_('Themes')?>"
                             field="path"
                 ></bbns-column>
-                <bbns-column :tcomponent="$options.components.themes"
+                <bbns-column  :tcomponent="$options.components.themes"
                               width="50"
                               :buttons="buttonDeleteThemes"
                 ></bbns-column>
@@ -234,15 +238,15 @@
               <bbn-table :source="dataVersion.dependencies"
                          ref="tableDependecies"
                          editable="inline"
-                         class="bbn-100"
                          :toolbar="[{
                            text: '<strong>'+'<?=_('Add dependencies')?>' + '</strong>',
-                           icon: 'fas fa-plus',
+                           icon: 'nf nf-fa-plus',
                            command: 'edit'
                          }]"
                         @saveItem="saveDependencies"
                         v-if="table === 'dependencies'"
                         key="table_dependencies"
+                        :scrollable="true"
               >
                 <bbns-column title="<?=_('Library')?>"
                             field="lib_name"
@@ -268,9 +272,9 @@
               <!--TABLE Dependent-->
               <bbn-table :source="dataVersion.slave_dependencies"
                          ref="tableDependent"
-                         cls="bbn-100"
                          v-if="table === 'dependent' && management.action.addVers === true"
                          key="table_dependent"
+                         :scrollable="true"
               >
                 <bbns-column title="<?=_('Title')?>"
                              field="title"
@@ -281,7 +285,6 @@
                              cls="bbn-c"
                 ></bbns-column>
               </bbn-table>
-            </div>
           </bbn-pane>
         </bbn-splitter>
       </bbn-pane>
@@ -289,7 +292,7 @@
                 :scrollable="true"
       >
         <div class="bbn-c bbn-w-100" v-if="dataVersion.dependencies_html.lenght">
-          <div class="bbn-w-50 w3-card bbn-padded bbn-grid-fields">
+          <div class="bbn-w-50 bbn-card bbn-padded bbn-grid-fields">
             <div>
               <span class="bbn-b" v-text="_('Dependecies')"></span>
               <br>

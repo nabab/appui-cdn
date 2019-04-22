@@ -15,9 +15,14 @@ if ( !empty($model->data['git_user']) && !empty($model->data['git_repo']) && \de
 
   $dependencies = '';
 
-  if ( empty($model->data['git_id_ver']) ||
+  if ( !empty($model->data['tags']) && !empty($model->data['git_id_ver']) ){
+    $version_name = $model->data['git_id_ver'];
+    $down_url = 'https://github.com/'.$model->data['git_user'].'/'.$model->data['git_repo'].'/archive/'.$version_name.'.zip';
+  }
+  else if (  empty($model->data['git_id_ver']) ||
     ($model->data['git_id_ver'] == $model->data['git_latest_ver'])
   ){
+
   // If you don't have a version's ID get the link of the latest release from GitHub
     // If you don't have the latest name's version get it from the tags
     //if ( empty($model->data['git_latest_ver']) ){
@@ -27,15 +32,17 @@ if ( !empty($model->data['git_user']) && !empty($model->data['git_repo']) && \de
         $version_name = $tags[0]['name'];
       }
     }
+
     else {
       //$version_name = $model->data['git_latest_ver'];
       $version_name = $model->data['version'];
     }
-    $down_url = 'https://github.com/'.$model->data['git_user'].'/'.$model->data['git_repo'].'/archive/'.$version_name.'.zip';
-  }
 
+    $down_url = 'https://github.com/'.$model->data['git_user'].'/'.$model->data['git_repo'].'/archive/'.$version_name.'.zip';
+
+  }
   // Get version from an ID
-  if ( !empty($model->data['git_id_ver']) &&
+  else if ( !empty($model->data['git_id_ver']) &&
     ( $model->data['git_id_ver'] != $model->data['git_latest_ver'] ) &&
     // Get version's info
     ($version = \bbn\x::to_object($git->api('repo')->releases()->show($model->data['git_user'], $model->data['git_repo'], $model->data['git_id_ver'])))
@@ -93,6 +100,7 @@ if ( !empty($model->data['git_user']) && !empty($model->data['git_repo']) && \de
   }
 
   if ( !empty($down_url) && !empty($version_name) ){
+
     // Set the file's path
     $fz = BBN_USER_PATH.'tmp/'.basename($down_url);
     // Download the version file

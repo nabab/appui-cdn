@@ -5,10 +5,10 @@
     <div class="k-block">
       <div class="k-header" style="margin-bottom: 0; font-size: inherit">
         <span style="margin-right: 10px; margin-left: 5px; cursor: pointer">
-          <i class="far fa-check-square ds-check"></i> <?=_("Check all")?>
+          <i class="nf nf-fa-check_square ds-check"></i> <?=_("Check all")?>
         </span>
         <span style="cursor: pointer">
-          <i class="far fa-square ds-check"></i> <?=_("Uncheck all")?>
+          <i class="nf nf-fa-square ds-check"></i> <?=_("Uncheck all")?>
         </span>
       </div>
       <div style="padding: 5px">

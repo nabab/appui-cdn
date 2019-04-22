@@ -15,8 +15,8 @@ if ( !empty($model->data['db']) &&
 ){
   $languages = [];
   $themes = [];
-    
-  
+
+
   foreach ( $model->data['languages'] as $l ){
     array_push($languages, $l['path']);
   }
@@ -28,6 +28,12 @@ if ( !empty($model->data['db']) &&
     'lang' => $languages,
     'theme_files' => $themes
   ];
+
+  
+  if ( !empty($content['theme_files']) ){
+    $content['theme_prepend'] = $model->data['theme_prepend'];
+  }
+
   if ( !empty($model->data['is_latest']) ){
     $internal = $model->data['db']->get_one(<<<'SQLITE'
     SELECT MAX(internal)
@@ -91,12 +97,12 @@ SQLITE
       }
     }
 
-    
+
     if ( !empty($model->data['slave_dependencies']) ){
       if ( !empty($model->data['no_update_dependents']) ){
         $no_update = $model->data['no_update_dependents'];
-        $updates = array_map(function($lib)use($no_update){        
-          foreach($no_update as $ele){          
+        $updates = array_map(function($lib)use($no_update){
+          foreach($no_update as $ele){
             if ( $ele['id_slave'] !== $lib['id_slave']){
               return $lib['id_slave'];
             }
@@ -109,9 +115,9 @@ SQLITE
         }, $model->data['slave_dependencies']);
       }
     }
-        
+
     if( !empty($updates) ){
-      foreach ( $updates AS $id_slave ){        
+      foreach ( $updates AS $id_slave ){
         if ( !empty($id_slave) ){
           $model->data['db']->insert('dependencies', [
             'id_master' => $id,
@@ -119,9 +125,9 @@ SQLITE
           ]);
         }
       }
-    }    
-    return ['success' => true];  
-  }  
+    }
+    return ['success' => true];
+  }
 }
 return ['success' => false];
 

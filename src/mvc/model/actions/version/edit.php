@@ -30,6 +30,15 @@ if ( !empty($model->data['db']) &&
     'lang' => $languages,
     'theme_files' => $themes
   ];
+
+  if ( !empty($content['theme_files']) ){
+    $content['theme_prepend'] = $model->data['theme_prepend'];
+  }
+  else{
+    $content['theme_prepend'] = false;
+  }
+
+
   if ( $model->data['db']->update('versions', ['content' => json_encode($content)], ['id' => $model->data['id']]) ){
     if ( !empty($model->data['is_latest']) ){
       //$ver_lib = $model->data['db']->rselect('versions', ['name', 'library'], ['id' => $model->data['id']]);

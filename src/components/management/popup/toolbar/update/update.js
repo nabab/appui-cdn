@@ -2,7 +2,7 @@
   var management = false;
   return {
     created(){
-      management = bbn.vue.closest(this, 'bbns-tab').getComponent();
+      management = bbn.vue.closest(this, 'bbn-container').getComponent();
     },
     methods:{
       buttons(row, col, idx){
@@ -12,7 +12,7 @@
            command: ()=>{
              this.dependencies(row, col, idx);
            },
-           icon: 'fas fa-code-branch',
+           icon: 'nf nf-fa-code_branch',
            title: bbn._('Dependencies'),
            notext: true,
          },{
@@ -21,14 +21,14 @@
              this.infoNewVersion(row, col, idx);
            },
            notext: true,
-           icon: 'fas fa-eye',
+           icon: 'nf nf-fa-eye',
            title: bbn._('new')
          },{
             text: bbn._('Update'),
             command: () => {
               this.updateLib(row);
             },
-            icon: 'fas fa-cogs',
+            icon: 'nf nf-fa-cogs',
             title: bbn._('Update'),
             notext: true
           }

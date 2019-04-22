@@ -21,16 +21,15 @@ if ( !empty($model->data['git_user']) && !empty($model->data['git_repo']) && \de
   catch (Throwable $e) {
     try {
       $tags = $git->api('repo')->tags($model->data['git_user'], $model->data['git_repo']);
-
     }
     catch (Throwable $e){
       $tags = [];
     }
     if ( !empty($tags) && !empty($tags[0]['name']) ){
       $latest = $tags[0]['name'];
-
     }
   }
+
   if ( $releases ){
     try {
       $versions = $releases->all($model->data['git_user'], $model->data['git_repo']);
@@ -56,7 +55,8 @@ if ( !empty($model->data['git_user']) && !empty($model->data['git_repo']) && \de
     }
     $versions = $tmp;
   }
-  /*else if ( !empty($tags) ){
+  else if ( !empty($tags) ){
+
     $versions = array_map(function($t){
       return [
         'id' => $t['name'],
@@ -64,7 +64,7 @@ if ( !empty($model->data['git_user']) && !empty($model->data['git_repo']) && \de
         'is_latest' => false
       ];
     }, $tags );
-  }*/
+  }
   else if ( !empty($latest) ){
     $versions = [[
       'id' => $latest,
@@ -77,6 +77,7 @@ if ( !empty($model->data['git_user']) && !empty($model->data['git_repo']) && \de
     'git_repo' => $model->data['git_repo'],
     'git_user' => $model->data['git_user'],
     'latest' => $latest,
-    'versions' => $versions
+    'versions' => $versions,
+    'tags' => !empty($tags)
   ];
 }

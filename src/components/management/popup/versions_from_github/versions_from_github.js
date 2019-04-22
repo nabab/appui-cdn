@@ -5,11 +5,11 @@
         buttonsAction:[
           {
             text: "cancel",
-            icon: 'fas fa-ban',
+            icon: 'nf nf-fa-ban',
             command: ()=>{ this.$refs.form_versions_fromGithub.cancel() },
           },{
             text: "Import",
-            icon: 'fas fa-download',
+            icon: 'nf nf-fa-download',
             command: ()=>{ this.$refs.form_versions_fromGithub.submit() },
           }
         ],
@@ -20,12 +20,15 @@
       success(ele){
         if ( ele.data ){
           bbn.vue.closest(this, 'bbn-popup').close();
-          this.getPopup().open({
-            height: '95%',
-            width: '85%',
+          this.getPopup().open({          
+            height: '500px',
+            width: '600px',
             title: bbn._('Add version library') + " " + this.source.folder,
             component:'appui-cdn-management-library_edit',
-            source: $.extend({row: ele.data}, {name: this.source.folder})
+            source:{
+              row: $.extend(ele.data.folders_versions[0], {github: ele.data.github}),
+              name: this.source.folder
+            }
           });
         }
       }
@@ -60,7 +63,8 @@
           git_user: this.source.git_user,
           git_id_ver: this.git_id_ver,
           git_latest_ver: this.lastVersion,
-          version: this.versionName
+          version: this.versionName,
+          tags: this.source.tags
         }
       }
     }

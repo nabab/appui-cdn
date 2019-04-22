@@ -9,7 +9,7 @@
             command: ()=>{
               bbn.vue.closest(this, "bbn-popup").close();
             },
-            icon: 'fas fa-ban',
+            icon: 'nf nf-fa-ban',
             title: bbn._('cancel'),
           },{
             text: bbn._('Skip'),
@@ -17,14 +17,14 @@
              this.addManualyLib()
             },
             title: bbn._('skip'),
-            icon: 'fas fa-angle-double-right',
+            icon: 'nf nf-fa-angle_double_right',
             class: "k-primary",
           },{
             text: bbn._('Import'),
             command: ()=>{
              this.importGithub()
             },
-            icon: "fas fa-angle-right",
+            icon: "nf nf-fa-angle_right",
             title: bbn._('import'),
             class: "",
             disabled: true
@@ -34,7 +34,7 @@
     },
     computed:{
       management(){
-        return this.closest("bbns-tab").getComponent()
+        return this.closest("bbn-container").getComponent()
       }
     },
     methods:{
@@ -82,7 +82,7 @@
                   });
                 }
                 else{
-                  bbn.vue.closest(this, 'bbns-tab').popup().alert(bbn._("Releases not found"));
+                  bbn.vue.closest(this, 'bbn-container').popup().alert(bbn._("Releases not found"));
                 }
               }
             }
@@ -93,7 +93,7 @@
         }
       },
       addManualyLib(){
-        let pop = bbn.vue.closest(this, 'bbns-tab').popup();
+        let pop = bbn.vue.closest(this, 'bbn-container').popup();
         pop.open({
             height: '80%',
             width: '60%',

@@ -8,7 +8,7 @@
   ></bbns-column>
   <bbns-column title= "<?=_('Latest version')?>"
               field= "latest"
-              cls= "bbn-c w3-red"
+              cls= "bbn-c bbn-bg-red bbn-white"
   ></bbns-column>
   <bbns-column title= " "
                width= 140

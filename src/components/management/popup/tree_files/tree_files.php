@@ -1,20 +1,24 @@
-<div class="bbn-padded bbn-full-screen bbn-flex-height">
-  <div class="bbn-flex-fill">
-    <div class="bbn-flex-width bbn-h-20 bbn-vmiddle">
+<div class="bbn-100 bbn-padded"
+     style="display: grid; grid-template-rows: max-content auto"
+>
+  <div class="bbn-w-100 bbn-grid-width bbn-padded">
+    <div class="bbn-w-80 bbn-middle">
       <bbn-input placeholder="<?=_('Select file')?>"
                  v-model="element"
                  @keydown.enter="addLanguage"
-                 class="bbn-w-100 bbn-h-20 bbn-padded"
+                 class="bbn-w-100 bbn-h-20"
       ></bbn-input>
+    </div>
+    <div class="bbn-flex-fill bbn-middle">
       <bbn-button @click="addLanguage"
-                  icon="fas fa-plus"
+                  icon="nf nf-fa-plus"
                   title="<?=_('Add file')?>"
                   v-if ="element.length"
-                  class="bbn-flex-fill bbn-h-20"
+                  class="bbn-h-20"
       ></bbn-button>
     </div>
   </div>
-  <div class="bbn-h-100">
+  <div class="bbn-padded">
     <bbn-tree :source="source.tree"
               :map="mapMenu"
               @select="selectElement"
