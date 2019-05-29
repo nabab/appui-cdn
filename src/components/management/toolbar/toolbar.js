@@ -11,8 +11,8 @@
       add(){
         this.management.actions('addLib');
         this.getPopup().open({
-          width: "80%",
-          height: "20%",
+          width: "70%",
+          height: "15%",
           title: bbn._("GitHub Link:"),
           component: 'appui-cdn-management-popup-toolbar-library_add',
           //source: this.updateList

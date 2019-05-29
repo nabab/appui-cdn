@@ -95,8 +95,8 @@
       editLibrary(row, col, idx){
         return this.$refs.cdn_management.edit(row,  {
           title: this.source.lng.editLib,
-          height: '95%',
-          width: '85%'
+          height: '950',
+          width: '850'
         }, idx);
       },
       /*edit(row, col, idx){

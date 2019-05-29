@@ -579,7 +579,10 @@
       },
       //button in title column grid add file language
       'languages':{
-        template:`<bbn-button @click="openTreeLanguage" :title="titleButton" icon="nf nf-fa-plus"></bbn-button>`,
+        template:`<bbn-button @click="openTreeLanguage"
+                              :title="titleButton"
+                              icon="nf nf-fa-plus"
+                  ></bbn-button>`,
         props: ['source'],
         data(){
           return{
