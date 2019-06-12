@@ -3,7 +3,7 @@
   <div id="asdahf8923489yhf98923hr" style="display: none">
     <div class="bbn-form-label bbn-r fix-width no-padding"><?=_("Name")?></div>
     <div class="bbn-form-field fix-width">
-      <input id="u93248safn328dasuq89yu" class="k-textbox" name="vname" style="width: 100%" required data-bind="value: version">
+      <input id="u93248safn328dasuq89yu" class="bbn-textbox" name="vname" style="width: 100%" required data-bind="value: version">
     </div>
     <div class="bbn-form-label bbn-r fix-width no-padding"><?=_("Files")?></div>
     <div class="bbn-form-field fix-width" style="display: flex">
@@ -11,7 +11,7 @@
         <div id="ashd3538y1i35h8oasdj023"></div>
       </div>
       <div class="bbn-w-50">
-        <div class="k-header k-shadow bbn-c"><?=_("Files Order (drag&drop)")?></div>
+        <div class="bbn-header k-shadow bbn-c"><?=_("Files Order (drag&drop)")?></div>
         <div id="joisfd8723hifwe78238hds" style="padding: 5px"></div>
       </div>
     </div>

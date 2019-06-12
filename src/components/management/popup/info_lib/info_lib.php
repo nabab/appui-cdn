@@ -1,7 +1,7 @@
 <bbn-splitter orientation="vertical">
   <bbn-pane>
     <div class="bbn-flex-height">
-      <div class="bbn-w-100 k-header bbn-middle">
+      <div class="bbn-w-100 bbn-header bbn-middle">
         <strong>
           "<?=_('Info')?>"
         </strong>
@@ -18,7 +18,7 @@
   </bbn-pane>
   <bbn-pane>
     <div class="bbn-flex-height">
-      <div class="bbn-w-100 k-header bbn-middle">
+      <div class="bbn-w-100 bbn-header bbn-middle">
         <strong>
           '<?=_('Versions')?>"
         </strong>

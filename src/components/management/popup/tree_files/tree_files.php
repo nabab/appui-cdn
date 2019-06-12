@@ -1,4 +1,4 @@
-<div class="bbn-full-screen bbn-padded"
+<div class="bbn-overlay bbn-padded"
      style="display: grid; grid-template-rows: max-content auto"
 >
   <div class="bbn-w-100 bbn-grid-width bbn-padded">

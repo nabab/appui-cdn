@@ -2,7 +2,7 @@
           :data="infoForDelete"
           @success="success"
           @failure="failure"
-          class="bbn-full-screen bbn-padded"
+          class="bbn-overlay bbn-padded"
           :prefilled="true"
 >
   <div class="bbn-100 bbn-padded">

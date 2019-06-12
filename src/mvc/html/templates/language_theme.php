@@ -2,7 +2,7 @@
 <script type="text/html" id="9342ja823hioasfy3oi">
   <div class="k-edit-label"><?=_("Path string")?></div>
   <div class="k-edit-field">
-    <input class="k-textbox" name="path" style="width: 100%" required>
+    <input class="bbn-textbox" name="path" style="width: 100%" required>
   </div>
   <div class="k-edit-label"><?=_("Files")?></div>
   <div class="k-edit-field">

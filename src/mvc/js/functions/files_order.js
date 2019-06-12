@@ -8,7 +8,7 @@
 // Function to add/remove files to/from version's files reorder list
 var addDelFilesOrder = function(item, forceAdd){
   var cont = $("#asdahf8923489yhf98923hr:visible"),
-    kcont = cont.closest(".k-content:visible").data("kendoWindow");
+    kcont = cont.closest(".bbn-content:visible").data("kendoWindow");
 
   if ( item.length ){
     $.each(item, function(i, v){

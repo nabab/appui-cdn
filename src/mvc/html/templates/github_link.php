@@ -4,7 +4,7 @@
     <form>
       <div class="bbn-form-label bbn-r"><?=_("Import from GitHub link")?></div>
       <div class="bbn-form-field">
-        <input class="k-textbox" type="url" name="github" style="width: 100%" placeholder="https://...">
+        <input class="bbn-textbox" type="url" name="github" style="width: 100%" placeholder="https://...">
       </div>
     </form>
   </div>

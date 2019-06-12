@@ -1,7 +1,7 @@
 <bbn-splitter :collapsible="true"
               :resizableue="true"
               orientation="horizontal"
-              class="dependencies bbn-full-screen"
+              class="dependencies bbn-overlay"
 >
   <bbn-pane>
     <bbn-table :source="source.depend"

@@ -1,9 +1,9 @@
 <!-- Library details popup -->
 <script type="text/html" id="i3h34uefn94uh3rnfe9sfd23u">
-  <div class="bbn-full-screen bbn-flex-height">
+  <div class="bbn-overlay bbn-flex-height">
     <!-- Info panel -->
-    <div class="k-block bbn-flex-fill bbn-margin">
-      <div class="k-header" style="text-align: center"><?=_("INFO")?></div>
+    <div class="bbn-block bbn-flex-fill bbn-margin">
+      <div class="bbn-header" style="text-align: center"><?=_("INFO")?></div>
       <!--<div style="padding: 10px; height: 310px">-->
       <div style="padding: 10px">
         <div class="bbn-form-label"><strong><?=_("Title:")?></strong></div>
@@ -57,8 +57,8 @@
       </div>
     </div>
     <!-- Library's versions panel -->
-    <div class="k-block bbn-margin">
-      <div class="k-header k-shadow" style="text-align: center; margin-bottom: 2px"><?=_("VERSIONS")?></div>
+    <div class="bbn-block bbn-margin">
+      <div class="bbn-header k-shadow" style="text-align: center; margin-bottom: 2px"><?=_("VERSIONS")?></div>
       <div>
         <div id="hufsa93hias9n38fn3293h389r2"></div>
       </div>

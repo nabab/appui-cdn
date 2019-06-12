@@ -2,8 +2,8 @@
 <script type="text/html" id="hfashio3289yasdnuqwy8232">
   <div class="bbn-form-label bbn-r fix-width no-padding"><?=_("Slave dependecies")?></div>
   <div class="bbn-form-field">
-    <div class="k-block">
-      <div class="k-header" style="margin-bottom: 0; font-size: inherit">
+    <div class="bbn-block">
+      <div class="bbn-header" style="margin-bottom: 0; font-size: inherit">
         <span style="margin-right: 10px; margin-left: 5px; cursor: pointer">
           <i class="nf nf-fa-check_square ds-check"></i> <?=_("Check all")?>
         </span>

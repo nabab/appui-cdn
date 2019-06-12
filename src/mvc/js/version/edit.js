@@ -11,7 +11,7 @@ var versionEdit = function(e){
   // Remove all field
   $("div.k-edit-field, div.k-edit-label", cont).remove();
   // Insert template
-  $("div.k-edit-form-container", cont).prepend($("#932f9u4923rjasdu09j3333").html());
+  $("div.k--container", cont).prepend($("#932f9u4923rjasdu09j3333").html());
   bbn.fn.post('cdn/data/version/edit', {version: e.model.id}, function(p){
     if ( p.data ){
       // Show form
@@ -50,7 +50,7 @@ var versionEdit = function(e){
       addDelFilesOrder(p.data.files, true);
       // Drag&Drop files reorder
       $("#joisfd8723hifwe78238hds", cont).kendoDraggable({
-        filter: 'div.k-alt',
+        filter: 'div.k-
         group: 'filesGroup',
         threshold: 100,
         axis: 'y',
@@ -93,14 +93,14 @@ var versionEdit = function(e){
         }, {
           title: '',
           width: 50,
-          headerTemplate: '<a href="javascript:;" class="k-button k-button-icontext k-grid-add nf nf-fa-plus add-lang"></a>',
+          headerTemplate: '<a href="javascript:;" class="k-button-k-grid-add nf nf-fk-lang"></a>',
           headerAttributes: {
             style: "text-align: center"
           },
           command: [{
             name: 'destroy',
             test: data.lng.del,
-            template: '<a class="k-button k-grid-delete nf nf-fa-trash" href="javascript:;"></a>'
+            template: '<a class="k-grid-dek-fa-trash" href="javascript:;"></a>'
           }]
         }],
         remove: function(){
@@ -108,7 +108,7 @@ var versionEdit = function(e){
         }
       });
       // Insert new language file
-      $("a.k-button.k-button-icontext.k-grid-add.fa.fa-plus.add-lang", cont).on("click", function(){
+      $("a.k-button-k-grid-add.fa.fa-pk-g", cont).on("click", function(){
         bbn.fn.popup($("#9342ja823hioasfy3oi").html(), data.lng.add_language, 850, false, function(w){
           $("#845hiay8h9fhuwiey823hi", w).kendoTreeView({
             dataSource: p.data.languages_tree,
@@ -126,12 +126,12 @@ var versionEdit = function(e){
               }, 300);
             }
           });
-          $("a.k-button:first", w).on("click", function(){
+          $("a.k-rst", w).on("click", function(){
             $("#y7hhiawza3u9y983w2asj9h9xe4", cont).data("kendoGrid").dataSource.add({path: $("input[name=path]", w).val()});
             e.model.dirty = true;
             bbn.fn.closePopup();
           });
-          $("a.k-button:last", w).on("click", function(){
+          $("a.k-st", w).on("click", function(){
             bbn.fn.closePopup();
           });
         });
@@ -148,14 +148,14 @@ var versionEdit = function(e){
         }, {
           title: '',
           width: 50,
-          headerTemplate: '<a href="javascript:;" class="k-button k-button-icontext k-grid-add nf nf-fa-plus add-theme"></a>',
+          headerTemplate: '<a href="javascript:;" class="k-button-k-grid-add nf nf-fk-theme"></a>',
           headerAttributes: {
             style: "text-align: center"
           },
           command: [{
             name: 'destroy',
             test: data.lng.del,
-            template: '<a class="k-button k-grid-delete nf nf-fa-trash" href="javascript:;"></a>'
+            template: '<a class="k-grid-dek-fa-trash" href="javascript:;"></a>'
           }]
         }],
         remove: function(){
@@ -163,7 +163,7 @@ var versionEdit = function(e){
         }
       });
       // Insert new theme file
-      $("a.k-button.k-button-icontext.k-grid-add.fa.fa-plus.add-theme", "#y99hu8y4ss3a2s5423ld453wmn", cont).on("click", function(){
+      $("a.k-button-k-grid-add.fa.fa-pk-me", "#y99hu8y4ss3a2s5423ld453wmn", cont).on("click", function(){
         bbn.fn.popup($("#9342ja823hioasfy3oi").html(), data.lng.add_theme_file, 850, false, function(w){
           $("#845hiay8h9fhuwiey823hi", w).kendoTreeView({
             dataSource: p.data.themes_tree,
@@ -181,12 +181,12 @@ var versionEdit = function(e){
               }, 300);
             }
           });
-          $("a.k-button:first", w).on("click", function(){
+          $("a.k-rst", w).on("click", function(){
             $("#y99hu8y4ss3a2s5423ld453wmn", cont).data("kendoGrid").dataSource.add({path: $("input[name=path]", w).val()});
             e.model.dirty = true;
             bbn.fn.closePopup();
           });
-          $("a.k-button:last", w).on("click", function(){
+          $("a.k-st", w).on("click", function(){
             bbn.fn.closePopup();
           });
         });
@@ -274,7 +274,7 @@ var versionEdit = function(e){
         }, {
           title: '',
           width: 100,
-          headerTemplate: '<a href="#" class="k-button k-grid-add nf nf-fa-plus add-dep"></a>',
+          headerTemplate: '<a href="#" class="k-grid-adk-plus add-dep"></a>',
           headerAttributes: {
             style: "text-align: center"
           },
@@ -289,18 +289,18 @@ var versionEdit = function(e){
               update: ''
             },
             click: function(){
-              $("a.k-button-icontext", "#732ijfasASdha92389yasdh9823", cont).removeClass("k-button-icontext");
+              $("a.k-ontext", "#732ijfasASdha92389yasdh9823", cont).removeClass("k-button-k-
             }
           }, {
             name: 'destroy',
-            template: '<a class="k-button k-grid-delete nf nf-fa-trash" href="javascript:;"></a>'
+            template: '<a class="k-grid-dek-fa-trash" href="javascript:;"></a>'
           }]
         }],
         dataBound: function(){
-          $("a.k-button-icontext", "#732ijfasASdha92389yasdh9823", cont).removeClass("k-button-icontext");
+          $("a.k-ontext", "#732ijfasASdha92389yasdh9823", cont).removeClass("k-button-k-
           $("a.add-dep", cont).click(function(){
             $("#732ijfasASdha92389yasdh9823", cont).data("kendoGrid").addRow();
-            $("a.k-button-icontext", "#732ijfasASdha92389yasdh9823", cont).removeClass("k-button-icontext");
+            $("a.k-ontext", "#732ijfasASdha92389yasdh9823", cont).removeClass("k-button-k-
           });
         },
         remove: function(){

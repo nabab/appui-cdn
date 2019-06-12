@@ -1,5 +1,4 @@
-<bbn-form class="bbn-full-screen"
-          :action="management.action.post"
+<bbn-form :action="management.action.post"
           :source="source.row"
           :data="complementaryData"
           ref="form_library"

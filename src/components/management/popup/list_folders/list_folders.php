@@ -1,4 +1,4 @@
-<bbn-form class="bbn-full-screen bbn-c"
+<bbn-form class="bbn-c"
           ref="form"
           :buttons="buttonsAction"
           @submit="submit"

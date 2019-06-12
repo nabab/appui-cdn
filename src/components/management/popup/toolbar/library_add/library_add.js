@@ -18,7 +18,7 @@
             },
             title: bbn._('skip'),
             icon: 'nf nf-fa-angle_double_right',
-            class: "k-primary",
+            class: "bbn-primary",
           },{
             text: bbn._('Import'),
             command: ()=>{
@@ -125,14 +125,14 @@
         let idImport = bbn.fn.search(this.btns, 'text', 'Import'),
           idSkip = bbn.fn.search(this.btns, 'text', 'Skip');
         if ( url.length ){
-          this.btns[idImport].class = "k-primary";
+          this.btns[idImport].class = "bbn-primary";
           this.btns[idImport].disabled = false;
           this.btns[idSkip].class = "";
         }
         else{
           this.btns[idImport].class = "";
           this.btns[idImport].disabled = true;
-          this.btns[idSkip].class = "k-primary";
+          this.btns[idSkip].class = "bbn-primary";
 
         }
       }

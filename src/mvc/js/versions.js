@@ -92,7 +92,7 @@
         },
         command: [{
           name: "info",
-          template: '<a class="k-button k-grid-d-info nf nf-fa-info" href="javascript:;"></a>'
+          template: '<a class="k-grid-d-k-fa-info" href="javascript:;"></a>'
         }, {
           name: "edit",
           text: {
@@ -100,20 +100,20 @@
             update: data.lng.save,
             cancel: data.lng.cancel,
           },
-          template: '<a class="k-button k-grid-edit nf nf-fa-edit" href="javascript:;"></a>'
+          template: '<a class="k-grid-edk--edit" href="javascript:;"></a>'
         }, {
           name: "destroy",
           text: data.lng.del,
-          template: '<a class="k-button k-grid-delete nf nf-fa-trash" href="javascript:;"></a>'
+          template: '<a class="k-grid-dek-fa-trash" href="javascript:;"></a>'
         }]
       }],
       dataBound: function (db){
         // Library's version info popup
-        $("a.k-grid-d-info", versionsGrid).on("click", function (e){
+        $("a.k-fo", versionsGrid).on("click", function (e){
           versionInfo(e, db.sender);
         });
         // Insert new library's version (Plus button)
-        $("a.k-button.k-button-icontext.k-grid-add.fa.fa-plus.add-ver", versionsGrid).on("click", function (e){
+        $("a.k-button-k-grid-add.fa.fa-pk-", versionsGrid).on("click", function (e){
           bbn.fn.post('cdn/data/version/add', {folder: d.data.name}, function (p){
             versionAdd(p, d);
           });

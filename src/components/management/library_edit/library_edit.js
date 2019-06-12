@@ -87,7 +87,7 @@
               {
                 text: "Next",
                 title: "next",
-                class:"k-primary",
+                class:"bbn-primary",
                 icon: 'nf nf-fa-arrow_circle_right',
                 disabled: (!this.source.row.title && !this.source.row.name)  ? true : false,
                 command: ()=>{ this.next() }
@@ -107,7 +107,7 @@
               {
                 text: "Save",
                 icon: 'nf nf-fa-check_circle',
-                class:"k-primary",
+                class:"bbn-primary",
                 command: ()=>{
                   if ( this.referenceNodeTree.length ){
                     this.$refs.form_library.submit()
@@ -124,7 +124,7 @@
               'cancel',
               {
                 text: "Save",
-                class:"k-primary",
+                class:"bbn-primary",
                 icon: 'nf nf-fa-check_circle',
                 command: ()=>{
                   //case edit library

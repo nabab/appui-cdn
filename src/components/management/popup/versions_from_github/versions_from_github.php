@@ -1,4 +1,4 @@
-<bbn-form class="bbn-full-screen bbn-c"
+<bbn-form class="bbn-c"
           action="cdn/data/version/add"
           :data="dataPost"
           ref="form_versions_fromGithub"

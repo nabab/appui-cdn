@@ -5,7 +5,7 @@
              :info="true"
              :sortable="true"
              ref="tableVersionsLib"
-             class="bbn-full-screen"
+             class="bbn-overlay"
   >
     <bbns-column title="<?=_('Version')?>"
                 field="name"

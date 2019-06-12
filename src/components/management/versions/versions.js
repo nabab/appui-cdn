@@ -166,7 +166,7 @@
     components: {
       'packgeJson':{
         template:
-        ` <div class="bbn-full-screen">
+        ` <div class="bbn-overlay">
             <div v-if="source.scripts.length > 0" class="bbn-flex-height">
               <div class="bbn-padded bbn-grid-fields"
                    style="grid-auto-rows: max-content max-content max-content max-content auto"
@@ -192,7 +192,7 @@
       //button info version
       'info':{
         template:
-        ` <div class="bbn-full-screen">
+        ` <div class="bbn-overlay">
             <div class="bbn-padded bbn-h-100 bbn-grid-fields"
                  style="grid-auto-rows: max-content max-content max-content max-content auto"
              >
