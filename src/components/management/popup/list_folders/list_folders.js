@@ -48,7 +48,7 @@
             width: '50%',
             title: bbn._('List versions github'),
             component:'appui-cdn-management-popup-versions_from_github',
-            source: $.extend({}, ele.data, {folder: this.source.name, versions: ele.data.versions})
+            source: bbn.fn.extend(true, {}, ele.data, {folder: this.source.name, versions: ele.data.versions})
           });
         });
       },

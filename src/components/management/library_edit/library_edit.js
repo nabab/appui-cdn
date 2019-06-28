@@ -228,8 +228,7 @@
         //let's check if you do it next for the first time or not
         if ( this.management.action.addLib &&
            this.source.row.name &&
-           this.source.row.title /*&&
-           $.isEmptyObject(this.dataVersion)*/
+           this.source.row.title
           ){
             bbn.fn.post(this.management.source.root +'data/version/add', {
               folder: this.source.row.name,
@@ -260,7 +259,8 @@
             );
         }
         else{
-          if ( !$.isEmptyObject(this.dataVersion) ){
+          //if ( !$.isEmptyObject(this.dataVersion) ){
+          if ( Object.entries(this.dataVersion).length > 0 ){  
             this.configuratorLibrary = true;
           }
         }
@@ -300,7 +300,7 @@
         }*/
       },
       checkFile(){
-        this.copyItemsTree = $.extend({},this.$refs.filesListTree.items);
+        this.copyItemsTree = bbn.fn.extend(true, {}, this.$refs.filesListTree.items);
         this.referenceNodeTree = this.$refs.filesListTree.checked;
       },
       uncheckFile(){

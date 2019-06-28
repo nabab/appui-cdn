@@ -146,7 +146,7 @@
           height: 200,
           title: bbn._("Remove version in library") +  " " + this.source.title,
           component: 'appui-cdn-management-popup-remove',
-          source: $.extend(row, {titleLibrary: this.source.title, action:this.management.source.root + 'actions/version/delete'})
+          source: bbn.fn.extend(true, row, {titleLibrary: this.source.title, action:this.management.source.root + 'actions/version/delete'})
         })
       },
     },
@@ -250,7 +250,7 @@
                       width: '50%',
                       title: this.tableVersions.management.source.lng.githubVersion,
                       component:'appui-cdn-management-popup-versions_from_github',
-                      source: $.extend({}, ele.data, {folder: this.tableVersions.source.name, versions: ele.data.versions})
+                      source: bbn.fn.extend(true, {}, ele.data, {folder: this.tableVersions.source.name, versions: ele.data.versions})
                     });
                   });
                 });

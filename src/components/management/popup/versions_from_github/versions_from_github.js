@@ -26,7 +26,7 @@
             title: bbn._('Add version library') + " " + this.source.folder,
             component:'appui-cdn-management-library_edit',
             source:{
-              row: $.extend(ele.data.folders_versions[0], {github: ele.data.github}),
+              row: bbn.fn.extend(true, ele.data.folders_versions[0], {github: ele.data.github}),
               name: this.source.folder
             }
           });
