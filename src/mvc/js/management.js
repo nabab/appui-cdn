@@ -134,7 +134,7 @@
           height: 200,
           title: bbn._("Remove library"),
           component: 'appui-cdn-management-popup-remove',
-          source: bbn.fn.extend(true, row, {deleteLib: true, action: this.source.root + 'actions/library/delete'})
+          source: bbn.fn.extend(row, {deleteLib: true, action: this.source.root + 'actions/library/delete'})
         })
       },
       //for render icon table
