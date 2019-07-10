@@ -300,7 +300,7 @@
         }*/
       },
       checkFile(){
-        this.copyItemsTree = bbn.fn.extend(true, {}, this.$refs.filesListTree.items);
+        this.copyItemsTree = bbn.fn.extend(this.$refs.filesListTree.items, true);
         this.referenceNodeTree = this.$refs.filesListTree.checked;
       },
       uncheckFile(){
@@ -401,13 +401,15 @@
         return bbn.fn.get_field(this.dataVersion.lib_ver, "id_ver", ele.id_ver, "version");
       },
       //at click editline table dependencies
-      saveDependencies(row, col, idx){
+      saveDependencies(row, col, idx){       
         //error in case no lib or version for dependencies
         if ( !row.id_ver || !row.lib_name ){
           appui.error(bbn._("ID_VERSION or LIBRARY NAME is missing"));
         }
          //error in case no lib or version or existing lib  in list of dependencies
-        else if ( bbn.fn.search(this.dataVersion.dependencies, 'lib_name', row.lib_name) >= 0 ){
+        else if ( (this.dataVersion.dependencies.length > 0) &&
+          (bbn.fn.search(this.dataVersion.dependencies, 'lib_name', row.lib_name) >= 0) 
+        ){
           appui.error(bbn._("Dependencies already inserted"));
         }
         //if we insert a value that is not an integer as the order number
@@ -415,10 +417,14 @@
           appui.error(bbn._("The order is not an integer"));
         }
         else {
-          this.$refs.tableDependecies.add(row);
-          this.$refs.tableDependecies.updateData();
-          this.$refs.tableDependecies._removeTmp();
-        }
+          let obj = bbn.fn.extend({}, row)
+          this.dataVersion.dependencies.push(obj);
+          this.source.row.dependencies.push(obj);
+          this.$nextTick(()=>{         
+            this.$refs.tableDependecies.updateData();
+          })
+       //   this.$refs.tableDependecies._removeTmp();  
+       }
       },//for to display dependency names in _cthe table because the source that is attributed to the column is a computed and updates every time we insert a new dependency
       renderLibName(row){
         let idx =  bbn.fn.search(this.listLib, 'value', row.lib_name);

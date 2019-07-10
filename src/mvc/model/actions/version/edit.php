@@ -69,7 +69,7 @@ if ( !empty($model->data['db']) &&
       foreach ( $model->data['dependencies'] as $dep ){
         $dependencies[$dep['id_ver']] = $dep;
       }
-      $old_dep = $model->data['db']->get_col_array('
+      /*$old_dep = $model->data['db']->get_col_array('
         SELECT dependencies.id_master
         FROM dependencies
         JOIN versions
@@ -78,19 +78,53 @@ if ( !empty($model->data['db']) &&
         GROUP BY versions.library
         ORDER BY versions.internal',
         $model->data['id']
-      );
-      foreach ( $old_dep as $old ){
-        if ( !\in_array($old, array_keys($dependencies)) ){
-          if ( !$model->data['db']->delete('dependencies', [
-            'id_slave' => $model->data['id'],
-            'id_master' => $old
-          ]) ){
-            return ['error' => _('Error to delete a version\'s dependency')];
-          };
+      );*/
+      $old_dep = $model->data['db']->rselect_all([
+        'table' => "dependencies",
+        'fields' => 'id_master',
+        'join' => [[
+          'table' => 'versions',
+          'on' => [            
+            'conditions' => [
+              'field' => 'dependencies.id_master',          
+              'exp' => 'versions.id'
+            ]
+          ]      
+        ]],
+        'where' => [
+          'conditions' => [[
+            'field' => "dependencies.id_slave",
+            'value' => $model->data['id']
+          ]]
+        ],
+        'group_by' => 'versions.library',
+        'order' => [[
+          'field' => 'versions.internal',
+          'dir' => 'DESC'
+        ]]        
+      ]);
+    
+      if ( count($old_dep) ){
+        
+        foreach ( $old_dep as $old ){
+          if ( !\in_array($old, array_keys($dependencies)) ){
+            if ( !$model->data['db']->delete('dependencies', [
+              'id_slave' => $model->data['id'],
+              'id_master' => $old
+            ]) ){
+              return ['error' => _('Error to delete a version\'s dependency')];
+            };
+          }
         }
-      }
+      }   
+      
       foreach ( $dependencies as $idd => $dep ){
         if ( !\in_array($idd, $old_dep) ){
+          die(var_dump($model->data['id'], $idd, $dep['order'],$model->data['db'],$model->data['db']->insert('dependencies', [
+            'id_slave' => $model->data['id'],
+            'id_master' => $idd,
+            'order' => $dep['order']
+          ])));   
           if ( !$model->data['db']->insert('dependencies', [
             'id_slave' => $model->data['id'],
             'id_master' => $idd,

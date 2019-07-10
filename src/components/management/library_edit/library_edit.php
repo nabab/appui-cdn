@@ -241,8 +241,8 @@
                            text: '<strong>'+'<?=_('Add dependencies')?>' + '</strong>',
                            icon: 'nf nf-fa-plus',
                            command: 'edit'
-                         }]"
-                        @saveItem="saveDependencies"
+                         }]"                        
+                        @saverow="saveDependencies"
                         v-if="table === 'dependencies'"
                         key="table_dependencies"
                         :scrollable="true"
