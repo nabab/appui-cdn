@@ -1,6 +1,7 @@
 <bbn-form class="bbn-c"
           ref="form"
           :buttons="buttonsAction"
+          :prefilled="true"
           @submit="submit"
           confirm-leave="<?=_("Are you sure you want to go out?")?>"
 >
@@ -9,6 +10,7 @@
                   ref="listFolders"
                   placeholder= "<?=_('Select folder version')?>"
                   :source="folders"
+                  :required="true"
                   v-model="folderId"
     ></bbn-dropdown>
     <bbn-button v-if="folderId.length"

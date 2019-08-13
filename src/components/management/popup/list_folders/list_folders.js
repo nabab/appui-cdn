@@ -104,7 +104,7 @@
             text: bbn._("Import"),
             icon: 'nf nf-fa-download',
             command: ()=>{ this.$refs.form.submit() },
-            disabled: this.folder === undefined
+            disabled: ()=>{return this.folder === undefined;}
           }
         ];
       }
