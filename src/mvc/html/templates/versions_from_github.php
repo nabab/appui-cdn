@@ -12,8 +12,8 @@
     </div>
     <div class="bbn-form-label bbn-r fix-width no-padding"></div>
     <div class="bbn-form-field bbn-r">
-      <button class="k-button" type="submit"><i class="nf nf-fa-download"></i> <?=_("Import")?></button>
-      <button class="k-button" type="button" onclick="bbn.fn.closePopup();"><i class="nf nf-fa-times"></i> <?=_("Cancel")?></button>
+      <button class="bbn-button" type="submit"><i class="nf nf-fa-download"></i> <?=_("Import")?></button>
+      <button class="bbn-button" type="button" onclick="bbn.fn.closePopup();"><i class="nf nf-fa-times"></i> <?=_("Cancel")?></button>
     </div>
   </form>
 </script>
