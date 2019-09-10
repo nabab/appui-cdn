@@ -17,7 +17,7 @@ $paths = [
   $cdn.'lib/jquery-jsoneditor/0.2',
   $cdn.'lib/appui/0.4/src',
   //$cdn.'lib/vue-kendo/0.2/src',
-  BBN_APP_PATH.'mvc'
+  $model->app_path().'mvc'
 ];
 foreach ( $model->get_plugins() as $plugin ){
   $paths[] = $plugin['path'].'mvc';
