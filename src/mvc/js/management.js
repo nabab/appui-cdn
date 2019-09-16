@@ -72,7 +72,7 @@
           info : row,
           versions: []
         };
-        bbn.fn.post(this.source.root + 'data/versions', {id_lib: row.name}, d =>{
+        this.post(this.source.root + 'data/versions', {id_lib: row.name}, d =>{
           if ( d.data.success ){
             if ( d.data.versions ){
               for ( let ele of d.data.versions ){
@@ -179,7 +179,7 @@
         </div>`
       },
       refreshManagement(){
-        bbn.fn.post(this.source.root + "management", {refresh: true}, d => {
+        this.post(this.source.root + "management", {refresh: true}, d => {
           if( d.all_lib != undefined ){
             this.source.all_lib = d.all_lib;
             this.$nextTick(()=>{

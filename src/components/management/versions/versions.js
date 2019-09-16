@@ -49,7 +49,7 @@
         ];
       },
       viewPackageJson(row, col, idx){
-        bbn.fn.post(appui.plugins['appui-cdn'] + '/data/version/get_file',
+        this.post(appui.plugins['appui-cdn'] + '/data/version/get_file',
           {
             file: 'package.json',
             library: row.library,
@@ -127,7 +127,7 @@
       deleteVersion(row, col, id){/*
         bbn.vue.closest(this, "bbn-container").popup().confirm(bbn._('Are you sure you want to delete?'), ()=>{
           if ( (row.id !== undefined) && (row.library !== undefined) ){
-            bbn.fn.post( this.management.source.root + 'actions/version/delete', {
+            this.post( this.management.source.root + 'actions/version/delete', {
               id_ver: row.id,
               library: row.library
             }, d => {
@@ -151,7 +151,7 @@
       },
     },
     mounted(){
-      bbn.fn.post(this.link, {id_lib: this.source.name}, d => {
+      this.post(this.link, {id_lib: this.source.name}, d => {
         if ( d.data.success ){
           this.versionsInfo = d.data.versions
           this.$nextTick(() => {
@@ -226,7 +226,7 @@
         methods:{
           add(){
             this.tableVersions.management.actions("addVers");
-            bbn.fn.post(this.tableVersions.management.source.root +'data/version/add', {
+            this.post(this.tableVersions.management.source.root +'data/version/add', {
               folder: this.tableVersions.source.name
             }, d => {
               if( d.data && (d.data.folders_versions !== undefined) ){
@@ -244,7 +244,7 @@
               }
               else if ( d.data.github && (d.data.folders_versions === undefined) ){
                 this.confirm( this.tableVersions.management.source.lng.versionGithubImport, ()=>{
-                  bbn.fn.post( this.tableVersions.management.source.root + 'github/versions', {url: d.data.github}, ele => {
+                  this.post( this.tableVersions.management.source.root + 'github/versions', {url: d.data.github}, ele => {
                     this.getPopup().open({
                       height: '25%',
                       width: '50%',

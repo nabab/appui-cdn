@@ -40,7 +40,7 @@
       },
       skipListVersionsGitHub(){
         bbn.vue.closest(this, 'bbn-popup').close();
-        bbn.fn.post('cdn/github/versions', {
+        this.post('cdn/github/versions', {
           url: this.source.github
         }, ele => {
           this.getPopup().open({
@@ -54,7 +54,7 @@
       },
       deleteFolder(){
         if ( (this.folder !== undefined) && (this.folder.version !== undefined) ){
-          bbn.fn.post(appui.plugins['appui-cdn']+'/actions/folder_version/remove', {
+          this.post(appui.plugins['appui-cdn']+'/actions/folder_version/remove', {
             folder: this.source.name,
             version_folder: this.folder.version
           }, d => {

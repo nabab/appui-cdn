@@ -40,7 +40,7 @@
     methods:{
       importGithub(){
         if ( this.urlGit.length ){
-          bbn.fn.post(this.management.source.root + "github/info", {
+          this.post(this.management.source.root + "github/info", {
               url: this.urlGit,
               only_info: false
             },

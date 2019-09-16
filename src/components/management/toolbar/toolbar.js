@@ -20,7 +20,7 @@
       },
       checkUpdate(){
         appui.confirm(this.management.source.lng.checkUpdates, ()=>{
-          bbn.fn.post(this.management.source.root + 'github/updates', {}, d =>{
+          this.post(this.management.source.root + 'github/updates', {}, d =>{
             if ( d.data.updates.length  ){
               this.updateList = d.data.updates;
               this.totalUpdateList = d.data.total;

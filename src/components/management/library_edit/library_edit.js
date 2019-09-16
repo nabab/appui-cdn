@@ -186,7 +186,7 @@
     },
     methods:{
       getInfo(){
-        bbn.fn.post(this.management.source.root +"github/info", {
+        this.post(this.management.source.root +"github/info", {
             url: this.source.row.git,
             only_info: true
           },
@@ -230,7 +230,7 @@
            this.source.row.name &&
            this.source.row.title
           ){
-            bbn.fn.post(this.management.source.root +'data/version/add', {
+            this.post(this.management.source.root +'data/version/add', {
               folder: this.source.row.name,
               git_id_ver: this.source.row.git_id,
               git_user:  this.source.row.user !== undefined ? this.source.row.user : false,
@@ -441,7 +441,7 @@
       //is called to the mounted in case of edit version
       editVersion(){
         this.configuratorLibrary = true;
-        bbn.fn.post("cdn/data/version/edit", {version: this.source.row.id, library: this.source.row.library}, d => {
+        this.post("cdn/data/version/edit", {version: this.source.row.id, library: this.source.row.library}, d => {
           if ( d.data !== undefined ){
             this.dataVersion.dependencies = d.data.dependencies;
             this.dataVersion.files_tree = d.data.files_tree;

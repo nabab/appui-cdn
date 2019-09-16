@@ -35,7 +35,7 @@
         ]
       },
       dependencies(row, col, idx){
-        bbn.fn.post(management.source.root+'data/dependencies',{folder: row.folder}, d => {
+        this.post(management.source.root+'data/dependencies',{folder: row.folder}, d => {
           if ( (d.data.depend.length > 0) || (d.data.dependent.length > 0) ){
             this.getPopup().open({
               width: 700,
@@ -73,9 +73,9 @@
       },
       updateLib(row){
         management.actions("addVers");
-        bbn.fn.post(management.source.root +'data/version/add',{folder: row.folder}, d => {
+        this.post(management.source.root +'data/version/add',{folder: row.folder}, d => {
           if ( d.data.github ){
-            bbn.fn.post(management.source.root +'data/version/add',{
+            this.post(management.source.root +'data/version/add',{
               folder: row.folder,
               git_repo: row.git_repo,
               git_user: row.git_user,
@@ -90,7 +90,7 @@
         });
       },
       infoNewVersion(row){
-        bbn.fn.post(management.source.root +'github/info',{
+        this.post(management.source.root +'github/info',{
           git_user: row.git_user,
           git_repo: row.git_repo,
           url: row.github,
