@@ -90,7 +90,7 @@
                 class:"bbn-primary",
                 icon: 'nf nf-fa-arrow_circle_right',
                 disabled: (!this.source.row.title && !this.source.row.name)  ? true : false,
-                command: ()=>{ this.next() }
+                action: ()=>{ this.next() }
               }
             ];
           }
@@ -101,14 +101,14 @@
                 text: "Prev",
                 title: "Prev",
                 icon: 'nf nf-fa-arrow_circle_left',
-                command: ()=>{ this.configuratorLibrary = false }
+                action: ()=>{ this.configuratorLibrary = false }
               },
               'cancel',
               {
                 text: "Save",
                 icon: 'nf nf-fa-check_circle',
                 class:"bbn-primary",
-                command: ()=>{
+                action: ()=>{
                   if ( this.referenceNodeTree.length ){
                     this.$refs.form_library.submit()
                   }
@@ -126,7 +126,7 @@
                 text: "Save",
                 class:"bbn-primary",
                 icon: 'nf nf-fa-check_circle',
-                command: ()=>{
+                action: ()=>{
                   //case edit library
                   if ( this.management.action.editLib ){
                     if ( this.source.row.title.length || this.source.row.name.length ){
@@ -311,7 +311,7 @@
         return [{
           text: "destroy",
           icon: "nf nf-fa-trash",
-          command: (row, col, id )=>{
+          action: (row, col, id )=>{
             return this.$refs.tableLanguages.delete(id, bbn._("Are you sure you want to delete?"));
           },
           notext: true
@@ -321,7 +321,7 @@
         return [{
           text: "destroy",
           icon: "nf nf-fa-trash",
-          command: (row, col, id )=>{
+          action: (row, col, id )=>{
             return this.$refs.tableThemes.delete(id, bbn._("Are you sure you want to delete?"));
             // if ( this.$refs.tableThemes.currentData.length === 0 ){
             //   this.check_prepend = false;
@@ -387,7 +387,7 @@
         return [
           {
            text: 'Delete',
-           command: (row, col, id )=>{
+           action: (row, col, id )=>{
              return this.$refs.tableDependecies.delete(id, bbn._("Are you sure you want to delete?"));
            },
            icon: 'nf nf-fa-trash',
@@ -501,7 +501,7 @@
         /*return [
           {
             text: bbn._('Update last version'),
-            command: ( row, col, id)=>{
+            action: ( row, col, id)=>{
               let i = bbn.fn.search(this.listUpdate, 'name', row.name)
               if ( i > -1 ){
                 this.listUpdate.splice(i,1);
@@ -515,7 +515,7 @@
             style:"width:50%; color: green"
           },{
           text: bbn._('no update'),
-          command: ( row, col, id)=>{
+          action: ( row, col, id)=>{
             this.listNoUpdate.push(row);
           },
           icon: 'nf nf-fa-ban',

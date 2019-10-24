@@ -36,7 +36,7 @@
       buttons(row, col, idx){
         return [{
             text: "Info",
-            command:()=>{
+            action:()=>{
               this.info(row, col, idx);
             },
             icon: 'nf nf-fa-info',
@@ -45,7 +45,7 @@
           },
           {
             text: 'Edit',
-            command:()=>{
+            action:()=>{
               this.actions('editLib');
               this.editLibrary(row, col, idx);
             },
@@ -55,7 +55,7 @@
           },
           {
            text: 'Delete',
-           command:()=>{
+           action:()=>{
              this.removeLib(row,col,idx);
            },
            icon: 'nf nf-fa-trash',

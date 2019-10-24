@@ -240,7 +240,7 @@
                          :toolbar="[{
                            text: '<strong>'+'<?=_('Add dependencies')?>' + '</strong>',
                            icon: 'nf nf-fa-plus',
-                           command: 'edit'
+                           action: 'edit'
                          }]"                        
                         @saverow="saveDependencies"
                         v-if="table === 'dependencies'"

@@ -13,7 +13,7 @@
         return [
           {
             text: "Info",
-            command:(row, col, idx) => {
+            action:(row, col, idx) => {
               this.infoVersion(row, col, idx);
             },
             icon: 'nf nf-fa-info',
@@ -21,7 +21,7 @@
             notext: true
           },{
             text: 'Edit',
-            command:(row, col, idx)=>{
+            action:(row, col, idx)=>{
               this.management.actions('editVers');
               this.editVersion(row, col, idx);
             },
@@ -30,7 +30,7 @@
             notext: true
           },{
             text: 'Scripts',
-            command: (row, col, idx) =>{
+            action: (row, col, idx) =>{
               this.viewPackageJson(row, col, idx)
             },
             icon: 'nf nf-fa-play',
@@ -38,7 +38,7 @@
             notext: true
           },{
            text: 'Delete',
-           command:(row, col, idx)=>{
+           action:(row, col, idx)=>{
              this.deleteVersion(row, col, idx);
            },
            icon: 'nf nf-fa-trash',

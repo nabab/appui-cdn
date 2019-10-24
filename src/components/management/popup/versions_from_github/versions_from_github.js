@@ -6,11 +6,11 @@
           {
             text: "cancel",
             icon: 'nf nf-fa-ban',
-            command: ()=>{ this.$refs.form_versions_fromGithub.cancel() },
+            action: ()=>{ this.$refs.form_versions_fromGithub.cancel() },
           },{
             text: "Import",
             icon: 'nf nf-fa-download',
-            command: ()=>{ this.$refs.form_versions_fromGithub.submit() },
+            action: ()=>{ this.$refs.form_versions_fromGithub.submit() },
           }
         ],
         git_id_ver:"",

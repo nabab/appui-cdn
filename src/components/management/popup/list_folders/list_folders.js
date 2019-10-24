@@ -6,15 +6,15 @@
         //   {
         //     text: bbn._("cancel"),
         //     icon: 'nf nf-fa-ban',
-        //     command: ()=>{ this.$refs.form.cancel() },
+        //     action: ()=>{ this.$refs.form.cancel() },
         //   }, {
         //     text: bbn._("Skip"),
         //     icon: 'nf nf-fa-angle_double_right',
-        //     command: this.skipListVersionsGitHub
+        //     action: this.skipListVersionsGitHub
         //   }, {
         //     text: bbn._("Import"),
         //     icon: 'nf nf-fa-download',
-        //     command: ()=>{ this.$refs.form.submit() },
+        //     action: ()=>{ this.$refs.form.submit() },
         //     disabled: this.folder !== undefined
         //   }
         // ],
@@ -95,15 +95,15 @@
           {
             text: bbn._("cancel"),
             icon: 'nf nf-fa-ban',
-            command: ()=>{ this.$refs.form.cancel() },
+            action: ()=>{ this.$refs.form.cancel() },
           }, {
             text: bbn._("Skip"),
             icon: 'nf nf-fa-angle_double_right',
-            command: this.skipListVersionsGitHub
+            action: this.skipListVersionsGitHub
           }, {
             text: bbn._("Import"),
             icon: 'nf nf-fa-download',
-            command: ()=>{ this.$refs.form.submit() },
+            action: ()=>{ this.$refs.form.submit() },
             disabled: ()=>{return this.folder === undefined;}
           }
         ];

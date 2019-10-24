@@ -9,7 +9,7 @@
         return [
          {
            text: bbn._('Dependencies'),
-           command: ()=>{
+           action: ()=>{
              this.dependencies(row, col, idx);
            },
            icon: 'nf nf-fa-code_branch',
@@ -17,7 +17,7 @@
            notext: true,
          },{
            text: bbn._('Info package.json new version'),
-           command: ()=>{
+           action: ()=>{
              this.infoNewVersion(row, col, idx);
            },
            notext: true,
@@ -25,7 +25,7 @@
            title: bbn._('new')
          },{
             text: bbn._('Update'),
-            command: () => {
+            action: () => {
               this.updateLib(row);
             },
             icon: 'nf nf-fa-cogs',

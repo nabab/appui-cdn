@@ -6,14 +6,14 @@
         btns:[
           {
             text: bbn._('Cancel'),
-            command: ()=>{
+            action: ()=>{
               bbn.vue.closest(this, "bbn-popup").close();
             },
             icon: 'nf nf-fa-ban',
             title: bbn._('cancel'),
           },{
             text: bbn._('Skip'),
-            command: ()=>{
+            action: ()=>{
              this.addManualyLib()
             },
             title: bbn._('skip'),
@@ -21,7 +21,7 @@
             class: "bbn-primary",
           },{
             text: bbn._('Import'),
-            command: ()=>{
+            action: ()=>{
              this.importGithub()
             },
             icon: "nf nf-fa-angle_right",
