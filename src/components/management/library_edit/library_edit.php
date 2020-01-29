@@ -6,9 +6,9 @@
           @success="success"
           confirm-leave="<?=_("Are you sure you want to close?")?>"
           :buttons="currentButton"
-          :scrollable="false"
-          style="display: grid; grid-template-rows: auto max-content"
-
+          :scrollable="true"
+          v-if="showForm"
+          class="bbn-lpadded"
 >
  <div class="bbn-padded bbn-grid-fields" v-if="!configuratorLibrary">
    <label><?=_("GitHub")?></label>
@@ -90,7 +90,7 @@
   <div class="secondStep bbn-padded" v-else>
     <bbn-splitter :scrollable="false"
                   orientation="vertical">
-      <bbn-pane :size="350">
+      <bbn-pane :size="350" class="bbn-padded">
         <bbn-splitter orientation="horizontal">
           <bbn-pane>
             <div class="bbn-padded bbn-grid-fields bbn-100"
@@ -152,7 +152,7 @@
         </bbn-splitter>
       </bbn-pane>
       <!-- tables -->
-      <bbn-pane>
+      <bbn-pane  class="bbn-padded">
         <bbn-splitter orientation="horizontal">
           <bbn-pane :size="160">
             <div class="bbn-padded bbn-w-100"  style="margin-bottom: 20px">

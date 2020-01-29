@@ -96,7 +96,7 @@
         return this.$refs.cdn_management.edit(row,  {
           title: this.source.lng.editLib,
           height: '950',
-          width: '850'
+          //width: '850'
         }, idx);
       },
       /*edit(row, col, idx){

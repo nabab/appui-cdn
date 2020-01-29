@@ -20,7 +20,7 @@
       success(ele){
         if ( ele.data ){
           bbn.vue.closest(this, 'bbn-popup').close();
-          this.getPopup().open({          
+          this.getPopup().open({
             height: '500px',
             width: '600px',
             title: bbn._('Add version library') + " " + this.source.folder,

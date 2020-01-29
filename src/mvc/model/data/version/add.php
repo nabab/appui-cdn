@@ -33,6 +33,7 @@ if ( !empty($model->data['folder']) && !empty($model->data['db']) && \defined('B
           'name' => basename($dir),
           'library' => $model->data['folder']
         ])) ){
+         
           if ( empty($github) ){
             array_push($ver, $dir);
           }

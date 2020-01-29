@@ -25,10 +25,11 @@
     methods:{
       submit(){
         if ( this.folder !== undefined ){
-          bbn.vue.closest(this, 'bbn-popup').close();
+          alert();
+          //bbn.vue.closest(this, 'bbn-popup').close();
           this.getPopup().open({
-            height: '95%',
-            width: '85%',
+            height: 950,
+            width: 850,
             title: bbn._('Add version library') + " " + this.source.name,
             component:'appui-cdn-management-library_edit',
             source: {
@@ -103,7 +104,7 @@
           }, {
             text: bbn._("Import"),
             icon: 'nf nf-fa-download',
-            action: ()=>{ this.$refs.form.submit() },
+            action: ()=>{ this.submit() },
             disabled: ()=>{return this.folder === undefined;}
           }
         ];

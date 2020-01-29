@@ -9,7 +9,7 @@
 
 if ( !empty($ctrl->post) ){
   $ctrl->data = array_merge($ctrl->data, $ctrl->post);
-  $model = $ctrl->get_model();  
+  $model = $ctrl->get_model();
   if ( !empty($model['error']) ){
     $ctrl->obj->error = $model['error'];
   }
