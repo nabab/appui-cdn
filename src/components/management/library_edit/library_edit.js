@@ -125,7 +125,7 @@
                 title: "next",
                 class:"bbn-primary",
                 icon: 'nf nf-fa-arrow_circle_right',
-                disabled: (!this.source.row.title && !this.source.row.name)  ? true : false,
+             //   disabled: (!this.source.row.title && !this.source.row.name)  ? true : false,
                 action: ()=>{ this.next() }
               }
             ];
@@ -197,8 +197,6 @@
               bbn.fn.each( d.data, (val, prop) =>{
                 // if ( (prop !== 'name') &&
                 //   (prop !== 'latest') &&
-                bbn.fn.log("propooo", prop)
-                alert();
                 if ( this.source.row[prop] !== undefined ){
                   this.source.row[prop] = val;
                   if ( prop === 'licence' ){

@@ -24,7 +24,6 @@ if ( !empty($ctrl->post['url']) &&
       'info_package_json' => $ctrl->post['info_package_json']
     ]);
   }
-  // die(var_dump("dentro",$ctrl->post));
   if ( isset($ctrl->post['only_info']) ){
     $ctrl->data['only_info'] = $ctrl->post['only_info'];
   }

@@ -102,7 +102,7 @@ if ( !empty($model->data['git_user']) && !empty($model->data['git_repo']) ){
 
   if ( !empty($model->data['info_package_json']) ){
     if ( !empty($package) ){
-      die(var_dump($package));
+      
       $info = $package;
     }
     else if ( !empty($bower) ){

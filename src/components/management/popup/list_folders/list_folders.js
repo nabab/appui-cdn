@@ -25,8 +25,6 @@
     methods:{
       submit(){
         if ( this.folder !== undefined ){
-          alert();
-          //bbn.vue.closest(this, 'bbn-popup').close();
           this.getPopup().open({
             height: 950,
             width: 850,
