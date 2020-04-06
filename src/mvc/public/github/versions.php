@@ -19,6 +19,7 @@ if ( !empty($ctrl->post['url']) &&
     'git_user' =>  $ctrl->post['url'][0],
     'git_repo' => $ctrl->post['url'][1]
   ]);
+  
   $ctrl->obj->data = $ctrl->get_model();
 }
 else {
