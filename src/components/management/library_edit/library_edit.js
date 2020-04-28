@@ -200,9 +200,9 @@
                 if ( this.source.row[prop] !== undefined ){
                   this.source.row[prop] = val;
                   if ( prop === 'licence' ){
-                    let lic = bbn.fn.get_field(data.licences, 'name', d.data[prop], 'licence');
+                    let lic = bbn.fn.getField(data.licences, 'licence', 'name', d.data[prop]);
                     if ( !lic ){
-                      lic = bbn.fn.get_field(data.licences, 'licence', d.data[prop], 'licence');
+                      lic = bbn.fn.getField(data.licences, 'licence', 'licence', d.data[prop]);
                     }
                     if ( lic ){
                       this.source.row.licence = lic;
@@ -399,7 +399,7 @@
       },
       //at select a version depandacies render in this function for show at number version and not your id
       showVersion(ele){
-        return bbn.fn.get_field(this.dataVersion.lib_ver, "id_ver", ele.id_ver, "version");
+        return bbn.fn.getField(this.dataVersion.lib_ver, "version", "id_ver", ele.id_ver);
       },
       //at click editline table dependencies
       saveDependencies(row, col, idx){       

@@ -49,9 +49,9 @@
                 for (var prop in d.data){
                   if ( (prop !== 'name') && (prop !== 'latest') && (this[prop] !== undefined) ){
                     if ( prop === 'licence' ){
-                      let lic = bbn.fn.get_field(data.licences, 'name', d.data[prop], 'licence');
+                      let lic = bbn.fn.getField(data.licences, 'licence', 'name', d.data[prop]);
                       if ( !lic ){
-                        lic = bbn.fn.get_field(data.licences, 'licence', d.data[prop], 'licence');
+                        lic = bbn.fn.getField(data.licences, 'licence', 'licence', d.data[prop]);
                       }
                       if ( lic ){
                         d.data.licence = lic;

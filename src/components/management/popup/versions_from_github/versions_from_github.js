@@ -54,7 +54,7 @@
         return this.source.versions[i]['id'];
       },
       versionName(){
-        return bbn.fn.get_field(this.source.versions, 'id', this.git_id_ver, 'version');
+        return bbn.fn.getField(this.source.versions, 'version', 'id', this.git_id_ver);
       },
       dataPost(){
         return {

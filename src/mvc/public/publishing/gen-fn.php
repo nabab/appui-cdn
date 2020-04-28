@@ -8,6 +8,3 @@
 if (!empty($ctrl->post['fns'])) {
   $ctrl->action();
 }
-else {
-  $ctrl->combo(_("bbnjs publisher"));
-}
