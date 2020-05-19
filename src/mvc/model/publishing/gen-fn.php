@@ -122,6 +122,9 @@ if ($model->has_data('fns')) {
 EOD;
       $params = ['param', 'returns', ''];
       $methods = [];
+      $parser['methods'] = array_filter($parser['methods'], function($a) {
+        return substr($a['name'], 0, 1) !== '_';
+      });
       foreach ($parser['methods'] as $meth) {
         $src .= '    /**'.PHP_EOL;
         $methods[$meth['name']] = '### <a name="'.$meth['name'].'"></a>bbn.fn.'.
@@ -255,6 +258,9 @@ EOD;
       sort($method_names);
       $toc = '';
       foreach ($method_names as $method_name) {
+        if (substr($method_name, 0, 1) === '_') {
+          continue;
+        }
         $toc .= '[bbn.fn.__'.$method_name.'__](#'.$method_name.')  '.PHP_EOL.
           $parser['methods'][$method_name]['summary'].'  '.PHP_EOL;
       }
@@ -269,20 +275,22 @@ EOD;
   $json = [];
   foreach ($res as $file => $content) {
     if (!empty($content['methods'])) {
-      $json[] = [
+      $tmp = [
         'text' => substr($content['summary'], 0, -1),
         'desc' => $content['description'],
-        'value' => 'php/'.basename($file, '.js'),
+        'value' => basename($file, '.js'),
         'items' => \bbn\x::map(function($a, $name) use ($file) {
           return [
             'file' => $file,
             'text' => $name,
             'desc' => substr($a['summary'], 0, -1),
             'value' => 'js/'.basename($file, '.js').'/'.$name,
-            'url' => 'js/'.basename($file, '.js').'/'.$name
+            'url' => 'bbn-js/doc/'.basename($file, '.js').'/'.$name
           ];
         }, $content['methods'])
       ];
+      \bbn\x::sort_by($tmp['items'], 'text');
+      $json[] = $tmp;
     }
   }
   $fs->put_contents(BBN_CDN_PATH.'lib/bbnjs/1.0.1/doc/bbn.json', json_encode($json, JSON_PRETTY_PRINT));
