@@ -284,7 +284,7 @@ EOD;
             'file' => $file,
             'text' => $name,
             'desc' => substr($a['summary'], 0, -1),
-            'value' => 'js/'.basename($file, '.js').'/'.$name,
+            'value' => $name,
             'url' => 'bbn-js/doc/'.basename($file, '.js').'/'.$name
           ];
         }, $content['methods'])
