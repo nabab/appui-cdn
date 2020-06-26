@@ -15,6 +15,10 @@ $vue = [];
 $mixins = [];
 $expressions = [];
 $less = new \lessc();
+$fs->delete('dist/js');
+$fs->delete('dist/vue');
+$fs->create_path('dist/js/components');
+$fs->delete('dist/vue/components');
 foreach ($components as $component) {
   $cp = basename($component);
   $html = $fs->is_file($p.$cp.'/'.$cp.'.html') ? $fs->get_contents($p.$cp.'/'.$cp.'.html') : '';
@@ -22,6 +26,11 @@ foreach ($components as $component) {
   $js = $fs->is_file($p.$cp.'/'.$cp.'.js') ? $fs->get_contents($p.$cp.'/'.$cp.'.js') : '';
   $cfg = $fs->is_file($p.$cp.'/bbn.json') ? json_decode($fs->get_contents($p.$cp.'/bbn.json'), true) : '';
   if ($js) {
+    $cp_files = array_filter($fs->get_files($p.$cp, true, false), function ($a) use ($cp, $p) {
+      $ext = \bbn\str::file_ext($a);
+      return !in_array($ext, ['md', 'lang', 'pdf', 'bak', 'json']) &&
+        !in_array($a, [$p.$cp.'/'.$cp.'.html', $p.$cp.'/'.$cp.'.less', $p.$cp.'/'.$cp.'.js']);
+    });
     $ar_cfg = false;
     if (!empty($cfg['dependencies'])) {
       $cdn_cfg = new \bbn\cdn\config(
@@ -103,6 +112,8 @@ foreach ($components as $component) {
     }
     $vue[] = $tmp;
     // .vue files
+    $fs->create_path('dist/js/components/'.$cp);
+    $fs->create_path('dist/vue/components/'.$cp);
     $st_vue = '';
     $css_dependencies = [];
     $st_js = '(bbn_resolve) => { ((bbn) => {'.PHP_EOL;
@@ -156,26 +167,30 @@ document.body.insertAdjacentElement('beforeend', script);
 JAVASCRIPT;
     }
     $st_vue .= '<script>'.PHP_EOL.'  module.exports = '.$js.PHP_EOL.'</script>'.PHP_EOL;
-    if ($css) {
-      if ($css = $less->compile($css)) {
-        $st_vue .= '<style scoped>'.PHP_EOL.$css.PHP_EOL.'</style>'.PHP_EOL;
-        $content = str_replace('`', '\\`', $css);
-        $st_js .= <<<JAVASCRIPT
-let css = document.createElement('style');
-css.innerHTML = `$content`;
+    if ($css && ($css = $less->compile($css))) {
+      $st_vue .= '<style scoped>'.PHP_EOL.$css.PHP_EOL.'</style>'.PHP_EOL;
+      $content = str_replace('`', '\\`', $css);
+      $fs->put_contents('dist/js/components/'.$cp.'/'.$cp.'.css', $content);
+      $st_js .= <<<JAVASCRIPT
+let css = document.createElement('link');
+css.setAttribute('rel', "stylesheet");
+css.setAttribute('href', bbn.vue.libURL + "dist/js/components/$cp/$cp.css");
 document.head.insertAdjacentElement('beforeend', css);
 
 JAVASCRIPT;
-      }
     }
     $st_js .= $js.PHP_EOL.'bbn_resolve("ok");'.PHP_EOL;
     if ($dep_st) {
       $st_js .= '};'.PHP_EOL.'document.head.insertAdjacentElement("beforeend", script_dep);'.PHP_EOL;
     }
     $st_js .= '})(bbn); }';
-    $fs->put_contents('dist/js/components/'.$cp.'.js', $st_js);
-    $fs->put_contents('dist/vue/components/'.$cp.'.vue', $st_vue);
-    if ($fs->is_file('dist/vue/components/'.$cp.'.vue')) {
+    foreach ($cp_files as $cp_file) {
+      $fs->copy($cp_file, 'dist/js/components/'.$cp.'/'.basename($cp_file));
+      $fs->copy($cp_file, 'dist/vue/components/'.$cp.'/'.basename($cp_file));
+    }
+    $fs->put_contents('dist/js/components/'.$cp.'/'.$cp.'.js', $st_js);
+    $fs->put_contents('dist/vue/components/'.$cp.'/'.$cp.'.vue', $st_vue);
+    if ($fs->is_file('dist/vue/components/'.$cp.'/'.$cp.'.vue')) {
       $num++;
     }
   }
