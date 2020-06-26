@@ -61,7 +61,7 @@ if ( !empty($model->data['folder']) && !empty($model->data['db']) && \defined('B
         $pa = substr($p, \strlen($ver_path), \strlen($p));
         $r = [
           'text' => basename($p),
-          'path' => (strpos($pa, '/') === 0) ? substr($pa, 1, \strlen($pa)) : $pa
+          'fpath' => (strpos($pa, '/') === 0) ? substr($pa, 1, \strlen($pa)) : $pa
         ];
         if ( is_dir($p) ){
           $r['items'] = $tree($p, $ver_path, $ext);

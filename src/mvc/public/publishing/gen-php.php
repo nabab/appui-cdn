@@ -70,6 +70,19 @@ foreach ($types as $singular => $type) {
       $path_bbnio = str_replace('php/doc/'.$singular.'/', 'php/doc/method/', $path_bbnio);
       $num = 0;
       $php_doc = $full[$path.$class_name.'.php'] ?? false;
+      if ($xml->constructor) {
+        $m = (array)$xml->constructor[0];
+        $desc = '';
+        if ($php_doc && $php_doc['methods'][$m['@attributes']['name']]) {
+          $desc = $php_doc['methods'][$m['@attributes']['name']]['summary'] ?? '';
+        }
+        $tmp['items'][] = [
+          'text' => $m['@attributes']['name'],
+          'value' => $m['@attributes']['name'],
+          'url' => $path_bbnio.$path.$class_name.'/'.$m['@attributes']['name'],
+          'desc' => $desc
+        ];
+      }
       foreach ($xml->method as $method) {
         $m = (array)$method;
         if ($m['@attributes']['visibility'] === 'public') {

@@ -277,12 +277,12 @@
 
         let obj = {
           data: ele,
-          path: ele.path,
+          fpath: ele.fpath,
           items: ele.items || [],
           icon: 'nf nf-fa-file',
           file: true,
           text: ele.text,
-          num: ele.items ? ele.items.length : 0,
+          //num: ele.items ? ele.items.length : 0,
           numChildren: ele.items ? ele.items.length : 0
         };
         if ( obj.items.length > 0 ){
@@ -301,7 +301,7 @@
         }*/
       },
       checkFile(){
-        this.copyItemsTree = bbn.fn.extend(this.$refs.filesListTree.items, true);
+        this.copyItemsTree = bbn.fn.extend(this.$refs.filesListTree.source, true);
         this.referenceNodeTree = this.$refs.filesListTree.checked;
       },
       uncheckFile(){

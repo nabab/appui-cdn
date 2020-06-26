@@ -22,9 +22,9 @@ if ( !empty($model->data['db']) && !empty($model->data['version']) && \defined('
           $pa = substr($p, \strlen($ver_path), \strlen($p));
           $r = [
             'text' => basename($p),
-            'path' => (strpos($pa, '/') === 0) ? substr($pa, 1, \strlen($pa)) : $pa
+            'fpath' => (strpos($pa, '/') === 0) ? substr($pa, 1, \strlen($pa)) : $pa
           ];
-          if ( !empty($c) && \in_array($r['path'], $c) ){
+          if ( !empty($c) && \in_array($r['fpath'], $c) ){
             $r['checked'] = 1;
           }
           if ( is_dir($p) ){
@@ -43,7 +43,7 @@ if ( !empty($model->data['db']) && !empty($model->data['version']) && \defined('
   $themes = [];
   if ( !empty($cont['files']) ){
     foreach ( $cont['files'] as $f ){
-      array_push($files, ['path' => $f]);
+      array_push($files, ['fpath' => $f]);
     }
   }
   if ( !empty($cont['lang']) ){

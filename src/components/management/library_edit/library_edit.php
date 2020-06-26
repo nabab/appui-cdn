@@ -104,11 +104,11 @@
                 <?=_("Files:")?>
               </span>
               <bbn-tree :source="dataVersion.files_tree"
-                        :checkable="true"
+                        :selection="true"
                         @check="checkFile"
                         @uncheck="uncheckFile"
                         :map="treeFiles"
-                        uid="path"
+                        uid="fpath"
                         ref="filesListTree"
                         @ready="checkedNode"
               ></bbn-tree>
