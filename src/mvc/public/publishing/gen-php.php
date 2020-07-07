@@ -59,7 +59,7 @@ foreach ($types as $singular => $type) {
       $content2 = $fs->get_contents(BBN_LIB_PATH.'bbn/bbn/src/bbn/'.$path.$class_name.'.php');
       $info = $content2 ? $p->parse($content2) : [];
       $tmp = [
-        'type' => $type,
+        'type' => $singular,
         'value' => $class_name,
         'text' => $class_name,
         'url' => $path_bbnio.$path.$class_name,
@@ -77,6 +77,8 @@ foreach ($types as $singular => $type) {
           $desc = $php_doc['methods'][$m['@attributes']['name']]['summary'] ?? '';
         }
         $tmp['items'][] = [
+          'type' => 'method',
+          'class' => $path.$class_name,
           'text' => $m['@attributes']['name'],
           'value' => $m['@attributes']['name'],
           'url' => $path_bbnio.$path.$class_name.'/'.$m['@attributes']['name'],
@@ -91,6 +93,8 @@ foreach ($types as $singular => $type) {
             $desc = $php_doc['methods'][$m['@attributes']['name']]['summary'] ?? '';
           }
           $tmp['items'][] = [
+            'type' => 'method',
+            'class' => $path.$class_name,
             'text' => $m['@attributes']['name'],
             'value' => $m['@attributes']['name'],
             'url' => $path_bbnio.$path.$class_name.'/'.$m['@attributes']['name'],
