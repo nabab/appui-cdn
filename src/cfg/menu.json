@@ -1,0 +1,9 @@
+{
+  "text": "CDN",
+  "icon": "nf nf-fa-archive",
+  "items": [{
+    "text": "Management",
+    "icon": "nf nf-fa-list_alt",
+    "link": "management"
+  }]
+}
