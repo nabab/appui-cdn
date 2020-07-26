@@ -99,7 +99,7 @@ foreach ($components as $component) {
           $stmp = [
             'text' => $name,
             'desc' => $d['description'] ?? '',
-            'url' => 'bbn-vue/component/'. $cp .'/'.$i.'/'.$name,
+            'url' => 'bbn-vue/component/'. $cp .'/doc/'.$i.'#'.$name,
           ];
         }
         $item[] = $stmp;
@@ -156,7 +156,7 @@ JAVASCRIPT;
     }
     if ($html) {
       $st_vue .= '<template>'.PHP_EOL.$html.PHP_EOL.'</template>'.PHP_EOL;
-      $content = str_replace('`', '\\`', $html);
+      $content = str_replace('`', '\\`', str_replace('\\', '\\\\', $html));
       $st_js .= <<<JAVASCRIPT
 let script = document.createElement('script');
 script.innerHTML = `$content`;
@@ -179,7 +179,7 @@ document.head.insertAdjacentElement('beforeend', css);
 
 JAVASCRIPT;
     }
-    $st_js .= $js.PHP_EOL.'bbn_resolve("ok");'.PHP_EOL;
+    $st_js .= $js.PHP_EOL.'if (bbn_resolve) {bbn_resolve("ok");}'.PHP_EOL;
     if ($dep_st) {
       $st_js .= '};'.PHP_EOL.'document.head.insertAdjacentElement("beforeend", script_dep);'.PHP_EOL;
     }
@@ -225,7 +225,7 @@ foreach ($method_names as $method_name) {
     $fns[] = [
       'text' => $method_name,
       'url' => 'bbn-vue/function/'.$method_name,
-      'desc' => $methods[$method_name]['description']
+      'desc' => $methods[$method_name]['summary']
     ];
   }
 }
