@@ -30,7 +30,7 @@ function pad(&$arr) {
 }
 $less = new \lessc();
 if ($model->has_data('fns')) {
-  $dir = BBN_CDN_PATH.'lib/bbnjs/1.0.1/src/fn';
+  $dir = BBN_CDN_PATH.'lib/bbn-js/1.0.1/src/fn';
   $fs = new \bbn\file\system();
   $fs->cd($dir);
   $files = $fs->get_files('.');
@@ -267,8 +267,8 @@ EOD;
       }
       $src .= '  });'.PHP_EOL.'})(bbn);'.PHP_EOL;
       $md .= '<a name="bbn_top"></a>'.$toc.PHP_EOL.PHP_EOL.\bbn\x::join($methods, PHP_EOL.PHP_EOL);
-      $fs->put_contents(BBN_CDN_PATH.'lib/bbnjs/1.0.1/doc/src/'.$f, $src);
-      $fs->put_contents(BBN_CDN_PATH.'lib/bbnjs/1.0.1/doc/md/'.basename($f, '.js').'.md', $md);
+      $fs->put_contents(BBN_CDN_PATH.'lib/bbn-js/1.0.1/doc/src/'.$f, $src);
+      $fs->put_contents(BBN_CDN_PATH.'lib/bbn-js/1.0.1/doc/md/'.basename($f, '.js').'.md', $md);
       $parser['new'] = $src;
       $res[$f] = $parser;
     }
@@ -294,26 +294,26 @@ EOD;
       $json[] = $tmp;
     }
   }
-  $fs->put_contents(BBN_CDN_PATH.'lib/bbnjs/1.0.1/doc/bbn.json', json_encode($json, JSON_PRETTY_PRINT));
+  $fs->put_contents(BBN_CDN_PATH.'lib/bbn-js/1.0.1/doc/bbn.json', json_encode($json, JSON_PRETTY_PRINT));
   $files = json_decode('["src\/bbn.js","src\/functions.js","src\/env\/_def.js","src\/var\/_def.js","src\/var\/diacritic.js","src\/fn\/_def.js","src\/fn\/ajax.js","src\/fn\/form.js","src\/fn\/history.js","src\/fn\/init.js","src\/fn\/locale.js","src\/fn\/misc.js","src\/fn\/object.js","src\/fn\/size.js","src\/fn\/string.js","src\/fn\/style.js","src\/fn\/type.js"]');
   $st = '';
   foreach ($files as $f) {
-    $st .= $fs->get_contents(BBN_CDN_PATH.'lib/bbnjs/1.0.1/'.$f).PHP_EOL.PHP_EOL.PHP_EOL;
+    $st .= $fs->get_contents(BBN_CDN_PATH.'lib/bbn-js/1.0.1/'.$f).PHP_EOL.PHP_EOL.PHP_EOL;
   }
-  $fs->put_contents(BBN_CDN_PATH.'lib/bbnjs/1.0.1/dist/bbn.js', $st);
-  $fs->put_contents(BBN_CDN_PATH.'lib/bbnjs/1.0.1/dist/bbn.min.js', JShrink\Minifier::minify($st, ['flaggedComments' => false]));
-  $files = $fs->get_files(BBN_CDN_PATH.'lib/bbnjs/1.0.1/src/css', 'less');
+  $fs->put_contents(BBN_CDN_PATH.'lib/bbn-js/1.0.1/dist/bbn.js', $st);
+  $fs->put_contents(BBN_CDN_PATH.'lib/bbn-js/1.0.1/dist/bbn.min.js', JShrink\Minifier::minify($st, ['flaggedComments' => false]));
+  $files = $fs->get_files(BBN_CDN_PATH.'lib/bbn-js/1.0.1/src/css', 'less');
   $st = '';
   foreach ($files as $f) {
     if (\bbn\str::is_integer(substr(basename($f), 0, 2))) {
       $st .= $fs->get_contents($f).PHP_EOL.PHP_EOL.PHP_EOL;
     }
   }
-  $default = $fs->get_contents(BBN_CDN_PATH.'lib/bbnjs/1.0.1/src/css/themes/_def.less');
+  $default = $fs->get_contents(BBN_CDN_PATH.'lib/bbn-js/1.0.1/src/css/themes/_def.less');
   $compiled = $less->compile($default.$st);
-  $fs->put_contents(BBN_CDN_PATH.'lib/bbnjs/1.0.1/dist/css/bbn.css', $compiled);
-  $fs->put_contents(BBN_CDN_PATH.'lib/bbnjs/1.0.1/dist/css/bbn.min.css', CssMin::minify($compiled));
-  $themes = $fs->get_files(BBN_CDN_PATH.'lib/bbnjs/1.0.1/src/css/themes', '.less');
+  $fs->put_contents(BBN_CDN_PATH.'lib/bbn-js/1.0.1/dist/css/bbn.css', $compiled);
+  $fs->put_contents(BBN_CDN_PATH.'lib/bbn-js/1.0.1/dist/css/bbn.min.css', CssMin::minify($compiled));
+  $themes = $fs->get_files(BBN_CDN_PATH.'lib/bbn-js/1.0.1/src/css/themes', '.less');
   foreach ($themes as $t) {
     $name = basename($t, '.less');
     $error = false;
@@ -326,8 +326,8 @@ EOD;
       $error = true;
     }
     if (!$error && $compiled) {
-      $fs->put_contents(BBN_CDN_PATH.'lib/bbnjs/1.0.1/dist/css/bbn.'.$name.'.css', $compiled);
-      $fs->put_contents(BBN_CDN_PATH.'lib/bbnjs/1.0.1/dist/css/bbn.'.$name.'.min.css', CssMin::minify($compiled));
+      $fs->put_contents(BBN_CDN_PATH.'lib/bbn-js/1.0.1/dist/css/bbn.'.$name.'.css', $compiled);
+      $fs->put_contents(BBN_CDN_PATH.'lib/bbn-js/1.0.1/dist/css/bbn.'.$name.'.min.css', CssMin::minify($compiled));
     }
   }
   //$files = $fs->get_files

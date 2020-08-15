@@ -9,7 +9,7 @@ if (isset($model->data['fns'])) {
   $fs = new \bbn\file\system();
   $sources = [
     // bbnjs
-    BBN_CDN_PATH.'lib/bbnjs/1.0.1/src',
+    BBN_CDN_PATH.'lib/bbn-js/1.0.1/src',
     // bbn-vue
     BBN_CDN_PATH.'lib/bbn-vue/2.0.2/src',
     BBN_APP_PATH.'src',
