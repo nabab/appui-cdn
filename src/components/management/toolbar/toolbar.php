@@ -1,7 +1,7 @@
 <!-- Libraries toolbar -->
 <div class="toolbar">
   <div style="float:left; padding-left: 5px">
-    <span style="margin-right: 5px"><?=_('Reload:')?></span>
+    <span style="margin-right: 5px"><?=_('Reload')?></span>
     <bbn-button @click="management.refreshManagement"
                 icon="nf nf-fa-sync_alt"
                 style="margin-right: 5px"
@@ -9,7 +9,7 @@
       <?=_("Management")?>
     </bbn-button>
     <!-- Add library button -->
-    <span style="margin: 0 5px 0 10px"><i class="nf nf-fa-archive"></i><?=_('Libraries:')?></span>
+    <span style="margin: 0 5px 0 10px"><i class="nf nf-fa-archive"></i><?=_('Libraries')?></span>
     <bbn-button @click="add"
                 icon="nf nf-fa-plus"
                 style="margin-right: 5px"

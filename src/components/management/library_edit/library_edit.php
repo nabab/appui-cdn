@@ -11,7 +11,7 @@
           class="bbn-lpadded"
 >
  <div class="bbn-padded bbn-grid-fields" v-if="!configuratorLibrary">
-   <label><?=_("GitHub")?></label>
+   <label>GitHub</label>
    <div class="bbn-flex-width">
      <bbn-input class="bbn-flex-fill" v-model="source.row.git"></bbn-input>
      <bbn-button @click="getInfo"
@@ -59,7 +59,7 @@
     </div>
 
     <label>
-      <?=_("Web site")?>
+      <?=_("Website")?>
     </label>
     <bbn-input v-model="source.row.website"></bbn-input>
 
@@ -97,11 +97,11 @@
                  style="grid-auto-rows: max-content auto"
             >
               <span class="bbn-b">
-                <?=_("Name:")?>
+                <?=_("Name")?>:
               </span>
               <bbn-input style="width: 100%" v-model="dataVersion.version" :disabled="disabledEditVersion"></bbn-input>
               <span class="bbn-b">
-                <?=_("Files:")?>
+                <?=_("Files")?>:
               </span>
               <bbn-tree :source="dataVersion.files_tree"
                         :selection="true"
@@ -118,14 +118,14 @@
             <div class="bbn-padded">
               <div class="bbn-card bbn-c bbn-v-middle">
                 <span class="bbn-b">
-                  <?=_('Select files for order')?>
+                  <?=_('Select the files for changing their order')?>
                 </span>
               </div>
             </div>
             <div class="bbn-flex-fill bbn-h-100 bbn-flex-width" v-if ="treeOrderSource">
               <div class="bbn-padded">
                 <div class="bbn-b bbn-c" style="padding-bottom: 5px">
-                  <?=_("Move File")?>
+                  <?=_("Move selected files")?>
                 </div>
                 <div class="bbn-card bbn-c" v-if="fileMove" style="margin-top: 15px">
                   <div class="bbn-padded">
@@ -189,7 +189,7 @@
                           :style= "{color: table === 'dependent' ? 'red' : 'inherit'}"
                           v-if= "management.action.addVers === true"
               >
-                <?=_('Dependent')?>
+                <?=_('Get slave libraries')?>
               </bbn-button>
             </div>
             <div class="bbn-padded">

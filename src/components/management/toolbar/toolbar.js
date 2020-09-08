@@ -13,7 +13,7 @@
         this.getPopup().open({
           width: "70%",
           height: "15%",
-          title: bbn._("GitHub Link:"),
+          title: bbn._("GitHub link"),
           component: 'appui-cdn-management-popup-toolbar-library_add',
           //source: this.updateList
         });

@@ -73,7 +73,7 @@
                   this.getPopup().open({
                     height: '80%',
                     width: '70%',
-                    title: bbn._("Import library of github:"),
+                    title: bbn._("Import library from Github"),
                     component:'appui-cdn-management-library_edit',
                     source: {
                       row: d.data,
@@ -82,14 +82,14 @@
                   });
                 }
                 else{
-                  bbn.vue.closest(this, 'bbn-container').popup().alert(bbn._("Releases not found"));
+                  bbn.vue.closest(this, 'bbn-container').popup().alert(bbn._("No release found"));
                 }
               }
             }
           );
         }
         else{
-          bbn.vue.closest(this, "bbn-popup").alert(bbn._("Empty url github"));
+          bbn.vue.closest(this, "bbn-popup").alert(bbn._("The repository's URL is empty"));
         }
       },
       addManualyLib(){

@@ -3,12 +3,11 @@
           :buttons="buttonsAction"
           :prefilled="true"
           @submit="submit"
-          confirm-leave="<?=_("Are you sure you want to go out?")?>"
 >
   <div class="bbn-w-100 bbn-padded" bbn-xl>
     <bbn-dropdown style="width:300px"
                   ref="listFolders"
-                  placeholder= "<?=_('Select folder version')?>"
+                  placeholder= "<?=_('Select version directory')?>"
                   :source="folders"
                   :required="true"
                   v-model="folderId"

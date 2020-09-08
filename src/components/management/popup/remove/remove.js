@@ -17,32 +17,32 @@
       success(){
         bbn.vue.closest(this,'bbn-popup').close();
         if ( this.source.deleteLib ){
-          appui.success(bbn._('delete libreray'));
+          appui.success(bbn._('Library deleted'));
         }
         else{
-          appui.success(bbn._('delete version'));
+          appui.success(bbn._('Version deleted'));
         }
         this.management.refreshManagement();
       },
       failure(){
         if ( this.source.deleteLib ){
-          appui.error(bbn._("Error delete libray"));
+          appui.error(bbn._("Error while deleting library"));
         }
         else{
-          appui.error(bbn._("Error delete version"));
+          appui.error(bbn._("Error while deleting version"));
         }
       }
     },
     mounted(){
       //case delete library
       if ( this.source.deleteLib ){
-        this.deleteElement = bbn._("Do you want delete library") +  " " +  this.source.title + " ?";
-        this.deleteFolderElement = "( " +  bbn._("Delete the folder" ) + " " +   this.source.name + " " +  bbn._("in cdn") + " )";
+        this.deleteElement = bbn._("Do you really want delete the library") +  " " +  this.source.title + "?";
+        this.deleteFolderElement = "(" +  bbn._("and delete the folder" ) + " " +   this.source.name + ")";
       }
       //case delete version
       else{
-        this.deleteElement = bbn._("Do you want delete version ") +  this.source.name  +" ?";
-        this.deleteFolderElement = "( " +  bbn._("Delete the folder version" ) + " " +   this.source.name + " " +  bbn._("in cdn") + " )";
+        this.deleteElement = bbn._("Do you really want to delete the version") + ' ' + this.source.name  +"?";
+        this.deleteFolderElement = "(" +  bbn._("and delete the version folder" ) + " " +   this.source.name + ")";
       }
     }
   }

@@ -19,13 +19,13 @@
     </div>
     <!-- Dependencies panel -->
     <div class="bbn-block info-masonry">
-      <div class="bbn-header k-shadow" style="text-align: center"><?=_("DEPENDENCIES")?></div>
+      <div class="bbn-header k-shadow" style="text-align: center"><?=_("Library dependencies")?></div>
       <!-- Dependencies list -->
       <div id="isfih3huasdf92huf823hyhas93"></div>
     </div>
     <!-- Slave dependencies panel -->
     <div class="bbn-block info-masonry">
-      <div class="bbn-header k-shadow" style="text-align: center"><?=_("SLAVE DEPENDENCIES")?></div>
+      <div class="bbn-header k-shadow" style="text-align: center"><?=_("Slave libraries")?></div>
       <!-- Dependencies list -->
       <div id="snjgdnasdoi234nasdnu1opteoh"></div>
     </div>

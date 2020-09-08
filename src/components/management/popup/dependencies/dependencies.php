@@ -8,7 +8,7 @@
                :order="[{field: 'name', dir: 'ASC'}]"
                :title-groups="[{
                               value: 'depend',
-                              text: '<?=_("DEPEND")?>',
+                              text: '<?=_("Dependencies")?>',
                             }]"
     >
       <bbns-column title="<?=_("Library")?>"
@@ -33,7 +33,7 @@
                :order="[{field: 'name', dir: 'ASC'}]"
                :title-groups="[{
                               value: 'dependent',
-                              text: '<?=_("DEPENDENT")?>'
+                              text: '<?=_("Slaves")?>'
                             }]"
     >
       <bbns-column title="<?=_("Library")?>"

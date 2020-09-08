@@ -23,7 +23,7 @@
           this.getPopup().open({
             height: '500px',
             width: '600px',
-            title: bbn._('Add version library') + " " + this.source.folder,
+            title: bbn._('Add version to this library') + " " + this.source.folder,
             component:'appui-cdn-management-library_edit',
             source:{
               row: bbn.fn.extend(ele.data.folders_versions[0], {github: ele.data.github}),

@@ -149,7 +149,7 @@
                     this.$refs.form_library.submit()
                   }
                   else{
-                    alert(bbn._("No selected files"));
+                    alert(bbn._("No file selected"));
                   }
                 }
               }
@@ -169,7 +169,7 @@
                       this.$refs.form_library.submit()
                     }
                     else{
-                      bbn.vue.closest(this, 'bbn-popup').alert(bbn._("No name library or no name folder library"));
+                      bbn.vue.closest(this, 'bbn-popup').alert(bbn._("The name or the folder name for this library is missing"));
                     }
                   }//case edit or sdd version
                   else{
@@ -177,7 +177,7 @@
                       this.$refs.form_library.submit()
                     }
                     else{
-                      bbn.vue.closest(this, 'bbn-popup').alert(bbn._("No file order"));
+                      bbn.vue.closest(this, 'bbn-popup').alert(bbn._("No file selected"));
                     }
                   }
                 },
@@ -313,7 +313,7 @@
           text: "destroy",
           icon: "nf nf-fa-trash",
           action: (row, col, id )=>{
-            return this.$refs.tableLanguages.delete(id, bbn._("Are you sure you want to delete?"));
+            return this.$refs.tableLanguages.delete(id, bbn._("Are you sure you want to continue?"));
           },
           notext: true
         }]
@@ -323,7 +323,7 @@
           text: "destroy",
           icon: "nf nf-fa-trash",
           action: (row, col, id )=>{
-            return this.$refs.tableThemes.delete(id, bbn._("Are you sure you want to delete?"));
+            return this.$refs.tableThemes.delete(id, bbn._("Are you sure you want to continue?"));
             // if ( this.$refs.tableThemes.currentData.length === 0 ){
             //   this.check_prepend = false;
             // }
@@ -389,7 +389,7 @@
           {
            text: 'Delete',
            action: (row, col, id )=>{
-             return this.$refs.tableDependecies.delete(id, bbn._("Are you sure you want to delete?"));
+             return this.$refs.tableDependecies.delete(id, bbn._("Are you sure you want to continue?"));
            },
            icon: 'nf nf-fa-trash',
            title: 'delete',
@@ -405,7 +405,10 @@
       saveDependencies(row, col, idx){       
         //error in case no lib or version for dependencies
         if ( !row.id_ver || !row.lib_name ){
-          appui.error(bbn._("ID_VERSION or LIBRARY NAME is missing"));
+          appui.error(bbn._("The version's ID is missing"));
+        }
+        else if (!row.lib_name) {
+          appui.error(bbn._("The library's name is missing"));
         }
          //error in case no lib or version or existing lib  in list of dependencies
         else if ( (this.dataVersion.dependencies.length > 0) &&
@@ -415,7 +418,7 @@
         }
         //if we insert a value that is not an integer as the order number
         else if ( !Number.isInteger(row.order) ){
-          appui.error(bbn._("The order is not an integer"));
+          appui.error(bbn._("The order should be a number"));
         }
         else {
           let obj = bbn.fn.extend({}, row)
@@ -603,7 +606,7 @@
         props: ['source'],
         data(){
           return{
-            titleButton: bbn._('Add file language'),
+            titleButton: bbn._('Add language file'),
             sourceTree:  editLib.dataVersion.languages_tree,
           }
         },
@@ -612,7 +615,7 @@
             this.getPopup().open({
               height: '70%',
               width: '30%',
-              title: bbn._("Files:"),
+              title: bbn._("Files"),
               component:'appui-cdn-management-popup-tree_files',
               source: {tree: this.sourceTree, table: bbn.vue.closest(this,"bbn-form").$parent.data.languages},
               onClose: () =>{
@@ -637,7 +640,7 @@
             this.getPopup().open({
               height: '70%',
               width: '30%',
-              title: bbn._("Files:"),
+              title: bbn._("Files"),
               component:'appui-cdn-management-popup-tree_files',
               source: {
                 tree: this.sourceTree,
@@ -660,7 +663,7 @@
         data(){
           return {
             show: editLib.table === "themes",
-            labelCheck: bbn._('Theme Prepend'),
+            labelCheck: bbn._('Prepend the theme files'),
             checkTheme: editLib.complementaryData.theme_prepend
           }
         },

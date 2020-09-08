@@ -28,7 +28,7 @@
           this.getPopup().open({
             height: 950,
             width: 850,
-            title: bbn._('Add version library') + " " + this.source.name,
+            title: bbn._('Add version to this library') + " " + this.source.name,
             component:'appui-cdn-management-library_edit',
             source: {
               row: this.folder,
@@ -45,7 +45,7 @@
           this.getPopup().open({
             height: '25%',
             width: '50%',
-            title: bbn._('List versions github'),
+            title: bbn._("List versions from repository"),
             component:'appui-cdn-management-popup-versions_from_github',
             source: bbn.fn.extend({}, ele.data, {folder: this.source.name, versions: ele.data.versions})
           });
@@ -68,7 +68,7 @@
               }
             }
             else{
-              appui.errror(bbn._("Error delete"))
+              appui.errror(bbn._("Error while deleting"))
             }
           });
         }

@@ -11,7 +11,7 @@ if ( !empty($model->data['db']) && !empty($model->data['name']) ){
   if ( !empty($model->data['removeFolder']) ){
     $path_folder = BBN_CDN_PATH.'lib/'.$model->data['name'];
     if( empty(\bbn\file\dir::delete($path_folder)) ){
-      return ['error' => _('Error delete folder')];
+      return ['error' => _('Error while deleting folder')];
     }
   }
   if ( $model->data['db']->delete('libraries', ['name' => $model->data['name']]) ){

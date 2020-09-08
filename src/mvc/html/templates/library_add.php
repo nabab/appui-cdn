@@ -31,7 +31,7 @@
       <select name="licence" data-bind="value: licence" style="width: 50%"></select>
     </div>
 
-    <div class="bbn-form-label bbn-r"><?=_("Web site")?></div>
+    <div class="bbn-form-label bbn-r"><?=_("Website")?></div>
     <div class="bbn-form-field">
       <input class="bbn-textbox" name="website" data-bind="value: website" type="text">
     </div>
@@ -46,7 +46,7 @@
       <input class="bbn-textbox" name="doc_link" data-bind="value: doc_link" type="text">
     </div>
 
-    <div class="bbn-form-label bbn-r"><?=_("GitHub")?></div>
+    <div class="bbn-form-label bbn-r">GitHub</div>
     <div class="bbn-form-field">
       <input class="bbn-textbox" name="git" data-bind="value: git" type="text">
     </div>

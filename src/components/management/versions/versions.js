@@ -125,7 +125,7 @@
         }, idx)
       },
       deleteVersion(row, col, id){/*
-        bbn.vue.closest(this, "bbn-container").popup().confirm(bbn._('Are you sure you want to delete?'), ()=>{
+        bbn.vue.closest(this, "bbn-container").popup().confirm(bbn._('Are you sure you want to continue?'), ()=>{
           if ( (row.id !== undefined) && (row.library !== undefined) ){
             this.post( this.management.source.root + 'actions/version/delete', {
               id_ver: row.id,
@@ -136,7 +136,7 @@
                 appui.success(bbn._("Delete version"));
               }
               else{
-                appui.error(bbn._("Error delete version"));
+                appui.error(bbn._("Error while deleting version"));
               }
             });
           }
@@ -171,7 +171,7 @@
               <div class="bbn-padded bbn-grid-fields"
                    style="grid-auto-rows: max-content max-content max-content max-content auto"
               >
-               <span v-text="_('Scripts:')" class="bbn-l bbn-b"></span>
+               <span v-text="_('Scripts')" class="bbn-l bbn-b"></span>
                <bbn-dropdown :source="source.scripts" v-model="contentScript"></bbn-dropdown>
               </div>
               <div v-if="contentScript.length" class="bbn-flex-fill bbn-w-100 bbn-middle">
@@ -196,15 +196,15 @@
             <div class="bbn-padded bbn-h-100 bbn-grid-fields"
                  style="grid-auto-rows: max-content max-content max-content max-content auto"
              >
-              <span v-text="_('Id:')" class="bbn-l bbn-b"></span>
+              <span v-text="_('ID')" class="bbn-l bbn-b"></span>
               <bbn-input v-text="source.id"></bbn-input>
-              <span v-text="_('Name:')" class="bbn-l bbn-b"></span>
+              <span v-text="_('Name')" class="bbn-l bbn-b"></span>
               <bbn-input v-text="source.name" class="bbn-l bbn-b"></bbn-input>
               <span v-text="_('Library')" class="bbn-l bbn-b"></span>
               <bbn-input v-text="source.library"></bbn-input>
               <span v-text="_('Date added')" class="bbn-r bbn-b"></span>
               <bbn-input v-text="source.date_added" readonly></bbn-input>
-              <span v-text="_('Content:')" class="bbn-l bbn-b" v-if="source.content"></span>
+              <span v-text="_('Content')" class="bbn-l bbn-b" v-if="source.content"></span>
               <bbn-tree :source="source.content"  v-if="source.content">
               </bbn-tree>
             </div>
@@ -233,7 +233,7 @@
                 this.getPopup().open({
                   height: '200px',
                   width: '450px',
-                  title: bbn._('Exsist folders version') + " " + this.tableVersions.source.name,
+                  title: bbn._('The following version already exists') + ": " + this.tableVersions.source.name,
                   component:'appui-cdn-management-popup-list_folders',
                   source: {
                     folders: d.data.folders_versions,

@@ -16,7 +16,7 @@
            title: bbn._('Dependencies'),
            notext: true,
          },{
-           text: bbn._('Info package.json new version'),
+           text: bbn._('Get info from package.json'),
            action: ()=>{
              this.infoNewVersion(row, col, idx);
            },
@@ -50,7 +50,7 @@
             });
           }
           else{
-            this.alert(bbn._("No dependencies in the cdn"));
+            this.alert(bbn._("No dependencies found"));
           }
         })
       },
@@ -62,7 +62,7 @@
           this.getPopup().open({
             height: '95%',
             width: '85%',
-            title: bbn._('Add version library') + " " + lib.title,
+            title: bbn._('New version for ') + " " + lib.title,
             component:'appui-cdn-management-library_edit',
             source: {row: ele.data, name: lib.title}
           });

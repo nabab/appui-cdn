@@ -19,7 +19,7 @@ if ( !empty($model->data['db']) &&
     $path_folder =  BBN_CDN_PATH.'lib/'.$model->data['library'].'/'.$model->data['name'];
     $delete_folder = \bbn\file\dir::delete($path_folder.'/');
     if( empty($delete_folder) ){
-      return ['error' => _('Error delete folder')];
+      return ['error' => _('Error while deleting folder')];
     }
   }
   // Get version's name and library's name
