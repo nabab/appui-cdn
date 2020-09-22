@@ -3,6 +3,7 @@
  * Describe what it does!
  *
  **/
+use bbn\x;
 
 /** @var $model \bbn\mvc\model*/
 function pad(&$arr) {
@@ -46,9 +47,9 @@ if ($model->has_data('fns')) {
       /*
       $tt = Peast\Peast::latest($content)->tokenize(); //Parse it!
       foreach ($tt as $t) {
-        \bbn\x::hdump($t->getType(), $t->getValue());
+        x::hdump($t->getType(), $t->getValue());
       }
-      die(\bbn\x::dump($tt));
+      die(x::dump($tt));
       $p = new \bbn\parsers\doc($content, 'js');
       $parser = $p->get_js();
       //ksort($parser['methods']);
@@ -146,7 +147,7 @@ EOD;
               $meth['description'] .= '.';
             }
             $methods[$meth['name']] .= '  '.$meth['description'].PHP_EOL.PHP_EOL;
-            $desc = \bbn\x::split($meth['description'], PHP_EOL);
+            $desc = x::split($meth['description'], PHP_EOL);
             $num = 0;
             foreach ($desc as $d) {
               $d = trim($d);
@@ -184,7 +185,7 @@ EOD;
         ];
         if (!empty($meth['example'])) {
           foreach ($meth['example'] as $ex) {
-            $bits = \bbn\x::split($ex['text'], PHP_EOL);
+            $bits = x::split($ex['text'], PHP_EOL);
             $lines[] = [
               'tag' => 'example'
             ];
@@ -240,7 +241,7 @@ EOD;
           if ($return_type === '*') {
             $return_type = 'Mixed';
           }
-          $methods[$meth['name']] = sprintf($methods[$meth['name']], \bbn\x::join($args, ', ')).PHP_EOL.
+          $methods[$meth['name']] = sprintf($methods[$meth['name']], x::join($args, ', ')).PHP_EOL.
             '  __Returns__ _'.$return_type.'_ '.($return['description'] ?? '');
           if (!empty($meth['example'])) {
             foreach ($meth['example'] as $ex) {
@@ -251,7 +252,7 @@ EOD;
         }
         pad($lines);
         foreach ($lines as $line) {
-          $src .= '     * '.(empty($line['tag']) ? '' : '@').\bbn\x::join($line, '').PHP_EOL;
+          $src .= '     * '.(empty($line['tag']) ? '' : '@').x::join($line, '').PHP_EOL;
         }
         $src .= '     */'.PHP_EOL.'    '.(empty($meth['source']) ? '' : $meth['source'].',').PHP_EOL.PHP_EOL;
       }
@@ -266,7 +267,7 @@ EOD;
           $parser['methods'][$method_name]['summary'].'  '.PHP_EOL;
       }
       $src .= '  });'.PHP_EOL.'})(bbn);'.PHP_EOL;
-      $md .= '<a name="bbn_top"></a>'.$toc.PHP_EOL.PHP_EOL.\bbn\x::join($methods, PHP_EOL.PHP_EOL);
+      $md .= '<a name="bbn_top"></a>'.$toc.PHP_EOL.PHP_EOL.x::join($methods, PHP_EOL.PHP_EOL);
       $fs->put_contents(BBN_CDN_PATH.'lib/bbn-js/1.0.1/doc/src/'.$f, $src);
       $fs->put_contents(BBN_CDN_PATH.'lib/bbn-js/1.0.1/doc/md/'.basename($f, '.js').'.md', $md);
       $parser['new'] = $src;
@@ -280,7 +281,7 @@ EOD;
         'text' => substr($content['summary'], 0, -1),
         'desc' => $content['description'],
         'value' => basename($file, '.js'),
-        'items' => \bbn\x::map(function($a, $name) use ($file) {
+        'items' => x::map(function($a, $name) use ($file) {
           return [
             'file' => $file,
             'text' => $name,
@@ -290,7 +291,7 @@ EOD;
           ];
         }, $content['methods'])
       ];
-      \bbn\x::sort_by($tmp['items'], 'text');
+      x::sort_by($tmp['items'], 'text');
       $json[] = $tmp;
     }
   }
@@ -321,8 +322,8 @@ EOD;
       $compiled = $less->compile($default.$fs->get_contents($t).$st);
     }
     catch (\Exception $e) {
-      \bbn\x::log($name);
-      \bbn\x::log($e->getMessage());
+      x::log($name);
+      x::log($e->getMessage());
       $error = true;
     }
     if (!$error && $compiled) {

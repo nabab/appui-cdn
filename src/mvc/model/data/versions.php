@@ -5,6 +5,7 @@
  * Date: 15/12/2016
  * Time: 09:43
  */
+use bbn\x;
 /** @var $model \bbn\mvc\model */
 $res['success'] = false;
 /*if ( !empty($model->data['data']['id_lib']) && !isset($model->data['id_lib']) ){
@@ -59,7 +60,7 @@ if ( !empty($model->data['db']) && !empty($model->data['id_lib']) ){
     );
 
     // Make version's files TreeView
-    $versions[$i]['files_tree'] = \bbn\x::make_tree((array)json_decode($ver['content']));
+    $versions[$i]['files_tree'] = x::make_tree((array)json_decode($ver['content']));
     //$versions[$i]['files_tree'] = json_decode($ver['content']);
   }
   $res = [

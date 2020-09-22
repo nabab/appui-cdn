@@ -3,6 +3,7 @@
  * Describe what it does!
  *
  **/
+use bbn\x;
 
 /** @var $model \bbn\mvc\model*/
 $dir = BBN_CDN_PATH.'lib/bbn-vue/2.0.2';
@@ -35,7 +36,7 @@ foreach ($components as $component) {
     if (!empty($cfg['dependencies'])) {
       $cdn_cfg = new \bbn\cdn\config(
         BBN_SHARED_PATH.'?lib='
-        .\bbn\x::join(array_keys($cfg['dependencies']), ',')
+        .x::join(array_keys($cfg['dependencies']), ',')
       );
       $ar_cfg = $cdn_cfg->get();
     }
@@ -54,13 +55,13 @@ foreach ($components as $component) {
       $item =& $tmp[$i];
       foreach ($doc[$i] as $d) {
         if (empty($d['name'])) {
-          \bbn\x::log($d);
+          x::log($d);
           continue;
         }
         if (substr($d['name'], 0, 1) === '_') {
           continue;
         }
-        $bits = \bbn\x::split($d['name'], '.');
+        $bits = x::split($d['name'], '.');
         $name = end($bits);
         if (isset($item['type']) && ($item['type'] === 'mixins')) {
           $mixin = substr($name, 0, -9);
@@ -107,7 +108,7 @@ foreach ($components as $component) {
     }
     unset($item);
     foreach ($to_remove as $rem) {
-      $idx = \bbn\x::find($tmp['items'], ['value' => $rem]);
+      $idx = x::find($tmp['items'], ['value' => $rem]);
       array_splice($tmp['items'], $idx, 1);
     }
     $vue[] = $tmp;
@@ -129,11 +130,11 @@ foreach ($components as $component) {
           $files_css[] = 'gh/'.$nc['git'].'@'.$nc['version'].'/'.$nccss;
         }
         if (count($files_css)) {
-          $css_dependencies[] = 'https://cdn.jsdelivr.net/combine/'.\bbn\x::join($files_css, ',');
+          $css_dependencies[] = 'https://cdn.jsdelivr.net/combine/'.x::join($files_css, ',');
         }
       }
       if (count($files_js)) {
-        $dep_st = 'https://cdn.jsdelivr.net/combine/'.\bbn\x::join($files_js, ',');
+        $dep_st = 'https://cdn.jsdelivr.net/combine/'.x::join($files_js, ',');
         $st_js .= <<<JAVASCRIPT
 let script_dep = document.createElement('script');
 script_dep.setAttribute('src', "$dep_st");

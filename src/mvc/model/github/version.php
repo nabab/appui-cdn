@@ -5,6 +5,9 @@
  * Date: 16/12/2016
  * Time: 11:48
  */
+
+use bbn\x;
+
 /** @var $model \bbn\mvc\model */
 
 if ( !empty($model->data['git_user']) && !empty($model->data['git_repo']) && \defined('BBN_GITHUB_TOKEN') ){
@@ -45,7 +48,7 @@ if ( !empty($model->data['git_user']) && !empty($model->data['git_repo']) && \de
   else if ( !empty($model->data['git_id_ver']) &&
     ( $model->data['git_id_ver'] != $model->data['git_latest_ver'] ) &&
     // Get version's info
-    ($version = \bbn\x::to_object($git->api('repo')->releases()->show($model->data['git_user'], $model->data['git_repo'], $model->data['git_id_ver'])))
+    ($version = x::to_object($git->api('repo')->releases()->show($model->data['git_user'], $model->data['git_repo'], $model->data['git_id_ver'])))
   ){
     // Version's name
     $version_name = $version->tag_name;

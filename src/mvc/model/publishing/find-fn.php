@@ -3,6 +3,7 @@
  * Describe what it does!
  *
  **/
+use bbn\x;
 
 /** @var $model \bbn\mvc\model*/
 if (isset($model->data['fns'])) {
@@ -39,7 +40,7 @@ if (isset($model->data['fns'])) {
     }
   }
   foreach ($sources as $src) {
-    \bbn\x::dump(
+    x::dump(
       $src,
       $fs->search('bbn.fn.isFunction', $src, true, false, 'js|php'),
       '+++++++++++++++++++++++',

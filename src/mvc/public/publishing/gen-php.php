@@ -1,10 +1,10 @@
 <?php
-/*
+/**
  * Describe what it does!
- *
- * @var $ctrl \bbn\mvc\controller 
- *
  */
+use bbn\x;
+
+/** @var $ctrl \bbn\mvc\controller */
 $fs = new \bbn\file\system();
 $fs->cd(BBN_LIB_PATH.'bbn/bbn/build/phpdox/xml');
 $types = [
@@ -21,14 +21,14 @@ foreach ($types as $singular => $type) {
   $items = $fs->get_files($type);
   foreach ($items as $it) {
     $name = basename($it, '.xml');
-    $bits = \bbn\x::split($name, '_');
+    $bits = x::split($name, '_');
     if ($bits[0] === 'bbn') {
       array_shift($bits);
       $class_name = array_pop($bits);
       $current =& $res;
       foreach ($bits as $i => $b) {
-        $idx = \bbn\x::find($current, ['value' => $b.'/']);
-        if (!\bbn\x::has_prop($res, $idx)) {
+        $idx = x::find($current, ['value' => $b.'/']);
+        if (!x::has_prop($res, $idx)) {
           $idx = count($current);
           $current[] = [
             'type' => 'namespace',
@@ -43,7 +43,7 @@ foreach ($types as $singular => $type) {
   }
   foreach ($items as $it) {
     $name = basename($it, '.xml');
-    $bits = \bbn\x::split($name, '_');
+    $bits = x::split($name, '_');
     if ($bits[0] === 'bbn') {
       array_shift($bits);
       $class_name = array_pop($bits);
@@ -51,7 +51,7 @@ foreach ($types as $singular => $type) {
       $path_bbnio = 'bbn-php/doc/'.$singular.'/';
       $path = '';
       foreach ($bits as $i => $b) {
-        $idx = \bbn\x::find($current, ['value' => $b.'/']);
+        $idx = x::find($current, ['value' => $b.'/']);
         $path .= $b.'/';
         $current =& $current[$idx]['items'];
       }
@@ -102,7 +102,7 @@ foreach ($types as $singular => $type) {
           ];
         }
       }
-			\bbn\x::sort_by($tmp['items'], 'text');
+			x::sort_by($tmp['items'], 'text');
       $current[] = $tmp;
     }
   }
