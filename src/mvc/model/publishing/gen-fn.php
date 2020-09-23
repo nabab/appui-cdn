@@ -312,8 +312,8 @@ EOD;
   }
   $default = $fs->get_contents(BBN_CDN_PATH.'lib/bbn-css/1.0.0/src/css/themes/_def.less');
   $compiled = $less->compile($default.$st);
-  $fs->put_contents(BBN_CDN_PATH.'lib/bbn-css/1.0.0/dist/css/bbn.css', $compiled);
-  $fs->put_contents(BBN_CDN_PATH.'lib/bbn-css/1.0.0/dist/css/bbn.min.css', CssMin::minify($compiled));
+  $fs->put_contents(BBN_CDN_PATH.'lib/bbn-css/1.0.0/dist/bbn.css', $compiled);
+  $fs->put_contents(BBN_CDN_PATH.'lib/bbn-css/1.0.0/dist/bbn.min.css', CssMin::minify($compiled));
   $themes = $fs->get_files(BBN_CDN_PATH.'lib/bbn-css/1.0.0/src/css/themes', '.less');
   foreach ($themes as $t) {
     $name = basename($t, '.less');
@@ -327,8 +327,8 @@ EOD;
       $error = true;
     }
     if (!$error && $compiled) {
-      $fs->put_contents(BBN_CDN_PATH.'lib/bbn-css/1.0.1/dist/css/bbn.'.$name.'.css', $compiled);
-      $fs->put_contents(BBN_CDN_PATH.'lib/bbn-css/1.0.1/dist/css/bbn.'.$name.'.min.css', CssMin::minify($compiled));
+      $fs->put_contents(BBN_CDN_PATH.'lib/bbn-css/1.0.0/dist/bbn.'.$name.'.css', $compiled);
+      $fs->put_contents(BBN_CDN_PATH.'lib/bbn-css/1.0.0/dist/bbn.'.$name.'.min.css', CssMin::minify($compiled));
     }
   }
   //$files = $fs->get_files
