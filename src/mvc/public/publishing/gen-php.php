@@ -52,6 +52,9 @@ foreach ($types as $singular => $type) {
       $path = '';
       foreach ($bits as $i => $b) {
         $idx = x::find($current, ['value' => $b.'/']);
+        if ($idx === null) {
+          throw new Error("Impossible to find path $b/");
+        }
         $path .= $b.'/';
         $current =& $current[$idx]['items'];
       }

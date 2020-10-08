@@ -109,6 +109,9 @@ foreach ($components as $component) {
     unset($item);
     foreach ($to_remove as $rem) {
       $idx = x::find($tmp['items'], ['value' => $rem]);
+      if ($idx === null) {
+        throw new Error("Impossible to find item $rem");
+      }
       array_splice($tmp['items'], $idx, 1);
     }
     $vue[] = $tmp;
