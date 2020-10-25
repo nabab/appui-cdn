@@ -3,7 +3,6 @@
  * Describe what it does!
  */
 use bbn\x;
-
 /** @var $ctrl \bbn\mvc\controller */
 $fs = new \bbn\file\system();
 $fs->cd(BBN_LIB_PATH.'bbn/bbn/build/phpdox/xml');
