@@ -1,9 +1,19 @@
 {
   "text": "CDN",
-  "icon": "nf nf-fa-archive",
-  "items": [{
-    "text": "Management",
-    "icon": "nf nf-fa-list_alt",
-    "link": "management"
-  }]
+  "num": 16,
+  "icon": "nf nf-fa-microchip",
+  "items": [
+    {
+      "text": "Configurations",
+      "num": 1,
+      "icon": "nf nf-fa-microchip",
+      "link": "management"
+    },
+    {
+      "text": "Libraries publishing",
+      "num": 2,
+      "icon": "nf nf-mdi-publish",
+      "link": "publishing/home"
+    }
+  ]
 }
