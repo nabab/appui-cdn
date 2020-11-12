@@ -27,7 +27,7 @@ foreach ($types as $singular => $type) {
       $current =& $res;
       foreach ($bits as $i => $b) {
         $idx = x::find($current, ['value' => $b.'/']);
-        if (!x::has_prop($res, $idx)) {
+        if (!isset($current[$idx])) {
           $idx = count($current);
           $current[] = [
             'type' => 'namespace',
@@ -114,5 +114,5 @@ foreach ($full as $filename => $cls) {
   $fs->create_path(BBN_LIB_PATH.'bbn/bbn/json-doc/'.dirname($filename));
   $fs->put_contents(BBN_LIB_PATH.'bbn/bbn/json-doc/'.substr($filename, 0, -4).'.json', json_encode($cls, JSON_PRETTY_PRINT));
 }
-$ctrl->obj = $res;
+$ctrl->obj->data = $res;
 $fs->put_contents(BBN_LIB_PATH.'bbn/bbn/bbn-php.json', json_encode($res, JSON_PRETTY_PRINT));

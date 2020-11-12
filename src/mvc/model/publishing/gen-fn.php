@@ -332,5 +332,5 @@ EOD;
     }
   }
   //$files = $fs->get_files
-  return $json;
+  return ['data' => $json];
 }

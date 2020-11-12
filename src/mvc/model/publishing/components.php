@@ -243,4 +243,4 @@ foreach ($files as $f) {
 $fs->put_contents('dist/js/bbn-vue.js', $st);
 
 $fs->put_contents('dist/js/bbn-vue.min.js', JShrink\Minifier::minify($st, ['flaggedComments' => false]));
-return $res;
+return ['data' => $res];
