@@ -20,7 +20,8 @@ if ( !empty($model->data['folder']) && !empty($model->data['db']) && \defined('B
     (!empty($model->data['git_id_ver']) || !empty($model->data['git_latest_ver']) || !empty($model->data['tags']))
   ){
     if ( is_dir($model->data['lib_path']) ){
-      $github = $model->get_model('./../../github/version', $model->data);
+      $github = $model->get_model(APPUI_CDN_ROOT.'github/version', $model->data);
+      die(var_dump($github));
     }
   }
 

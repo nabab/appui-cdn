@@ -105,7 +105,7 @@ if ( !empty($model->data['git_user']) && !empty($model->data['git_repo']) && \de
   if ( !empty($down_url) && !empty($version_name) ){
 
     // Set the file's path
-    $fz = BBN_USER_PATH.'tmp/'.basename($down_url);
+    $fz = $model->user_tmp_path().basename($down_url);
     // Download the version file
     file_put_contents($fz, fopen($down_url, 'r'));
     if ( is_file($fz) ){
