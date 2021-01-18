@@ -16,6 +16,7 @@ $p = new \bbn\parsers\docblock('php');
 $parser = new \bbn\parsers\php();
 $full = $parser->analyzeLibrary(BBN_LIB_PATH.'bbn/bbn/src/bbn', 'bbn');
 $namespaces = [];
+$all_methods = [];
 foreach ($types as $singular => $type) {
   $items = $fs->get_files($type);
   foreach ($items as $it) {
@@ -78,6 +79,9 @@ foreach ($types as $singular => $type) {
         if ($php_doc && $php_doc['methods'][$m['@attributes']['name']]) {
           $desc = $php_doc['methods'][$m['@attributes']['name']]['summary'] ?? '';
         }
+        if (($singular === 'class') && in_array($class_name, ['x', 'str'])) {
+          $all_methods[] = $class_name.'::'.$m['@attributes']['name'];
+        }
         $tmp['items'][] = [
           'type' => 'method',
           'class' => $path.$class_name,
@@ -93,6 +97,9 @@ foreach ($types as $singular => $type) {
           $desc = '';
           if ($php_doc && $php_doc['methods'][$m['@attributes']['name']]) {
             $desc = $php_doc['methods'][$m['@attributes']['name']]['summary'] ?? '';
+          }
+          if (($singular === 'class') && in_array($class_name, ['x', 'str'])) {
+            $all_methods[] = $class_name.'::'.$m['@attributes']['name'];
           }
           $tmp['items'][] = [
             'type' => 'method',
@@ -114,5 +121,8 @@ foreach ($full as $filename => $cls) {
   $fs->create_path(BBN_LIB_PATH.'bbn/bbn/json-doc/'.dirname($filename));
   $fs->put_contents(BBN_LIB_PATH.'bbn/bbn/json-doc/'.substr($filename, 0, -4).'.json', json_encode($cls, JSON_PRETTY_PRINT));
 }
-$ctrl->obj->data = $res;
+sort($all_methods);
+$ctrl->obj->data = [
+  'res'=> $all_methods
+];
 $fs->put_contents(BBN_LIB_PATH.'bbn/bbn/bbn-php.json', json_encode($res, JSON_PRETTY_PRINT));

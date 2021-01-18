@@ -209,13 +209,36 @@ EOD;
           }
         }
         $tern_args = [];
+        $reserved = ['null', 'undefined', 'NaN', '[]', '{}', 'false', 'true'];
         if (!empty($meth['param'])) {
           foreach ($meth['param'] as $j => $param) {
             if (!isset($param['type'])) {
               $param['type'] = '{*}';
             }
-            $args[] = $param['name'];
-            $tern_args[] = $param['name'].': '.($param['type'] ? substr($param['type'], 1, -1) : 'mixed');
+            $tern_def = false;
+            if (substr($param['name'], 0, 1) === '[') {
+              $tern_name = str_replace('[', '', str_replace(']', '', $param['name']));
+              $bits = x::split($tern_name, '=');
+              if (count($bits) === 2) {
+                $tern_name = trim($bits[0]);
+                $tern_def = trim($bits[1]);
+                if (!in_array($tern_def, $reserved) && !\bbn\str::is_number($tern_def)) {
+                  $tern_def = "'".$tern_def."'";
+                }
+              }
+            }
+            else {
+              $tern_name = $param['name'];
+            }
+            $args[] = $tern_name;
+            $tern_type = $param['type'] ? substr($param['type'], 1, -1) : 'mixed';
+            if (substr($tern_type, 0, 1) === '(') {
+              $tern_type = substr($tern_type, 1, -1);
+            }
+            if (($tern_type === 'String') || strpos('|', $tern_type)) {
+              $tern_type = strtolower($tern_type);
+            }
+            $tern_args[] = $tern_name.': '.$tern_type;//.($tern_def ? ' = '.$tern_def : '');
             $lines[] = [
               'tag' => 'param',
               'type' => $param['type'],
@@ -304,6 +327,12 @@ EOD;
     }
   }
   $fs->put_contents(BBN_CDN_PATH.'lib/bbn-js/1.0.1/doc/bbn.json', json_encode($json, JSON_PRETTY_PRINT));
+  $tern_json = [
+    '!name' => 'bbn',
+    'bbn' => [
+      'fn' => $tern_json
+    ]
+  ];
   $fs->put_contents(BBN_CDN_PATH.'lib/bbn-js/1.0.1/doc/tern.json', json_encode($tern_json, JSON_PRETTY_PRINT));
   $files = json_decode('["src\/bbn.js","src\/functions.js","src\/env\/_def.js","src\/var\/_def.js","src\/var\/diacritic.js","src\/fn\/_def.js","src\/fn\/ajax.js","src\/fn\/form.js","src\/fn\/history.js","src\/fn\/init.js","src\/fn\/locale.js","src\/fn\/misc.js","src\/fn\/object.js","src\/fn\/size.js","src\/fn\/string.js","src\/fn\/style.js","src\/fn\/type.js"]');
   $st = '';

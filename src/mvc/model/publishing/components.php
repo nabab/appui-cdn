@@ -251,6 +251,7 @@ $content           = $fs->get_contents('src/methods.js');
 $parser            = $p->parse($content);
 $params            = ['param', 'returns', ''];
 $methods           = [];
+$tern_json = [];
 $parser['methods'] = array_filter(
   $parser['methods'], function ($a) {
     return substr($a['name'], 0, 1) !== '_';
@@ -270,11 +271,22 @@ foreach ($method_names as $method_name) {
       'url' => 'bbn-vue/function/'.$method_name,
       'desc' => $methods[$method_name]['summary']
     ];
+    $tern_json[$method_name] = [
+      "!type" => 'fn() -> mixed',
+      "!url" => "https://bbn.io/'bbn-vue/function/".$method_name,
+      "!doc" => $methods[$method_name]['summary']
+    ];
   }
 }
+$tern_json = [
+  'bbn' => [
+    'vue' => $tern_json
+  ]
+];
 
 $res[1]['items'] = $fns;
 $fs->put_contents($dir.'/bbn-vue.json', json_encode($res, JSON_PRETTY_PRINT));
+$fs->put_contents($dir.'/tern.json', json_encode($tern_json, JSON_PRETTY_PRINT));
 $files = json_decode('["src\/vars.js","src\/methods.js","src\/mixins\/basic.js","src\/mixins\/empty.js","src\/mixins\/dimensions.js","src\/mixins\/position.js","src\/mixins\/dropdown.js","src\/mixins\/keynav.js","src\/mixins\/toggle.js","src\/mixins\/localStorage.js","src\/mixins\/data.js","src\/mixins\/dataEditor.js","src\/mixins\/events.js","src\/mixins\/list.js","src\/mixins\/memory.js","src\/mixins\/input.js","src\/mixins\/resizer.js","src\/mixins\/close.js","src\/mixins\/field.js","src\/mixins\/view.js","src\/mixins\/observer.js","src\/mixins\/keepCool.js","src\/mixins\/url.js","src\/mixins.js","src\/defaults.js","src\/init.js"]');
 $st    = '';
 foreach ($files as $f) {

@@ -9,7 +9,7 @@
       }
     },
     methods:{
-      buttonsTable(row, col, idx){
+      buttonsTable(row, col, idx) {
         return [
           {
             text: "Info",
@@ -19,7 +19,7 @@
             icon: 'nf nf-fa-info',
             title: bbn._('info'),
             notext: true
-          },{
+          }, {
             text: 'Edit',
             action:(row, col, idx)=>{
               this.management.actions('editVers');
@@ -28,7 +28,7 @@
             icon: 'nf nf-fa-edit',
             title: bbn._('Edit'),
             notext: true
-          },{
+          }, {
             text: 'Scripts',
             action: (row, col, idx) =>{
               this.viewPackageJson(row, col, idx)
@@ -36,9 +36,9 @@
             icon: 'nf nf-fa-play',
             title: 'scripts',
             notext: true
-          },{
+          }, {
            text: 'Delete',
-           action:(row, col, idx)=>{
+           action:(row, col, idx) => {
              this.deleteVersion(row, col, idx);
            },
            icon: 'nf nf-fa-trash',
@@ -242,7 +242,7 @@
                   }
                 });
               }
-              else if ( d.data.github && (d.data.folders_versions === undefined) ){
+              else if (d.data && d.data.github && (d.data.folders_versions === undefined)) {
                 this.confirm( this.tableVersions.management.source.lng.versionGithubImport, ()=>{
                   this.post( this.tableVersions.management.source.root + 'github/versions', {url: d.data.github}, ele => {
                     this.getPopup().open({

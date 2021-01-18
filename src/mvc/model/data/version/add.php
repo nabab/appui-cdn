@@ -21,7 +21,6 @@ if ( !empty($model->data['folder']) && !empty($model->data['db']) && \defined('B
   ){
     if ( is_dir($model->data['lib_path']) ){
       $github = $model->get_model(APPUI_CDN_ROOT.'github/version', $model->data);
-      die(var_dump($github));
     }
   }
 
@@ -34,7 +33,6 @@ if ( !empty($model->data['folder']) && !empty($model->data['db']) && \defined('B
           'name' => basename($dir),
           'library' => $model->data['folder']
         ])) ){
-         
           if ( empty($github) ){
             array_push($ver, $dir);
           }
