@@ -1,7 +1,7 @@
 <?php
-/** @var $model \bbn\mvc\model */
+/** @var $model \bbn\Mvc\Model */
 
-return $model->data['db']->get_rows("
+return $model->data['db']->getRows("
     SELECT *
     FROM licences
     ORDER BY name COLLATE NOCASE ASC

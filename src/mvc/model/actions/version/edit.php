@@ -5,7 +5,7 @@
  * Date: 15/12/2016
  * Time: 09:50
  */
-/** @var $model \bbn\mvc\model */
+/** @var $model \bbn\Mvc\Model */
 
 
 if ( !empty($model->data['db']) &&
@@ -51,7 +51,7 @@ if ( !empty($model->data['db']) &&
       }
     }//temporaney add a latest if latest in blibraries is empty
   /*  if ( isset($lib) && empty($lib['latest']) ){
-      $all_versions = $model->data['db']->rselect_all(
+      $all_versions = $model->data['db']->rselectAll(
         "versions", // table
         ['name'], // column name
         ["library" => $model->data['library']], // WHERE
@@ -69,7 +69,7 @@ if ( !empty($model->data['db']) &&
       foreach ( $model->data['dependencies'] as $dep ){
         $dependencies[$dep['id_ver']] = $dep;
       }
-      /*$old_dep = $model->data['db']->get_col_array('
+      /*$old_dep = $model->data['db']->getColArray('
         SELECT dependencies.id_master
         FROM dependencies
         JOIN versions
@@ -79,7 +79,7 @@ if ( !empty($model->data['db']) &&
         ORDER BY versions.internal',
         $model->data['id']
       );*/
-      $old_dep = $model->data['db']->rselect_all([
+      $old_dep = $model->data['db']->rselectAll([
         'table' => "dependencies",
         'fields' => 'id_master',
         'join' => [[

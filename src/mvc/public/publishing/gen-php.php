@@ -2,9 +2,9 @@
 /**
  * Describe what it does!
  */
-use bbn\x;
-/** @var $ctrl \bbn\mvc\controller */
-$fs = new \bbn\file\system();
+use bbn\X;
+/** @var $ctrl \bbn\Mvc\Controller */
+$fs = new \bbn\File\System();
 $fs->cd(BBN_LIB_PATH.'bbn/bbn/build/phpdox/xml');
 $types = [
   'class' => 'classes',
@@ -12,22 +12,22 @@ $types = [
   'interface' => 'interfaces'
 ];
 $res = [];
-$p = new \bbn\parsers\docblock('php');
-$parser = new \bbn\parsers\php();
+$p = new \bbn\Parsers\Docblock('php');
+$parser = new \bbn\Parsers\Php();
 $full = $parser->analyzeLibrary(BBN_LIB_PATH.'bbn/bbn/src/bbn', 'bbn');
 $namespaces = [];
 $all_methods = [];
 foreach ($types as $singular => $type) {
-  $items = $fs->get_files($type);
+  $items = $fs->getFiles($type);
   foreach ($items as $it) {
     $name = basename($it, '.xml');
-    $bits = x::split($name, '_');
+    $bits = X::split($name, '_');
     if ($bits[0] === 'bbn') {
       array_shift($bits);
       $class_name = array_pop($bits);
       $current =& $res;
       foreach ($bits as $i => $b) {
-        $idx = x::find($current, ['value' => $b.'/']);
+        $idx = X::find($current, ['value' => $b.'/']);
         if (!isset($current[$idx])) {
           $idx = count($current);
           $current[] = [
@@ -43,7 +43,7 @@ foreach ($types as $singular => $type) {
   }
   foreach ($items as $it) {
     $name = basename($it, '.xml');
-    $bits = x::split($name, '_');
+    $bits = X::split($name, '_');
     if ($bits[0] === 'bbn') {
       array_shift($bits);
       $class_name = array_pop($bits);
@@ -51,15 +51,15 @@ foreach ($types as $singular => $type) {
       $path_bbnio = 'bbn-php/doc/'.$singular.'/';
       $path = '';
       foreach ($bits as $i => $b) {
-        $idx = x::find($current, ['value' => $b.'/']);
+        $idx = X::find($current, ['value' => $b.'/']);
         if ($idx === null) {
           throw new Error("Impossible to find path $b/");
         }
         $path .= $b.'/';
         $current =& $current[$idx]['items'];
       }
-      $content = $fs->get_contents($it);
-      $content2 = $fs->get_contents(BBN_LIB_PATH.'bbn/bbn/src/bbn/'.$path.$class_name.'.php');
+      $content = $fs->getContents($it);
+      $content2 = $fs->getContents(BBN_LIB_PATH.'bbn/bbn/src/bbn/'.$path.$class_name.'.php');
       $info = $content2 ? $p->parse($content2) : [];
       $tmp = [
         'type' => $singular,
@@ -111,18 +111,18 @@ foreach ($types as $singular => $type) {
           ];
         }
       }
-			x::sort_by($tmp['items'], 'text');
+			x::sortBy($tmp['items'], 'text');
       $current[] = $tmp;
     }
   }
 }
 
 foreach ($full as $filename => $cls) {
-  $fs->create_path(BBN_LIB_PATH.'bbn/bbn/json-doc/'.dirname($filename));
-  $fs->put_contents(BBN_LIB_PATH.'bbn/bbn/json-doc/'.substr($filename, 0, -4).'.json', json_encode($cls, JSON_PRETTY_PRINT));
+  $fs->createPath(BBN_LIB_PATH.'bbn/bbn/json-doc/'.dirname($filename));
+  $fs->putContents(BBN_LIB_PATH.'bbn/bbn/json-doc/'.substr($filename, 0, -4).'.json', Json_encode($cls, JSON_PRETTY_PRINT));
 }
 sort($all_methods);
 $ctrl->obj->data = [
   'res'=> $all_methods
 ];
-$fs->put_contents(BBN_LIB_PATH.'bbn/bbn/bbn-php.json', json_encode($res, JSON_PRETTY_PRINT));
+$fs->putContents(BBN_LIB_PATH.'bbn/bbn/bbn-php.json', Json_encode($res, JSON_PRETTY_PRINT));

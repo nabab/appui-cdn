@@ -5,10 +5,10 @@
  * Date: 15/12/2016
  * Time: 10:24
  */
-/** @var $model \bbn\mvc\model */
+/** @var $model \bbn\Mvc\Model */
 if ( !empty($model->data['folder']) && !empty($model->data['db']) && \defined('BBN_CDN_PATH') ){
   // Library path
-  $model->data['lib_path'] = \bbn\file\dir::create_path(BBN_CDN_PATH . 'lib/' . $model->data['folder']);
+  $model->data['lib_path'] = \bbn\File\Dir::createPath(BBN_CDN_PATH . 'lib/' . $model->data['folder']);
 
   if ( $model->data['lib_path'] ){
     $model->data['lib_path'] .= '/';
@@ -20,12 +20,12 @@ if ( !empty($model->data['folder']) && !empty($model->data['db']) && \defined('B
     (!empty($model->data['git_id_ver']) || !empty($model->data['git_latest_ver']) || !empty($model->data['tags']))
   ){
     if ( is_dir($model->data['lib_path']) ){
-      $github = $model->get_model(APPUI_CDN_ROOT.'github/version', $model->data);
+      $github = $model->getModel(APPUI_CDN_ROOT.'github/version', $model->data);
     }
   }
 
   // Check if the library's subfolders are already inserted into db and use the first not included as version
-  if ( is_dir($model->data['lib_path']) && ($dirs = \bbn\file\dir::get_dirs($model->data['lib_path'])) ){
+  if ( is_dir($model->data['lib_path']) && ($dirs = \bbn\File\Dir::getDirs($model->data['lib_path'])) ){
     $ver = [];
     if ( !empty($dirs) ){
       foreach ( $dirs as $dir ){
@@ -43,7 +43,7 @@ if ( !empty($model->data['folder']) && !empty($model->data['db']) && \defined('B
       }
     }
     if ( empty($ver) ){
-      if ( $g = $model->data['db']->select_one('libraries', 'git', ['name' => $model->data['folder']]) ){
+      if ( $g = $model->data['db']->selectOne('libraries', 'git', ['name' => $model->data['folder']]) ){
         return ['github' => $g];
       }
       return [];
@@ -55,8 +55,8 @@ if ( !empty($model->data['folder']) && !empty($model->data['db']) && \defined('B
   // Make the tree data
   $tree = function($path, $ver_path, $ext=false)use(&$tree){
     $res = [];
-    foreach ( \bbn\file\dir::get_files($path, 1) as $p ){
-      if ( empty($ext) || (!empty($ext) && ( (\bbn\str::file_ext($p) === $ext) || (\bbn\str::file_ext($p) === '') ) ) ){
+    foreach ( \bbn\File\Dir::getFiles($path, 1) as $p ){
+      if ( empty($ext) || (!empty($ext) && ( (\bbn\Str::fileExt($p) === $ext) || (\bbn\Str::fileExt($p) === '') ) ) ){
         $pa = substr($p, \strlen($ver_path), \strlen($p));
         $r = [
           'text' => basename($p),
@@ -82,15 +82,15 @@ if ( !empty($model->data['folder']) && !empty($model->data['db']) && \defined('B
       // Version name
       'version' => basename($v),
       // All libraries list
-      'lib_ver' => $model->data['db']->get_rows("
-        SELECT libraries.title AS lib_title, libraries.name AS lib_name, versions.name AS version, versions.id AS id_ver
+      'lib_ver' => $model->data['db']->getRows("
+        SELECT libraries.title AS lib_title, libraries.name AS lib_name, Versions.name AS version, Versions.id AS id_ver
         FROM libraries
         JOIN versions
           ON versions.library = libraries.name
         ORDER BY lib_title COLLATE NOCASE ASC, internal DESC
       "),
       // Dependencies from latest version
-      'dependencies' => $model->data['db']->get_rows('
+      'dependencies' => $model->data['db']->getRows('
         SELECT "vers"."id" AS id_ver, "vers"."name" AS version, "libr"."name" AS lib_name,
           "libr"."title" AS lib_title, "dependencies"."order"
         FROM "versions"
@@ -108,7 +108,7 @@ if ( !empty($model->data['folder']) && !empty($model->data['db']) && \defined('B
         $model->data['folder']
       ),
       // All slave dependencies
-      'slave_dependencies' =>  $model->data['db']->get_rows("
+      'slave_dependencies' =>  $model->data['db']->getRows("
         SELECT vers.id AS id_slave, libr.name, libr.title
         FROM versions
         JOIN libraries
@@ -124,18 +124,18 @@ if ( !empty($model->data['folder']) && !empty($model->data['db']) && \defined('B
         ORDER BY libr.name ASC",
         $model->data['folder']
       ),/*
-      'internal' => $model->data['db']->get_rows("
+      'internal' => $model->data['db']->getRows("
         SELECT internal AS text, internal AS value
         FROM versions
         WHERE library = ?",
         $model->data['folder']
       ),*/
-      'title' => $model->data['db']->select_one('libraries', 'title', ['name' => $model->data['folder']]),
+      'title' => $model->data['db']->selectOne('libraries', 'title', ['name' => $model->data['folder']]),
       'dependencies_html' => !empty($github['dependencies']) ? $github['dependencies'] : ''
     ];
   }
   return [
     'folders_versions' => $all['folders_versions'],
-    'github' => $model->data['db']->select_one('libraries', 'git', ['name' => $model->data['folder']])
+    'github' => $model->data['db']->selectOne('libraries', 'git', ['name' => $model->data['folder']])
   ];
 }

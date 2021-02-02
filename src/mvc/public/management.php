@@ -1,9 +1,9 @@
 <?php
-/** @var $ctrl \bbn\mvc\controller */
-$templates = \bbn\file\dir::get_files($ctrl->plugin_path('appui-cdn').'mvc/html/templates');
+/** @var $ctrl \bbn\Mvc\Controller */
+$templates = \bbn\File\Dir::getFiles($ctrl->pluginPath('appui-cdn').'mvc/html/templates');
 if ( !empty($templates) ){
   $ctrl->data['templates'] = array_map(function($t)use($ctrl){
-    return $ctrl->get_view('./templates/'.basename($t, '.php'));
+    return $ctrl->getView('./templates/'.basename($t, '.php'));
   }, $templates);
 }
 else{
@@ -12,15 +12,15 @@ else{
 //in the case of an explicit refresh, we return only from this point, that is to say, in this case the bookshelves
 if( isset($ctrl->post['refresh']) && !empty($ctrl->post['refresh']) ){
   $ctrl->obj = [
-    'all_lib' => $ctrl->get_model('./data/libraries', ['db' => $ctrl->data['db']]),
+    'all_lib' => $ctrl->getModel('./data/libraries', ['db' => $ctrl->data['db']]),
   ];
 }
 else{
   $ctrl->combo('CDN Management', [
-    'all_conf' => $ctrl->get_model('./configurations', ['db' => $ctrl->data['db']]),
-    'all_lib' => $ctrl->get_model('./data/libraries', ['db' => $ctrl->data['db']]),
+    'all_conf' => $ctrl->getModel('./configurations', ['db' => $ctrl->data['db']]),
+    'all_lib' => $ctrl->getModel('./data/libraries', ['db' => $ctrl->data['db']]),
     'root' => APPUI_CDN_ROOT,
-    'licences' => $ctrl->get_model('./licences'),
+    'licences' => $ctrl->getModel('./licences'),
     'lng' => [
       'title' => _("Title"),
       'folderName' => _("Folder name"),

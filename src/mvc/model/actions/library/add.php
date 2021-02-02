@@ -5,7 +5,7 @@
  * Date: 14/12/2016
  * Time: 18:59
  */
-/** @var $model \bbn\mvc\model */
+/** @var $model \bbn\Mvc\Model */
 if ( !empty($model->data['db']) &&
   !empty($model->data['name']) &&
   !empty($model->data['title']) &&
@@ -27,12 +27,12 @@ if ( !empty($model->data['db']) &&
     'doc_link' => $model->data['doc_link'],
     'git' => $model->data['git'],
     'support_link' => $model->data['support_link'],
-    'last_update' => date('Y-m-d H:i:s', time()),
-    'last_check' => date('Y-m-d H:i:s', time())
+    'last_update' => date('Y-m-d H:i:s', Time()),
+    'last_check' => date('Y-m-d H:i:s', Time())
   ]) ){
-    $ver = $model->get_model('./../version/add', $model->data);
+    $ver = $model->getModel('./../version/add', $model->data);
     if ( !empty($ver['success']) ){
-      return $model->data['db']->get_rows("
+      return $model->data['db']->getRows("
         SELECT *
         FROM libraries
         ORDER BY title COLLATE NOCASE ASC

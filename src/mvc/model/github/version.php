@@ -6,9 +6,9 @@
  * Time: 11:48
  */
 
-use bbn\x;
+use bbn\X;
 
-/** @var $model \bbn\mvc\model */
+/** @var $model \bbn\Mvc\Model */
 
 if ( !empty($model->data['git_user']) && !empty($model->data['git_repo']) && \defined('BBN_GITHUB_TOKEN') ){
   $git = new \Github\Client();
@@ -48,7 +48,7 @@ if ( !empty($model->data['git_user']) && !empty($model->data['git_repo']) && \de
   else if ( !empty($model->data['git_id_ver']) &&
     ( $model->data['git_id_ver'] != $model->data['git_latest_ver'] ) &&
     // Get version's info
-    ($version = x::to_object($git->api('repo')->releases()->show($model->data['git_user'], $model->data['git_repo'], $model->data['git_id_ver'])))
+    ($version = X::toObject($git->api('repo')->releases()->show($model->data['git_user'], $model->data['git_repo'], $model->data['git_id_ver'])))
   ){
     // Version's name
     $version_name = $version->tag_name;
@@ -105,51 +105,51 @@ if ( !empty($model->data['git_user']) && !empty($model->data['git_repo']) && \de
   if ( !empty($down_url) && !empty($version_name) ){
 
     // Set the file's path
-    $fz = $model->user_tmp_path().basename($down_url);
+    $fz = $model->userTmpPath().basename($down_url);
     // Download the version file
     file_put_contents($fz, fopen($down_url, 'r'));
     if ( is_file($fz) ){
       $path = $model->data['lib_path'].$version_name.'/';
       if ( is_dir($path) ){
-        \bbn\file\dir::delete($path);
+        \bbn\File\Dir::delete($path);
       }
       //case no zip but single file javascript
 
       if ( (strpos($fz, '.js') !== false) && !empty($content_type) && (strpos($content_type, 'javascript') !== false) ){
-        if ( \bbn\file\dir::create_path($path) ){
+        if ( \bbn\File\Dir::createPath($path) ){
           file_put_contents($path.basename($down_url), fopen($fz, 'r'));
-          \bbn\file\dir::delete($fz);
+          \bbn\File\Dir::delete($fz);
         }
       }
       // Extract the zip file
       else{
         $zip = new ZipArchive();
         if ( $zip->open($fz) === true ){
-          if ( \bbn\file\dir::create_path($path) &&
+          if ( \bbn\File\Dir::createPath($path) &&
             $zip->extractTo($path)
           ){
             // Delete the zip file
-            \bbn\file\dir::delete($fz);
+            \bbn\File\Dir::delete($fz);
           }
         }
       }
       // Delete the first directory (move its children files|directories to the root version's directory)
-      /*if( $dirs = \bbn\file\dir::get_dirs($path) ){
-        foreach ( \bbn\file\dir::get_files($dirs[0], true) as $dir ){
-          \bbn\file\dir::move($dir, $path.basename($dir));
+      /*if( $dirs = \bbn\File\Dir::getDirs($path) ){
+        foreach ( \bbn\File\Dir::getFiles($dirs[0], true) as $dir ){
+          \bbn\File\Dir::move($dir, $path.basename($dir));
         }
-        \bbn\file\dir::delete($dirs[0]);
+        \bbn\File\Dir::delete($dirs[0]);
       }
       return [
         'success' => true,
         'version' => $version_name,
         'dependencies' => $dependencies
       ];*/
-      if( $dirs = \bbn\file\dir::get_dirs($path) ){
-        foreach ( \bbn\file\dir::get_files($dirs[0], true) as $dir ){
-          \bbn\file\dir::move($dir, $path.basename($dir));
+      if( $dirs = \bbn\File\Dir::getDirs($path) ){
+        foreach ( \bbn\File\Dir::getFiles($dirs[0], true) as $dir ){
+          \bbn\File\Dir::move($dir, $path.basename($dir));
         }
-        \bbn\file\dir::delete($dirs[0]);
+        \bbn\File\Dir::delete($dirs[0]);
       }
       return [
         'success' => true,

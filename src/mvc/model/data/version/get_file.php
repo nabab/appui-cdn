@@ -12,7 +12,7 @@ if ( !empty($model->data['file'])  &&
 ){
 
   $path = BBN_CDN_PATH.'lib'. '/'. $model->data['library'].'/'.$model->data['version'];
-  $content = \bbn\file\dir::scan($path,'file',true);
+  $content = \bbn\File\Dir::scan($path,'file',true);
 
   if( !empty($content) ){
     foreach ($content as $i => $file){

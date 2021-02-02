@@ -3,9 +3,9 @@
  * Describe what it does!
  *
  **/
-use bbn\x;
+use bbn\X;
 
-/** @var $model \bbn\mvc\model*/
+/** @var $model \bbn\Mvc\Model*/
 function pad(&$arr) {
   $max = [];
   foreach ($arr as $a) {
@@ -31,17 +31,17 @@ function pad(&$arr) {
 }
 $less = new \lessc();
 $tern_json = [];
-if ($model->has_data('fns')) {
+if ($model->hasData('fns')) {
   $root = BBN_CDN_PATH.'lib/bbn-js/1.0.1/';
   $dir = $root.'src/fn';
-  $fs = new \bbn\file\system();
+  $fs = new \bbn\File\System();
   $fs->cd($dir);
-  $files = $fs->get_files('.');
+  $files = $fs->getFiles('.');
   $res = [];
-  $p = new \bbn\parsers\docblock('js');
+  $p = new \bbn\Parsers\Docblock('js');
   foreach( $files as $i => $f ){
     if (!in_array(substr($f, 0, 1), ['.', '_'])) {
-      $content = $fs->get_contents($f);
+      $content = $fs->getContents($f);
       $parser = $p->parse($content);
       if (isset($parser['ignore'])) {
         continue;
@@ -49,11 +49,11 @@ if ($model->has_data('fns')) {
       /*
       $tt = Peast\Peast::latest($content)->tokenize(); //Parse it!
       foreach ($tt as $t) {
-        x::hdump($t->getType(), $t->getValue());
+        X::hdump($t->getType(), $t->getValue());
       }
       die(x::dump($tt));
-      $p = new \bbn\parsers\doc($content, 'js');
-      $parser = $p->get_js();
+      $p = new \bbn\Parsers\Doc($content, 'js');
+      $parser = $p->getJs();
       //ksort($parser['methods']);
       */
       foreach ($parser['methods'] as &$m) {
@@ -114,7 +114,7 @@ if ($model->has_data('fns')) {
       $src .= ' */'.PHP_EOL.PHP_EOL;
       $src .= <<<EOD
 ;((bbn) => {
-  "use strict";
+  "use Strict";
 
   /**
    * @var {Object} _private Misc variable for internal use
@@ -149,7 +149,7 @@ EOD;
               $meth['description'] .= '.';
             }
             $methods[$meth['name']] .= '  '.$meth['description'].PHP_EOL.PHP_EOL;
-            $desc = x::split($meth['description'], PHP_EOL);
+            $desc = X::split($meth['description'], PHP_EOL);
             $num = 0;
             foreach ($desc as $d) {
               $d = trim($d);
@@ -187,7 +187,7 @@ EOD;
         ];
         if (!empty($meth['example'])) {
           foreach ($meth['example'] as $ex) {
-            $bits = x::split($ex['text'], PHP_EOL);
+            $bits = X::split($ex['text'], PHP_EOL);
             $lines[] = [
               'tag' => 'example'
             ];
@@ -218,12 +218,12 @@ EOD;
             }
             $tern_def = false;
             if (substr($param['name'], 0, 1) === '[') {
-              $tern_name = str_replace('[', '', str_replace(']', '', $param['name']));
-              $bits = x::split($tern_name, '=');
+              $tern_name = str_replace('[', '', Str_replace(']', '', $param['name']));
+              $bits = X::split($tern_name, '=');
               if (count($bits) === 2) {
                 $tern_name = trim($bits[0]);
                 $tern_def = trim($bits[1]);
-                if (!in_array($tern_def, $reserved) && !\bbn\str::is_number($tern_def)) {
+                if (!in_array($tern_def, $reserved) && !\bbn\Str::isNumber($tern_def)) {
                   $tern_def = "'".$tern_def."'";
                 }
               }
@@ -273,7 +273,7 @@ EOD;
           if ($return_type === '*') {
             $return_type = 'Mixed';
           }
-          $methods[$meth['name']] = sprintf($methods[$meth['name']], x::join($args, ', ')).PHP_EOL.
+          $methods[$meth['name']] = sprintf($methods[$meth['name']], X::join($args, ', ')).PHP_EOL.
             '  __Returns__ _'.$return_type.'_ '.($return['description'] ?? '');
           if (!empty($meth['example'])) {
             foreach ($meth['example'] as $ex) {
@@ -300,8 +300,8 @@ EOD;
       }
       $src .= '  });'.PHP_EOL.'})(bbn);'.PHP_EOL;
       $md .= '<a name="bbn_top"></a>'.$toc.PHP_EOL.PHP_EOL.x::join($methods, PHP_EOL.PHP_EOL);
-      $fs->put_contents($root.'doc/src/'.$f, $src);
-      $fs->put_contents($root.'doc/md/'.basename($f, '.js').'.md', $md);
+      $fs->putContents($root.'doc/src/'.$f, $src);
+      $fs->putContents($root.'doc/md/'.basename($f, '.js').'.md', $md);
       $parser['new'] = $src;
       $res[$f] = $parser;
     }
@@ -313,7 +313,7 @@ EOD;
         'text' => substr($content['summary'], 0, -1),
         'desc' => $content['description'],
         'value' => basename($file, '.js'),
-        'items' => x::map(function($a, $name) use ($file) {
+        'items' => X::map(function($a, $name) use ($file) {
           return [
             'file' => $file,
             'text' => $name,
@@ -323,52 +323,52 @@ EOD;
           ];
         }, $content['methods'])
       ];
-      x::sort_by($tmp['items'], 'text');
+      X::sortBy($tmp['items'], 'text');
       $json[] = $tmp;
     }
   }
-  $fs->put_contents($root.'doc/bbn.json', json_encode($json, JSON_PRETTY_PRINT));
+  $fs->putContents($root.'doc/bbn.json', Json_encode($json, JSON_PRETTY_PRINT));
   $tern_json = [
     '!name' => 'bbn',
     'bbn' => [
       'fn' => $tern_json
     ]
   ];
-  $fs->put_contents($root.'doc/tern.json', json_encode($tern_json, JSON_PRETTY_PRINT));
+  $fs->putContents($root.'doc/tern.json', Json_encode($tern_json, JSON_PRETTY_PRINT));
   $files = json_decode('["src\/bbn.js","src\/functions.js","src\/env\/_def.js","src\/var\/_def.js","src\/var\/diacritic.js","src\/fn\/_def.js","src\/fn\/ajax.js","src\/fn\/form.js","src\/fn\/history.js","src\/fn\/init.js","src\/fn\/locale.js","src\/fn\/misc.js","src\/fn\/object.js","src\/fn\/size.js","src\/fn\/string.js","src\/fn\/style.js","src\/fn\/type.js"]');
   $st = '';
   foreach ($files as $f) {
-    $st .= $fs->get_contents($root.$f).PHP_EOL.PHP_EOL.PHP_EOL;
+    $st .= $fs->getContents($root.$f).PHP_EOL.PHP_EOL.PHP_EOL;
   }
-  $fs->put_contents($root.'dist/bbn.js', $st);
-  $fs->put_contents($root.'dist/bbn.min.js', JShrink\Minifier::minify($st, ['flaggedComments' => false]));
-  $files = $fs->get_files($root.'src/css', 'less');
+  $fs->putContents($root.'dist/bbn.js', $st);
+  $fs->putContents($root.'dist/bbn.min.js', JShrink\Minifier::minify($st, ['flaggedComments' => false]));
+  $files = $fs->getFiles($root.'src/css', 'less');
   $st = '';
   foreach ($files as $f) {
-    if (\bbn\str::is_integer(substr(basename($f), 0, 2))) {
-      $st .= $fs->get_contents($f).PHP_EOL.PHP_EOL.PHP_EOL;
+    if (\bbn\Str::isInteger(substr(basename($f), 0, 2))) {
+      $st .= $fs->getContents($f).PHP_EOL.PHP_EOL.PHP_EOL;
     }
   }
   $root_css = BBN_CDN_PATH.'lib/bbn-css/1.0.0/';
-  $default = $fs->get_contents($root_css.'src/css/themes/_def.less');
+  $default = $fs->getContents($root_css.'src/css/themes/_def.less');
   $compiled = $less->compile($default.$st);
-  $fs->put_contents($root_css.'dist/bbn.css', $compiled);
-  $fs->put_contents($root_css.'dist/bbn.min.css', CssMin::minify($compiled));
-  $themes = $fs->get_files($root_css.'src/css/themes', '.less');
+  $fs->putContents($root_css.'dist/bbn.css', $compiled);
+  $fs->putContents($root_css.'dist/bbn.min.css', CssMin::minify($compiled));
+  $themes = $fs->getFiles($root_css.'src/css/themes', '.less');
   foreach ($themes as $t) {
     $name = basename($t, '.less');
     $error = false;
     try {
-      $compiled = $less->compile($default.$fs->get_contents($t).$st);
+      $compiled = $less->compile($default.$fs->getContents($t).$st);
     }
     catch (\Exception $e) {
-      x::log($name);
-      x::log($e->getMessage());
+      X::log($name);
+      X::log($e->getMessage());
       $error = true;
     }
     if (!$error && $compiled) {
-      $fs->put_contents($root_css.'dist/bbn.'.$name.'.css', $compiled);
-      $fs->put_contents($root_css.'dist/bbn.'.$name.'.min.css', CssMin::minify($compiled));
+      $fs->putContents($root_css.'dist/bbn.'.$name.'.css', $compiled);
+      $fs->putContents($root_css.'dist/bbn.'.$name.'.min.css', CssMin::minify($compiled));
     }
   }
   //$files = $fs->get_files

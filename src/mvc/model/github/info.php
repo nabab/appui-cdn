@@ -5,8 +5,8 @@
  * Date: 15/12/2016
  * Time: 18:25
  */
-/** @var $model \bbn\mvc\model */
-use bbn\x;
+/** @var $model \bbn\Mvc\Model */
+use bbn\X;
 /*
 if ( !\defined('BBN_GITHUB_TOKEN') ){
   die('BBN_GITHUB_TOKEN is not defined!');
@@ -16,7 +16,7 @@ if ( !empty($model->data['git_user']) && !empty($model->data['git_repo']) ){
   $git = new \Github\Client();
   $git->authenticate(BBN_GITHUB_TOKEN, \Github\Client::AUTH_HTTP_TOKEN);
   // Get repository's info
-  $github = x::to_object($git->api('repo')->show($model->data['git_user'], $model->data['git_repo']));
+  $github = X::toObject($git->api('repo')->show($model->data['git_user'], $model->data['git_repo']));
 
   // Check if the library already exists
   if ( empty($model->data['only_info']) && $model->data['db']->select('libraries', [], ['name' => $github->name]) ){
@@ -24,7 +24,7 @@ if ( !empty($model->data['git_user']) && !empty($model->data['git_repo']) ){
   }
 
   // Get author
-  $author = x::to_object($git->api('user')->show($model->data['git_user']));
+  $author = X::toObject($git->api('user')->show($model->data['git_user']));
   //$tags = $git->api('repo')->tags($model->data['user'], $model->data['repo']);
 
   // Get repository's info from bower.json file if it exists
@@ -39,7 +39,7 @@ if ( !empty($model->data['git_user']) && !empty($model->data['git_repo']) ){
   if ( empty($model->data['only_info']) ){
     // Get all versions list and the latest version
 
-    $ver_lat = $model->get_model('./versions', $model->data);
+    $ver_lat = $model->getModel('./versions', $model->data);
   }
 
   $info = [
@@ -70,7 +70,7 @@ if ( !empty($model->data['git_user']) && !empty($model->data['git_repo']) ){
   $git = new \Github\Client();
   $git->authenticate(BBN_GITHUB_TOKEN, \Github\Client::AUTH_HTTP_TOKEN);
   // Get repository's info
-  $github = x::to_object($git->api('repo')->show($model->data['git_user'], $model->data['git_repo']));
+  $github = X::toObject($git->api('repo')->show($model->data['git_user'], $model->data['git_repo']));
 
 
   // Check if the library already exists
@@ -82,7 +82,7 @@ if ( !empty($model->data['git_user']) && !empty($model->data['git_repo']) ){
 
   }
   // Get author
-  $author = x::to_object($git->api('user')->show($model->data['git_user']));
+  $author = X::toObject($git->api('user')->show($model->data['git_user']));
   //$tags = $git->api('repo')->tags($model->data['user'], $model->data['repo']);
 
   // Get repository's info from bower.json file if it exists
@@ -96,7 +96,7 @@ if ( !empty($model->data['git_user']) && !empty($model->data['git_repo']) ){
 
   if ( empty($model->data['only_info']) ){
     // Get all versions list and the latest version
-    $ver_lat = $model->get_model('./versions', $model->data);
+    $ver_lat = $model->getModel('./versions', $model->data);
   }
 
 

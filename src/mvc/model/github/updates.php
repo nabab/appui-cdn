@@ -5,11 +5,11 @@
  * Date: 30/12/2016
  * Time: 17:55
  */
-/** @var $model \bbn\mvc\model */
+/** @var $model \bbn\Mvc\Model */
 
 if ( !empty($model->data['db']) &&
-  ($libraries = $model->data['db']->get_rows("
-    SELECT title, name, git, latest
+  ($libraries = $model->data['db']->getRows("
+    SELECT title, name, Git, latest
     FROM libraries
     WHERE git IS NOT NULL
   "))
@@ -23,13 +23,13 @@ if ( !empty($model->data['db']) &&
   foreach ($libraries as $lib ){
     $url = $lib['git'];
     if ( !empty($lib['git']) &&
-      \bbn\str::is_url($lib['git']) &&
+      \bbn\Str::isUrl($lib['git']) &&
       ((strpos($lib['git'], 'http://github.com/') === 0) || (strpos($lib['git'], 'https://github.com/') === 0)) &&
       !empty($lib['latest'])
     ){
-      $lib['git'] = str_replace('http://github.com/', '', str_replace('https://github.com/', '', $lib['git']));
+      $lib['git'] = str_replace('http://github.com/', '', Str_replace('https://github.com/', '', $lib['git']));
       $lib['git'] = explode('/', $lib['git']);
-      $versions = $model->get_model('./versions', [
+      $versions = $model->getModel('./versions', [
         'db' => $model->data['db'],
         'git_user' =>  $lib['git'][0],
         'git_repo' => $lib['git'][1]

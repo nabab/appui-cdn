@@ -5,7 +5,7 @@
  * Date: 15/12/2016
  * Time: 09:48
  */
-/** @var $model \bbn\mvc\model */
+/** @var $model \bbn\Mvc\Model */
 if ( !empty($model->data['db']) &&
   !empty($model->data['name']) &&
   !empty($model->data['vname']) &&
@@ -35,7 +35,7 @@ if ( !empty($model->data['db']) &&
   }
 
   if ( !empty($model->data['is_latest']) ){
-    $internal = $model->data['db']->get_one(<<<'SQLITE'
+    $internal = $model->data['db']->getOne(<<<'SQLITE'
     SELECT MAX(internal)
     FROM versions
     WHERE library = ?
@@ -50,9 +50,9 @@ SQLITE
       $internal++;
     }
   }
-  else if ( isset($model->data['internal']) && \bbn\str::is_integer($model->data['internal']) ){
+  else if ( isset($model->data['internal']) && \bbn\Str::isInteger($model->data['internal']) ){
     $internal = $model->data['internal'];
-    if ( $model->data['db']->select_one('versions', 'internal', ['internal' => $internal]) ){
+    if ( $model->data['db']->selectOne('versions', 'internal', ['internal' => $internal]) ){
       $model->data['db']->query(<<<SQLITE
       UPDATE versions SET internal = internal+1
       WHERE internal >= ?
@@ -68,10 +68,10 @@ SQLITE
     'name' => $model->data['vname'],
     'library' => $model->data['name'],
     'content' => json_encode($content),
-    'date_added' => date('Y-m-d H:i:s', time()),
+    'date_added' => date('Y-m-d H:i:s', Time()),
     'internal' => $internal
   ]) ) {
-    $id = $model->data['db']->last_id();
+    $id = $model->data['db']->lastId();
     if ( !empty($model->data['is_latest']) ){
       $model->data['db']->update('libraries', ['latest' => $model->data['vname']], ['name' => $model->data['name']]);
     }
@@ -79,7 +79,7 @@ SQLITE
 
     if ( !empty($model->data['dependencies']) ){
       foreach ( $model->data['dependencies'] as $dep ){
-        if ( $model->data['db']->select_one('dependencies', 'order', ['order' => $dep['order']]) ){
+        if ( $model->data['db']->selectOne('dependencies', 'order', ['order' => $dep['order']]) ){
           $model->data['db']->query(<<<'SQLITE'
           UPDATE "dependencies" SET "order" = "order"+1
           WHERE "order" >= ?
@@ -134,7 +134,7 @@ return ['success' => false];
 /*
       foreach ( $model->data['slave_dependencies'] AS $lib => $yes ){
         if ( !empty($yes) ){
-          $id_slave = $model->data['db']->get_one(<<<SQLITE
+          $id_slave = $model->data['db']->getOne(<<<SQLITE
             SELECT versions.id
             FROM versions
             JOIN libraries

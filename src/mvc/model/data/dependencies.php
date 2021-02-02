@@ -1,7 +1,7 @@
 <?php
 if( !empty($model->data['folder']) ){
   return [
-    'depend' => $model->data['db']->get_rows('
+    'depend' => $model->data['db']->getRows('
       SELECT "vers"."id" AS id_ver, "vers"."name" AS version, "libr"."name" AS name,
         "libr"."title" AS lib_title, "dependencies"."order"
       FROM "versions"
@@ -19,7 +19,7 @@ if( !empty($model->data['folder']) ){
       ORDER BY "libr"."title" COLLATE NOCASE ASC',
       $model->data['folder']
     ),
-    'dependent' => $model->data['db']->get_rows("
+    'dependent' => $model->data['db']->getRows("
     SELECT libr.name, libr.title, vers.name AS version
     FROM versions
     JOIN libraries

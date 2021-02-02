@@ -3,14 +3,14 @@
  * Describe what it does!
  *
  **/
-use bbn\x;
+use bbn\X;
 
-/** @var $model \bbn\mvc\model*/
+/** @var $model \bbn\Mvc\Model*/
 $dir = BBN_CDN_PATH.'lib/bbn-vue/2.0.2';
-$fs  = new \bbn\file\system();
+$fs  = new \bbn\File\System();
 $fs->cd($dir);
 $p           = 'src/components/';
-$components  = $fs->get_dirs($p);
+$components  = $fs->getDirs($p);
 $num         = 0;
 $vue         = [];
 $mixins      = [];
@@ -18,33 +18,33 @@ $expressions = [];
 $less        = new \lessc();
 $fs->delete('dist/js');
 $fs->delete('dist/vue');
-$fs->create_path('dist/js/components');
+$fs->createPath('dist/js/components');
 $fs->delete('dist/vue/components');
 foreach ($components as $component) {
   $cp   = basename($component);
-  $html = $fs->is_file($p.$cp.'/'.$cp.'.html') ? $fs->get_contents($p.$cp.'/'.$cp.'.html') : '';
-  $css  = $fs->is_file($p.$cp.'/'.$cp.'.less') ? $fs->get_contents($p.$cp.'/'.$cp.'.less') : '';
-  $js   = $fs->is_file($p.$cp.'/'.$cp.'.js') ? $fs->get_contents($p.$cp.'/'.$cp.'.js') : '';
-  $cfg  = $fs->is_file($p.$cp.'/bbn.json') ? json_decode($fs->get_contents($p.$cp.'/bbn.json'), true) : '';
+  $html = $fs->isFile($p.$cp.'/'.$cp.'.html') ? $fs->getContents($p.$cp.'/'.$cp.'.html') : '';
+  $css  = $fs->isFile($p.$cp.'/'.$cp.'.less') ? $fs->getContents($p.$cp.'/'.$cp.'.less') : '';
+  $js   = $fs->isFile($p.$cp.'/'.$cp.'.js') ? $fs->getContents($p.$cp.'/'.$cp.'.js') : '';
+  $cfg  = $fs->isFile($p.$cp.'/bbn.json') ? json_decode($fs->getContents($p.$cp.'/bbn.json'), true) : '';
   if ($js) {
     $cp_files = array_filter(
-      $fs->get_files($p.$cp, true, false), function ($a) use ($cp, $p) {
-        $ext = \bbn\str::file_ext($a);
+      $fs->getFiles($p.$cp, true, false), function ($a) use ($cp, $p) {
+        $ext = \bbn\Str::fileExt($a);
         return !in_array($ext, ['md', 'lang', 'pdf', 'bak', 'json']) &&
         !in_array($a, [$p.$cp.'/'.$cp.'.html', $p.$cp.'/'.$cp.'.less', $p.$cp.'/'.$cp.'.js']);
       }
     );
     $ar_cfg   = false;
     if (!empty($cfg['dependencies'])) {
-      $cdn_cfg = new \bbn\cdn\config(
+      $cdn_cfg = new \bbn\Cdn\Config(
         BBN_SHARED_PATH.'?lib='
         .x::join(array_keys($cfg['dependencies']), ',')
       );
       $ar_cfg  = $cdn_cfg->get();
     }
 
-    $parser = new \bbn\parsers\doc($js, 'vue');
-    $doc    = $parser->get_vue();
+    $parser = new \bbn\Parsers\Doc($js, 'vue');
+    $doc    = $parser->getVue();
     // bbn.io
     $tmp       = [
       'text' => $cp,
@@ -58,7 +58,7 @@ foreach ($components as $component) {
       $item =& $tmp[$i];
       foreach ($doc[$i] as $d) {
         if (empty($d['name'])) {
-          x::log($d);
+          X::log($d);
           continue;
         }
 
@@ -66,12 +66,12 @@ foreach ($components as $component) {
           continue;
         }
 
-        $bits = x::split($d['name'], '.');
+        $bits = X::split($d['name'], '.');
         $name = end($bits);
         if (isset($item['type']) && ($item['type'] === 'mixins')) {
           $mixin = substr($name, 0, -9);
           if (!isset($mixins[$mixin])) {
-            $c2 = $fs->get_contents($dir.'/src/mixins/'.$mixin.'.js');
+            $c2 = $fs->getContents($dir.'/src/mixins/'.$mixin.'.js');
             if (!$c2) {
               throw new \Exception(
                 _("Impossible to find the content of the mixins")
@@ -79,8 +79,8 @@ foreach ($components as $component) {
               );
             }
 
-            $parser2 = new \bbn\parsers\doc($c2, 'vue');
-            if ($doc2 = $parser2->get_vue()) {
+            $parser2 = new \bbn\Parsers\Doc($c2, 'vue');
+            if ($doc2 = $parser2->getVue()) {
               if (!empty($doc2['components'])) {
                 $doc2 = $doc2['components'][0];
               }
@@ -122,7 +122,7 @@ foreach ($components as $component) {
 
     unset($item);
     foreach ($to_remove as $rem) {
-      $idx = x::find($tmp['items'], ['value' => $rem]);
+      $idx = X::find($tmp['items'], ['value' => $rem]);
       if ($idx === null) {
         throw new Error("Impossible to find item $rem");
       }
@@ -132,8 +132,8 @@ foreach ($components as $component) {
 
     $vue[] = $tmp;
     // .vue files
-    $fs->create_path('dist/js/components/'.$cp);
-    $fs->create_path('dist/vue/components/'.$cp);
+    $fs->createPath('dist/js/components/'.$cp);
+    $fs->createPath('dist/vue/components/'.$cp);
     $st_vue           = '';
     $css_dependencies = [];
     $st_js            = '(bbn_resolve) => { ((bbn) => {'.PHP_EOL;
@@ -191,7 +191,7 @@ JAVASCRIPT;
 
     if ($html) {
       $st_vue .= '<template>'.PHP_EOL.$html.PHP_EOL.'</template>'.PHP_EOL;
-      $content = str_replace('`', '\\`', str_replace('\\', '\\\\', $html));
+      $content = str_replace('`', '\\`', Str_replace('\\', '\\\\', $html));
       $st_js  .= <<<JAVASCRIPT
 let script = document.createElement('script');
 script.innerHTML = `$content`;
@@ -206,7 +206,7 @@ JAVASCRIPT;
     if ($css && ($css = $less->compile($css))) {
       $st_vue .= '<style scoped>'.PHP_EOL.$css.PHP_EOL.'</style>'.PHP_EOL;
       $content = str_replace('`', '\\`', $css);
-      $fs->put_contents('dist/js/components/'.$cp.'/'.$cp.'.css', $content);
+      $fs->putContents('dist/js/components/'.$cp.'/'.$cp.'.css', $content);
       $st_js .= <<<JAVASCRIPT
 let css = document.createElement('link');
 css.setAttribute('rel', "stylesheet");
@@ -227,9 +227,9 @@ JAVASCRIPT;
       $fs->copy($cp_file, 'dist/vue/components/'.$cp.'/'.basename($cp_file));
     }
 
-    $fs->put_contents('dist/js/components/'.$cp.'/'.$cp.'.js', $st_js);
-    $fs->put_contents('dist/vue/components/'.$cp.'/'.$cp.'.vue', $st_vue);
-    if ($fs->is_file('dist/vue/components/'.$cp.'/'.$cp.'.vue')) {
+    $fs->putContents('dist/js/components/'.$cp.'/'.$cp.'.js', $st_js);
+    $fs->putContents('dist/vue/components/'.$cp.'/'.$cp.'.vue', $st_vue);
+    if ($fs->isFile('dist/vue/components/'.$cp.'/'.$cp.'.vue')) {
       $num++;
     }
   }
@@ -246,8 +246,8 @@ $res               = [
   ]
 ];
 $fns               = [];
-$p                 = new \bbn\parsers\docblock('js');
-$content           = $fs->get_contents('src/methods.js');
+$p                 = new \bbn\Parsers\Docblock('js');
+$content           = $fs->getContents('src/methods.js');
 $parser            = $p->parse($content);
 $params            = ['param', 'returns', ''];
 $methods           = [];
@@ -285,15 +285,15 @@ $tern_json = [
 ];
 
 $res[1]['items'] = $fns;
-$fs->put_contents($dir.'/bbn-vue.json', json_encode($res, JSON_PRETTY_PRINT));
-$fs->put_contents($dir.'/tern.json', json_encode($tern_json, JSON_PRETTY_PRINT));
+$fs->putContents($dir.'/bbn-vue.json', Json_encode($res, JSON_PRETTY_PRINT));
+$fs->putContents($dir.'/tern.json', Json_encode($tern_json, JSON_PRETTY_PRINT));
 $files = json_decode('["src\/vars.js","src\/methods.js","src\/mixins\/basic.js","src\/mixins\/empty.js","src\/mixins\/dimensions.js","src\/mixins\/position.js","src\/mixins\/dropdown.js","src\/mixins\/keynav.js","src\/mixins\/toggle.js","src\/mixins\/localStorage.js","src\/mixins\/data.js","src\/mixins\/dataEditor.js","src\/mixins\/events.js","src\/mixins\/list.js","src\/mixins\/memory.js","src\/mixins\/input.js","src\/mixins\/resizer.js","src\/mixins\/close.js","src\/mixins\/field.js","src\/mixins\/view.js","src\/mixins\/observer.js","src\/mixins\/keepCool.js","src\/mixins\/url.js","src\/mixins.js","src\/defaults.js","src\/init.js"]');
 $st    = '';
 foreach ($files as $f) {
-  $st .= $fs->get_contents($f).PHP_EOL.PHP_EOL.PHP_EOL;
+  $st .= $fs->getContents($f).PHP_EOL.PHP_EOL.PHP_EOL;
 }
 
-$fs->put_contents('dist/js/bbn-vue.js', $st);
+$fs->putContents('dist/js/bbn-vue.js', $st);
 
-$fs->put_contents('dist/js/bbn-vue.min.js', JShrink\Minifier::minify($st, ['flaggedComments' => false]));
+$fs->putContents('dist/js/bbn-vue.min.js', JShrink\Minifier::minify($st, ['flaggedComments' => false]));
 return ['data' => $res];

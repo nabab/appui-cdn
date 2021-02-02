@@ -1,16 +1,16 @@
 <?php
-/** @var $ctrl \bbn\mvc\controller */
+/** @var $ctrl \bbn\Mvc\Controller */
 // SQLITE connection
-$path = $ctrl->data_path('appui-cdn');
-$fs = new \bbn\file\system();
+$path = $ctrl->dataPath('appui-cdn');
+$fs = new \bbn\File\System();
 if ( !\defined('BBN_CDN_DB') && file_exists($path.'db/cdn.sqlite') ){
   define('BBN_CDN_DB', $path.'db/cdn.sqlite');
 }
-$ctrl->data['db'] = new \bbn\db([
+$ctrl->data['db'] = new \bbn\Db([
   'engine' => 'sqlite',
   'db' => BBN_CDN_DB
 ]);
 if ( !\defined('APPUI_CDN_ROOT') ){
-  define('APPUI_CDN_ROOT', $ctrl->plugin_url('appui-cdn').'/');
+  define('APPUI_CDN_ROOT', $ctrl->pluginUrl('appui-cdn').'/');
 }
 return 1;

@@ -5,7 +5,7 @@
  * Date: 15/12/2016
  * Time: 09:52
  */
-/** @var $model \bbn\mvc\model */
+/** @var $model \bbn\Mvc\Model */
 //die(var_dump($model->data['id_ver'], $model->data['library'], $model->data['name']));
 if ( !empty($model->data['db']) &&
   !empty($model->data['id_ver']) &&
@@ -17,7 +17,7 @@ if ( !empty($model->data['db']) &&
     !empty($model->data['name'])
   ){
     $path_folder =  BBN_CDN_PATH.'lib/'.$model->data['library'].'/'.$model->data['name'];
-    $delete_folder = \bbn\file\dir::delete($path_folder.'/');
+    $delete_folder = \bbn\File\Dir::delete($path_folder.'/');
     if( empty($delete_folder) ){
       return ['error' => _('Error while deleting folder')];
     }
@@ -30,9 +30,9 @@ if ( !empty($model->data['db']) &&
     $model->data['db']->delete('dependencies', ['id_slave' => $model->data['id_ver']]);
     $model->data['db']->delete('dependencies', ['id_master' => $model->data['id_ver']]);
     // Check if it's the latest library's version
-    if ( $ver['name'] === $model->data['db']->select_one('libraries', 'latest', ['name' => $ver['library']]) ){
+    if ( $ver['name'] === $model->data['db']->selectOne('libraries', 'latest', ['name' => $ver['library']]) ){
       // Get previous version's name
-      $prev = $model->data['db']->get_one("
+      $prev = $model->data['db']->getOne("
         SELECT name
         FROM versions
         WHERE library = ?
@@ -49,7 +49,7 @@ if ( !empty($model->data['db']) &&
 
     return [
       'success' => 1,
-      'latest' => $model->data['db']->get_one("
+      'latest' => $model->data['db']->getOne("
         SELECT name, MAX(internal)
         FROM versions
         WHERE library = ?",

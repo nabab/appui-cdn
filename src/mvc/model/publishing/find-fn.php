@@ -3,11 +3,11 @@
  * Describe what it does!
  *
  **/
-use bbn\x;
+use bbn\X;
 
-/** @var $model \bbn\mvc\model*/
+/** @var $model \bbn\Mvc\Model*/
 if (isset($model->data['fns'])) {
-  $fs = new \bbn\file\system();
+  $fs = new \bbn\File\System();
   $sources = [
     // bbnjs
     BBN_CDN_PATH.'lib/bbn-js/1.0.1/src',
@@ -40,7 +40,7 @@ if (isset($model->data['fns'])) {
     }
   }
   foreach ($sources as $src) {
-    x::dump(
+    X::dump(
       $src,
       $fs->search('bbn.fn.isFunction', $src, true, false, 'js|php'),
       '+++++++++++++++++++++++',
