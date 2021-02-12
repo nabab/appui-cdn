@@ -8,7 +8,7 @@
            editor="appui-cdn-management-library_edit"
            toolbar="appui-cdn-management-toolbar"
            expander="appui-cdn-management-versions"
-           :order="[{field: 'title', Dir: 'ASC'}]"
+           :order="[{field: 'title', dir: 'ASC'}]"
 >
   <bbns-column title="<?=_("Title")?>"
                field="title"

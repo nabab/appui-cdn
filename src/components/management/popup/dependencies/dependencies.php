@@ -5,7 +5,7 @@
 >
   <bbn-pane>
     <bbn-table :source="source.depend"
-               :order="[{field: 'name', Dir: 'ASC'}]"
+               :order="[{field: 'name', dir: 'ASC'}]"
                :title-groups="[{
                               value: 'depend',
                               text: '<?=_("Dependencies")?>',
@@ -30,7 +30,7 @@
   </bbn-pane>
   <bbn-pane>
     <bbn-table :source="source.dependent"
-               :order="[{field: 'name', Dir: 'ASC'}]"
+               :order="[{field: 'name', dir: 'ASC'}]"
                :title-groups="[{
                               value: 'dependent',
                               text: '<?=_("Slaves")?>'
