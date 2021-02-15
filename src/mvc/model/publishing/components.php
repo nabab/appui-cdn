@@ -191,7 +191,7 @@ JAVASCRIPT;
 
     if ($html) {
       $st_vue .= '<template>'.PHP_EOL.$html.PHP_EOL.'</template>'.PHP_EOL;
-      $content = str_replace('`', '\\`', Str_replace('\\', '\\\\', $html));
+      $content = str_replace('`', '\\`', str_replace('\\', '\\\\', $html));
       $st_js  .= <<<JAVASCRIPT
 let script = document.createElement('script');
 script.innerHTML = `$content`;

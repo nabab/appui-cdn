@@ -218,7 +218,7 @@ EOD;
             }
             $tern_def = false;
             if (substr($param['name'], 0, 1) === '[') {
-              $tern_name = str_replace('[', '', Str_replace(']', '', $param['name']));
+              $tern_name = str_replace('[', '', str_replace(']', '', $param['name']));
               $bits = X::split($tern_name, '=');
               if (count($bits) === 2) {
                 $tern_name = trim($bits[0]);

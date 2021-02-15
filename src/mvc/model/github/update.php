@@ -16,7 +16,7 @@ if ( !empty($model->data['db']) &&
     !empty($library['latest'])
   ){
 
-    $library['git'] = str_replace('http://github.com/', '', Str_replace('https://github.com/', '', $library['git']));
+    $library['git'] = str_replace('http://github.com/', '', str_replace('https://github.com/', '', $library['git']));
     $library['git'] = explode('/', $library['git']);
     $version = $model->getModel('./versions', [
       'db' => $model->data['db'],

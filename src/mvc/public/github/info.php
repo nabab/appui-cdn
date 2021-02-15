@@ -12,7 +12,7 @@ if ( !empty($ctrl->post['url']) &&
   \bbn\Str::isUrl($ctrl->post['url']) &&
   ((strpos($ctrl->post['url'], 'http://github.com/') === 0) || (strpos($ctrl->post['url'], 'https://github.com/') === 0))
 ){
-  $ctrl->post['url'] = str_replace('http://github.com/', '', Str_replace('https://github.com/', '', $ctrl->post['url']));
+  $ctrl->post['url'] = str_replace('http://github.com/', '', str_replace('https://github.com/', '', $ctrl->post['url']));
   if ( substr($ctrl->post['url'], -4) === '.git' ){
     $ctrl->post['url'] = substr($ctrl->post['url'], 0, -4);
   }

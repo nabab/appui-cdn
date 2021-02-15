@@ -27,7 +27,7 @@ if ( !empty($model->data['db']) &&
       ((strpos($lib['git'], 'http://github.com/') === 0) || (strpos($lib['git'], 'https://github.com/') === 0)) &&
       !empty($lib['latest'])
     ){
-      $lib['git'] = str_replace('http://github.com/', '', Str_replace('https://github.com/', '', $lib['git']));
+      $lib['git'] = str_replace('http://github.com/', '', str_replace('https://github.com/', '', $lib['git']));
       $lib['git'] = explode('/', $lib['git']);
       $versions = $model->getModel('./versions', [
         'db' => $model->data['db'],

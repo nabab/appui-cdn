@@ -64,7 +64,7 @@
     <bbn-input v-model="source.row.website"></bbn-input>
 
     <label class="bbn-r">
-      <?=_("Download")?>
+      <?=_("Download link")?>
     </label>
     <bbn-input v-model="source.row.download_link"></bbn-input>
 

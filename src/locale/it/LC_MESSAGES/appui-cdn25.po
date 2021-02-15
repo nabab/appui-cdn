@@ -3,14 +3,14 @@ msgstr ""
 "Project-Id-Version: 1\n"
 "Report-Msgid-Bugs-To: info@bbn.so\n"
 "last-Translator: BBN Solutions <support@bbn.solutions>\n"
-"Language-Team: DE <DE@li.org>\n"
+"Language-Team: IT <IT@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2020-09-05 20:02+0200\n"
-"POT-Revision-Date: 2020-09-05 20:02+0200\n"
-"Language: de\n"
-"X-Domain: appui-cdn21\n"
+"POT-Creation-Date: 2021-02-15 01:09+0100\n"
+"POT-Revision-Date: 2021-02-15 01:09+0100\n"
+"Language: it\n"
+"X-Domain: appui-cdn\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/library_edit/library_edit.js
@@ -102,7 +102,7 @@ msgstr ""
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/library_details_popup.php
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/library_edit.php
 msgid "Description"
-msgstr ""
+msgstr "Descrizione"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/library_add.php
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/library_details_popup.php
@@ -125,11 +125,8 @@ msgstr ""
 msgid "Website"
 msgstr ""
 
-#: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/library_add.php
-#: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/library_details_popup.php
-#: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/library_edit.php
-#: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/public/management.php
-msgid "Download"
+#: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/library_edit/library_edit.php
+msgid "Download link"
 msgstr ""
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/library_add.php
@@ -156,7 +153,7 @@ msgstr ""
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/library_version.php
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/public/management.php
 msgid "Name"
-msgstr ""
+msgstr "Nome"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/library_edit/library_edit.php
 msgid "Select the files for changing their order"
@@ -219,6 +216,13 @@ msgstr ""
 msgid "Latest version"
 msgstr ""
 
+#: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/library_add.php
+#: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/library_details_popup.php
+#: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/library_edit.php
+#: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/public/management.php
+msgid "Download"
+msgstr ""
+
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/js/management.js
 msgid "Info"
 msgstr ""
@@ -233,7 +237,7 @@ msgstr ""
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/public/management.php
 msgid "Date"
-msgstr ""
+msgstr "Data"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/popup/list_folders/list_folders.js
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/popup/versions_from_github/versions_from_github.js
@@ -428,7 +432,7 @@ msgstr ""
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/versions/versions.js
 msgid "Error"
-msgstr ""
+msgstr "Errore"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/versions/versions.js
 msgid "Info version "
@@ -460,7 +464,7 @@ msgstr ""
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/versions/versions.js
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/versions/versions.js
 msgid "Date added"
@@ -581,6 +585,10 @@ msgstr ""
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/model/github/info.php
 msgid "No info"
+msgstr ""
+
+#: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/model/publishing/components.php
+msgid "Impossible to find the content of the mixins"
 msgstr ""
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/model/publishing/components.php
