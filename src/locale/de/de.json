@@ -1,5 +1,5 @@
 {
-    "components\/management\/library_edit\/library_edit": {
+    "components\/management\/library_edit": {
         "No file selected": "",
         "The name or the folder name for this library is missing": "",
         "Success!": "",
@@ -10,10 +10,42 @@
         "Dependencies already inserted": "",
         "The order should be a number": "",
         "Add language file": "",
+        "Files": "",
         "Add theme": "",
         "Prepend the theme files": ""
     },
-    "components\/management\/popup\/toolbar\/update\/update": {
+    "components\/management\/popup\/info_lib": {
+        "Title": "",
+        "Folder name": "",
+        "Function name": "",
+        "Description": "",
+        "Author": "",
+        "Licence": "",
+        "Website": "",
+        "Documentation": "",
+        "Support": "",
+        "Latest version": "",
+        "Download": ""
+    },
+    "components\/management\/versions": {
+        "Name": "",
+        "Library": "",
+        "info": "",
+        "Edit": "",
+        "Script package.json": "",
+        "Error": "",
+        "Info version ": "",
+        "Edit the version of the": "",
+        "library": "",
+        "Remove version in library": "",
+        "The following version already exists": "",
+        "Scripts": "",
+        "No Script": "",
+        "ID": "",
+        "Date added": "",
+        "Content": ""
+    },
+    "components\/management\/popup\/toolbar\/update": {
         "Dependencies": "",
         "Update": "",
         "Get info from package.json": "",
@@ -28,17 +60,22 @@
         "Delete": "",
         "Remove library": ""
     },
-    "components\/management\/popup\/list_folders\/list_folders": {
+    "components\/management\/popup\/list_folders": {
         "Add version to this library": "",
         "List versions from repository": "",
         "Error while deleting": "",
-        "cancel": ""
+        "cancel": "",
+        "Skip": "",
+        "Import": ""
     },
-    "components\/management\/popup\/versions_from_github\/versions_from_github": {
+    "components\/management\/popup\/versions_from_github": {
         "Add version to this library": ""
     },
-    "components\/management\/popup\/toolbar\/library_add\/library_add": {
+    "components\/management\/popup\/toolbar\/library_add": {
         "cancel": "",
+        "Skip": "",
+        "Import": "",
+        "Cancel": "",
         "skip": "",
         "import": "",
         "Import library from Github": "",
@@ -46,7 +83,7 @@
         "The repository's URL is empty": "",
         "Add library": ""
     },
-    "components\/management\/popup\/remove\/remove": {
+    "components\/management\/popup\/remove": {
         "Library deleted": "",
         "Version deleted": "",
         "Error while deleting library": "",
@@ -54,22 +91,9 @@
         "Do you really want delete the library": "",
         "Do you really want to delete the version": ""
     },
-    "components\/management\/toolbar\/toolbar": {
+    "components\/management\/toolbar": {
         "GitHub link": "",
+        "GitHub updates": "",
         "libraries": ""
-    },
-    "components\/management\/versions\/versions": {
-        "Script package.json": "",
-        "Error": "",
-        "Info version ": "",
-        "Edit the version of the": "",
-        "library": "",
-        "Remove version in library": "",
-        "The following version already exists": "",
-        "Scripts": "",
-        "No Script": "",
-        "ID": "",
-        "Date added": "",
-        "Content": ""
     }
 }
