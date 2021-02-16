@@ -3,77 +3,77 @@ msgstr ""
 "Project-Id-Version: 1\n"
 "Report-Msgid-Bugs-To: info@bbn.so\n"
 "last-Translator: BBN Solutions <support@bbn.solutions>\n"
-"Language-Team: ES <ES@li.org>\n"
+"Language-Team: EN <EN@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-02-15 01:09+0100\n"
-"POT-Revision-Date: 2021-02-15 01:09+0100\n"
-"Language: es\n"
+"POT-Creation-Date: 2021-02-16 05:17+0100\n"
+"POT-Revision-Date: 2021-02-16 05:17+0100\n"
+"Language: en\n"
 "X-Domain: appui-cdn\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/library_edit/library_edit.js
 msgid "No file selected"
-msgstr ""
+msgstr "No file selected"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/library_edit/library_edit.js
 msgid "The name or the folder name for this library is missing"
-msgstr ""
+msgstr "The name or the folder name for this library is missing"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/library_edit/library_edit.js
 msgid "Success!"
-msgstr ""
+msgstr "Success!"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/library_edit/library_edit.js
 msgid "A problem has occurred"
-msgstr ""
+msgstr "A problem has occurred"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/library_edit/library_edit.js
 msgid "Are you sure you want to continue?"
-msgstr ""
+msgstr "Are you sure you want to continue?"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/library_edit/library_edit.js
 msgid "The version's ID is missing"
-msgstr ""
+msgstr "The version's ID is missing"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/library_edit/library_edit.js
 msgid "The library's name is missing"
-msgstr ""
+msgstr "The library's name is missing"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/library_edit/library_edit.js
 msgid "Dependencies already inserted"
-msgstr ""
+msgstr "Dependencies already inserted"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/library_edit/library_edit.js
 msgid "The order should be a number"
-msgstr ""
+msgstr "The order should be a number"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/library_edit/library_edit.js
 msgid "Add language file"
-msgstr ""
+msgstr "Add language file"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/language_theme.php
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/library_version.php
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/public/management.php
 msgid "Files"
-msgstr ""
+msgstr "Files"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/library_edit/library_edit.js
 msgid "Add theme"
-msgstr ""
+msgstr "Add theme"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/library_edit/library_edit.js
 msgid "Prepend the theme files"
-msgstr ""
+msgstr "Prepend the theme files"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/library_edit/library_edit.php
 msgid "Are you sure you want to close?"
-msgstr ""
+msgstr "Are you sure you want to close?"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/library_edit/library_edit.php
 msgid "Import library's info from GitHub"
-msgstr ""
+msgstr "Import library's info from GitHub"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/management.php
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/library_add.php
@@ -81,7 +81,7 @@ msgstr ""
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/library_edit.php
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/public/management.php
 msgid "Title"
-msgstr ""
+msgstr "Title"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/management.php
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/library_add.php
@@ -89,642 +89,646 @@ msgstr ""
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/library_edit.php
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/public/management.php
 msgid "Folder name"
-msgstr ""
+msgstr "Folder name"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/library_add.php
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/library_details_popup.php
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/library_edit.php
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/public/management.php
 msgid "Function name"
-msgstr ""
+msgstr "Function Name"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/library_add.php
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/library_details_popup.php
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/library_edit.php
 msgid "Description"
-msgstr ""
+msgstr "Description"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/library_add.php
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/library_details_popup.php
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/library_edit.php
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/public/management.php
 msgid "Author"
-msgstr ""
+msgstr "Author"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/library_add.php
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/library_details_popup.php
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/library_edit.php
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/public/management.php
 msgid "Licence"
-msgstr ""
+msgstr "Licence"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/library_add.php
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/library_details_popup.php
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/library_edit.php
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/public/management.php
 msgid "Website"
-msgstr ""
+msgstr "Website"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/library_edit/library_edit.php
 msgid "Download link"
-msgstr ""
+msgstr "Download link"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/library_add.php
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/library_details_popup.php
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/library_edit.php
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/public/management.php
 msgid "Documentation"
-msgstr ""
+msgstr "Documentation"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/library_add.php
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/library_details_popup.php
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/library_edit.php
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/public/management.php
 msgid "Support"
-msgstr ""
+msgstr "Support"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/library_add.php
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/library_edit.php
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/versions_from_github.php
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/public/management.php
 msgid "Version"
-msgstr ""
+msgstr "Version"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/library_version.php
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/public/management.php
 msgid "Name"
-msgstr ""
+msgstr "Name"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/library_edit/library_edit.php
 msgid "Select the files for changing their order"
-msgstr ""
+msgstr "Select the files for changing their order"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/library_edit/library_edit.php
 msgid "Move selected files"
-msgstr ""
+msgstr "Move selected files"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/library_version.php
 msgid "Languages"
-msgstr ""
+msgstr "Languages"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/library_version.php
 msgid "Themes"
-msgstr ""
+msgstr "Themes"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/library_edit/library_edit.php
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/popup/dependencies/dependencies.php
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/popup/toolbar/update/update.js
 msgid "Dependencies"
-msgstr ""
+msgstr "DEPENDENCIES"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/library_edit/library_edit.php
 msgid "Get slave libraries"
-msgstr ""
+msgstr "Get slave libraries"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/management.php
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/library_version.php
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/public/management.php
 msgid "Latest"
-msgstr ""
+msgstr "Latest"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/library_edit/library_edit.php
 msgid "Languages Files"
-msgstr ""
+msgstr "Languages Files"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/library_edit/library_edit.php
 msgid "Add dependencies"
-msgstr ""
+msgstr "Add dependencies"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/public/management.php
 msgid "Library"
-msgstr ""
+msgstr "Library"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/public/management.php
 msgid "Order"
-msgstr ""
+msgstr "Order"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/library_edit/library_edit.php
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/popup/toolbar/update/update.js
 msgid "Update"
-msgstr ""
+msgstr "Update"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/popup/dependencies/dependencies.php
 msgid "Slaves"
-msgstr ""
+msgstr "Slaves"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/library_details_popup.php
 msgid "Latest version"
-msgstr ""
+msgstr "Latest version"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/library_add.php
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/library_details_popup.php
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/library_edit.php
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/public/management.php
 msgid "Download"
-msgstr ""
+msgstr "Download"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/js/management.js
 msgid "Info"
-msgstr ""
+msgstr "Info"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/popup/info_lib/info_lib.php
 msgid "Information"
-msgstr ""
+msgstr "Information"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/library_details_popup.php
 msgid "Versions"
-msgstr ""
+msgstr "Versions"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/public/management.php
 msgid "Date"
-msgstr ""
+msgstr "Date"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/popup/list_folders/list_folders.js
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/popup/versions_from_github/versions_from_github.js
 msgid "Add version to this library"
-msgstr ""
+msgstr "Add version to this library"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/popup/list_folders/list_folders.js
 msgid "List versions from repository"
-msgstr ""
+msgstr "List versions from repository"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/popup/list_folders/list_folders.js
 msgid "Error while deleting"
-msgstr ""
+msgstr "Error while deleting"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/popup/list_folders/list_folders.js
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/popup/toolbar/library_add/library_add.js
 msgid "cancel"
-msgstr ""
+msgstr "Cancel"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/public/management.php
 msgid "Skip"
-msgstr ""
+msgstr "Skip"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/versions_from_github.php
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/public/management.php
 msgid "Import"
-msgstr ""
+msgstr "Import"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/popup/list_folders/list_folders.php
 msgid "Select version directory"
-msgstr ""
+msgstr "Select version directory"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/popup/list_folders/list_folders.php
 msgid "Delete Folder"
-msgstr ""
+msgstr "Delete folder"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/popup/remove/remove.js
 msgid "Library deleted"
-msgstr ""
+msgstr "Library deleted"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/popup/remove/remove.js
 msgid "Version deleted"
-msgstr ""
+msgstr "Version deleted"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/popup/remove/remove.js
 msgid "Error while deleting library"
-msgstr ""
+msgstr "Error while deleting library"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/popup/remove/remove.js
 msgid "Error while deleting version"
-msgstr ""
+msgstr "Error while deleting version"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/popup/remove/remove.js
 msgid "Do you really want delete the library"
-msgstr ""
+msgstr "Do you really want delete the library"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/popup/remove/remove.js
 msgid "Do you really want to delete the version"
-msgstr ""
+msgstr "Do you really want to delete the version"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/language_theme.php
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/versions_from_github.php
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/public/management.php
 msgid "Cancel"
-msgstr ""
+msgstr "Cancel"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/popup/toolbar/library_add/library_add.js
 msgid "skip"
-msgstr ""
+msgstr "Skip"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/popup/toolbar/library_add/library_add.js
 msgid "import"
-msgstr ""
+msgstr "Import"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/popup/toolbar/library_add/library_add.js
 msgid "Import library from Github"
-msgstr ""
+msgstr "Import library from Github"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/popup/toolbar/library_add/library_add.js
 msgid "No release found"
-msgstr ""
+msgstr "No release found"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/popup/toolbar/library_add/library_add.js
 msgid "The repository's URL is empty"
-msgstr ""
+msgstr "The repository's URL is empty"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/popup/toolbar/library_add/library_add.js
 msgid "Add library"
-msgstr ""
+msgstr "Add library"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/github_link.php
 msgid "Import from GitHub link"
-msgstr ""
+msgstr "Import from GitHub link"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/popup/toolbar/update/update.js
 msgid "Get info from package.json"
-msgstr ""
+msgstr "Get info from package.json"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/popup/toolbar/update/update.js
 msgid "new"
-msgstr ""
+msgstr "New"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/popup/toolbar/update/update.js
 msgid "Dependencies library"
-msgstr ""
+msgstr "Dependencies library"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/popup/toolbar/update/update.js
 msgid "No dependencies found"
-msgstr ""
+msgstr "No dependencies found"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/popup/toolbar/update/update.js
 msgid "New version for "
-msgstr ""
+msgstr "New version for"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/popup/toolbar/update/update.php
 msgid "Local version"
-msgstr ""
+msgstr "Local version"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/popup/tree_files/tree_files.php
 msgid "Select file"
-msgstr ""
+msgstr "Select file"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/popup/tree_files/tree_files.php
 msgid "Add file"
-msgstr ""
+msgstr "Add file"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/popup/versions_from_github/versions_from_github.php
 msgid "Are you sure you want to go out?"
-msgstr ""
+msgstr "Are you sure you want to go out?"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/popup/versions_from_github/versions_from_github.php
 msgid "Select version"
-msgstr ""
+msgstr "Select version"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/toolbar/toolbar.js
 msgid "GitHub link"
-msgstr ""
+msgstr "GitHub link"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/public/management.php
 msgid "GitHub updates"
-msgstr ""
+msgstr "GitHub updates"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/toolbar/toolbar.js
 msgid "libraries"
-msgstr ""
+msgstr "libraries"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/toolbar/toolbar.php
 msgid "Reload"
-msgstr ""
+msgstr "Reload"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/toolbar/toolbar.php
 msgid "Management"
-msgstr ""
+msgstr "Management"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/toolbar/toolbar.php
 msgid "Libraries"
-msgstr ""
+msgstr "libraries"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/libraries_toolbar.php
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/public/management.php
 msgid "Add"
-msgstr ""
+msgstr "Add"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/libraries_toolbar.php
 msgid "Check updates from GitHub"
-msgstr ""
+msgstr "Check updates from GitHub"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/libraries_toolbar.php
 msgid "Check updates"
-msgstr ""
+msgstr "Check updates"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/libraries_toolbar.php
 msgid "Show updates"
-msgstr ""
+msgstr "Show updates"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/libraries_toolbar.php
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/public/management.php
 msgid "Updates"
-msgstr ""
+msgstr "Updates"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/public/management.php
 msgid "info"
-msgstr ""
+msgstr "Info"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/js/management.js
 msgid "Edit"
-msgstr ""
+msgstr "Edit"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/versions/versions.js
 msgid "Script package.json"
-msgstr ""
+msgstr "Script package.json"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/versions/versions.js
 msgid "Error"
-msgstr ""
+msgstr "Error"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/versions/versions.js
 msgid "Info version "
-msgstr ""
+msgstr "Info version"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/versions/versions.js
 msgid "Edit the version of the"
-msgstr ""
+msgstr "Edit the version of the"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/versions/versions.js
 msgid "library"
-msgstr ""
+msgstr "Library"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/versions/versions.js
 msgid "Remove version in library"
-msgstr ""
+msgstr "Remove version in library"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/versions/versions.js
 msgid "The following version already exists"
-msgstr ""
+msgstr "The following version already exists"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/versions/versions.js
 msgid "Scripts"
-msgstr ""
+msgstr "Scripts"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/versions/versions.js
 msgid "No Script"
-msgstr ""
+msgstr "No Script"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/versions/versions.js
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/versions/versions.js
 msgid "Date added"
-msgstr ""
+msgstr "Date added"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/components/management/versions/versions.js
 msgid "Content"
-msgstr ""
+msgstr "Content"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/management.php
 msgid "Function Name"
-msgstr ""
+msgstr "Function Name"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/management.php
 msgid "Infos"
-msgstr ""
+msgstr "Infos"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/language_theme.php
 msgid "Path string"
-msgstr ""
+msgstr "Path string"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/language_theme.php
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/public/management.php
 msgid "Save"
-msgstr ""
+msgstr "Save"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/library_details_popup.php
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/version_detail_popup.php
 msgid "INFO"
-msgstr ""
+msgstr "Info"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/library_version.php
 msgid "Files Order (drag&drop)"
-msgstr ""
+msgstr "Files Order (drag&drop)"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/library_version.php
 msgid "Dependecies"
-msgstr ""
+msgstr "Dependecies"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/library_version.php
 msgid "To add these dependecies"
-msgstr ""
+msgstr "To add these dependecies"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/version_detail_popup.php
 msgid "Version:"
-msgstr ""
+msgstr "Version:"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/version_detail_popup.php
 msgid "Date:"
-msgstr ""
+msgstr "Date:"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/version_detail_popup.php
 msgid "CONTENT"
-msgstr ""
+msgstr "Content"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/version_detail_popup.php
 msgid "Library dependencies"
-msgstr ""
+msgstr "Library dependencies"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/version_detail_popup.php
 msgid "Slave libraries"
-msgstr ""
+msgstr "Slave libraries"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/version_slave_dependencies.php
 msgid "Slave dependecies"
-msgstr ""
+msgstr "Slave dependecies"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/version_slave_dependencies.php
 msgid "Check all"
-msgstr ""
+msgstr "Check all"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/html/templates/version_slave_dependencies.php
 msgid "Uncheck all"
-msgstr ""
+msgstr "Uncheck all"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/js/management.js
 msgid "Delete"
-msgstr ""
+msgstr "Delete"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/js/management.js
 msgid "Remove library"
-msgstr ""
+msgstr "Remove library"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/model/actions/library/add.php
 msgid "Error to add new library's version."
-msgstr ""
+msgstr "Error to add new library's version."
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/model/actions/library/delete.php
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/model/actions/version/delete.php
 msgid "Error while deleting folder"
-msgstr ""
+msgstr "Error while deleting folder"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/model/actions/library/edit.php
 msgid "error rename"
-msgstr ""
+msgstr "error rename"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/model/actions/version/edit.php
 msgid "Error to delete a version's dependency"
-msgstr ""
+msgstr "Error to delete a version's dependency"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/model/actions/version/edit.php
 msgid "Error to insert a new version's dependency"
-msgstr ""
+msgstr "Error to insert a new version's dependency"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/model/actions/version/edit.php
 msgid "Error to update a version's dependency"
-msgstr ""
+msgstr "Error to update a version's dependency"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/model/data/version/add.php
 msgid ""
 "The library's directory isn't existing or you don't have a version folder "
 "inserted."
 msgstr ""
+"The library's directory isn't existing or you don't have a version folder "
+"inserted."
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/model/github/info.php
 msgid "The library exists."
-msgstr ""
+msgstr "The library exists."
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/model/github/info.php
 msgid "No info"
-msgstr ""
+msgstr "No info"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/model/publishing/components.php
 msgid "Impossible to find the content of the mixins"
-msgstr ""
+msgstr "Impossible to find the content of the mixins"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/model/publishing/components.php
 msgid "Components"
-msgstr ""
+msgstr "Components"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/model/publishing/components.php
 msgid "Functions"
-msgstr ""
+msgstr "Functions"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/public/management.php
 msgid "Select one"
-msgstr ""
+msgstr "Select one"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/public/management.php
 msgid "edit"
-msgstr ""
+msgstr "Edit"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/public/management.php
 msgid "New Library's Version"
-msgstr ""
+msgstr "New Library's Version"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/public/management.php
 msgid "Mod."
-msgstr ""
+msgstr "Mod."
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/public/management.php
 msgid "Destroy"
-msgstr ""
+msgstr "Destroy"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/public/management.php
 msgid "Del"
-msgstr ""
+msgstr "Del"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/public/management.php
 msgid "Are you sure that you want to delete this entry?"
-msgstr ""
+msgstr "Are you sure that you want to delete this entry?"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/public/management.php
 msgid "Next"
-msgstr ""
+msgstr "Next"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/public/management.php
 msgid "Before"
-msgstr ""
+msgstr "Before"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/public/management.php
 msgid "Set the folder name first, please."
-msgstr ""
+msgstr "Set the folder name first, please."
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/public/management.php
 msgid "No dependencies"
-msgstr ""
+msgstr "NO DEPENDENCIES"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/public/management.php
 msgid "Edit library's version"
-msgstr ""
+msgstr "Edit library's version"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/public/management.php
 msgid "Select dependences..."
-msgstr ""
+msgstr "Select dependences..."
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/public/management.php
 msgid "Add new version: {0}"
-msgstr ""
+msgstr "Add new version: {0}"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/public/management.php
 msgid "library's version"
-msgstr ""
+msgstr "library's version"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/public/management.php
 msgid "Add theme file"
-msgstr ""
+msgstr "Add theme file"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/public/management.php
 msgid "New Library"
-msgstr ""
+msgstr "New Library"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/public/management.php
 msgid "Search library"
-msgstr ""
+msgstr "Search library"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/public/management.php
 msgid "Edit Library"
-msgstr ""
+msgstr "Edit Library"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/public/management.php
 msgid "Hash"
-msgstr ""
+msgstr "Hash"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/public/management.php
 msgid "Configuration"
-msgstr ""
+msgstr "Configuration"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/public/management.php
 msgid "cached"
-msgstr ""
+msgstr "cached"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/public/management.php
 msgid "Search configuration"
-msgstr ""
+msgstr "Search configuration"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/public/management.php
 msgid "Library: {0} - Version: {1}"
-msgstr ""
+msgstr "Library: {0} - Version: {1}"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/public/management.php
 msgid "You don't have a new library's version to add."
-msgstr ""
+msgstr "You don't have a new library's version to add."
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/public/management.php
 msgid ""
 "You don't have a new library's version to add (locally). Do you want to import "
 "it from GitHub?"
 msgstr ""
+"You don't have a new library's version to add (locally). Do you want to import "
+"it from GitHub?"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/public/management.php
 msgid "Select the version you want to import from GitHub"
-msgstr ""
+msgstr "Select the version you want to import from GitHub"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/public/management.php
 msgid "Do you want to check updates from GitHub? This may take a long time."
-msgstr ""
+msgstr "Do you want to check updates from GitHub? This may take a long time."
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/public/deliver/index.php
 msgid "Impossible to find the requested file"
-msgstr ""
+msgstr "Impossible to find the requested file"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/public/github/info.php
 msgid "You must insert a valid URL"
-msgstr ""
+msgstr "You must insert a valid URL"
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/public/github/versions.php
 msgid "You don't a valid GitHub URL for this library."
-msgstr ""
+msgstr "You don't a valid GitHub URL for this library."
 
 #: /home/thomas/domains/apstapp.thomas.lan/_appui/vendor/bbn/appui-cdn/src/mvc/public/publishing/home.php
 msgid "Help for our libraries"
-msgstr ""
+msgstr "Help for our libraries"

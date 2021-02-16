@@ -1,1 +1,75 @@
-{"":{"No file selected":"No file selected","The name or the folder name for this library is missing":"The name or the folder name for this library is missing","Success!":"Success!","A problem has occurred":"A problem has occurred","Are you sure you want to continue?":"Are you sure you want to continue?","The version's ID is missing":"The version's ID is missing","The library's name is missing":"The library's name is missing","Dependencies already inserted":"Dependencies already inserted","The order should be a number":"The order should be a number","Add language file":"Add language file","Add theme":"Add theme","Prepend the theme files":"Prepend the theme files","Dependencies":"DEPENDENCIES","Update":"Update","Info":"Info","Add version to this library":"Add version to this library","List versions from repository":"List versions from repository","Error while deleting":"Error while deleting","cancel":"Cancel","Library deleted":"Library deleted","Version deleted":"Version deleted","Error while deleting library":"Error while deleting library","Error while deleting version":"Error while deleting version","Do you really want delete the library":"Do you really want delete the library","Do you really want to delete the version":"Do you really want to delete the version","skip":"Skip","import":"Import","Import library from Github":"Import library from Github","No release found":"No release found","The repository's URL is empty":"The repository's URL is empty","Add library":"Add library","Get info from package.json":"Get info from package.json","new":"New","Dependencies library":"Dependencies library","No dependencies found":"No dependencies found","New version for ":"New version for","GitHub link":"GitHub link","libraries":"libraries","Edit":"Edit","Script package.json":"Script package.json","Error":"Error","Info version ":"Info version","Edit the version of the":"Edit the version of the","library":"Library","Remove version in library":"Remove version in library","The following version already exists":"The following version already exists","Scripts":"Scripts","No Script":"No Script","ID":"ID","Date added":"Date added","Content":"Content","Delete":"Delete","Remove library":"Remove library"}}
+{
+    "components\/management\/library_edit\/library_edit": {
+        "No file selected": "No file selected",
+        "The name or the folder name for this library is missing": "The name or the folder name for this library is missing",
+        "Success!": "Success!",
+        "A problem has occurred": "A problem has occurred",
+        "Are you sure you want to continue?": "Are you sure you want to continue?",
+        "The version's ID is missing": "The version's ID is missing",
+        "The library's name is missing": "The library's name is missing",
+        "Dependencies already inserted": "Dependencies already inserted",
+        "The order should be a number": "The order should be a number",
+        "Add language file": "Add language file",
+        "Add theme": "Add theme",
+        "Prepend the theme files": "Prepend the theme files"
+    },
+    "components\/management\/popup\/toolbar\/update\/update": {
+        "Dependencies": "DEPENDENCIES",
+        "Update": "Update",
+        "Get info from package.json": "Get info from package.json",
+        "new": "New",
+        "Dependencies library": "Dependencies library",
+        "No dependencies found": "No dependencies found",
+        "New version for ": "New version for"
+    },
+    "mvc\/management": {
+        "Info": "Info",
+        "Edit": "Edit",
+        "Delete": "Delete",
+        "Remove library": "Remove library"
+    },
+    "components\/management\/popup\/list_folders\/list_folders": {
+        "Add version to this library": "Add version to this library",
+        "List versions from repository": "List versions from repository",
+        "Error while deleting": "Error while deleting",
+        "cancel": "Cancel"
+    },
+    "components\/management\/popup\/versions_from_github\/versions_from_github": {
+        "Add version to this library": "Add version to this library"
+    },
+    "components\/management\/popup\/toolbar\/library_add\/library_add": {
+        "cancel": "Cancel",
+        "skip": "Skip",
+        "import": "Import",
+        "Import library from Github": "Import library from Github",
+        "No release found": "No release found",
+        "The repository's URL is empty": "The repository's URL is empty",
+        "Add library": "Add library"
+    },
+    "components\/management\/popup\/remove\/remove": {
+        "Library deleted": "Library deleted",
+        "Version deleted": "Version deleted",
+        "Error while deleting library": "Error while deleting library",
+        "Error while deleting version": "Error while deleting version",
+        "Do you really want delete the library": "Do you really want delete the library",
+        "Do you really want to delete the version": "Do you really want to delete the version"
+    },
+    "components\/management\/toolbar\/toolbar": {
+        "GitHub link": "GitHub link",
+        "libraries": "libraries"
+    },
+    "components\/management\/versions\/versions": {
+        "Script package.json": "Script package.json",
+        "Error": "Error",
+        "Info version ": "Info version",
+        "Edit the version of the": "Edit the version of the",
+        "library": "Library",
+        "Remove version in library": "Remove version in library",
+        "The following version already exists": "The following version already exists",
+        "Scripts": "Scripts",
+        "No Script": "No Script",
+        "ID": "ID",
+        "Date added": "Date added",
+        "Content": "Content"
+    }
+}
