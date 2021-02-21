@@ -19,6 +19,13 @@ $less        = new \lessc();
 $fs->delete('dist/js');
 $fs->delete('dist/vue');
 $fs->createPath('dist/js/components');
+if (!defined('BBN_CDN_DB')) {
+  throw new \Exception("The CDN DB path is not defined");
+}
+$sqlite = new bbn\Db([
+  'engine' => 'sqlite',
+  'db' => BBN_CDN_DB
+]);
 $fs->delete('dist/vue/components');
 foreach ($components as $component) {
   $cp   = basename($component);
@@ -36,9 +43,11 @@ foreach ($components as $component) {
     );
     $ar_cfg   = false;
     if (!empty($cfg['dependencies'])) {
+
       $cdn_cfg = new \bbn\Cdn\Config(
         BBN_SHARED_PATH.'?lib='
-        .x::join(array_keys($cfg['dependencies']), ',')
+            .x::join(array_keys($cfg['dependencies']), ','),
+        $sqlite
       );
       $ar_cfg  = $cdn_cfg->get();
     }
