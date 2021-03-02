@@ -287,6 +287,7 @@ foreach ($method_names as $method_name) {
     ];
   }
 }
+
 $tern_json = [
   'bbn' => [
     'vue' => $tern_json

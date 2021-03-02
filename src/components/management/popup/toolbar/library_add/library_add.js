@@ -3,36 +3,39 @@
     data(){
       return {
         urlGit: "",
-        btns:[
-          {
-            text: bbn._('Cancel'),
-            action: ()=>{
-              bbn.vue.closest(this, "bbn-popup").close();
-            },
-            icon: 'nf nf-fa-ban',
-            title: bbn._('cancel'),
-          },{
-            text: bbn._('Skip'),
-            action: ()=>{
-             this.addManualyLib()
-            },
-            title: bbn._('skip'),
-            icon: 'nf nf-fa-angle_double_right',
-            class: "bbn-primary",
-          },{
-            text: bbn._('Import'),
-            action: ()=>{
-             this.importGithub()
-            },
-            icon: "nf nf-fa-angle_right",
-            title: bbn._('import'),
-            class: "",
-            disabled: true
-          }
-        ]
       }
     },
     computed:{
+      btns(){
+        let isReady = !!(this.urlGit.length && bbn.fn.isURL(this.urlGit));
+        return [
+          {
+            text: bbn._('Cancel'),
+            icon: 'nf nf-fa-ban',
+            title: bbn._('Cancel'),
+            action: ()=>{
+              bbn.vue.closest(this, "bbn-popup").close();
+            },
+          },{
+            text: bbn._('Skip'),
+            title: bbn._('Skip'),
+            icon: 'nf nf-fa-angle_double_right',
+            class: isReady ? '' : 'bbn-primary',
+            action: ()=>{
+              this.addManualyLib()
+            },
+          },{
+            text: bbn._('Import'),
+            icon: "nf nf-fa-angle_right",
+            title: bbn._('import'),
+            class: isReady ? 'bbn-primary' : '',
+            disabled: !isReady,
+            action: ()=>{
+              this.importGithub()
+            },
+          }
+        ];
+      },
       management(){
         return this.closest("bbn-container").getComponent()
       }
@@ -117,24 +120,6 @@
               import: false
             }
         });
-      }
-    },
-    watch:{
-      //if a value is entered to the input then we enable the button otherwise no
-      urlGit(url){
-        let idImport = bbn.fn.search(this.btns, 'text', 'Import'),
-          idSkip = bbn.fn.search(this.btns, 'text', 'Skip');
-        if ( url.length ){
-          this.btns[idImport].class = "bbn-primary";
-          this.btns[idImport].disabled = false;
-          this.btns[idSkip].class = "";
-        }
-        else{
-          this.btns[idImport].class = "";
-          this.btns[idImport].disabled = true;
-          this.btns[idSkip].class = "bbn-primary";
-
-        }
       }
     }
   }
