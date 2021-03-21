@@ -8,6 +8,8 @@ $files = [
   BBN_LIB_PATH.'bbn/bbn/json-doc/Mvc/Model.json',
 	BBN_LIB_PATH.'bbn/bbn/json-doc/Appui/Option.json',
 	BBN_LIB_PATH.'bbn/bbn/json-doc/User.json',
+  BBN_LIB_PATH.'bbn/bbn/json-doc/User/Permissions.json',
+  BBN_LIB_PATH.'bbn/bbn/json-doc/User/Preferences.json',
   BBN_LIB_PATH.'bbn/bbn/json-doc/Cache.json',
   BBN_LIB_PATH.'bbn/bbn/json-doc/Db.json'
 ];
@@ -30,6 +32,12 @@ $res = [
           ], [
             'name' => 'options',
             'ref' => 'Option'
+          ], [
+            'name' => 'pref',
+            'ref' => 'Preferences'
+          ], [
+            'name' => 'perm',
+            'ref' => 'Permissions'
           ]
         ]
       ]
@@ -52,6 +60,12 @@ $res = [
           ], [
             'name' => 'options',
             'ref' => 'Option'
+          ], [
+            'name' => 'pref',
+            'ref' => 'Preferences'
+          ], [
+            'name' => 'perm',
+            'ref' => 'Permissions'
           ]
         ]
       ]
