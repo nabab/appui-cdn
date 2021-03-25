@@ -27,8 +27,8 @@
           bbn.fn.log(d);
         })
       },
-      genVue(){
-        bbn.fn.post('cdn/publishing/components', d => {
+      genVue(singleFiles){
+        bbn.fn.post('cdn/publishing/components', {single: typeof singleFiles === 'boolean' ? singleFiles : false}, d => {
           bbn.fn.log(d);
         })
       }

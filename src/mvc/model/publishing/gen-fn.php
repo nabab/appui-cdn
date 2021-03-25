@@ -342,14 +342,14 @@ EOD;
   }
   $fs->putContents($root.'dist/bbn.js', $st);
   $fs->putContents($root.'dist/bbn.min.js', JShrink\Minifier::minify($st, ['flaggedComments' => false]));
-  $files = $fs->getFiles($root.'src/css', 'less');
+  $root_css = BBN_CDN_PATH.'lib/bbn-css/1.0.0/';
+  $files = $fs->getFiles($root_css.'src/css', 'less');
   $st = '';
   foreach ($files as $f) {
     if (\bbn\Str::isInteger(substr(basename($f), 0, 2))) {
       $st .= $fs->getContents($f).PHP_EOL.PHP_EOL.PHP_EOL;
     }
   }
-  $root_css = BBN_CDN_PATH.'lib/bbn-css/1.0.0/';
   $default = $fs->getContents($root_css.'src/css/themes/_def.less');
   $compiled = $less->compile($default.$st);
   $fs->putContents($root_css.'dist/bbn.css', $compiled);

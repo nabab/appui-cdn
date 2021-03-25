@@ -6,6 +6,7 @@
 use bbn\X;
 
 /** @var $model \bbn\Mvc\Model*/
+$asSingleFiles = $model->hasData('single', true);
 $dir = BBN_CDN_PATH.'lib/bbn-vue/2.0.2';
 $fs  = new \bbn\File\System();
 $fs->cd($dir);
@@ -16,9 +17,10 @@ $vue         = [];
 $mixins      = [];
 $expressions = [];
 $less        = new \lessc();
-$fs->delete('dist/js');
+$distPath = 'dist/js' . ($asSingleFiles ? '_single_files' : '');
+$fs->delete($distPath);
 $fs->delete('dist/vue');
-$fs->createPath('dist/js/components');
+$fs->createPath($distPath . '/components');
 if (!defined('BBN_CDN_DB')) {
   throw new \Exception("The CDN DB path is not defined");
 }
@@ -26,13 +28,14 @@ $sqlite = new bbn\Db([
   'engine' => 'sqlite',
   'db' => BBN_CDN_DB
 ]);
-$fs->delete('dist/vue/components');
+
 foreach ($components as $component) {
   $cp   = basename($component);
   $html = $fs->isFile($p.$cp.'/'.$cp.'.html') ? $fs->getContents($p.$cp.'/'.$cp.'.html') : '';
   $css  = $fs->isFile($p.$cp.'/'.$cp.'.less') ? $fs->getContents($p.$cp.'/'.$cp.'.less') : '';
   $js   = $fs->isFile($p.$cp.'/'.$cp.'.js') ? $fs->getContents($p.$cp.'/'.$cp.'.js') : '';
   $cfg  = $fs->isFile($p.$cp.'/bbn.json') ? json_decode($fs->getContents($p.$cp.'/bbn.json'), true) : '';
+  $langs = $fs->getFiles($p.$cp, false, false, 'lang');
   if ($js) {
     $cp_files = array_filter(
       $fs->getFiles($p.$cp, true, false), function ($a) use ($cp, $p) {
@@ -141,11 +144,11 @@ foreach ($components as $component) {
 
     $vue[] = $tmp;
     // .vue files
-    $fs->createPath('dist/js/components/'.$cp);
+    $fs->createPath($distPath.'/components/'.$cp);
     $fs->createPath('dist/vue/components/'.$cp);
     $st_vue           = '';
     $css_dependencies = [];
-    $st_js            = '(bbn_resolve) => { ((bbn) => {'.PHP_EOL;
+    $st_js            = (!$asSingleFiles ? '(bbn_resolve) => {'.PHP_EOL : '') . '((bbn) => {'.PHP_EOL;
     $dep_st           = false;
     if ($ar_cfg && !empty($ar_cfg['content']) && !empty($ar_cfg['content']['includes'])) {
       $files_js = [];
@@ -159,13 +162,14 @@ foreach ($components as $component) {
             $files_js[] = 'gh/'.$nc['git'].'@'.$nc['version'].'/'.$ncjs;
           }
         }
-
-        foreach ($nc['css'] as $nccss) {
-          if (($nc['mode'] === 'npm') && !empty($nc['npm'])) {
-            $files_css[] = 'npm/'.$nc['npm'].'@'.$nc['version'].'/'.$nccss;
-          }
-          elseif (!empty($nc['git'])) {
-            $files_css[] = 'gh/'.$nc['git'].'@'.$nc['version'].'/'.$nccss;
+        if (!empty($nc['css'])) {
+          foreach ($nc['css'] as $nccss) {
+            if (($nc['mode'] === 'npm') && !empty($nc['npm'])) {
+              $files_css[] = 'npm/'.$nc['npm'].'@'.$nc['version'].'/'.$nccss;
+            }
+            elseif (!empty($nc['git'])) {
+              $files_css[] = 'gh/'.$nc['git'].'@'.$nc['version'].'/'.$nccss;
+            }
           }
         }
 
@@ -215,31 +219,52 @@ JAVASCRIPT;
     if ($css && ($css = $less->compile($css))) {
       $st_vue .= '<style scoped>'.PHP_EOL.$css.PHP_EOL.'</style>'.PHP_EOL;
       $content = str_replace('`', '\\`', $css);
-      $fs->putContents('dist/js/components/'.$cp.'/'.$cp.'.css', $content);
-      $st_js .= <<<JAVASCRIPT
+      $fs->putContents($distPath.'/components/'.$cp.'/'.$cp.'.css', $content);
+      if (!$asSingleFiles) {
+        $st_js .= <<<JAVASCRIPT
 let css = document.createElement('link');
 css.setAttribute('rel', "stylesheet");
-css.setAttribute('href', bbn.vue.libURL + "dist/js/components/$cp/$cp.css");
+css.setAttribute('href', bbn.vue.libURL + "$distPath/components/$cp/$cp.css");
 document.head.insertAdjacentElement('beforeend', css);
 
 JAVASCRIPT;
+      }
     }
 
-    $st_js .= $js.PHP_EOL.'if (bbn_resolve) {bbn_resolve("ok");}'.PHP_EOL;
+    $st_js .= $js.PHP_EOL.(!$asSingleFiles ? 'if (bbn_resolve) {bbn_resolve("ok");}' : '').PHP_EOL;
     if ($dep_st) {
       $st_js .= '};'.PHP_EOL.'document.head.insertAdjacentElement("beforeend", script_dep);'.PHP_EOL;
     }
 
-    $st_js .= '})(bbn); }';
+    $st_js .= '})(bbn);' . ($asSingleFiles ? '' : PHP_EOL.'}');
     foreach ($cp_files as $cp_file) {
-      $fs->copy($cp_file, 'dist/js/components/'.$cp.'/'.basename($cp_file));
+      $fs->copy($cp_file, $distPath.'/components/'.$cp.'/'.basename($cp_file));
       $fs->copy($cp_file, 'dist/vue/components/'.$cp.'/'.basename($cp_file));
     }
 
-    $fs->putContents('dist/js/components/'.$cp.'/'.$cp.'.js', $st_js);
+    $fs->putContents($distPath.'/components/'.$cp.'/'.$cp.'.js', $st_js);
+    $fs->putContents($distPath.'/components/'.$cp.'/'.$cp.'.min.js', JShrink\Minifier::minify($st_js, ['flaggedComments' => false]));
     $fs->putContents('dist/vue/components/'.$cp.'/'.$cp.'.vue', $st_vue);
     if ($fs->isFile('dist/vue/components/'.$cp.'/'.$cp.'.vue')) {
       $num++;
+    }
+
+    // Langs
+    if (!empty($langs)) {
+      foreach ($langs as $lang) {
+        preg_match('/[[:alnum:]]*\.{1}([a-z]{2})\.{1}lang$/', $lang, $lFile);
+        if (!empty($lang)
+          && !empty($lang[1])
+          && ($langFileContent = $fs->getContents($lang))
+        ){
+          $langContent = "
+(() => {
+  bbn.fn.autoExtend('lng', " . $langFileContent . ");
+})();";
+          $fs->putContents($distPath.'/components/'.$cp.'/'.$cp.'.'.$lFile[1].'.js', $langContent);
+          $fs->putContents($distPath.'/components/'.$cp.'/'.$cp.'.'.$lFile[1].'.min.js', JShrink\Minifier::minify($langContent, ['flaggedComments' => false]));
+        }
+      }
     }
   }
 }
@@ -297,13 +322,25 @@ $tern_json = [
 $res[1]['items'] = $fns;
 $fs->putContents($dir.'/bbn-vue.json', Json_encode($res, JSON_PRETTY_PRINT));
 $fs->putContents($dir.'/tern.json', Json_encode($tern_json, JSON_PRETTY_PRINT));
-$files = json_decode('["src\/vars.js","src\/methods.js","src\/mixins\/basic.js","src\/mixins\/empty.js","src\/mixins\/dimensions.js","src\/mixins\/position.js","src\/mixins\/dropdown.js","src\/mixins\/keynav.js","src\/mixins\/toggle.js","src\/mixins\/localStorage.js","src\/mixins\/data.js","src\/mixins\/dataEditor.js","src\/mixins\/events.js","src\/mixins\/list.js","src\/mixins\/memory.js","src\/mixins\/input.js","src\/mixins\/resizer.js","src\/mixins\/close.js","src\/mixins\/field.js","src\/mixins\/view.js","src\/mixins\/observer.js","src\/mixins\/keepCool.js","src\/mixins\/url.js","src\/mixins.js","src\/defaults.js","src\/init.js"]');
+$files = json_decode('["src\/vars.js","src\/methods.js","src\/mixins\/basic.js","src\/mixins\/empty.js","src\/mixins\/dimensions.js","src\/mixins\/position.js","src\/mixins\/dropdown.js","src\/mixins\/keynav.js","src\/mixins\/toggle.js","src\/mixins\/localStorage.js","src\/mixins\/data.js","src\/mixins\/dataEditor.js","src\/mixins\/events.js","src\/mixins\/editableList.js","src\/mixins\/list.js","src\/mixins\/memory.js","src\/mixins\/input.js","src\/mixins\/resizer.js","src\/mixins\/close.js","src\/mixins\/field.js","src\/mixins\/view.js","src\/mixins\/observer.js","src\/mixins\/keepCool.js","src\/mixins\/url.js","src\/mixins\/serviceWorker.js","src\/mixins\/browserNotification.js","src\/mixins\/componentInside.js","src\/mixins.js","src\/defaults.js","src\/init.js"]');
 $st    = '';
 foreach ($files as $f) {
   $st .= $fs->getContents($f).PHP_EOL.PHP_EOL.PHP_EOL;
 }
 
-$fs->putContents('dist/js/bbn-vue.js', $st);
+$fs->putContents($distPath.'/bbn-vue.js', $st);
 
-$fs->putContents('dist/js/bbn-vue.min.js', JShrink\Minifier::minify($st, ['flaggedComments' => false]));
+$fs->putContents($distPath.'/bbn-vue.min.js', JShrink\Minifier::minify($st, ['flaggedComments' => false]));
+
+// i18n
+if ($i18nFiles = $fs->getFiles('src/i18n')) {
+  foreach ($i18nFiles as $i18nFile) {
+    $st = $fs->getContents($i18nFile);
+    if (!$fs->isDir($distPath.'/i18n')) {
+      $fs->createPath($distPath.'/i18n');
+    }
+    $fs->putContents($distPath.'/i18n/bbn-vue.'.basename($i18nFile), $st);
+    $fs->putContents($distPath.'/i18n/bbn-vue.'.basename($i18nFile, '.js').'.min.js', JShrink\Minifier::minify($st, ['flaggedComments' => false]));
+  }
+}
 return ['data' => $res];
