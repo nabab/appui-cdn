@@ -118,7 +118,7 @@
         })
       },
       editVersion(row, col, idx){
-        return this.$refs.tableVersionsLib.edit(row,{
+        return this.$refs.tableVersionsLib.edit(row, {
           title: bbn._('Edit the version of the') + ' ' + row.library + ' ' + bbn._('library'), //this.management.source.lng.edit_library,
           height: '98%',
           width: '85%',

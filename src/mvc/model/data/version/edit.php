@@ -46,16 +46,19 @@ if ( !empty($model->data['db']) && !empty($model->data['version']) && \defined('
       array_push($files, ['fpath' => $f]);
     }
   }
+
   if ( !empty($cont['lang']) ){
     foreach ( $cont['lang'] as $l ){
       array_push($languages, ['path' => $l]);
     }
   }
+
   if ( !empty($cont['theme_files']) ){
     foreach ( $cont['theme_files'] as $t ){
       array_push($themes, ['path' => $t]);
     }
   }
+
   $ret = [
     'files' => $files,
     'files_tree' => tree($p, $p, $cont['files']),
@@ -102,5 +105,5 @@ if ( !empty($model->data['db']) && !empty($model->data['version']) && \defined('
   if ( $model->data['db']->selectOne('libraries', 'latest', ['name' => $ver['library']]) === $ver['name'] ){
     $ret['latest'] = 1;
   }
-  return $ret;
+  return ['data' => $ret];
 }

@@ -110,8 +110,7 @@
                         :map="treeFiles"
                         uid="fpath"
                         ref="filesListTree"
-                        @ready="checkedNode"
-              ></bbn-tree>
+                        @ready="checkedNode"/>
             </div>
           </bbn-pane>
           <bbn-pane class="bbn-flex-height">
