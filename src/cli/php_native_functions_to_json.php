@@ -44,8 +44,8 @@ $res = [
     ]
   ], [
     'name' => '$ctrl',
-    'type' => 'ref',
-    'value' => 'Controller',
+    'ref' => 'Controller',
+    'type' => 'object',
     'items' => [
       [
         'name' => 'db',
