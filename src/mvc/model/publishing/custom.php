@@ -24,7 +24,9 @@ if (isset($model->data['components'])) {
     }
   }
   $fs->cd($dirComp);
-  $js .= 'document.addEventListener("DOMContentLoaded", () => {';
+  if (!empty($model->data['domcontentloaded'])){
+    $js .= 'document.addEventListener("DOMContentLoaded", () => {';
+  }
   foreach ($model->data['components'] as $cp) {
     if ($fs->isFile("$cp/$cp.min.js")) {
       $js .= $fs->getContents("$cp/$cp.min.js").PHP_EOL;
@@ -38,7 +40,9 @@ if (isset($model->data['components'])) {
       }
     }
   }
-  $js .= '});';
+  if (!empty($model->data['domcontentloaded'])){
+    $js .= '});';
+  }
   $name = 'static_'.date('Y-m-d_H-i-s');
   file_put_contents($model->contentPath().$name.'.js', $js);
   file_put_contents($model->contentPath().$name.'.css', $css);
@@ -57,6 +61,9 @@ else {
     ], [
       'text' => 'Français',
       'value' => 'fr'
+    ], [
+      'text' => 'Italian',
+      'value' => 'it'
     ]
   ];
   return [
