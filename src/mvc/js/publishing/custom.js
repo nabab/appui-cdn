@@ -6,7 +6,8 @@
       return {
         formData: {
           language: 'en',
-          components: []
+          components: [],
+          domcontentloaded: true
         }
       };
     }
