@@ -3,7 +3,7 @@
  * Describe what it does!
  */
 use bbn\X;
-/** @var $ctrl \bbn\Mvc\Controller */
+/** @var $model \bbn\Mvc\Controller */
 $fs = new \bbn\File\System();
 $fs->cd(BBN_LIB_PATH.'bbn/bbn/build/phpdox/xml');
 $types = [
@@ -122,7 +122,7 @@ foreach ($full as $filename => $cls) {
   $fs->putContents(BBN_LIB_PATH.'bbn/bbn/json-doc/'.substr($filename, 0, -4).'.json', Json_encode($cls, JSON_PRETTY_PRINT));
 }
 sort($all_methods);
-$ctrl->obj->data = [
+$model->obj->data = [
   'res'=> $all_methods
 ];
 $fs->putContents(BBN_LIB_PATH.'bbn/bbn/bbn-php.json', Json_encode($res, JSON_PRETTY_PRINT));
