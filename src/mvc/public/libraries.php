@@ -1,7 +1,7 @@
 <?php
 /** @var $ctrl \bbn\Mvc\Controller */
 $templates = \bbn\File\Dir::getFiles($ctrl->pluginPath('appui-cdn').'mvc/html/templates');
-if ( !empty($templates) ){
+if (!empty($templates)) {
   $ctrl->data['templates'] = array_map(function($t)use($ctrl){
     return $ctrl->getView('./templates/'.basename($t, '.php'));
   }, $templates);
@@ -9,8 +9,9 @@ if ( !empty($templates) ){
 else{
   $ctrl->data['templates'] = [];
 }
+
 //in the case of an explicit refresh, we return only from this point, that is to say, in this case the bookshelves
-if( isset($ctrl->post['refresh']) && !empty($ctrl->post['refresh']) ){
+if (isset($ctrl->post['refresh']) && !empty($ctrl->post['refresh'])) {
   $ctrl->obj = [
     'all_lib' => $ctrl->getModel('./data/libraries', ['db' => $ctrl->data['db']]),
   ];
