@@ -4,11 +4,18 @@
  *
  **/
 use bbn\X;
+use bbn\Str;
+use bbn\Db;
+use bbn\File\System;
+use bbn\Cdn\Config;
+use bbn\Compilers\Less;
+use bbn\Parsers\Doc;
+use bbn\Parsers\Docblock;
 
 /** @var $model \bbn\Mvc\Model*/
 $asSingleFiles = $model->hasData('single', true);
 $dir = BBN_CDN_PATH.'lib/bbn-vue/2.0.2';
-$fs  = new \bbn\File\System();
+$fs  = new System();
 $fs->cd($dir);
 $p           = 'src/components/';
 $components  = $fs->getDirs($p);
@@ -16,15 +23,15 @@ $num         = 0;
 $vue         = [];
 $mixins      = [];
 $expressions = [];
-$less        = new \lessc();
+$less        = new Less();
 $distPath = 'dist/js' . ($asSingleFiles ? '_single_files' : '');
 $fs->delete($distPath);
 $fs->delete('dist/vue');
 $fs->createPath($distPath . '/components');
 if (!defined('BBN_CDN_DB')) {
-  throw new \Exception("The CDN DB path is not defined");
+  throw new Exception("The CDN DB path is not defined");
 }
-$sqlite = new bbn\Db([
+$sqlite = new Db([
   'engine' => 'sqlite',
   'db' => BBN_CDN_DB
 ]);
@@ -39,7 +46,7 @@ foreach ($components as $component) {
   if ($js) {
     $cp_files = array_filter(
       $fs->getFiles($p.$cp, true, false), function ($a) use ($cp, $p) {
-        $ext = \bbn\Str::fileExt($a);
+        $ext = Str::fileExt($a);
         return !in_array($ext, ['md', 'lang', 'pdf', 'bak', 'json']) &&
         !in_array($a, [$p.$cp.'/'.$cp.'.html', $p.$cp.'/'.$cp.'.less', $p.$cp.'/'.$cp.'.js']);
       }
@@ -47,7 +54,7 @@ foreach ($components as $component) {
     $ar_cfg   = false;
     if (!empty($cfg['dependencies'])) {
 
-      $cdn_cfg = new \bbn\Cdn\Config(
+      $cdn_cfg = new Config(
         BBN_SHARED_PATH.'?lib='
             .x::join(array_keys($cfg['dependencies']), ','),
         $sqlite
@@ -55,7 +62,7 @@ foreach ($components as $component) {
       $ar_cfg  = $cdn_cfg->get();
     }
 
-    $parser = new \bbn\Parsers\Doc($js, 'vue');
+    $parser = new Doc($js, 'vue');
     $doc    = $parser->getVue();
     // bbn.io
     $tmp       = [
@@ -85,13 +92,13 @@ foreach ($components as $component) {
           if (!isset($mixins[$mixin])) {
             $c2 = $fs->getContents($dir.'/src/mixins/'.$mixin.'.js');
             if (!$c2) {
-              throw new \Exception(
+              throw new Exception(
                 _("Impossible to find the content of the mixins")
                 .' '.$dir.'/src/mixins/'.$mixin.'.js'
               );
             }
 
-            $parser2 = new \bbn\Parsers\Doc($c2, 'vue');
+            $parser2 = new Doc($c2, 'vue');
             if ($doc2 = $parser2->getVue()) {
               if (!empty($doc2['components'])) {
                 $doc2 = $doc2['components'][0];
@@ -280,7 +287,7 @@ $res               = [
   ]
 ];
 $fns               = [];
-$p                 = new \bbn\Parsers\Docblock('js');
+$p                 = new Docblock('js');
 $content           = $fs->getContents('src/methods.js');
 $parser            = $p->parse($content);
 $params            = ['param', 'returns', ''];

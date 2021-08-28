@@ -4,6 +4,12 @@
  *
  **/
 use bbn\X;
+use bbn\Str;
+use bbn\Db;
+use bbn\File\System;
+use bbn\Compilers\Less;
+use bbn\Parsers\Doc;
+use bbn\Parsers\Docblock;
 
 /** @var $model \bbn\Mvc\Model*/
 function pad(&$arr) {
@@ -29,16 +35,16 @@ function pad(&$arr) {
   }
   unset($a);
 }
-$less = new \lessc();
+$less = new Less();
 $tern_json = [];
 if ($model->hasData('fns')) {
   $root = BBN_CDN_PATH.'lib/bbn-js/1.0.1/';
   $dir = $root.'src/fn';
-  $fs = new \bbn\File\System();
+  $fs = new System();
   $fs->cd($dir);
   $files = $fs->getFiles('.');
   $res = [];
-  $p = new \bbn\Parsers\Docblock('js');
+  $p = new Docblock('js');
   foreach( $files as $i => $f ){
     if (!in_array(substr($f, 0, 1), ['.', '_'])) {
       $content = $fs->getContents($f);
@@ -341,12 +347,12 @@ EOD;
     $st .= $fs->getContents($root.$f).PHP_EOL.PHP_EOL.PHP_EOL;
   }
   $fs->putContents($root.'dist/bbn.js', $st);
-  $fs->putContents($root.'dist/bbn.min.js', JShrink\Minifier::minify($st, ['flaggedComments' => false]));
+  $fs->putContents($root.'dist/bbn.min.js', Minifier::minify($st, ['flaggedComments' => false]));
   $root_css = BBN_CDN_PATH.'lib/bbn-css/1.0.0/';
   $files = $fs->getFiles($root_css.'src/css', 'less');
   $st = '';
   foreach ($files as $f) {
-    if (\bbn\Str::isInteger(substr(basename($f), 0, 2))) {
+    if (Str::isInteger(substr(basename($f), 0, 2))) {
       $st .= $fs->getContents($f).PHP_EOL.PHP_EOL.PHP_EOL;
     }
   }
