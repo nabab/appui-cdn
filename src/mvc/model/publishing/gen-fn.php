@@ -10,6 +10,7 @@ use bbn\File\System;
 use bbn\Compilers\Less;
 use bbn\Parsers\Doc;
 use bbn\Parsers\Docblock;
+use JShrink\Minifier;
 
 /** @var $model \bbn\Mvc\Model*/
 function pad(&$arr) {

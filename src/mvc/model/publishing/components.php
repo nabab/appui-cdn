@@ -11,6 +11,7 @@ use bbn\Cdn\Config;
 use bbn\Compilers\Less;
 use bbn\Parsers\Doc;
 use bbn\Parsers\Docblock;
+use JShrink\Minifier;
 
 /** @var $model \bbn\Mvc\Model*/
 $asSingleFiles = $model->hasData('single', true);
@@ -337,7 +338,7 @@ foreach ($files as $f) {
 
 $fs->putContents($distPath.'/bbn-vue.js', $st);
 
-$fs->putContents($distPath.'/bbn-vue.min.js', JShrink\Minifier::minify($st, ['flaggedComments' => false]));
+$fs->putContents($distPath.'/bbn-vue.min.js', Minifier::minify($st, ['flaggedComments' => false]));
 
 // i18n
 if ($i18nFiles = $fs->getFiles('src/i18n')) {
@@ -347,7 +348,7 @@ if ($i18nFiles = $fs->getFiles('src/i18n')) {
       $fs->createPath($distPath.'/i18n');
     }
     $fs->putContents($distPath.'/i18n/bbn-vue.'.basename($i18nFile), $st);
-    $fs->putContents($distPath.'/i18n/bbn-vue.'.basename($i18nFile, '.js').'.min.js', JShrink\Minifier::minify($st, ['flaggedComments' => false]));
+    $fs->putContents($distPath.'/i18n/bbn-vue.'.basename($i18nFile, '.js').'.min.js', Minifier::minify($st, ['flaggedComments' => false]));
   }
 }
 return ['data' => $res];
