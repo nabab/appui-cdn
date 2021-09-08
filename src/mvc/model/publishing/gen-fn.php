@@ -358,12 +358,17 @@ EOD;
     }
   }
   $default = $fs->getContents($root_css.'src/css/themes/_def.less');
+  $default .= $fs->getContents($root_css.'src/css/themes/_colors.less');
   $compiled = $less->compile($default.$st);
   $fs->putContents($root_css.'dist/bbn.css', $compiled);
   $fs->putContents($root_css.'dist/bbn.min.css', CssMin::minify($compiled));
   $themes = $fs->getFiles($root_css.'src/css/themes', '.less');
   foreach ($themes as $t) {
     $name = basename($t, '.less');
+    if (substr($name, 0, 1) === '_') {
+      continue;
+    }
+
     $error = false;
     try {
       $compiled = $less->compile($default.$fs->getContents($t).$st);
