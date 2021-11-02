@@ -32,18 +32,25 @@ $fs->createPath($distPath . '/components');
 if (!defined('BBN_CDN_DB')) {
   throw new Exception("The CDN DB path is not defined");
 }
+
 $sqlite = new Db([
   'engine' => 'sqlite',
   'db' => BBN_CDN_DB
 ]);
 
 foreach ($components as $component) {
-  $cp   = basename($component);
-  $html = $fs->isFile($p.$cp.'/'.$cp.'.html') ? $fs->getContents($p.$cp.'/'.$cp.'.html') : '';
-  $css  = $fs->isFile($p.$cp.'/'.$cp.'.less') ? $fs->getContents($p.$cp.'/'.$cp.'.less') : '';
-  $js   = $fs->isFile($p.$cp.'/'.$cp.'.js') ? $fs->getContents($p.$cp.'/'.$cp.'.js') : '';
-  $cfg  = $fs->isFile($p.$cp.'/bbn.json') ? json_decode($fs->getContents($p.$cp.'/bbn.json'), true) : '';
-  $langs = $fs->getFiles($p.$cp, false, false, 'lang');
+  $cp    = basename($component);
+  $flist = $fs->getFiles($p.$cp, false, false, null, 'mdt');
+  $last = X::sortBy($flist, 'mtime', 'desc')[0]['mtime'];
+  $html  = X::getRow($flist, ['name' => $p.$cp.'/'.$cp.'.html']) ? $fs->getContents($p.$cp.'/'.$cp.'.html') : '';
+  $css   = X::getRow($flist, ['name' => $p.$cp.'/'.$cp.'.less']) ? $fs->getContents($p.$cp.'/'.$cp.'.less') : '';
+  $js    = X::getRow($flist, ['name' => $p.$cp.'/'.$cp.'.js']) ? $fs->getContents($p.$cp.'/'.$cp.'.js') : '';
+  $cfg   = X::getRow($flist, ['name' => $p.$cp.'/bbn.json']) ? json_decode($fs->getContents($p.$cp.'/bbn.json'), true) : '';
+  $langs = X::filter($flist, [[
+    'field' => 'name',
+    'operator' => 'endswith',
+    'value' => '.lang'
+  ]]);
   if ($js) {
     $cp_files = array_filter(
       $fs->getFiles($p.$cp, true, false), function ($a) use ($cp, $p) {
@@ -68,6 +75,7 @@ foreach ($components as $component) {
     // bbn.io
     $tmp       = [
       'text' => $cp,
+      'lastmod' => $last,
       'url' => 'bbn-vue/component/'. $cp .'/overview',
       'props' => [],
       'methods' => [],

@@ -316,16 +316,19 @@ EOD;
   $json = [];
   foreach ($res as $file => $content) {
     if (!empty($content['methods'])) {
+      $lastmod = $fs->filemtime($file);
       $tmp = [
         'text' => substr($content['summary'], 0, -1),
         'desc' => $content['description'],
         'value' => basename($file, '.js'),
+        'lastmod' => $last,
         'items' => X::map(function($a, $name) use ($file) {
           return [
             'file' => $file,
             'text' => $name,
             'desc' => substr($a['summary'], 0, -1),
             'value' => $name,
+            'lastmod' => $last,
             'url' => 'bbn-js/doc/'.basename($file, '.js').'/'.$name
           ];
         }, $content['methods'])

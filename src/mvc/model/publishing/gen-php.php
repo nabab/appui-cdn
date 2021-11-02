@@ -65,11 +65,13 @@ foreach ($types as $singular => $type) {
         $content = $fs->getContents($it);
         $content2 = $fs->getContents(BBN_LIB_PATH.'bbn/bbn/src/bbn/'.$path.$class_name.'.php');
         $info = $content2 ? $p->parse($content2) : [];
+        $lastmod = $fs->filemtime(BBN_LIB_PATH.'bbn/bbn/src/bbn/'.$path.$class_name.'.php');
         $tmp = [
           'type' => $singular,
           'value' => $class_name,
           'text' => $class_name,
           'url' => $path_bbnio.$path.$class_name,
+          'lastmod' => $lastmod,
           'desc' => $info['summary'] ?? '',
           'items' => []
         ];
@@ -91,6 +93,7 @@ foreach ($types as $singular => $type) {
             'class' => $path.$class_name,
             'text' => $m['@attributes']['name'],
             'value' => $m['@attributes']['name'],
+            'lastmod' => $lastmod,
             'url' => $path_bbnio.$path.$class_name.'/'.$m['@attributes']['name'],
             'desc' => $desc
           ];
@@ -110,6 +113,7 @@ foreach ($types as $singular => $type) {
               'class' => $path.$class_name,
               'text' => $m['@attributes']['name'],
               'value' => $m['@attributes']['name'],
+              'lastmod' => $lastmod,
               'url' => $path_bbnio.$path.$class_name.'/'.$m['@attributes']['name'],
               'desc' => $desc
             ];
