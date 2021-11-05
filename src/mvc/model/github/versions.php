@@ -5,11 +5,12 @@
  * Date: 21/12/2016
  * Time: 18:24
  */
+use Github\Client;
 //die(var_dump( defined('BBN_GITHUB_TOKEN'),BBN_GITHUB_TOKEN ));
 if ( !empty($model->data['git_user']) && !empty($model->data['git_repo']) && \defined('BBN_GITHUB_TOKEN') ){
  
-  $git = new \Github\Client();
-  $git->authenticate(BBN_GITHUB_TOKEN, Github\Client::AUTH_HTTP_TOKEN);
+  $git = new Client();
+  $git->authenticate(BBN_GITHUB_TOKEN, Client::AUTH_HTTP_TOKEN);
   // Get the latest version
   $latest = '';
   $o = $git->api('repo')->releases();
