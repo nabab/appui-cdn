@@ -6,7 +6,7 @@
 
 /** @var $model \bbn\Mvc\Model*/
 
-$dir = BBN_CDN_PATH.'lib/bbn-vue/2.0.2/dist/js_single_files';
+$dir = BBN_CDN_PATH.'lib/bbn-vue/master/dist/js_single_files';
 $dirLang = $dir . '/i18n';
 $dirComp = $dir . '/components';
 $fs  = new \bbn\File\System();

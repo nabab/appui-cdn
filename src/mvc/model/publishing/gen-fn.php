@@ -39,7 +39,7 @@ function pad(&$arr) {
 $less = new Less();
 $tern_json = [];
 if ($model->hasData('fns')) {
-  $root = BBN_CDN_PATH.'lib/bbn-js/1.0.1/';
+  $root = BBN_CDN_PATH.'lib/bbn-js/master/';
   $dir = $root.'src/fn';
   $fs = new System();
   $fs->cd($dir);
@@ -352,7 +352,7 @@ EOD;
   }
   $fs->putContents($root.'dist/bbn.js', $st);
   $fs->putContents($root.'dist/bbn.min.js', Minifier::minify($st, ['flaggedComments' => false]));
-  $root_css = BBN_CDN_PATH.'lib/bbn-css/1.0.0/';
+  $root_css = BBN_CDN_PATH.'lib/bbn-css/master/';
   $files = $fs->getFiles($root_css.'src/css', 'less');
   $st = '';
   foreach ($files as $f) {

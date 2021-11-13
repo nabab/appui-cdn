@@ -15,7 +15,7 @@ use JShrink\Minifier;
 
 /** @var $model \bbn\Mvc\Model*/
 $asSingleFiles = $model->hasData('single', true);
-$dir = BBN_CDN_PATH.'lib/bbn-vue/2.0.2';
+$dir = BBN_CDN_PATH.'lib/bbn-vue/master';
 $fs  = new System();
 $fs->cd($dir);
 $p           = 'src/components/';
