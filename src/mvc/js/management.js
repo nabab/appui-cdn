@@ -79,7 +79,7 @@
               for ( let ele of d.data.versions ){
                 obj.versions.push({
                   name: ele.name,
-                  date: moment(ele.date_added).format('DD/MM/YYYY')
+                  date: dayjs(ele.date_added).format('DD/MM/YYYY')
                 });
               }
             }
