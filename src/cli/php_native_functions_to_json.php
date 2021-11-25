@@ -142,16 +142,26 @@ foreach ($fns['internal'] as $i => $fn) {
     ];
     $parameters = $refFunction->getParameters();
     if (count($parameters)) {
-      $tmp['arguments'] = [];
+      $tmp['args'] = [];
       foreach ($parameters as $parameter) {
         $type = $parameter->getType();
-        $tmp['arguments'][] = [
+        try {
+          $default = $parameter->getDefaultValue();
+        }
+        catch (\Exception $e) {
+          $default = '__BBN__';
+        }
+        $tmp = [
           'name' => $parameter->getName(),
           'optional' => $parameter->isOptional(),
-          //'default' => $parameter->getDefaultValue(),
           'type' => $type ? (string)$type : null,
           'nullable' => $type ? $type->allowsNull() : true
         ];
+        if ($default !== '__BBN__') {
+          $tmp['default'] = $default;
+        }
+
+        $tmp['args'][] = $tmp;
       }
     }
     $res[] = $tmp;
