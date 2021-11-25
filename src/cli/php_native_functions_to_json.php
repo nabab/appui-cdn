@@ -1,6 +1,8 @@
 <?php
+
 use bbn\X;
-$fs = new bbn\File\System();
+
+$fs    = new bbn\File\System();
 $files = [
   BBN_LIB_PATH.'bbn/bbn/json-doc/Str.json',
   BBN_LIB_PATH.'bbn/bbn/json-doc/X.json',
@@ -13,8 +15,22 @@ $files = [
   BBN_LIB_PATH.'bbn/bbn/json-doc/Cache.json',
   BBN_LIB_PATH.'bbn/bbn/json-doc/Db.json'
 ];
-$res = [
+$res   = [
   [
+    'name' => 'bbn',
+    'type' => 'namespace',
+    'items' => [
+      [
+        'name' => 'X',
+        'type' => 'class',
+        'ref' => 'X'
+      ], [
+        'name' => 'Str',
+        'type' => 'class',
+        'ref' => 'Str'
+      ]
+    ]
+  ], [
     'name' => '$model',
     'ref' => 'Model',
     'type' => 'object',
@@ -151,17 +167,17 @@ foreach ($fns['internal'] as $i => $fn) {
         catch (\Exception $e) {
           $default = '__BBN__';
         }
-        $tmp = [
+        $tmp2 = [
           'name' => $parameter->getName(),
           'optional' => $parameter->isOptional(),
           'type' => $type ? (string)$type : null,
           'nullable' => $type ? $type->allowsNull() : true
         ];
         if ($default !== '__BBN__') {
-          $tmp['default'] = $default;
+          $tmp2['default'] = (string)$default;
         }
 
-        $tmp['args'][] = $tmp;
+        $tmp['args'][] = $tmp2;
       }
     }
     $res[] = $tmp;
