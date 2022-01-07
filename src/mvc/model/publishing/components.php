@@ -25,23 +25,27 @@ $vue         = [];
 $mixins      = [];
 $expressions = [];
 $less        = new Less();
+// in dist: deletes folders js, js_single_files and vue
 $distPath = 'dist/js' . ($asSingleFiles ? '_single_files' : '');
 $fs->delete($distPath);
 $fs->delete('dist/vue');
+// Create folder js/components, js_single_files/components
 $fs->createPath($distPath . '/components');
 if (!defined('BBN_CDN_DB')) {
   throw new Exception("The CDN DB path is not defined");
 }
 
+// Connects to a Sqlite database
 $sqlite = new Db([
   'engine' => 'sqlite',
   'db' => BBN_CDN_DB
 ]);
 
+// For each directory in src/components gets the content of js, html and less file
 foreach ($components as $component) {
   $cp    = basename($component);
   $flist = $fs->getFiles($p.$cp, false, false, null, 'mdt');
-  $last = X::sortBy($flist, 'mtime', 'desc')[0]['mtime'];
+  $last  = X::sortBy($flist, 'mtime', 'desc')[0]['mtime'];
   $html  = X::getRow($flist, ['name' => $p.$cp.'/'.$cp.'.html']) ? $fs->getContents($p.$cp.'/'.$cp.'.html') : '';
   $css   = X::getRow($flist, ['name' => $p.$cp.'/'.$cp.'.less']) ? $fs->getContents($p.$cp.'/'.$cp.'.less') : '';
   $js    = X::getRow($flist, ['name' => $p.$cp.'/'.$cp.'.js']) ? $fs->getContents($p.$cp.'/'.$cp.'.js') : '';
@@ -51,6 +55,7 @@ foreach ($components as $component) {
     'operator' => 'endswith',
     'value' => '.lang'
   ]]);
+
   if ($js) {
     $cp_files = array_filter(
       $fs->getFiles($p.$cp, true, false), function ($a) use ($cp, $p) {
@@ -60,6 +65,7 @@ foreach ($components as $component) {
       }
     );
     $ar_cfg   = false;
+
     if (!empty($cfg['dependencies'])) {
 
       $cdn_cfg = new Config(
@@ -70,6 +76,7 @@ foreach ($components as $component) {
       $ar_cfg  = $cdn_cfg->get();
     }
 
+    // Start of documentation process
     $parser = new Doc($js, 'vue');
     $doc    = $parser->getVue();
     // bbn.io
@@ -159,6 +166,8 @@ foreach ($components as $component) {
     }
 
     $vue[] = $tmp;
+    // End of documentation process
+
     // .vue files
     $fs->createPath($distPath.'/components/'.$cp);
     $fs->createPath('dist/vue/components/'.$cp);
@@ -166,6 +175,8 @@ foreach ($components as $component) {
     $css_dependencies = [];
     $st_js            = (!$asSingleFiles ? '(bbn_resolve) => {'.PHP_EOL : '') . '((bbn) => {'.PHP_EOL;
     $dep_st           = false;
+
+    // Start of dependencies management
     if ($ar_cfg && !empty($ar_cfg['content']) && !empty($ar_cfg['content']['includes'])) {
       $files_js = [];
       foreach ($ar_cfg['content']['includes'] as $nc) {
@@ -196,24 +207,20 @@ foreach ($components as $component) {
 
       if (count($files_js)) {
         $dep_st = 'https://cdn.jsdelivr.net/combine/'.x::join($files_js, ',');
-        $st_js .= <<<JAVASCRIPT
-let script_dep = document.createElement('script');
-script_dep.setAttribute('src', "$dep_st");
-script_dep.onload = () => {
-
-JAVASCRIPT;
+        $st_js .= PHP_EOL . "let script_dep = document.createElement('script');" .
+                  PHP_EOL . "script_dep.setAttribute('src', '$dep_st');" .
+                  PHP_EOL . "script_dep.onload = () => {" . 
+                  PHP_EOL . PHP_EOL;
       }
 
       if (count($css_dependencies)) {
         $st_js .= PHP_EOL.'let css_dependency;'.PHP_EOL;
         foreach ($css_dependencies as $css_d) {
-          $st_js .= <<<JAVASCRIPT
-css_dependency = document.createElement('link');
-css_dependency.setAttribute('rel', "stylesheet");
-css_dependency.setAttribute('href', "$css_d");
-document.head.insertAdjacentElement('beforeend', css_dependency);
-
-JAVASCRIPT;
+          $st_js .= PHP_EOL . "css_dependency = document.createElement('link');" .
+                    PHP_EOL . "css_dependency.setAttribute('rel', 'stylesheet');" .
+                    PHP_EOL . "css_dependency.setAttribute('href', '$css_d');" .
+                    PHP_EOL . "document.head.insertAdjacentElement('beforeend', css_dependency);" .
+                    PHP_EOL . PHP_EOL;
         }
       }
     }
@@ -221,14 +228,12 @@ JAVASCRIPT;
     if ($html) {
       $st_vue .= '<template>'.PHP_EOL.$html.PHP_EOL.'</template>'.PHP_EOL;
       $content = str_replace('`', '\\`', str_replace('\\', '\\\\', $html));
-      $st_js  .= <<<JAVASCRIPT
-let script = document.createElement('script');
-script.innerHTML = `$content`;
-script.setAttribute('id', 'bbn-tpl-component-$cp');
-script.setAttribute('type', 'text/x-template');
-document.body.insertAdjacentElement('beforeend', script);
-
-JAVASCRIPT;
+      $st_js  .= PHP_EOL . "let script = document.createElement('script');" .
+                 PHP_EOL . "script.innerHTML = `$content`;" .
+                 PHP_EOL . "script.setAttribute('id', 'bbn-tpl-component-$cp');" .
+                 PHP_EOL . "script.setAttribute('type', 'text/x-template');" .
+                 "document.body.insertAdjacentElement('beforeend', script);" .
+                 PHP_EOL . PHP_EOL;
     }
 
     $st_vue .= '<script>'.PHP_EOL.'  module.exports = '.$js.PHP_EOL.'</script>'.PHP_EOL;
@@ -237,13 +242,11 @@ JAVASCRIPT;
       $content = str_replace('`', '\\`', $css);
       $fs->putContents($distPath.'/components/'.$cp.'/'.$cp.'.css', $content);
       if (!$asSingleFiles) {
-        $st_js .= <<<JAVASCRIPT
-let css = document.createElement('link');
-css.setAttribute('rel', "stylesheet");
-css.setAttribute('href', bbn.vue.libURL + "$distPath/components/$cp/$cp.css");
-document.head.insertAdjacentElement('beforeend', css);
-
-JAVASCRIPT;
+        $st_js .= PHP_EOL . "let css = document.createElement('link');" .
+                  PHP_EOL . "css.setAttribute('rel', 'stylesheet');" .
+                  PHP_EOL . "css.setAttribute('href', bbn.vue.libURL + '$distPath/components/$cp/$cp.css');" .
+                  PHP_EOL . "document.head.insertAdjacentElement('beforeend', css);" .
+                  PHP_EOL . PHP_EOL;
       }
     }
 
@@ -273,10 +276,9 @@ JAVASCRIPT;
           && !empty($lang[1])
           && ($langFileContent = $fs->getContents($lang))
         ){
-          $langContent = "
-(() => {
-  bbn.fn.autoExtend('lng', " . $langFileContent . ");
-})();";
+          $langContent = PHP_EOL . "(() => {" .
+                         PHP_EOL . "  bbn.fn.autoExtend('lng', $langFileContent);" .
+                         PHP_EOL . "})();";
           $fs->putContents($distPath.'/components/'.$cp.'/'.$cp.'.'.$lFile[1].'.js', $langContent);
           $fs->putContents($distPath.'/components/'.$cp.'/'.$cp.'.'.$lFile[1].'.min.js', JShrink\Minifier::minify($langContent, ['flaggedComments' => false]));
         }
