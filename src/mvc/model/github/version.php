@@ -14,7 +14,7 @@ if ( !empty($model->data['git_user']) && !empty($model->data['git_repo']) && \de
   $git = new \Github\Client();
 
 
-  $git->authenticate(BBN_GITHUB_TOKEN, Github\Client::AUTH_HTTP_TOKEN);
+  //$git->authenticate(BBN_GITHUB_TOKEN, Github\Client::AUTH_HTTP_TOKEN);
 
   $dependencies = '';
 

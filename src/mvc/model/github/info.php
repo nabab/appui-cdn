@@ -7,6 +7,7 @@
  */
 /** @var $model \bbn\Mvc\Model */
 use bbn\X;
+use Github\Client;
 /*
 if ( !\defined('BBN_GITHUB_TOKEN') ){
   die('BBN_GITHUB_TOKEN is not defined!');
@@ -67,8 +68,9 @@ if ( !\defined('BBN_GITHUB_TOKEN') ){
 }
 
 if ( !empty($model->data['git_user']) && !empty($model->data['git_repo']) ){
-  $git = new \Github\Client();
-  $git->authenticate(BBN_GITHUB_TOKEN, \Github\Client::AUTH_HTTP_TOKEN);
+  $git = new Client();
+  //die(var_dump($git));
+  //$git->authenticate(BBN_GITHUB_TOKEN, Client::AUTH_HTTP_TOKEN);
   // Get repository's info
   $github = X::toObject($git->api('repo')->show($model->data['git_user'], $model->data['git_repo']));
 

@@ -10,7 +10,7 @@ use Github\Client;
 if ( !empty($model->data['git_user']) && !empty($model->data['git_repo']) && \defined('BBN_GITHUB_TOKEN') ){
  
   $git = new Client();
-  $git->authenticate(BBN_GITHUB_TOKEN, Client::AUTH_HTTP_TOKEN);
+  //$git->authenticate(BBN_GITHUB_TOKEN, Client::AUTH_HTTP_TOKEN);
   // Get the latest version
   $latest = '';
   $o = $git->api('repo')->releases();
