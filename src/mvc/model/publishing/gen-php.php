@@ -8,30 +8,47 @@ use bbn\Parsers\Php;
 use bbn\File\System;
 
 /** @var $model \bbn\Mvc\Controller */
+/** @var System Filesystem object */
 $fs = new System();
+// Cding in documentation folder
 $fs->cd(BBN_LIB_PATH.'bbn/bbn/build/phpdox/xml');
+/** @var array $types The different types of classes */
 $types = [
   'class' => 'classes',
   'trait' => 'traits',
   'interface' => 'interfaces'
 ];
 $res = [];
+/** @var Docblock $p a docblock parser */
 $p = new Docblock('php');
+/** @var Php $parser PHP parser */
 $parser = new Php();
+/** @var array $full Result of library parsing */
 $full = $parser->analyzeLibrary(BBN_LIB_PATH.'bbn/bbn/src/bbn', 'bbn');
 $namespaces = [];
 $all_methods = [];
+// Explore each subfolder of the XML documentation
 foreach ($types as $singular => $type) {
+  // Gets all the files in each folder
   if ($items = $fs->getFiles($type)) {
     foreach ($items as $it) {
+      // Basename represents the full name of the class with backslashes replaced by underscores
       $name = basename($it, '.xml');
+      // making an array of each bits of the class name (each is a part of the namespace)
       $bits = X::split($name, '_');
+      // First namespace MUST be bbn
       if ($bits[0] === 'bbn') {
+        // we remove bbn
         array_shift($bits);
+        // Class name is the last bit of the name
         $class_name = array_pop($bits);
+        // Starts by being an empty an array
         $current =& $res;
-        foreach ($bits as $i => $b) {
+        // Foreach part of the namespace
+        foreach ($bits as $b) {
+          // Looks for the namespace in $current
           $idx = X::find($current, ['value' => $b.'/']);
+          // If it doesn't exist we create it
           if (!isset($current[$idx])) {
             $idx = count($current);
             $current[] = [
@@ -41,10 +58,12 @@ foreach ($types as $singular => $type) {
               'items' => []
             ];
           }
+          // Moving the reference into a deeper array for respecting the class tree structure
           $current =& $current[$idx]['items'];
         }
       }
     }
+
     foreach ($items as $it) {
       $name = basename($it, '.xml');
       $bits = X::split($name, '_');
@@ -54,6 +73,7 @@ foreach ($types as $singular => $type) {
         $current =& $res;
         $path_bbnio = 'bbn-php/doc/'.$singular.'/';
         $path = '';
+        $namespace = 'bbn\\'.(empty($bits) ? '' : X::join($bits, '\\').'\\');
         foreach ($bits as $i => $b) {
           $idx = X::find($current, ['value' => $b.'/']);
           if ($idx === null) {
