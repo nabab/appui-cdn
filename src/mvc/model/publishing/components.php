@@ -271,7 +271,7 @@ foreach ($components as $component) {
     // Langs
     if (!empty($langs)) {
       foreach ($langs as $lang) {
-        preg_match('/[[:alnum:]]*\.{1}([a-z]{2})\.{1}lang$/', $lang, $lFile);
+        preg_match('/[[:alnum:]]*\.{1}([a-z]{2})\.{1}lang$/', $lang['name'], $lFile);
         if (!empty($lang)
           && !empty($lang[1])
           && ($langFileContent = $fs->getContents($lang))
