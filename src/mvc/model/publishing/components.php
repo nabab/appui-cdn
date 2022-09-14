@@ -272,8 +272,8 @@ foreach ($components as $component) {
     if (!empty($langs)) {
       foreach ($langs as $lang) {
         preg_match('/[[:alnum:]]*\.{1}([a-z]{2})\.{1}lang$/', $lang['name'], $lFile);
-        if (!empty($lang)
-          && !empty($lang[1])
+        if (!empty($lFile)
+          && !empty($lFile[1])
           && ($langFileContent = $fs->getContents($lang))
         ){
           $langContent = PHP_EOL . "(() => {" .
