@@ -274,7 +274,7 @@ foreach ($components as $component) {
         preg_match('/[[:alnum:]]*\.{1}([a-z]{2})\.{1}lang$/', $lang['name'], $lFile);
         if (!empty($lFile)
           && !empty($lFile[1])
-          && ($langFileContent = $fs->getContents($lang))
+          && ($langFileContent = $fs->getContents($lFile[1]))
         ){
           $langContent = PHP_EOL . "(() => {" .
                          PHP_EOL . "  bbn.fn.autoExtend('lng', $langFileContent);" .
