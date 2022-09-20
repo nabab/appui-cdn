@@ -446,7 +446,7 @@
       //is called to the mounted in case of edit version
       editVersion(){
         this.configuratorLibrary = true;
-        this.post(appui.plugins['appui-cdn'] + "data/version/edit", {version: this.source.row.id, library: this.source.row.library}, d => {
+        this.post(appui.plugins['appui-cdn'] + "/data/version/edit", {version: this.source.row.id, library: this.source.row.library}, d => {
           if ( d.data !== undefined ){
             this.dataVersion.dependencies = d.data.dependencies;
             this.dataVersion.files_tree = d.data.files_tree;

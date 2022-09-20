@@ -1,48 +1,41 @@
 <!-- Libraries toolbar -->
-<div class="toolbar">
-  <div style="float:left; padding-left: 5px">
-    <span style="margin-right: 5px"><?=_('Reload')?></span>
-    <bbn-button @click="management.refreshManagement"
-                icon="nf nf-fa-sync_alt"
-                style="margin-right: 5px"
-    >
-      <?=_("Management")?>
-    </bbn-button>
-    <!-- Add library button -->
-    <span style="margin: 0 5px 0 10px"><i class="nf nf-fa-archive"></i><?=_('Libraries')?></span>
-    <bbn-button @click="add"
-                icon="nf nf-fa-plus"
-                style="margin-right: 5px"
-    >
-      <?=_("Add")?>
-    </bbn-button>
+<bbn-toolbar>
+  <div class="bbn-flex-width">
+    <div class="bbn-block">
+      <!-- Add library button -->
+      <bbn-button class="bbn-hsmargin"
+                  @click="add"
+                  icon="nf nf-fa-archive"
+                  secondary="nf nf-fa-plus">
+        <?=_("Add library")?>
+      </bbn-button>
 
-    <!-- GitHub Updates-->
-    <span style="margin: 0 5px 0 10px"><i class="nf nf-fa-github"></i>GitHub:</span>
-    <bbn-button @click="checkUpdate"
-                icon="nf nf-fa-sync_alt"
-                style="margin-right: 5px"
-                title="<?=_("Check updates from GitHub")?>"
-    >
-      <?=_("Check updates")?>
-    </bbn-button>
-    <!-- TODO incomplete-->
-    <bbn-button @click="showUpdate"
-                icon="nf nf-fa-cubes"
-                style="margin-right: 5px"
-                title="<?=_("Show updates")?>"
-                :disabled= "disabledButton"
-    >
-      <span v-if="totalUpdateList >0" v-text="totalUpdateList"></span>
-      <?=_('Updates')?>
-    </bbn-button>
+      <!-- GitHub Updates-->
+      <bbn-button @click="checkUpdate"
+                  icon="nf nf-fa-github"
+                  secondary="nf nf-fa-sync_alt"
+                  class="bbn-hsmargin"
+                  title="<?=_("Check updates from GitHub")?>">
+        <?=_("Check GitHub updates")?>
+      </bbn-button>
+      <!-- TODO incomplete-->
+      <bbn-button @click="showUpdate"
+                  icon="nf nf-fa-cubes"
+                  style="margin-right: 5px"
+                  class="bbn-hsmargin"
+                  title="<?=_("Show updates")?>"
+                  :disabled= "disabledButton">
+        <span v-if="totalUpdateList >0" v-text="totalUpdateList"/>
+        <?=_('Updates')?>
+      </bbn-button>
+    </div>
+    <div class="bbn-flex-fill bbn-r">
+      <i class="nf nf-fa-search"/>
+      <bbn-input class="bbn-hmargin"
+                 style="min-width: 25vw; max-width: 50vw; width: 300px; text-align: left"
+                 placeholder="Search library"
+                 v-model="searchNameLibrary"/>
+    </div>
   </div>
   <!-- Search library -->
-  <div style="float: right">
-    <i class="nf nf-fa-search" style="margin: 0 5px"></i>
-    <bbn-input style="width: 300px"
-               placeholder="Search library"
-               v-model="searchNameLibrary"
-    ></bbn-input>
-  </div>
-</div>
+</bbn-toolbar>

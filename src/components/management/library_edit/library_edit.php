@@ -94,23 +94,28 @@
         <bbn-splitter orientation="horizontal">
           <bbn-pane>
             <div class="bbn-padded bbn-grid-fields bbn-100"
-                 style="grid-auto-rows: max-content auto"
-            >
-              <span class="bbn-b">
+                 style="grid-auto-rows: max-content auto">
+              <div class="bbn-b">
                 <?=_("Name")?>:
-              </span>
-              <bbn-input style="width: 100%" v-model="dataVersion.version" :disabled="disabledEditVersion"></bbn-input>
-              <span class="bbn-b">
+              </div>
+              <bbn-input style="width: 100%"
+                         v-model="dataVersion.version"
+                         :disabled="disabledEditVersion"/>
+              <div class="bbn-b">
                 <?=_("Files")?>:
-              </span>
-              <bbn-tree :source="dataVersion.files_tree"
-                        :selection="true"
-                        @check="checkFile"
-                        @uncheck="uncheckFile"
-                        :map="treeFiles"
-                        uid="fpath"
-                        ref="filesListTree"
-                        @ready="checkedNode"/>
+              </div>
+              <div class="bbn-h-100">
+                <bbn-tree v-if="dataVersion && dataVersion.files_tree && dataVersion.files_tree.length"
+                          :source="dataVersion.files_tree"
+                          :selection="true"
+                          @check="checkFile"
+                          @uncheck="uncheckFile"
+                          :scrollable="true"
+                          :map="treeFiles"
+                          uid="fpath"
+                          ref="filesListTree"
+                          @ready="checkedNode"/>
+              </div>
             </div>
           </bbn-pane>
           <bbn-pane class="bbn-flex-height">
