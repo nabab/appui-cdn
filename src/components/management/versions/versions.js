@@ -9,6 +9,27 @@
       }
     },
     methods:{
+      dependencies(row, col, idx){
+        bbn.fn.log("row", row);
+        this.post(appui.plugins['appui-cdn'] + '/data/dependencies', {version: row.id}, d => {
+          if (d.data && ((d.data.depend.length > 0) || (d.data.dependent.length > 0))) {
+            this.getPopup({
+              width: 700,
+              height: 500,
+              title: bbn._('Dependencies library') + " " + row.library + " " + row.name,
+              component:'appui-cdn-management-popup-dependencies',
+              source: {
+                depend: d.data.depend,
+                dependent: d.data.dependent,
+                listUpdate: this.source.list
+              }
+            });
+          }
+          else{
+            this.alert(bbn._("No dependencies found"));
+          }
+        })
+      },
       buttonsTable(row, col, idx) {
         return [
           {
@@ -20,7 +41,15 @@
             title: bbn._('info'),
             notext: true
           }, {
-            text: 'Edit',
+            text: bbn._('Dependencies'),
+            action: ()=>{
+              this.dependencies(row, col, idx);
+            },
+            icon: 'nf nf-md-webpack',
+            title: bbn._('Dependencies'),
+            notext: true,
+          }, {
+             text: 'Edit',
             action:(row, col, idx)=>{
               this.management.actions('editVers');
               this.editVersion(row, col, idx);
@@ -205,11 +234,28 @@
               <span v-text="_('Date added')" class="bbn-r bbn-b"></span>
               <bbn-input v-text="source.date_added" readonly></bbn-input>
               <span v-text="_('Content')" class="bbn-l bbn-b" v-if="source.content"></span>
-              <bbn-tree :source="source.content"  v-if="source.content">
-              </bbn-tree>
+              <div style="min-height: 120px">
+	              <bbn-tree :source="source.content"
+                           v-if="source.content"
+                           :scrollable="false">
+                </bbn-tree>
+              </div>
             </div>
           </div>`,
-        props:['source']
+        props:['source'],
+        data() {
+          const treeSource = [];
+          bbn.fn.iterate(this.source.content, (a, n) => {
+            bbn.fn.log(a, n, '----');
+            treeSource.push({
+              text: n,
+              items: a.map(b => { return {text: b}})
+            });
+          });
+          return {
+            treeSource
+          };
+        }
       },
       'addVersions' : {
         template: `<bbn-button icon="nf nf-fa-plus" @click="add"></bbn-button>`,

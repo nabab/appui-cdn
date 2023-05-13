@@ -6,9 +6,11 @@
     },
     methods:{
       showIconUpdate(ele){
-        let id = bbn.fn.search(this.source.listUpdate, 'title', ele.name);
-        if ( id !== -1 ){
-          return `<div class='bbn-c'><i title='` + this.source.listUpdate[id]['latest'] +  `' class='nf nf-fa-upload bbn-bg-red bbn-white bbn-xxl'></i></div>`;
+        if (this.source.listUpdate) {
+          let id = bbn.fn.search(this.source.listUpdate, 'title', ele.name);
+          if ( id !== -1 ){
+            return `<div class='bbn-c'><i title='` + this.source.listUpdate[id]['latest'] +  `' class='nf nf-fa-upload bbn-bg-red bbn-white bbn-xxl'></i></div>`;
+          }
         }
         return '';
       }

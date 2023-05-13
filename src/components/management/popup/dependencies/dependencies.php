@@ -1,8 +1,7 @@
 <bbn-splitter :collapsible="true"
               :resizableue="true"
               orientation="horizontal"
-              class="dependencies bbn-overlay"
->
+              class="dependencies bbn-overlay">
   <bbn-pane>
     <bbn-table :source="source.depend"
                :order="[{field: 'name', dir: 'ASC'}]"
