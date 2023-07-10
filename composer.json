@@ -14,7 +14,7 @@
   ],
   "require": {
     "php": ">=7.4",
-    "bbn/bbn": "dev-master",
+    "bbn/bbn": "1.0.*",
     "knplabs/github-api": "3.3.*"
   }
 }
