@@ -244,7 +244,7 @@ foreach ($components as $component) {
       if (!$asSingleFiles) {
         $st_js .= PHP_EOL . "let css = document.createElement('link');" .
                   PHP_EOL . "css.setAttribute('rel', 'stylesheet');" .
-                  PHP_EOL . "css.setAttribute('href', bbn.vue.libURL + '$distPath/components/$cp/$cp.css');" .
+                  PHP_EOL . "css.setAttribute('href', bbn.cp.libURL + '$distPath/components/$cp/$cp.css');" .
                   PHP_EOL . "document.head.insertAdjacentElement('beforeend', css);" .
                   PHP_EOL . PHP_EOL;
       }

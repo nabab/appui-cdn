@@ -1,7 +1,7 @@
 (()=>{
   let management;
   return {
-    mixins: [bbn.vue.localStorageComponent],
+    mixins: [bbn.cp.mixins.localStorage],
     data(){
       return{
         searchContent: [],

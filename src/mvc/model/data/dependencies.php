@@ -1,91 +1,40 @@
 <?php
-
-$where = false;
-if ($model->hasData('folder')) {
-  $where = ['libraries.name' => $model->data['folder']];
-}
-elseif ($model->hasData('version')) {
-  $where = [
-    ['id_slave' => $model->data['version']],
-    ['id_master' => $model->data['version']]
-  ];
-}
-
-if ($where) {
+if( !empty($model->data['folder']) ){
   return [
-    'data' => [
-      'depend' => $model->data['db']->rselectAll([
-        'tables' => 'dependencies',
-        'fields' => [
-          'versions.id',
-          'version' => 'versions.name',
-          'libraries.name',
-          'lib_title' => 'libraries.title',
-          'dependencies.order'
-        ],
-        'join' => [
-          [
-            'table' => 'versions',
-            'on' => [
-              [
-                'field' => 'versions.id',
-                'exp' => 'dependencies.id_master'
-              ]
-            ]
-          ], [
-            'table' => 'libraries',
-            'on' => [
-              [
-                'field' => 'libraries.name',
-                'exp' => 'versions.library'
-              ]
-            ]
-          ]
-        ],
-        'where' => isset($where[1]) ? $where[0] : $where,
-        'order' => [
-          'field' => 'libraries.title',
-          'dir' => 'ASC'
-        ],
-        'group_by' => 'libraries.name'
-      ]),
-      'dependent' => $model->data['db']->rselectAll([
-        'tables' => 'dependencies',
-        'fields' => [
-          'versions.id',
-          'version' => 'versions.name',
-          'libraries.name',
-          'lib_title' => 'libraries.title',
-          'dependencies.order'
-        ],
-        'join' => [
-          [
-            'table' => 'versions',
-            'on' => [
-              [
-                'field' => 'versions.id',
-                'exp' => 'dependencies.id_slave'
-              ]
-            ]
-          ], [
-            'table' => 'libraries',
-            'on' => [
-              [
-                'field' => 'libraries.name',
-                'exp' => 'versions.library'
-              ]
-            ]
-          ]
-        ],
-        'where' => isset($where[0]) ? $where[1] : $where,
-        'order' => [
-          'field' => 'libraries.title',
-          'dir' => 'ASC'
-        ],
-        'group_by' => 'libraries.name'
-      ]),
-      'last' => $model->data['db']->last()
-    ]
+    'depend' => $model->data['db']->getRows('
+      SELECT "vers"."id" AS id_ver, "vers"."name" AS version, "libr"."name" AS name,
+        "libr"."title" AS lib_title, "dependencies"."order"
+      FROM "versions"
+      JOIN "libraries"
+        ON "versions"."library" = "libraries"."name"
+        AND "versions"."name" = "libraries"."latest"
+      JOIN "dependencies"
+        ON "versions"."id" = "dependencies"."id_slave"
+      JOIN "versions" AS vers
+        ON "dependencies"."id_master" = "vers"."id"
+      JOIN "libraries" AS libr
+        ON "vers"."library" = "libr"."name"
+      WHERE "libraries"."name" = ?
+      GROUP BY ("lib_name")
+      ORDER BY "libr"."title" COLLATE NOCASE ASC',
+      $model->data['folder']
+    ),
+    'dependent' => $model->data['db']->getRows("
+    SELECT libr.name, libr.title, vers.name AS version
+    FROM versions
+    JOIN libraries
+      ON versions.library = libraries.name
+      AND versions.name = libraries.latest
+    JOIN dependencies
+      ON versions.id = dependencies.id_master
+    JOIN versions AS vers
+      ON dependencies.id_slave = vers.id
+    JOIN libraries AS libr
+      ON vers.library = libr.name
+    WHERE libraries.name = ?
+    ORDER BY libr.name ASC",
+      $model->data['folder']
+    )
   ];
 }
 return ['succes' => false];

@@ -40,7 +40,7 @@
       },
       addLanguage(){
         this.source.table.push({path: this.element});
-        bbn.vue.closest(this, "bbn-popup").close();
+        this.closest("bbn-popup").close();
       },
       selectElement(node){
         if ( node.data.file ){

@@ -2,7 +2,7 @@
   var management = false;
   return {
     created(){
-      management = bbn.vue.closest(this, 'bbn-container').getComponent();
+      management = this.closest('bbn-container').getComponent();
     },
     methods:{
       buttons(row, col, idx){

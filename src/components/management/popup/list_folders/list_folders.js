@@ -38,7 +38,7 @@
         }
       },
       skipListVersionsGitHub(){
-        bbn.vue.closest(this, 'bbn-popup').close();
+        this.closest('bbn-popup').close();
         this.post('cdn/github/versions', {
           url: this.source.github
         }, ele => {
@@ -64,7 +64,7 @@
                 this.$set(this.source, 'folders', d.folders);
               }
               else{
-                bbn.vue.closest(this, 'bbn-popup').close();
+                this.closest('bbn-popup').close();
               }
             }
             else{

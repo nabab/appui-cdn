@@ -169,7 +169,7 @@
                       this.$refs.form_library.submit()
                     }
                     else{
-                      bbn.vue.closest(this, 'bbn-popup').alert(bbn._("The name or the folder name for this library is missing"));
+                      this.closest('bbn-popup').alert(bbn._("The name or the folder name for this library is missing"));
                     }
                   }//case edit or sdd version
                   else{
@@ -177,7 +177,7 @@
                       this.$refs.form_library.submit()
                     }
                     else{
-                      bbn.vue.closest(this, 'bbn-popup').alert(bbn._("No file selected"));
+                      this.closest('bbn-popup').alert(bbn._("No file selected"));
                     }
                   }
                 },
@@ -217,7 +217,7 @@
       success(){
         this.management.refreshManagement();
         this.$nextTick(()=>{
-          bbn.vue.closest(this, "bbn-popup").close();
+          this.closest("bbn-popup").close();
           appui.success(bbn._('Success!'));
         });
       },
@@ -559,7 +559,7 @@
         this.newName = this.source.row.name;
       }
       if ( this.management.action.addLib ){
-/*        let popup = bbn.vue.closest(this, 'bbn-container').popup(),
+/*        let popup = this.closest('bbn-container').popup(),
             id_popup = bbn.fn.count(popup.popups)-2;
         popup.close(id_popup);*/
       }
@@ -618,9 +618,9 @@
               width: '30%',
               title: bbn._("Files"),
               component:'appui-cdn-management-popup-tree_files',
-              source: {tree: this.sourceTree, table: bbn.vue.closest(this,"bbn-form").$parent.data.languages},
+              source: {tree: this.sourceTree, table: this.closest("bbn-form").$parent.data.languages},
               onClose: () =>{
-                bbn.vue.closest(this,'bbn-table').updateData()
+                this.closest('bbn-table').updateData()
               }
             });
           },
@@ -645,10 +645,10 @@
               component:'appui-cdn-management-popup-tree_files',
               source: {
                 tree: this.sourceTree,
-                table: bbn.vue.closest(this,"bbn-form").$parent.data.themes
+                table: this.closest("bbn-form").$parent.data.themes
               },
               onClose: () =>{
-                bbn.vue.closest(this,'bbn-table').updateData()
+                this.closest('bbn-table').updateData()
               }
             });
           },

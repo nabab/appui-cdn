@@ -29,7 +29,7 @@ if (!empty($model->data['db']) && !empty($model->data['version']) && defined('BB
             'text' => basename($p),
             'fpath' => (strpos($pa, '/') === 0) ? substr($pa, 1, \strlen($pa)) : $pa
           ];
-          if (!empty($c) && in_array($r['fpath'], $c)) {
+          if (!empty($c) && in_array($r['fpath'], $p)) {
             $r['checked'] = 1;
           }
 

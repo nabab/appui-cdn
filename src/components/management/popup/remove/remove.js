@@ -15,7 +15,7 @@
     },
     methods:{
       success(){
-        bbn.vue.closest(this,'bbn-popup').close();
+        this.closest('bbn-popup').close();
         if ( this.source.deleteLib ){
           appui.success(bbn._('Library deleted'));
         }

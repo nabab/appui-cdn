@@ -19,7 +19,7 @@
     methods:{
       success(ele){
         if ( ele.data ){
-          bbn.vue.closest(this, 'bbn-popup').close();
+          this.closest('bbn-popup').close();
           this.getPopup().open({
             height: '500px',
             width: '600px',

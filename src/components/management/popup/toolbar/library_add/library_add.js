@@ -14,7 +14,7 @@
             icon: 'nf nf-fa-ban',
             title: bbn._('Cancel'),
             action: ()=>{
-              bbn.vue.closest(this, "bbn-popup").close();
+              this.closest("bbn-popup").close();
             },
           },{
             text: bbn._('Skip'),
@@ -85,18 +85,18 @@
                   });
                 }
                 else{
-                  bbn.vue.closest(this, 'bbn-container').popup().alert(bbn._("No release found"));
+                  this.closest('bbn-container').popup().alert(bbn._("No release found"));
                 }
               }
             }
           );
         }
         else{
-          bbn.vue.closest(this, "bbn-popup").alert(bbn._("The repository's URL is empty"));
+          this.closest("bbn-popup").alert(bbn._("The repository's URL is empty"));
         }
       },
       addManualyLib(){
-        let pop = bbn.vue.closest(this, 'bbn-container').popup();
+        let pop = this.closest('bbn-container').popup();
         pop.open({
             height: '80%',
             width: '60%',

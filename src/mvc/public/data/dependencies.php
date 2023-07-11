@@ -7,4 +7,7 @@
  */
 /** @var $ctrl \bbn\Mvc\Controller */
 
-$ctrl->action();
+if ( !empty($ctrl->post) ){
+  $ctrl->data = array_merge($ctrl->data, $ctrl->post);
+  $ctrl->obj->data = $ctrl->getModel();
+}
