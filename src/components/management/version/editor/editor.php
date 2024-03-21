@@ -4,7 +4,7 @@
           ref="form_library"
           @failure="failure"
           @success="success"
-          confirm-leave="<?=_("Are you sure you want to close?")?>"
+          confirm-leave="<?= _("Are you sure you want to close?") ?>"
           :buttons="currentButton"
           :scrollable="true"
           v-if="showForm"
@@ -19,11 +19,11 @@
                style="grid-auto-rows: max-content auto"
                >
             <span class="bbn-b">
-              <?=_("Name")?>:
+              <?= _("Name") ?>:
             </span>
             <bbn-input style="width: 100%" v-model="dataVersion.version" :disabled="disabledEditVersion"></bbn-input>
             <span class="bbn-b">
-              <?=_("Files")?>:
+              <?= _("Files") ?>:
             </span>
             <bbn-tree :source="dataVersion.files_tree"
                       :selection="true"
@@ -39,14 +39,14 @@
           <div class="bbn-padded">
             <div class="bbn-card bbn-c bbn-v-middle">
               <span class="bbn-b">
-                <?=_('Select the files for changing their order')?>
+                <?= _('Select the files for changing their order') ?>
               </span>
             </div>
           </div>
           <div class="bbn-flex-fill bbn-h-100 bbn-flex-width" v-if ="treeOrderSource">
             <div class="bbn-padded">
               <div class="bbn-b bbn-c" style="padding-bottom: 5px">
-                <?=_("Move selected files")?>
+                <?= _("Move selected files") ?>
               </div>
               <div class="bbn-card bbn-c" v-if="fileMove" style="margin-top: 15px">
                 <div class="bbn-padded">
@@ -82,7 +82,7 @@
                         class="bbn-w-100"
                         :style = "{color: table === 'languages' ? 'red' : 'inherit'}"
                         >
-              <?=_('Languages')?>
+              <?= _('Languages') ?>
             </bbn-button>
           </div>
           <div class="bbn-padded bbn-w-100" style="margin-bottom: 20px">
@@ -91,7 +91,7 @@
                         class="bbn-w-100"
                         :style = "{color: table === 'themes' ? 'red' : 'inherit'}"
                         >
-              <?=_('Themes')?>
+              <?= _('Themes') ?>
             </bbn-button>
           </div>
           <div class="bbn-padded bbn-w-100 " style="margin-bottom: 20px">
@@ -100,7 +100,7 @@
                         class="bbn-w-100"
                         :style = "{color: table === 'dependencies' ? 'red' : 'inherit'}"
                         >
-              <?=_('Dependencies')?>
+              <?= _('Dependencies') ?>
             </bbn-button>
           </div>
           <div class="bbn-padded bbn-w-100 " style="margin-bottom: 20px">
@@ -110,7 +110,7 @@
                         :style= "{color: table === 'dependent' ? 'red' : 'inherit'}"
                         v-if= "management.action.addVers === true"
                         >
-              <?=_('Get slave libraries')?>
+              <?= _('Get slave libraries') ?>
             </bbn-button>
           </div>
           <div class="bbn-padded">
@@ -118,7 +118,7 @@
                           :disabled="abilitationCheckedLatest"
                           ></bbn-checkbox>
             <span class="bbn-b">
-              <?=_("Latest")?>
+              <?= _("Latest") ?>
             </span>
           </div>
         </bbn-pane>
@@ -130,7 +130,7 @@
                      key="table_languages"
                      :scrollable="true"
                      >
-            <bbns-column title="<?=_('Languages Files')?>"
+            <bbns-column title="<?= _('Languages Files') ?>"
                          field="path"
                          ></bbns-column>
             <bbns-column :tcomponent="$options.components.languages"
@@ -146,7 +146,7 @@
                      :scrollable="true"
                      :toolbar="$options.components.prepend_theme"
                      >
-            <bbns-column title="<?=_('Themes')?>"
+            <bbns-column title="<?= _('Themes') ?>"
                          field="path"
                          ></bbns-column>
             <bbns-column  :tcomponent="$options.components.themes"
@@ -159,7 +159,7 @@
                      ref="tableDependecies"
                      editable="inline"
                      :toolbar="[{
-                               text: '<strong>'+'<?=_('Add dependencies')?>' + '</strong>',
+                               text: '<strong>'+'<?= _('Add dependencies') ?>' + '</strong>',
                                icon: 'nf nf-fa-plus',
                                action: 'edit'
                                }]"                        
@@ -168,17 +168,17 @@
                      key="table_dependencies"
                      :scrollable="true"
                      >
-            <bbns-column title="<?=_('Library')?>"
+            <bbns-column title="<?= _('Library') ?>"
                          field="lib_name"
                          :source="list"
                          :render="renderLibName"
                          ></bbns-column>
-            <bbns-column title="<?=_('Version')?>"
+            <bbns-column title="<?= _('Version') ?>"
                          field="id_ver"
                          :editor="$options.components.versions"
                          :render="showVersion"
                          ></bbns-column>
-            <bbns-column title="<?=_('Order')?>"
+            <bbns-column title="<?= _('Order') ?>"
                          field="order"
                          width="100"
                          type="number"
@@ -196,10 +196,10 @@
                      key="table_dependent"
                      :scrollable="true"
                      >
-            <bbns-column title="<?=_('Title')?>"
+            <bbns-column title="<?= _('Title') ?>"
                          field="title"
                          ></bbns-column>
-            <bbns-column title="<?=_('Update')?>"
+            <bbns-column title="<?= _('Update') ?>"
                          width="100"
                          :component="$options.components.update",
                          cls="bbn-c"

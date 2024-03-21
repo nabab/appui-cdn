@@ -1,12 +1,12 @@
 <bbn-table :source="source.list">
-  <bbns-column title= "<?=_('Library')?>"
+  <bbns-column title= "<?= _('Library') ?>"
               field= "title"
   ></bbns-column>
-  <bbns-column title= "<?=_('Local version')?>"
+  <bbns-column title= "<?= _('Local version') ?>"
               field= "local"
               cls= "bbn-c"
   ></bbns-column>
-  <bbns-column title= "<?=_('Latest version')?>"
+  <bbns-column title= "<?= _('Latest version') ?>"
               field= "latest"
               cls= "bbn-c bbn-bg-red bbn-white"
   ></bbns-column>

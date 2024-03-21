@@ -8,14 +8,14 @@
                :order="[{field: 'name', dir: 'ASC'}]"
                :title-groups="[{
                               value: 'depend',
-                              text: '<?=_("Dependencies")?>',
+                              text: '<?= _("Dependencies") ?>',
                             }]"
     >
-      <bbns-column title="<?=_("Library")?>"
+      <bbns-column title="<?= _("Library") ?>"
                    field="name"
                    group="depend"
       ></bbns-column>
-      <bbns-column title="<?=_("Version")?>"
+      <bbns-column title="<?= _("Version") ?>"
                    field="version"
                    group="depend"
                    class="bbn-c"
@@ -33,14 +33,14 @@
                :order="[{field: 'name', dir: 'ASC'}]"
                :title-groups="[{
                               value: 'dependent',
-                              text: '<?=_("Slaves")?>'
+                              text: '<?= _("Slaves") ?>'
                             }]"
     >
-      <bbns-column title="<?=_("Library")?>"
+      <bbns-column title="<?= _("Library") ?>"
                    field="name"
                    group="dependent"
       ></bbns-column>
-      <bbns-column title="<?=_("Version")?>"
+      <bbns-column title="<?= _("Version") ?>"
                    field="version"
                    group="dependent"
                    class="bbn-c"

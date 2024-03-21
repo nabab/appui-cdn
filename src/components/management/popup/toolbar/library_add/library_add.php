@@ -3,7 +3,7 @@
 
 <bbn-form :buttons= "btns">
   <div class="bbn-padded bbn-l bbn-grid-fields">
-    <label><?=_("Import from GitHub link")?></label>
+    <label><?= _("Import from GitHub link") ?></label>
     <bbn-input  type="url" placeholder="https://..." v-model="urlGit"></bbn-input>
   </div>
 </bbn-form>

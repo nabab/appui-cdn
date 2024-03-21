@@ -7,11 +7,11 @@
              ref="tableVersionsLib"
              class="bbn-overlay"
   >
-    <bbns-column title="<?=_('Version')?>"
+    <bbns-column title="<?= _('Version') ?>"
                 field="name"
                 cls="bbn-c"
     ></bbns-column>
-    <bbns-column title="<?=_('Date')?>"
+    <bbns-column title="<?= _('Date') ?>"
                 field="date_added"
                 type="date"
                 cls="bbn-c"

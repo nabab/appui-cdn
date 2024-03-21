@@ -3,12 +3,12 @@
     <div class="bbn-flex-height">
       <div class="bbn-w-100 bbn-header bbn-middle">
         <strong>
-          "<?=_('Info')?>"
+          "<?= _('Info') ?>"
         </strong>
       </div>
       <div class="bbn-padded bbn-flex-fill">
         <bbn-table
-          title="<?=_("Information")?>"
+          title="<?= _("Information") ?>"
           :source="infos"
           :columns="colsInfo"
         >
@@ -20,20 +20,20 @@
     <div class="bbn-flex-height">
       <div class="bbn-w-100 bbn-header bbn-middle">
         <strong>
-          '<?=_('Versions')?>"
+          '<?= _('Versions') ?>"
         </strong>
       </div>
       <div class="bbn-flex-fill bbn-padded bbn-w-100">
         <bbn-table
-          title="<?=_("Versions")?>"
+          title="<?= _("Versions") ?>"
           :source="versions"
         >
-          <bbns-column   title="<?=_("Name")?>"
+          <bbns-column   title="<?= _("Name") ?>"
                         field="name"
                         :width="150"
                         cls="bbn-c"
           ></bbns-column>
-          <bbns-column   title="<?=_("Date")?>"
+          <bbns-column   title="<?= _("Date") ?>"
                         field="date"
                         :width="150"
                         type="date"

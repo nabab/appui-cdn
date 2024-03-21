@@ -7,7 +7,7 @@
                   @click="add"
                   icon="nf nf-fa-archive"
                   secondary="nf nf-fa-plus">
-        <?=_("Add library")?>
+        <?= _("Add library") ?>
       </bbn-button>
 
       <!-- GitHub Updates-->
@@ -15,18 +15,18 @@
                   icon="nf nf-fa-github"
                   secondary="nf nf-fa-sync_alt"
                   class="bbn-hsmargin"
-                  title="<?=_("Check updates from GitHub")?>">
-        <?=_("Check GitHub updates")?>
+                  title="<?= _("Check updates from GitHub") ?>">
+        <?= _("Check GitHub updates") ?>
       </bbn-button>
       <!-- TODO incomplete-->
       <bbn-button @click="showUpdate"
                   icon="nf nf-fa-cubes"
                   style="margin-right: 5px"
                   class="bbn-hsmargin"
-                  title="<?=_("Show updates")?>"
+                  title="<?= _("Show updates") ?>"
                   :disabled= "disabledButton">
         <span v-if="totalUpdateList >0" v-text="totalUpdateList"/>
-        <?=_('Updates')?>
+        <?= _('Updates') ?>
       </bbn-button>
     </div>
     <div class="bbn-flex-fill bbn-r">

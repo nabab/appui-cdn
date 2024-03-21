@@ -10,25 +10,25 @@
            expander="appui-cdn-management-versions"
            :order="[{field: 'title', dir: 'ASC'}]"
 >
-  <bbns-column title="<?=_("Title")?>"
+  <bbns-column title="<?= _("Title") ?>"
                field="title"
                :sortable="false"
   ></bbns-column>
 
-  <bbns-column title="<?=_("Folder name")?>"
+  <bbns-column title="<?= _("Folder name") ?>"
                field="name"
   ></bbns-column>
 
-  <bbns-column title="<?=_("Function Name")?>"
+  <bbns-column title="<?= _("Function Name") ?>"
                field="fname"
   ></bbns-column>
 
-  <bbns-column title="<?=_("Latest")?>"
+  <bbns-column title="<?= _("Latest") ?>"
                field="latest"
                cls="bbn-c"
                :width="80"
   ></bbns-column>
-  <bbns-column title="<?=_('Infos')?>"
+  <bbns-column title="<?= _('Infos') ?>"
                :render="showInfos"
                cls="bbn-c"
                :width="210"
