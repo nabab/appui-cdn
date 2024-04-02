@@ -159,7 +159,7 @@ foreach ($components as $component) {
     foreach ($to_remove as $rem) {
       $idx = X::find($tmp['items'], ['value' => $rem]);
       if ($idx === null) {
-        throw new Error("Impossible to find item $rem");
+        throw Error("Impossible to find item $rem");
       }
 
       array_splice($tmp['items'], $idx, 1);
