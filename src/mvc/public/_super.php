@@ -1,5 +1,5 @@
 <?php
-/** @var $ctrl \bbn\Mvc\Controller */
+/** @var bbn\Mvc\Controller $ctrl */
 // SQLITE connection
 $path = $ctrl->dataPath('appui-cdn');
 $fs = new \bbn\File\System();

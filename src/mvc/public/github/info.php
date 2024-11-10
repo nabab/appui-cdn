@@ -7,7 +7,7 @@
  */
 use bbn\X;
 
-/** @var $ctrl \bbn\Mvc\Controller */
+/** @var bbn\Mvc\Controller $ctrl */
 if ( !empty($ctrl->post['url']) &&
   \bbn\Str::isUrl($ctrl->post['url']) &&
   ((strpos($ctrl->post['url'], 'http://github.com/') === 0) || (strpos($ctrl->post['url'], 'https://github.com/') === 0))

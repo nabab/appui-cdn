@@ -5,7 +5,7 @@
  * Date: 14/12/2016
  * Time: 18:59
  */
-/** @var $ctrl \bbn\Mvc\Controller */
+/** @var bbn\Mvc\Controller $ctrl */
 if ( !empty($ctrl->post) ){
   $ctrl->data = array_merge($ctrl->data, $ctrl->post);
   $ctrl->obj->data = $ctrl->getModel();

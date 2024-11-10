@@ -12,7 +12,7 @@ use bbn\Parsers\Doc;
 use bbn\Parsers\Docblock;
 use JShrink\Minifier;
 
-/** @var $model \bbn\Mvc\Model*/
+/** @var bbn\Mvc\Model $model */
 function pad(&$arr) {
   $max = [];
   foreach ($arr as $a) {

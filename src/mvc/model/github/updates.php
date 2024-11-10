@@ -5,7 +5,7 @@
  * Date: 30/12/2016
  * Time: 17:55
  */
-/** @var $model \bbn\Mvc\Model */
+/** @var bbn\Mvc\Model $model */
 
 if ( !empty($model->data['db']) &&
   ($libraries = $model->data['db']->getRows("

@@ -6,7 +6,7 @@
  * Time: 09:43
  */
 use bbn\X;
-/** @var $model \bbn\Mvc\Model */
+/** @var bbn\Mvc\Model $model */
 $res['success'] = false;
 /*if ( !empty($model->data['data']['id_lib']) && !isset($model->data['id_lib']) ){
   $model->data['id_lib'] = $model->data['data']['id_lib'];

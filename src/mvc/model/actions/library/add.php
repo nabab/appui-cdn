@@ -5,7 +5,7 @@
  * Date: 14/12/2016
  * Time: 18:59
  */
-/** @var $model \bbn\Mvc\Model */
+/** @var bbn\Mvc\Model $model */
 if ( !empty($model->data['db']) &&
   !empty($model->data['name']) &&
   !empty($model->data['title']) &&

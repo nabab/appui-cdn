@@ -5,7 +5,7 @@
  * Date: 15/12/2016
  * Time: 10:24
  */
-/** @var $model \bbn\Mvc\Model */
+/** @var bbn\Mvc\Model $model */
 if ( !empty($model->data['folder']) && !empty($model->data['db']) && \defined('BBN_CDN_PATH') ){
   // Library path
   $model->data['lib_path'] = \bbn\File\Dir::createPath(BBN_CDN_PATH . 'lib/' . $model->data['folder']);

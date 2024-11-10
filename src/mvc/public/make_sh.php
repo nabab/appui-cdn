@@ -3,7 +3,7 @@
 use bbn\X;
 
 
-/** @var $ctrl \bbn\Mvc\Controller */
+/** @var bbn\Mvc\Controller $ctrl */
 $db = $ctrl->data['db'];
 
 $q = $db->query(<<<SQL

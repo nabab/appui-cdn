@@ -5,7 +5,7 @@
  * Date: 15/12/2016
  * Time: 09:52
  */
-/** @var $model \bbn\Mvc\Model */
+/** @var bbn\Mvc\Model $model */
 //die(var_dump($model->data['id_ver'], $model->data['library'], $model->data['name']));
 if ( !empty($model->data['db']) &&
   !empty($model->data['id_ver']) &&

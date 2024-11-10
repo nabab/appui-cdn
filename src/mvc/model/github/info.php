@@ -5,7 +5,7 @@
  * Date: 15/12/2016
  * Time: 18:25
  */
-/** @var $model \bbn\Mvc\Model */
+/** @var bbn\Mvc\Model $model */
 use bbn\X;
 use Github\Client;
 /*

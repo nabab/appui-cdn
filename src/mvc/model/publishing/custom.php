@@ -4,7 +4,7 @@
  *
  **/
 
-/** @var $model \bbn\Mvc\Model*/
+/** @var bbn\Mvc\Model $model */
 
 $dir = BBN_CDN_PATH.'lib/bbn-vue/master/dist/js_single_files';
 $dirLang = $dir . '/i18n';

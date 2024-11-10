@@ -13,7 +13,7 @@ use bbn\Parsers\Doc;
 use bbn\Parsers\Docblock;
 use JShrink\Minifier;
 
-/** @var $model \bbn\Mvc\Model*/
+/** @var bbn\Mvc\Model $model */
 $asSingleFiles = $model->hasData('single', true);
 $dir = BBN_CDN_PATH.'lib/bbn-vue/master';
 $fs  = new System();

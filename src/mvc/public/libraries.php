@@ -1,5 +1,5 @@
 <?php
-/** @var $ctrl \bbn\Mvc\Controller */
+/** @var bbn\Mvc\Controller $ctrl */
 $templates = \bbn\File\Dir::getFiles($ctrl->pluginPath('appui-cdn').'mvc/html/templates');
 if (!empty($templates)) {
   $ctrl->data['templates'] = array_map(function($t)use($ctrl){

@@ -5,7 +5,7 @@
  * Date: 15/12/2016
  * Time: 10:24
  */
-/** @var $model \bbn\Mvc\Model */
+/** @var bbn\Mvc\Model $model */
 
 use bbn\Str;
 use bbn\X;
