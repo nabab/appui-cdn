@@ -168,14 +168,14 @@
         template:
         ` <div class="bbn-overlay">
             <div v-if="source.scripts.length > 0" class="bbn-flex-height">
-              <div class="bbn-padded bbn-grid-fields"
+              <div class="bbn-padding bbn-grid-fields"
                    style="grid-auto-rows: max-content max-content max-content max-content auto"
               >
                <span v-text="_('Scripts')" class="bbn-l bbn-b"></span>
                <bbn-dropdown :source="source.scripts" v-model="contentScript"></bbn-dropdown>
               </div>
               <div v-if="contentScript.length" class="bbn-flex-fill bbn-w-100 bbn-middle">
-               <div class="bbn-card bbn-padded">
+               <div class="bbn-card bbn-padding">
                 <span class="bbn-b" v-text="contentScript"></span>
                </div>
               </div>
@@ -193,7 +193,7 @@
       'info':{
         template:
         ` <div class="bbn-overlay">
-            <div class="bbn-padded bbn-h-100 bbn-grid-fields"
+            <div class="bbn-padding bbn-h-100 bbn-grid-fields"
                  style="grid-auto-rows: max-content max-content max-content max-content auto"
              >
               <span v-text="_('ID')" class="bbn-l bbn-b"></span>

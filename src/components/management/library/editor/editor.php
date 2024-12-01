@@ -8,7 +8,7 @@
           :buttons="currentButton"
           :scrollable="true"
           v-if="showForm">
- <div class="bbn-lpadded bbn-grid-fields" v-if="!configuratorLibrary">
+ <div class="bbn-lpadding bbn-grid-fields" v-if="!configuratorLibrary">
    <label>GitHub</label>
    <div class="bbn-flex-width">
      <bbn-input class="bbn-flex-fill" v-model="source.row.git"/>

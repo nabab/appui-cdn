@@ -39,6 +39,6 @@ while ($lib = $q->getRow()) {
   $str .= 'cd $CDN_PATH;' . PHP_EOL . PHP_EOL;
 }
 
-echo '<div class="bbn-padded bbn-w-100"><code class="bbn-pre">' . $commands . $str . '</code></div>' . PHP_EOL;
+echo '<div class="bbn-padding bbn-w-100"><code class="bbn-pre">' . $commands . $str . '</code></div>' . PHP_EOL;
 echo '<div class="bbn-hr bbn-w-100"> </div>' . PHP_EOL;
-echo '<div class="bbn-padded bbn-w-100"><code class="bbn-pre">' . $str_path . $str . '</code></div>' . PHP_EOL;
+echo '<div class="bbn-padding bbn-w-100"><code class="bbn-pre">' . $str_path . $str . '</code></div>' . PHP_EOL;

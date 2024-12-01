@@ -6,7 +6,7 @@
           "<?= _('Info') ?>"
         </strong>
       </div>
-      <div class="bbn-padded bbn-flex-fill">
+      <div class="bbn-padding bbn-flex-fill">
         <bbn-table
           title="<?= _("Information") ?>"
           :source="infos"
@@ -23,7 +23,7 @@
           '<?= _('Versions') ?>"
         </strong>
       </div>
-      <div class="bbn-flex-fill bbn-padded bbn-w-100">
+      <div class="bbn-flex-fill bbn-padding bbn-w-100">
         <bbn-table
           title="<?= _("Versions") ?>"
           :source="versions"

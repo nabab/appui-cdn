@@ -1,7 +1,7 @@
-<div class="bbn-overlay bbn-padded"
+<div class="bbn-overlay bbn-padding"
      style="display: grid; grid-template-rows: max-content auto"
 >
-  <div class="bbn-w-100 bbn-grid-width bbn-padded">
+  <div class="bbn-w-100 bbn-grid-width bbn-padding">
     <div class="bbn-w-80 bbn-middle">
       <bbn-input placeholder="<?= _('Select file') ?>"
                  v-model="element"
@@ -18,7 +18,7 @@
       ></bbn-button>
     </div>
   </div>
-  <div class="bbn-padded">
+  <div class="bbn-padding">
     <bbn-tree :source="source.tree"
               :map="mapMenu"
               @select="selectElement"

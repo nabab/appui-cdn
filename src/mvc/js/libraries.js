@@ -212,7 +212,7 @@
     },
     /*components:{
       'deleteLib':{
-        template: `<div class="bbn-padded"><span class="bbn-b bbn-xxl" v-text="textDelete"></span><div class="bbn-vmiddle"><span class="bbn-b bbn-r" v-text="deleteFolderText"></span><bbn-switch class="bbn-l"></bbn-switch></div></div>`,
+        template: `<div class="bbn-padding"><span class="bbn-b bbn-xxl" v-text="textDelete"></span><div class="bbn-vmiddle"><span class="bbn-b bbn-r" v-text="deleteFolderText"></span><bbn-switch class="bbn-l"></bbn-switch></div></div>`,
         props: ['source'],
         data(){
           return{

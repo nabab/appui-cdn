@@ -1,5 +1,5 @@
 <!-- HTML Document -->
-<div class="bbn-padded bbn-center bbn-lg">
+<div class="bbn-padding bbn-center bbn-lg">
   <p>
     Click the next button to parse all the bbnjs source files and regenerate them in 
     doc/src and generate markdown documentation in doc/md.

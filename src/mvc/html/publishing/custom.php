@@ -5,7 +5,7 @@
             :source="formData"
             :scrollable="true">
     <div class="bbn-overlay bbn-flex-height">
-      <div class="bbn-w-100 bbn-spadded bbn-header">
+      <div class="bbn-w-100 bbn-spadding bbn-header">
         <span><?= _('Language') ?>:</span>
         <bbn-dropdown :source="source.languages"
                       v-model="formData.language"/>

@@ -4,7 +4,7 @@
           :prefilled="true"
           @submit="submit"
 >
-  <div class="bbn-w-100 bbn-padded" bbn-xl>
+  <div class="bbn-w-100 bbn-padding" bbn-xl>
     <bbn-dropdown style="width:300px"
                   ref="listFolders"
                   placeholder= "<?= _('Select version directory') ?>"
