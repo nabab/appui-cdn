@@ -39,18 +39,18 @@ function pad(&$arr) {
 $less = new Less();
 $tern_json = [];
 if ($model->hasData('fns')) {
-  $root = BBN_CDN_PATH.'lib/bbn-js/master/';
+  $root = BBN_CDN_PATH.'lib/bbn-js/v2/';
   $dir = $root.'src/fn';
   $fs = new System();
   $fs->cd($dir);
-  $files = $fs->getFiles('.');
+  $files = $fs->scan('.', 'ts');
   $res = [];
   $p = new Docblock('js');
   foreach( $files as $i => $f ){
     if (!in_array(substr($f, 0, 1), ['.', '_'])) {
       $content = $fs->getContents($f);
       $parser = $p->parse($content);
-      if (isset($parser['ignore'])) {
+      if (!empty($parser['ignore'])) {
         continue;
       }
       /*
@@ -63,57 +63,46 @@ if ($model->hasData('fns')) {
       $parser = $p->getJs();
       //ksort($parser['methods']);
       */
-      foreach ($parser['methods'] as &$m) {
-        $m['source'] = $model->data['fns'][$m['name']] ?? '';
-      }
-      unset($m);
+      $parser['source'] = $model->data['fns'][$m['name']] ?? '';
       $src = '/**'.PHP_EOL;
       $md = '# '.$f.PHP_EOL.PHP_EOL;
       $head = [];
-      if (empty($parser['summary'])) {
+      if (empty($parser['description'])) {
         $head[] = [
-          'tag' => 'todo',
-          'content' => 'Add a file summary'
+          'tag' => 'file',
+          'content' => $parser['summary']
         ];
       }
       else {
-        if (empty($parser['description'])) {
-          $head[] = [
-            'tag' => 'file',
-            'content' => $parser['summary']
-          ];
-        }
-        else {
-          array_push(
-            $head,
-            ['content' => $parser['summary']],
-            ['content' => ''],
-            ['content' => $parser['description']]
-          );
-        }
-        $md .= '## '.$parser['summary'].PHP_EOL.PHP_EOL;
-        if (!empty($parser['description'])) {
-          $md .= $parser['description'].PHP_EOL.PHP_EOL;
-        }
-        if (empty($parser['author'])) {
-          $head[] = [
-            'tag' => 'author',
-            'content' => 'BBN Solutions <info@bbn.solutions>'
-          ];
-        }
-        else {
-          foreach ($parser['author'] as $a) {
-            $head[] = [
-              'tag' => 'author',
-              'content' => $a['text']
-            ];
-          }
-        }
+        array_push(
+          $head,
+          ['content' => $parser['summary']],
+          ['content' => ''],
+          ['content' => $parser['description']]
+        );
+      }
+      $md .= '## '.$parser['summary'].PHP_EOL.PHP_EOL;
+      if (!empty($parser['description'])) {
+        $md .= $parser['description'].PHP_EOL.PHP_EOL;
+      }
+      if (empty($parser['author'])) {
         $head[] = [
-          'tag' => 'since',
-          'content' => isset($h['since']) ? $h['since']['text'] : date('d/m/Y')
+          'tag' => 'author',
+          'content' => 'BBN Solutions <info@bbn.solutions>'
         ];
       }
+      else {
+        foreach ($parser['author'] as $a) {
+          $head[] = [
+            'tag' => 'author',
+            'content' => $a['text']
+          ];
+        }
+      }
+      $head[] = [
+        'tag' => 'since',
+        'content' => isset($h['since']) ? $h['since']['text'] : date('d/m/Y')
+      ];
       pad($head);
       foreach ($head as $h) {
         $src .= ' * @'.($h['tag'] ?? '').$h['content'].PHP_EOL;
@@ -307,6 +296,7 @@ EOD;
       }
       $src .= '  });'.PHP_EOL.'})(bbn);'.PHP_EOL;
       $md .= '<a name="bbn_top"></a>'.$toc.PHP_EOL.PHP_EOL.x::join($methods, PHP_EOL.PHP_EOL);
+      X::ddump($f, $md, $src);
       $fs->putContents($root.'doc/src/'.$f, $src);
       $fs->putContents($root.'doc/md/'.basename($f, '.js').'.md', $md);
       $parser['new'] = $src;
@@ -345,6 +335,7 @@ EOD;
     ]
   ];
   $fs->putContents($root.'doc/tern.json', Json_encode($tern_json, JSON_PRETTY_PRINT));
+  /*
   $files = json_decode('["src\/bbn.js","src\/functions.js","src\/env\/_def.js","src\/var\/_def.js","src\/var\/diacritic.js","src\/fn\/_def.js","src\/fn\/ajax.js","src\/fn\/form.js","src\/fn\/history.js","src\/fn\/init.js","src\/fn\/locale.js","src\/fn\/misc.js","src\/fn\/object.js","src\/fn\/size.js","src\/fn\/string.js","src\/fn\/style.js","src\/fn\/type.js"]');
   $st = '';
   foreach ($files as $f) {
@@ -352,7 +343,8 @@ EOD;
   }
   $fs->putContents($root.'dist/bbn.js', $st);
   $fs->putContents($root.'dist/bbn.min.js', Minifier::minify($st, ['flaggedComments' => false]));
-  $root_css = BBN_CDN_PATH.'lib/bbn-css/master/';
+  */
+  $root_css = BBN_CDN_PATH.'lib/bbn-css/v2/';
   $files = $fs->getFiles($root_css.'src/css', 'less');
   $st = '';
   foreach ($files as $f) {

@@ -10,9 +10,9 @@ if (isset($model->data['fns'])) {
   $fs = new \bbn\File\System();
   $sources = [
     // bbnjs
-    BBN_CDN_PATH.'lib/bbn-js/master/src',
+    BBN_CDN_PATH.'lib/bbn-js/v2/src',
     // bbn-vue
-    BBN_CDN_PATH.'lib/bbn-vue/master/src',
+    BBN_CDN_PATH.'lib/bbn-cp/v2/src',
     BBN_APP_PATH.'src',
     BBN_LIB_PATH.'bbn'
   ];
@@ -24,7 +24,7 @@ if (isset($model->data['fns'])) {
     return 'bbn.fn.'.$a;
   }, $model->data['fns']);
   foreach ($sources as $src) {
-    if ($found = $fs->search($fns, $src, true, false, 'js|php')) {
+    if ($found = $fs->searchContents($fns, $src, true, false, 'js|php')) {
       foreach ($found as $fn => $files) {
         $res[$fn] = array_merge($res[$fn], $files);
         foreach ($files as $f) {
