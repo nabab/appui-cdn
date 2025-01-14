@@ -24,12 +24,12 @@
         if ( this.source.info ){
           return [
             {
-              title: ' ',
+              label: ' ',
               field: 'text',
               width: "180"
             },
             {
-              title: ' ',
+              label: ' ',
               field: 'value',
               width: "300"
             }

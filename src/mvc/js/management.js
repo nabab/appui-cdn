@@ -1,12 +1,12 @@
-(()=>{
+(() => {
   let management;
   return {
     mixins: [bbn.cp.mixins.localStorage],
-    data(){
-      return{
+    data() {
+      return {
         searchContent: [],
         search: false,
-        action:{
+        action: {
           post: "",
           addLib: false,
           addVers: false,
@@ -15,14 +15,14 @@
         }
       }
     },
-    computed:{
-      sourceTable(){
-        if ( this.searchContent.length ){
+    computed: {
+      sourceTable() {
+        if (this.searchContent.length) {
           //filter data table for search libraries
           return this.searchContent
         }
         //all libraries for table
-        if ( this.search === false ){
+        if (this.search === false) {
           return this.source.all_lib
         }
         else {
@@ -32,12 +32,12 @@
 
       }
     },
-    methods:{
-      buttons(row, col, idx){
+    methods: {
+      buttons(row, col, idx) {
         return [
           {
-            text: "Info",
-            action:()=>{
+            label: "Info",
+            action: () => {
               this.info(row, col, idx);
             },
             icon: 'nf nf-fa-info',
@@ -45,8 +45,8 @@
             notext: true
           },
           {
-            text: 'Edit',
-            action:()=>{
+            label: 'Edit',
+            action: () => {
               this.actions('editLib');
               this.editLibrary(row, col, idx);
             },
@@ -55,46 +55,46 @@
             notext: true
           },
           {
-           text: 'Delete',
-           action:()=>{
-             this.removeLib(row,col,idx);
-           },
-           icon: 'nf nf-fa-trash',
-           title: bbn._('Delete'),
-           notext: true
+            label: 'Delete',
+            action: () => {
+              this.removeLib(row, col, idx);
+            },
+            icon: 'nf nf-fa-trash',
+            title: bbn._('Delete'),
+            notext: true
           }
         ];
       },
       /* this function is activated at the click of the info button and
        *  its task is to display a popup with all the information related to the selected library
        */
-      info(row, col, idx){
+      info(row, col, idx) {
         let obj = {
-          info : row,
+          info: row,
           versions: []
         };
-        this.post(this.source.root + 'data/versions', {id_lib: row.name}, d =>{
-          if ( d.data.success ){
-            if ( d.data.versions ){
-              for ( let ele of d.data.versions ){
+        this.post(this.source.root + 'data/versions', { id_lib: row.name }, d => {
+          if (d.data.success) {
+            if (d.data.versions) {
+              for (let ele of d.data.versions) {
                 obj.versions.push({
                   name: ele.name,
                   date: dayjs(ele.date_added).format('DD/MM/YYYY')
                 });
               }
             }
-            this.getPopup().open({
+            this.getPopup({
               width: 580,
               height: 700,
-              title: bbn._("Info") + ': '+ row.name,
+              label: bbn._("Info") + ': ' + row.name,
               component: 'appui-cdn-management-popup-info_lib',
               source: obj
             })
           }
         });
       },
-      editLibrary(row, col, idx){
-        return this.$refs.cdn_management.edit(row,  {
+      editLibrary(row, col, idx) {
+        return this.$refs.cdn_management.edit(row, {
           title: this.source.lng.editLib,
           height: '950',
           //width: '850'
@@ -103,14 +103,14 @@
       /*edit(row, col, idx){
         return this.$refs.table.edit(row, bbn._("Edit Library"), idx);
       },*/
-      actions(type){
-        switch(type) {
+      actions(type) {
+        switch (type) {
           case 'addVers':
             this.action.post = this.source.root + 'actions/version/add';
             break;
           case 'editVers':
             this.action.post = this.source.root + 'actions/version/edit';
-          break;
+            break;
           case 'addLib':
             this.action.post = this.source.root + 'actions/library/add';
             break;
@@ -120,56 +120,56 @@
         }
 
         for (let typeAction in this.action) {
-          if ( typeAction === type ){
+          if (typeAction === type) {
             this.action[typeAction] = true;
           }
-          else{
-            if (typeAction !== 'post'){
+          else {
+            if (typeAction !== 'post') {
               this.action[typeAction] = false;
             }
           }
         }
       },
-      removeLib(row, col, idx){
-        this.getPopup().open({
+      removeLib(row, col, idx) {
+        this.getPopup({
           width: 500,
           height: 200,
-          title: bbn._("Remove library"),
+          label: bbn._("Remove library"),
           component: 'appui-cdn-management-popup-remove',
-          source: bbn.fn.extend(row, {deleteLib: true, action: this.source.root + 'actions/library/delete'})
+          source: bbn.fn.extend(row, { deleteLib: true, action: this.source.root + 'actions/library/delete' })
         })
       },
       //for render icon table
-      showIconAuthor(ele){
-        return ( ele.author && ele.author.length ) ?
-         `<i class='nf nf-fa-user paddingIcon' title="` + ele.author + `"></i>` : '';
+      showIconAuthor(ele) {
+        return (ele.author && ele.author.length) ?
+          `<i class='nf nf-fa-user paddingIcon' title="` + ele.author + `"></i>` : '';
       },
-      showIconLicense(ele){
-        return ( ele.licence && ele.licence.length ) ?
-         `<i class='nf nf-fa-copyright paddingIcon'></i>` : '';
+      showIconLicense(ele) {
+        return (ele.licence && ele.licence.length) ?
+          `<i class='nf nf-fa-copyright paddingIcon'></i>` : '';
       },
-      showIconWeb(ele){
-        return ( ele.website && ele.website.length ) ?
-        `<a class='appui-no' href='` + ele.website + `' target='_blank'><i class='nf nf-fa-globe paddingIcon'></i></a>` : ''
-        ;
+      showIconWeb(ele) {
+        return (ele.website && ele.website.length) ?
+          `<a class='appui-no' href='` + ele.website + `' target='_blank'><i class='nf nf-fa-globe paddingIcon'></i></a>` : ''
+          ;
       },
-      showIconDownload(ele){
-        return ( ele.download_link && ele.download_link.length ) ?
-        `<a class='appui-no' href='`+ ele.download_link +`' target='_blank'><i class='nf nf-fa-download paddingIcon'></i></a>` : '';
+      showIconDownload(ele) {
+        return (ele.download_link && ele.download_link.length) ?
+          `<a class='appui-no' href='` + ele.download_link + `' target='_blank'><i class='nf nf-fa-download paddingIcon'></i></a>` : '';
       },
-      showIconDoc(ele){
-        return ( ele.doc_link && ele.doc_link.length ) ?
-        `<a class='appui-no' href='`+ ele.doc_link + `' target='_blank'><i class='nf nf-fa-book paddingIcon'></i></a>` : '';
+      showIconDoc(ele) {
+        return (ele.doc_link && ele.doc_link.length) ?
+          `<a class='appui-no' href='` + ele.doc_link + `' target='_blank'><i class='nf nf-fa-book paddingIcon'></i></a>` : '';
       },
-      showIconGit(ele){
-        return ( ele.git && ele.git.length ) ?
-        `<a class='appui-no' href='`+ ele.git +`' target='_blank'><i class='nf nf-fa-github paddingIcon'></i></a>` : '';
+      showIconGit(ele) {
+        return (ele.git && ele.git.length) ?
+          `<a class='appui-no' href='` + ele.git + `' target='_blank'><i class='nf nf-fa-github paddingIcon'></i></a>` : '';
       },
-      showIconSupportLink(ele){
-        return ( ele.support_link && ele.support_link.length ) ?
-         `<a class='appui-no' href='` + ele.support_link + `' target='_blank'><i class='nf nf-fa-ambulance'></i></a>` : '';
+      showIconSupportLink(ele) {
+        return (ele.support_link && ele.support_link.length) ?
+          `<a class='appui-no' href='` + ele.support_link + `' target='_blank'><i class='nf nf-fa-ambulance'></i></a>` : '';
       },
-      showInfos(ele){
+      showInfos(ele) {
         return `<div>
           ${this.showIconAuthor(ele)}
           ${this.showIconLicense(ele)}
@@ -180,31 +180,31 @@
           ${this.showIconSupportLink(ele)}
         </div>`
       },
-      refreshManagement(){
-        this.post(this.source.root + "management", {refresh: true}, d => {
-          if( d.all_lib != undefined ){
+      refreshManagement() {
+        this.post(this.source.root + "management", { refresh: true }, d => {
+          if (d.all_lib != undefined) {
             this.source.all_lib = d.all_lib;
-            this.$nextTick(()=>{
+            this.$nextTick(() => {
               this.$refs.cdn_management.updateData()
             });
           }
         });
       }
     },
-    created(){
+    created() {
       management = this;
       let mixins = [{
-        data(){
+        data() {
           return {
             management: management
           }
         },
       }];
     },
-    watch:{//for search libray in table
-      sourceTable(val){
-        if ( val && this.search ){
-          this.$nextTick(()=>{
+    watch: {//for search libray in table
+      sourceTable(val) {
+        if (val && this.search) {
+          this.$nextTick(() => {
             this.$refs.cdn_management.updateData()
           });
         }

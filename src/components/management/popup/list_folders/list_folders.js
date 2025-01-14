@@ -25,10 +25,10 @@
     methods:{
       submit(){
         if ( this.folder !== undefined ){
-          this.getPopup().open({
+          this.getPopup({
             height: 950,
             width: 850,
-            title: bbn._('Add version to this library') + " " + this.source.name,
+            label: bbn._('Add version to this library') + " " + this.source.name,
             component:'appui-cdn-management-library_edit',
             source: {
               row: this.folder,
@@ -42,10 +42,10 @@
         this.post('cdn/github/versions', {
           url: this.source.github
         }, ele => {
-          this.getPopup().open({
+          this.getPopup({
             height: '25%',
             width: '50%',
-            title: bbn._("List versions from repository"),
+            label: bbn._("List versions from repository"),
             component:'appui-cdn-management-popup-versions_from_github',
             source: bbn.fn.extend({}, ele.data, {folder: this.source.name, versions: ele.data.versions})
           });

@@ -130,7 +130,7 @@
                      key="table_languages"
                      :scrollable="true"
                      >
-            <bbns-column title="<?= _('Languages Files') ?>"
+            <bbns-column label="<?= _('Languages Files') ?>"
                          field="path"
                          ></bbns-column>
             <bbns-column :tcomponent="$options.components.languages"
@@ -146,7 +146,7 @@
                      :scrollable="true"
                      :toolbar="$options.components.prepend_theme"
                      >
-            <bbns-column title="<?= _('Themes') ?>"
+            <bbns-column label="<?= _('Themes') ?>"
                          field="path"
                          ></bbns-column>
             <bbns-column  :tcomponent="$options.components.themes"
@@ -168,22 +168,22 @@
                      key="table_dependencies"
                      :scrollable="true"
                      >
-            <bbns-column title="<?= _('Library') ?>"
+            <bbns-column label="<?= _('Library') ?>"
                          field="lib_name"
                          :source="list"
                          :render="renderLibName"
                          ></bbns-column>
-            <bbns-column title="<?= _('Version') ?>"
+            <bbns-column label="<?= _('Version') ?>"
                          field="id_ver"
                          :editor="$options.components.versions"
                          :render="showVersion"
                          ></bbns-column>
-            <bbns-column title="<?= _('Order') ?>"
+            <bbns-column label="<?= _('Order') ?>"
                          field="order"
                          width="100"
                          type="number"
                          ></bbns-column>
-            <bbns-column title=" "
+            <bbns-column label=" "
                          width="100"
                          cls="bbn-c"
                          :buttons="buttonsTableDepandencies"
@@ -196,10 +196,10 @@
                      key="table_dependent"
                      :scrollable="true"
                      >
-            <bbns-column title="<?= _('Title') ?>"
+            <bbns-column label="<?= _('Title') ?>"
                          field="title"
                          ></bbns-column>
-            <bbns-column title="<?= _('Update') ?>"
+            <bbns-column label="<?= _('Update') ?>"
                          width="100"
                          :component="$options.components.update",
                          cls="bbn-c"

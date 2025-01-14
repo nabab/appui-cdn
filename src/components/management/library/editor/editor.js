@@ -121,7 +121,7 @@
             return [
               'cancel',
               {
-                text: "Next",
+                label: "Next",
                 title: "next",
                 class:"bbn-primary",
                 icon: 'nf nf-fa-arrow_circle_right',
@@ -134,14 +134,14 @@
           if ( this.management.action.addLib  && this.configuratorLibrary ){
             return [
               {
-                text: "Prev",
+                label: "Prev",
                 title: "Prev",
                 icon: 'nf nf-fa-arrow_circle_left',
                 action: ()=>{ this.configuratorLibrary = false }
               },
               'cancel',
               {
-                text: "Save",
+                label: "Save",
                 icon: 'nf nf-fa-check_circle',
                 class:"bbn-primary",
                 action: ()=>{
@@ -159,7 +159,7 @@
             return [
               'cancel',
               {
-                text: "Save",
+                label: "Save",
                 class:"bbn-primary",
                 icon: 'nf nf-fa-check_circle',
                 action: ()=>{
@@ -387,7 +387,7 @@
       buttonsTableDepandencies(row, col, idx){
         return [
           {
-           text: 'Delete',
+           label: 'Delete',
            action: (row, col, id )=>{
              return this.$refs.tableDependecies.delete(id, bbn._("Are you sure you want to continue?"));
            },
@@ -505,7 +505,7 @@
       },
         /*return [
           {
-            text: bbn._('Update last version'),
+            label: bbn._('Update last version'),
             action: ( row, col, id)=>{
               let i = bbn.fn.search(this.listUpdate, 'name', row.name)
               if ( i > -1 ){
@@ -514,7 +514,7 @@
               this.listUpdate.push(row);
             },
             icon: 'zmdi zmdi-thumb-up',
-            title: bbn._('Update last version'),
+            label: bbn._('Update last version'),
             notext: true,
 
             style:"width:50%; color: green"
@@ -524,7 +524,7 @@
             this.listNoUpdate.push(row);
           },
           icon: 'nf nf-fa-ban',
-          title: bbn._('No update'),
+          label: bbn._('No update'),
           notext: true,
           style:"width:50%; color: red"
         }]*/
@@ -613,10 +613,10 @@
         },
         methods:{
           openTreeLanguage(){
-            this.getPopup().open({
+            this.getPopup({
               height: '70%',
               width: '30%',
-              title: bbn._("Files"),
+              label: bbn._("Files"),
               component:'appui-cdn-management-popup-tree_files',
               source: {tree: this.sourceTree, table: this.closest("bbn-form").$parent.data.languages},
               onClose: () =>{
@@ -638,10 +638,10 @@
         },
         methods:{
           openTreeThemes(){
-            this.getPopup().open({
+            this.getPopup({
               height: '70%',
               width: '30%',
-              title: bbn._("Files"),
+              label: bbn._("Files"),
               component:'appui-cdn-management-popup-tree_files',
               source: {
                 tree: this.sourceTree,

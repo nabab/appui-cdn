@@ -20,10 +20,10 @@
       success(ele){
         if ( ele.data ){
           this.closest('bbn-popup').close();
-          this.getPopup().open({
+          this.getPopup({
             height: '500px',
             width: '600px',
-            title: bbn._('Add version to this library') + " " + this.source.folder,
+            label: bbn._('Add version to this library') + " " + this.source.folder,
             component:'appui-cdn-management-library_edit',
             source:{
               row: bbn.fn.extend(ele.data.folders_versions[0], {github: ele.data.github}),

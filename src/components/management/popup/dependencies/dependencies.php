@@ -11,16 +11,16 @@
                               text: '<?= _("Dependencies") ?>',
                             }]"
     >
-      <bbns-column title="<?= _("Library") ?>"
+      <bbns-column label="<?= _("Library") ?>"
                    field="name"
                    group="depend"
       ></bbns-column>
-      <bbns-column title="<?= _("Version") ?>"
+      <bbns-column label="<?= _("Version") ?>"
                    field="version"
                    group="depend"
                    class="bbn-c"
       ></bbns-column>
-      <bbns-column title=" "
+      <bbns-column label=" "
                    field="lib_name"
                    group="depend"
                    class="bbn-c"
@@ -36,16 +36,16 @@
                               text: '<?= _("Slaves") ?>'
                             }]"
     >
-      <bbns-column title="<?= _("Library") ?>"
+      <bbns-column label="<?= _("Library") ?>"
                    field="name"
                    group="dependent"
       ></bbns-column>
-      <bbns-column title="<?= _("Version") ?>"
+      <bbns-column label="<?= _("Version") ?>"
                    field="version"
                    group="dependent"
                    class="bbn-c"
       ></bbns-column>
-      <bbns-column title=" "
+      <bbns-column label=" "
                    field="name"
                    group="dependent"
                    class="bbn-c"

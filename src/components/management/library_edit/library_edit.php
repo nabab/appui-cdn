@@ -156,12 +156,12 @@
           <bbn-pane>
             <!--TABLE LANGUAGES-->
             <bbn-table :source="data.languages" ref="tableLanguages" v-if="table === 'languages'" key="table_languages" :scrollable="true">
-              <bbns-column title="<?= _('Languages Files') ?>" field="path" />
+              <bbns-column label="<?= _('Languages Files') ?>" field="path" />
               <bbns-column :tcomponent="$options.components.languages" width="50" :buttons="buttonDeleteLanguages" />
             </bbn-table>
             <!--TABLE THEMES-->
             <bbn-table :source="data.themes" ref="tableThemes" v-if="table === 'themes'" key="table_themes" :scrollable="true" :toolbar="$options.components.prepend_theme">
-              <bbns-column title="<?= _('Themes') ?>" field="path" />
+              <bbns-column label="<?= _('Themes') ?>" field="path" />
               <bbns-column :tcomponent="$options.components.themes" width="50" :buttons="buttonDeleteThemes" />
             </bbn-table>
             <!--TABLE Dependecies-->
@@ -170,15 +170,15 @@
                            icon: 'nf nf-fa-plus',
                            action: 'edit'
                          }]" @saverow="saveDependencies" v-if="table === 'dependencies'" key="table_dependencies" :scrollable="true">
-              <bbns-column title="<?= _('Library') ?>" field="lib_name" :source="list" :render="renderLibName" />
-              <bbns-column title="<?= _('Version') ?>" field="id_ver" :editor="$options.components.versions" :render="showVersion" />
-              <bbns-column title="<?= _('Order') ?>" field="order" width="100" type="number" />
-              <bbns-column title=" " width="100" cls="bbn-c" :buttons="buttonsTableDepandencies" />
+              <bbns-column label="<?= _('Library') ?>" field="lib_name" :source="list" :render="renderLibName" />
+              <bbns-column label="<?= _('Version') ?>" field="id_ver" :editor="$options.components.versions" :render="showVersion" />
+              <bbns-column label="<?= _('Order') ?>" field="order" width="100" type="number" />
+              <bbns-column label=" " width="100" cls="bbn-c" :buttons="buttonsTableDepandencies" />
             </bbn-table>
             <!--TABLE Dependent-->
             <bbn-table :source="dataVersion.slave_dependencies" ref="tableDependent" v-if="table === 'dependent' && management.action.addVers === true" key="table_dependent" :scrollable="true">
-              <bbns-column title="<?= _('Title') ?>" field="title" />
-              <bbns-column title="<?= _('Update') ?>" width="100" :component="$options.components.update" , cls="bbn-c" />
+              <bbns-column label="<?= _('Title') ?>" field="title" />
+              <bbns-column label="<?= _('Update') ?>" width="100" :component="$options.components.update" , cls="bbn-c" />
             </bbn-table>
           </bbn-pane>
         </bbn-splitter>

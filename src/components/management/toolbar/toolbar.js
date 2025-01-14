@@ -10,10 +10,10 @@
     methods:{
       add(){
         this.management.actions('addLib');
-        this.getPopup().open({
+        this.getPopup({
           width: "70%",
           height: "15%",
-          title: bbn._("GitHub link"),
+          label: bbn._("GitHub link"),
           component: 'appui-cdn-management-popup-toolbar-library_add',
           //source: this.updateList
         });
@@ -30,10 +30,10 @@
       },
       showUpdate(){
         if (this.updateList.length && !this.disabledButton ){
-          this.getPopup().open({
+          this.getPopup({
             width: 700,
             height: 500,
-            title: bbn._("GitHub updates") + ' ' + this.totalUpdateList + ' ' + bbn._("libraries"),
+            label: bbn._("GitHub updates") + ' ' + this.totalUpdateList + ' ' + bbn._("libraries"),
             component: 'appui-cdn-management-popup-toolbar-update',
             source: {
               list: this.updateList

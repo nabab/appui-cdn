@@ -10,14 +10,14 @@
         let isReady = !!(this.urlGit.length && bbn.fn.isURL(this.urlGit));
         return [
           {
-            text: bbn._('Cancel'),
+            label: bbn._('Cancel'),
             icon: 'nf nf-fa-ban',
             title: bbn._('Cancel'),
             action: ()=>{
               this.closest("bbn-popup").close();
             },
           },{
-            text: bbn._('Skip'),
+            label: bbn._('Skip'),
             title: bbn._('Skip'),
             icon: 'nf nf-fa-angle_double_right',
             class: isReady ? '' : 'bbn-primary',
@@ -25,7 +25,7 @@
               this.addManualyLib()
             },
           },{
-            text: bbn._('Import'),
+            label: bbn._('Import'),
             icon: "nf nf-fa-angle_right",
             title: bbn._('import'),
             class: isReady ? 'bbn-primary' : '',
@@ -73,10 +73,10 @@
                   }
                 }
                 if ( d.data['versions'].length ){
-                  this.getPopup().open({
+                  this.getPopup({
                     height: '80%',
                     width: '70%',
-                    title: bbn._("Import library from Github"),
+                    label: bbn._("Import library from Github"),
                     component:'appui-cdn-management-library_edit',
                     source: {
                       row: d.data,
