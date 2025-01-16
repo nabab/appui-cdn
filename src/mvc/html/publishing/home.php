@@ -15,7 +15,7 @@
     Click the next button to generate the Vue files for bbn-vue.
   </p>
   <bbn-button label="Generate bbn-vue" icon="nf nf-fa-flash" @click="genVue" />
-  <bbn-button label="Generate bbn-vue (single files)" icon="nf nf-mdi-flash_outline" @click="genVue(true)" />
+  <bbn-button label="Generate bbn-vue (single files)" icon="nf nf-md-flash_outline" @click="genVue(true)" />
   <p>
     Click the next button to generate the json file for the PHP libraries.
   </p>
