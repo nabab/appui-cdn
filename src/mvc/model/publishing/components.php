@@ -157,7 +157,7 @@ foreach ($components as $component) {
 
     unset($item);
     foreach ($to_remove as $rem) {
-      $idx = X::find($tmp['items'], ['value' => $rem]);
+      $idx = X::search($tmp['items'], ['value' => $rem]);
       if ($idx === null) {
         throw Error("Impossible to find item $rem");
       }

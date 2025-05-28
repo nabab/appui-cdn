@@ -34,7 +34,7 @@ foreach ($all as $a) {
   $bits = X::split(substr($a['class'], 5), '\\');
   while (count($bits) > 1) {
     $namespace = array_shift($bits);
-    $idx = X::find($cur, ['type' => 'namespace', 'value' => $namespace . '/']);
+    $idx = X::search($cur, ['type' => 'namespace', 'value' => $namespace . '/']);
     if ($idx !== null) {
       $cur =& $cur[$idx]['items'];
     }
