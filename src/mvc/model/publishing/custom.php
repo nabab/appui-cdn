@@ -6,6 +6,7 @@
 
 /** @var bbn\Mvc\Model $model */
 
+throw new Exception('This is an exception because what happens after is dangerous');
 $dir = BBN_CDN_PATH.'lib/bbn-vue/master/dist/js_single_files';
 $dirLang = $dir . '/i18n';
 $dirComp = $dir . '/components';

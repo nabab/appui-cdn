@@ -12,10 +12,9 @@
   <bbn-button label="Find and count bbn-js" icon="nf nf-fa-search" @click="findBBNJs">
   </bbn-button>
   <p>
-    Click the next button to generate the Vue files for bbn-vue.
+    Click the next button to generate the bbn-cp files for bbn-vue.
   </p>
-  <bbn-button label="Generate bbn-vue" icon="nf nf-fa-flash" @click="genVue" />
-  <bbn-button label="Generate bbn-vue (single files)" icon="nf nf-md-flash_outline" @click="genVue(true)" />
+  <bbn-button label="Generate from bbn-cp documentation" icon="nf nf-fa-flash" @click="genVue" />
   <p>
     Click the next button to generate the json file for the PHP libraries.
   </p>

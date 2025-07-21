@@ -9,16 +9,16 @@ use bbn\File\System;
 
 /** @var $model \bbn\Mvc\Controller */
 
-$parser = new bbn\Parsers\Php();
-$path = BBN_LIB_PATH.'bbn/bbn/src/bbn';
+$parser = new Php();
+$path = constant('BBN_LIB_PATH') . 'bbn/bbn/src/bbn';
 $all = $parser->getLibraryClasses($path, 'bbn');
 $res = [];
 
 /** @var System Filesystem object */
 $fs = new System();
 // Cding in documentation folder
-$fs->delete(BBN_LIB_PATH.'bbn/bbn/json-doc', true);
-$docRoot = BBN_LIB_PATH.'bbn/bbn/json-doc/';
+$fs->delete(constant('BBN_LIB_PATH') . 'bbn/bbn/json-doc', true);
+$docRoot = constant('BBN_LIB_PATH') . 'bbn/bbn/json-doc/';
 foreach ($all as $a) {
   $cls = $parser->analyzeClass($a['class'], $path);
   $spath = dirname($docRoot . $a['file']);
@@ -72,7 +72,7 @@ foreach ($all as $a) {
   ];
 }
 
-$fs->putContents(BBN_LIB_PATH.'bbn/bbn/bbn-php.json', json_encode($res, JSON_PRETTY_PRINT));
+$fs->putContents(constant('BBN_LIB_PATH') . 'bbn/bbn/bbn-php.json', json_encode($res, JSON_PRETTY_PRINT));
 
 /*
 $types = [
