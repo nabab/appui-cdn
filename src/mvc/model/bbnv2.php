@@ -10,7 +10,6 @@ $bbn = json_decode('{"siteTitle":{"name":"siteTitle","ns":"env","num":0,"occ":[]
 $cdn = BBN_CDN_PATH;
 $vars = ['env', 'var', 'fn'];
 $paths = [
-  $cdn.'APST-UI/js',
   $cdn.'lib/bbn/0.2/src',
   $cdn.'lib/jquery-tabnav/0.4',
   $cdn.'lib/jquery-codemirror/0.3',
