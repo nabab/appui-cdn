@@ -1,12 +1,7 @@
 <?php
-/*
- * Describe what it does!
- *
- * @var $ctrl \bbn\Mvc\Controller 
- *
- */
 use bbn\X;
 
+/** @var bbn\Mvc\Controller $ctrl */
 if ($ctrl->hasArguments()) {
   $path = dirname($ctrl->getPath()).'/';
   if ((strpos($ctrl->arguments[0], '/') === false) && $ctrl->modelExists($path.$ctrl->arguments[0])) {

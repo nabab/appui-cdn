@@ -1,8 +1,4 @@
 <?php
-/*
- * Describe what it does!
- *
- **/
 use bbn\X;
 
 /** @var bbn\Mvc\Model $model */
@@ -10,11 +6,11 @@ if (isset($model->data['fns'])) {
   $fs = new \bbn\File\System();
   $sources = [
     // bbnjs
-    BBN_CDN_PATH.'lib/bbn-js/v2/src',
+    constant('BBN_CDN_PATH') . 'lib/bbn-js/v2/src',
     // bbn-vue
-    BBN_CDN_PATH.'lib/bbn-cp/v2/src',
-    BBN_APP_PATH.'src',
-    BBN_LIB_PATH.'bbn'
+    constant('BBN_CDN_PATH') . 'lib/bbn-cp/v2/src',
+    constant('BBN_APP_PATH') . 'src',
+    constant('BBN_LIB_PATH') . 'bbn'
   ];
   $res = [];
   $num = [];

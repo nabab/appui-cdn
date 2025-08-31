@@ -1,8 +1,4 @@
 <?php
-/*
- * Describe what it does!
- *
- **/
 use Exception;
 use bbn\X;
 use bbn\Str;

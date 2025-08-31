@@ -7,7 +7,7 @@ use bbn\Parsers\Docblock;
 use bbn\Parsers\Php;
 use bbn\File\System;
 
-/** @var $model \bbn\Mvc\Controller */
+/** @var bbn\Mvc\Model $model */
 
 $parser = new Php();
 $path = constant('BBN_LIB_PATH') . 'bbn/bbn/src/bbn';
