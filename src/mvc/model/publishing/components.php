@@ -48,13 +48,13 @@ foreach ($components as $component) {
     $ar_cfg   = false;
 
     // Start of documentation process
-    $parser = new Doc($js, 'vue');
-    $doc    = $parser->getVue();
+    $parser = new Doc($js, 'cp');
+    $doc    = $parser->getCp();
     // bbn.io
     $tmp       = [
       'text' => $cp,
       'lastmod' => $last,
-      'url' => 'bbn-cp/component/'. $cp .'/overview',
+      'url' => 'bbn-cp/component/'. $cp,
       'props' => [],
       'methods' => [],
       'mixins' => []
@@ -88,8 +88,8 @@ foreach ($components as $component) {
             );
           }
 
-          $parser2 = new Doc($c2, 'vue');
-          if ($doc2 = $parser2->getVue()) {
+          $parser2 = new Doc($c2, 'cp');
+          if ($doc2 = $parser2->getCp()) {
             $mixinCp = [
               'name' => $mixin,
               'props' => [],
