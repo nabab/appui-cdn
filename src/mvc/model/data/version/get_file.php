@@ -1,4 +1,5 @@
 <?php
+use bbn\Str;
 $res = [
  'success' => false,
  'data' => []
@@ -11,12 +12,12 @@ if ( !empty($model->data['file'])  &&
  !empty($model->data['version'])
 ){
 
-  $path = BBN_CDN_PATH.'lib'. '/'. $model->data['library'].'/'.$model->data['version'];
+  $path = constant('BBN_CDN_PATH').'lib'. '/'. $model->data['library'].'/'.$model->data['version'];
   $content = \bbn\File\Dir::scan($path,'file',true);
 
   if( !empty($content) ){
     foreach ($content as $i => $file){
-      if( !empty(strpos($file, $model->data['file']))  ){        
+      if( !empty(Str::pos($file, $model->data['file']))  ){        
         $file_contents = json_decode(file_get_contents($file));
         break;
       }

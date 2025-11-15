@@ -3,6 +3,7 @@
  * Describe what it does!
  */
 use bbn\X;
+use bbn\Str;
 use bbn\Parsers\Docblock;
 use bbn\Parsers\Php;
 use bbn\File\System;
@@ -31,7 +32,7 @@ foreach ($all as $a) {
 
   //X::ddump($cls);
   $cur =& $res;
-  $bits = X::split(substr($a['class'], 5), '\\');
+  $bits = X::split(Str::sub($a['class'], 5), '\\');
   while (count($bits) > 1) {
     $namespace = array_shift($bits);
     $idx = X::search($cur, ['type' => 'namespace', 'value' => $namespace . '/']);

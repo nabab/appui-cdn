@@ -5,10 +5,12 @@
  * Date: 15/12/2016
  * Time: 10:24
  */
+use bbn\Str;
+use bbn\File\Dir;
 /** @var bbn\Mvc\Model $model */
 if ( !empty($model->data['folder']) && !empty($model->data['db']) && \defined('BBN_CDN_PATH') ){
   // Library path
-  $model->data['lib_path'] = \bbn\File\Dir::createPath(BBN_CDN_PATH . 'lib/' . $model->data['folder']);
+  $model->data['lib_path'] = Dir::createPath(constant('BBN_CDN_PATH') . 'lib/' . $model->data['folder']);
 
   if ( $model->data['lib_path'] ){
     $model->data['lib_path'] .= '/';
@@ -25,7 +27,7 @@ if ( !empty($model->data['folder']) && !empty($model->data['db']) && \defined('B
   }
 
   // Check if the library's subfolders are already inserted into db and use the first not included as version
-  if ( is_dir($model->data['lib_path']) && ($dirs = \bbn\File\Dir::getDirs($model->data['lib_path'])) ){
+  if ( is_dir($model->data['lib_path']) && ($dirs = Dir::getDirs($model->data['lib_path'])) ){
     $ver = [];
     if ( !empty($dirs) ){
       foreach ( $dirs as $dir ){
@@ -55,12 +57,12 @@ if ( !empty($model->data['folder']) && !empty($model->data['db']) && \defined('B
   // Make the tree data
   $tree = function($path, $ver_path, $ext=false)use(&$tree){
     $res = [];
-    foreach ( \bbn\File\Dir::getFiles($path, 1) as $p ){
-      if ( empty($ext) || (!empty($ext) && ( (\bbn\Str::fileExt($p) === $ext) || (\bbn\Str::fileExt($p) === '') ) ) ){
-        $pa = substr($p, \strlen($ver_path), \strlen($p));
+    foreach ( Dir::getFiles($path, 1) as $p ){
+      if ( empty($ext) || (!empty($ext) && ( (Str::fileExt($p) === $ext) || (Str::fileExt($p) === '') ) ) ){
+        $pa = Str::sub($p, Str::len($ver_path), Str::len($p));
         $r = [
           'text' => basename($p),
-          'fpath' => (strpos($pa, '/') === 0) ? substr($pa, 1, \strlen($pa)) : $pa
+          'fpath' => (Str::pos($pa, '/') === 0) ? Str::sub($pa, 1, Str::len($pa)) : $pa
         ];
         if ( is_dir($p) ){
           $r['items'] = $tree($p, $ver_path, $ext);

@@ -62,7 +62,7 @@ foreach ($components as $component) {
 
     foreach (['mixins', 'props', 'methods'] as $i) {
       foreach ($doc[$i] as $d) {
-        if (empty($d['name']) || (substr($d['name'], 0, 1) === '_')) {
+        if (empty($d['name']) || (Str::sub($d['name'], 0, 1) === '_')) {
           continue;
         }
 
@@ -70,7 +70,7 @@ foreach ($components as $component) {
         $name = end($bits);
         if ($i === 'mixins') {
           $mixin = $name;
-          if (strpos($d['name'], $mixinPrefix) === 0) {
+          if (Str::pos($d['name'], $mixinPrefix) === 0) {
             $c2 = $fs->getContents($dir.'/src/mixins/'.$mixin.'.js');
           }
           elseif ($hasMixins && $fs->exists($p.$cp.'/_mixins/'.$mixin.'.js')) {
@@ -97,7 +97,7 @@ foreach ($components as $component) {
             ];
             foreach ($mixinCp as $k => &$item2) {
               foreach ($doc2[$k] as $d2) {
-                if (substr($d2['name'], 0, 1) !== '_') {
+                if (Str::sub($d2['name'], 0, 1) !== '_') {
                   $item2[] = array_merge($d2, [
                     'text' => $d2['name'],
                     'desc' => $d2['description'] ?? '',
@@ -161,7 +161,7 @@ $method_names = array_keys($tmp);
 sort($method_names);
 $toc = '';
 foreach ($method_names as $method_name) {
-  if (substr($method_name, 0, 1) !== '_') {
+  if (Str::sub($method_name, 0, 1) !== '_') {
     $fns[] = [
       'text' => $method_name,
       'url' => 'bbn-cp/function/'.$method_name,

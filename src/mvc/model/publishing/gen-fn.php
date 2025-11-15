@@ -15,7 +15,7 @@ function pad(&$arr) {
     if (count($a) > 1) {
       foreach ($a as $n => $v) {
         if ($n !== 'content') {
-          $len = strlen($v);
+          $len = Str::len($v);
           if (!isset($max[$n]) || ($max[$n] < $len)) {
             $max[$n] = $len;
           }
@@ -50,7 +50,7 @@ if ($model->hasData('fns')) {
       $dirs[] = $dir;
     }
 
-    if (!in_array(substr($name, 0, 1), ['.', '_'])) {
+    if (!in_array(Str::sub($name, 0, 1), ['.', '_'])) {
       $content = $fs->getContents($f);
       $meth = $p->parse($content);
       if (!empty($meth['ignore']) || !array_key_exists($meth['name'], $model->data['fns'])) {
@@ -136,13 +136,13 @@ EOD;
       $has_desc = false;
       if (!empty($meth['summary'])) {
         $summary = trim($meth['summary']);
-        if (substr($summary, -1) !== '.') {
+        if (Str::sub($summary, -1) !== '.') {
           $summary .= '.';
         }
         $md .= '  __'.$summary.'__'.PHP_EOL.PHP_EOL;
         $src .= '     * '.$summary.PHP_EOL.'     *'.PHP_EOL;
         if ($meth['description'] = trim(trim($meth['description']), PHP_EOL)) {
-          if (substr($meth['description'], -1) !== '.') {
+          if (Str::sub($meth['description'], -1) !== '.') {
             $meth['description'] .= '.';
           }
           $md .= '  '.$meth['description'].PHP_EOL.PHP_EOL;
@@ -214,7 +214,7 @@ EOD;
             $param['type'] = '{*}';
           }
           $tern_def = false;
-          if (substr($param['name'], 0, 1) === '[') {
+          if (Str::sub($param['name'], 0, 1) === '[') {
             $tern_name = str_replace('[', '', str_replace(']', '', $param['name']));
             $bits = X::split($tern_name, '=');
             if (count($bits) === 2) {
@@ -229,11 +229,11 @@ EOD;
             $tern_name = $param['name'];
           }
           $args[] = $tern_name;
-          $tern_type = $param['type'] ? substr($param['type'], 1, -1) : 'mixed';
-          if (substr($tern_type, 0, 1) === '(') {
-            $tern_type = substr($tern_type, 1, -1);
+          $tern_type = $param['type'] ? Str::sub($param['type'], 1, -1) : 'mixed';
+          if (Str::sub($tern_type, 0, 1) === '(') {
+            $tern_type = Str::sub($tern_type, 1, -1);
           }
-          if (($tern_type === 'String') || strpos('|', $tern_type)) {
+          if (($tern_type === 'String') || Str::pos('|', $tern_type)) {
             $tern_type = strtolower($tern_type);
           }
           $tern_args[] = $tern_name.': '.$tern_type;//.($tern_def ? ' = '.$tern_def : '');
@@ -244,7 +244,7 @@ EOD;
             'content' => $param['description'] ?? ''
           ];
           $md .= '  * __'.$param['name'].'__ _'.
-            ($param['type'] === '{*}' ? 'Mixed' : substr($param['type'], 1, -1)).
+            ($param['type'] === '{*}' ? 'Mixed' : Str::sub($param['type'], 1, -1)).
             '_ '.($param['description'] ?? '').PHP_EOL;
         }
       }
@@ -253,7 +253,7 @@ EOD;
         $return['type'] = '{undefined}';
       }
       $tern_json[$meth['name']] = [
-        "!type" => str_replace('*', 'mixed', 'fn('.x::join($tern_args, ', ').') -> '.substr($return['type'], 1, -1)),
+        "!type" => str_replace('*', 'mixed', 'fn('.x::join($tern_args, ', ').') -> ' . Str::sub($return['type'], 1, -1)),
         "!url" => "https://bbn.io/bbn-js/doc/".$meth['name'],
         "!doc" => $meth['summary']
       ];
@@ -263,7 +263,7 @@ EOD;
         'content' => $return['description'] ?? ''
       ];
 
-      $return_type = substr($return['type'], 1, -1);
+      $return_type = Str::sub($return['type'], 1, -1);
       if ($return_type === '*') {
         $return_type = 'Mixed';
       }
@@ -281,8 +281,8 @@ EOD;
         $src .= '     * '.(empty($line['tag']) ? '' : '@').x::join($line, '').PHP_EOL;
       }
       $source = trim(empty($meth['source']) ? '' : $meth['source']);
-      if (strpos($source, 'function') === 0) {
-        $source = trim(substr($source, 8));
+      if (Str::pos($source, 'function') === 0) {
+        $source = trim(Str::sub($source, 8));
       }
 
       $src .= '     */'.PHP_EOL.'    '.$source.PHP_EOL.PHP_EOL;
@@ -312,7 +312,7 @@ EOD;
       $tmp['items'][] = [
         'file' => $file,
         'text' => $content['name'],
-        'desc' => substr($content['summary'], 0, -1),
+        'desc' => Str::sub($content['summary'], 0, -1),
         'value' => $content['name'],
         'lastmod' => $lastmod,
         'url' => 'bbn-js/doc/'.$content['name']
@@ -343,7 +343,7 @@ EOD;
   $files = $fs->getFiles($root_css.'src/css', 'less');
   $st = '';
   foreach ($files as $f) {
-    if (Str::isInteger(substr(basename($f), 0, 2))) {
+    if (Str::isInteger(Str::sub(basename($f), 0, 2))) {
       $st .= $fs->getContents($f).PHP_EOL.PHP_EOL.PHP_EOL;
     }
   }
@@ -355,7 +355,7 @@ EOD;
   $themes = $fs->getFiles($root_css.'src/css/themes', '.less');
   foreach ($themes as $t) {
     $name = basename($t, '.less');
-    if (substr($name, 0, 1) === '_') {
+    if (Str::sub($name, 0, 1) === '_') {
       continue;
     }
 

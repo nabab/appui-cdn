@@ -7,11 +7,14 @@
  */
 
 use bbn\X;
+use bbn\Str;
+use bbn\File\Dir;
+use Github\Client;
 
 /** @var bbn\Mvc\Model $model */
 
 if ( !empty($model->data['git_user']) && !empty($model->data['git_repo']) && \defined('BBN_GITHUB_TOKEN') ){
-  $git = new \Github\Client();
+  $git = new Client();
 
 
   //$git->authenticate(BBN_GITHUB_TOKEN, Github\Client::AUTH_HTTP_TOKEN);
@@ -111,25 +114,25 @@ if ( !empty($model->data['git_user']) && !empty($model->data['git_repo']) && \de
     if ( is_file($fz) ){
       $path = $model->data['lib_path'].$version_name.'/';
       if ( is_dir($path) ){
-        \bbn\File\Dir::delete($path);
+        Dir::delete($path);
       }
       //case no zip but single file javascript
 
-      if ( (strpos($fz, '.js') !== false) && !empty($content_type) && (strpos($content_type, 'javascript') !== false) ){
-        if ( \bbn\File\Dir::createPath($path) ){
+      if ( (Str::pos($fz, '.js') !== false) && !empty($content_type) && (Str::pos($content_type, 'javascript') !== false) ){
+        if ( Dir::createPath($path) ){
           file_put_contents($path.basename($down_url), fopen($fz, 'r'));
-          \bbn\File\Dir::delete($fz);
+          Dir::delete($fz);
         }
       }
       // Extract the zip file
       else{
         $zip = new ZipArchive();
         if ( $zip->open($fz) === true ){
-          if ( \bbn\File\Dir::createPath($path) &&
+          if ( Dir::createPath($path) &&
             $zip->extractTo($path)
           ){
             // Delete the zip file
-            \bbn\File\Dir::delete($fz);
+            Dir::delete($fz);
           }
         }
       }
@@ -145,11 +148,11 @@ if ( !empty($model->data['git_user']) && !empty($model->data['git_repo']) && \de
         'version' => $version_name,
         'dependencies' => $dependencies
       ];*/
-      if( $dirs = \bbn\File\Dir::getDirs($path) ){
-        foreach ( \bbn\File\Dir::getFiles($dirs[0], true) as $dir ){
-          \bbn\File\Dir::move($dir, $path.basename($dir));
+      if( $dirs = Dir::getDirs($path) ){
+        foreach ( Dir::getFiles($dirs[0], true) as $dir ){
+          Dir::move($dir, $path.basename($dir));
         }
-        \bbn\File\Dir::delete($dirs[0]);
+        Dir::delete($dirs[0]);
       }
       return [
         'success' => true,

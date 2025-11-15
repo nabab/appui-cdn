@@ -11,11 +11,11 @@ use bbn\Str;
 /** @var bbn\Mvc\Controller $ctrl */
 if ( !empty($ctrl->post['url']) &&
   Str::isUrl($ctrl->post['url']) &&
-  ((strpos($ctrl->post['url'], 'http://github.com/') === 0) || (strpos($ctrl->post['url'], 'https://github.com/') === 0))
+  ((Str::pos($ctrl->post['url'], 'http://github.com/') === 0) || (Str::pos($ctrl->post['url'], 'https://github.com/') === 0))
 ){
   $ctrl->post['url'] = str_replace('http://github.com/', '', str_replace('https://github.com/', '', $ctrl->post['url']));
-  if ( substr($ctrl->post['url'], -4) === '.git' ){
-    $ctrl->post['url'] = substr($ctrl->post['url'], 0, -4);
+  if ( Str::sub($ctrl->post['url'], -4) === '.git' ){
+    $ctrl->post['url'] = Str::sub($ctrl->post['url'], 0, -4);
   }
   $ctrl->post['url'] = explode('/', $ctrl->post['url']);
   $ctrl->data = X::mergeArrays($ctrl->data, [

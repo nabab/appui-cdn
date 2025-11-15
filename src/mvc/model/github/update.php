@@ -1,5 +1,5 @@
 <?php
-
+use bbn\Str;
 //die(var_dump("ss", $model->data['library']));
 if ( !empty($model->data['db']) &&
   ($library = $model->data['db']->getRows("
@@ -11,8 +11,8 @@ if ( !empty($model->data['db']) &&
   $library = $library[0];
   $url = $library['git'];
   if ( !empty($library['git']) &&
-    \bbn\Str::isUrl($library['git']) &&
-    ((strpos($library['git'], 'http://github.com/') === 0) || (strpos($library['git'], 'https://github.com/') === 0)) &&
+    Str::isUrl($library['git']) &&
+    ((Str::pos($library['git'], 'http://github.com/') === 0) || (Str::pos($library['git'], 'https://github.com/') === 0)) &&
     !empty($library['latest'])
   ){
 

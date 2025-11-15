@@ -6,7 +6,7 @@
  * Time: 17:55
  */
 /** @var bbn\Mvc\Model $model */
-
+use bbn\Str;
 if ( !empty($model->data['db']) &&
   ($libraries = $model->data['db']->getRows("
     SELECT title, name, Git, latest
@@ -23,8 +23,8 @@ if ( !empty($model->data['db']) &&
   foreach ($libraries as $lib ){
     $url = $lib['git'];
     if ( !empty($lib['git']) &&
-      \bbn\Str::isUrl($lib['git']) &&
-      ((strpos($lib['git'], 'http://github.com/') === 0) || (strpos($lib['git'], 'https://github.com/') === 0)) &&
+      Str::isUrl($lib['git']) &&
+      ((Str::pos($lib['git'], 'http://github.com/') === 0) || (Str::pos($lib['git'], 'https://github.com/') === 0)) &&
       !empty($lib['latest'])
     ){
       $lib['git'] = str_replace('http://github.com/', '', str_replace('https://github.com/', '', $lib['git']));
