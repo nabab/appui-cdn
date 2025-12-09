@@ -1,7 +1,4 @@
 <?php
-/**
- * Describe what it does!
- */
 use bbn\X;
 use bbn\Str;
 use bbn\Parsers\Docblock;
