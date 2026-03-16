@@ -222,8 +222,8 @@ $tern_json = [
 ];
 
 $res[2]['items'] = $methods;
-$fs->putContents($dir.'/bbn-cp.json', Json_encode($res, JSON_PRETTY_PRINT));
-$fs->putContents($dir.'/tern.json', Json_encode($tern_json, JSON_PRETTY_PRINT));
+$fs->putContents($dir.'/bbn-cp.json', json_encode($res, JSON_PRETTY_PRINT));
+$fs->putContents($dir.'/tern.json', json_encode($tern_json, JSON_PRETTY_PRINT));
 
 // i18n
 /*
