@@ -4,7 +4,6 @@ use bbn\X;
 use bbn\Str;
 use bbn\Db;
 use bbn\File\System;
-use bbn\Cdn\Config;
 use bbn\Compilers\Less;
 use bbn\Parsers\Doc;
 use bbn\Parsers\Docblock;
